@@ -3,7 +3,7 @@ package com.example.quiplash
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class SignIn : AppCompatActivity() {
+class SignInActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

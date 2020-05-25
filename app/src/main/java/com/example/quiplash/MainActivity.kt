@@ -16,17 +16,17 @@ class MainActivity : AppCompatActivity() {
         val btnStart = findViewById<Button>(R.id.start)
 
         btnSignIn.setOnClickListener() {
-            val intent = Intent(this, SignIn::class.java);
+            val intent = Intent(this, SignInActivity::class.java);
             startActivity(intent);
         }
 
         btnSignUp.setOnClickListener() {
-            val intent = Intent(this, SignUp::class.java);
+            val intent = Intent(this, SignUpActivity::class.java);
             startActivity(intent);
         }
 
         btnStart.setOnClickListener() {
-            val intent = Intent(this, HomeScreen::class.java);
+            val intent = Intent(this, HomeActivity::class.java);
             startActivity(intent);
         }
     }
