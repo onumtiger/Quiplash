@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Quiplash</string>
+    <string name="signin_btn">Sign In</string>
+    <string name="signup_btn">Sign Up</string>
+    <string name="email_label">e-mail</string>
+    <string name="password_label">password</string>
+    <string name="auth_failed">Authentication failed, please check your email and password.</string>
+
 </resources>
