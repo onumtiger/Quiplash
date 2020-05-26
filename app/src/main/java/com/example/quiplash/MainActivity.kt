@@ -26,10 +26,10 @@ class MainActivity : AppCompatActivity() {
             val user = firebaseAuth.currentUser
             if (user != null) {
                 // launch login activity
-                startActivity(Intent(this@MainActivity, HomeScreen::class.java))
+                startActivity(Intent(this@MainActivity, HomeActivity::class.java))
                 finish()
             } else{
-                startActivity(Intent(this@MainActivity, SignIn::class.java))
+                startActivity(Intent(this@MainActivity, SignInActivity::class.java))
                 finish()
             }
         }
@@ -43,17 +43,17 @@ class MainActivity : AppCompatActivity() {
 
 
         btnSignIn.setOnClickListener() {
-            val intent = Intent(this, SignIn::class.java);
+            val intent = Intent(this, SignInActivity::class.java);
             startActivity(intent);
         }
 
         btnSignUp.setOnClickListener() {
-            val intent = Intent(this, SignUp::class.java);
+            val intent = Intent(this, SignUpActivity::class.java);
             startActivity(intent);
         }
 
         btnStart.setOnClickListener() {
-            val intent = Intent(this, HomeScreen::class.java);
+            val intent = Intent(this, HomeActivity::class.java);
             startActivity(intent);
         }
     }
