@@ -55,7 +55,7 @@
         android:layout_height="20dp"
         android:gravity="center"
         android:text="@string/delete"
-        android:textColor="@android:color/red"
+        android:textColor="@color/colorRed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.88"
