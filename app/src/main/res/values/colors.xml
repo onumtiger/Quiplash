@@ -3,20 +3,17 @@
     <!-- Colors -->
     <color name="colorGreen">#30823B</color>
     <color name="colorBlue">#006FBF</color>
-    <color name="colorBlack">000</color>
-    <color name="colorWhite">#fff</color>
     <color name="colorRed">#D0021B</color>
-    <!-- Primary Colors -->
+    <color name="colorWhite">#fff</color>
+    <!-- Normal text -->
+    <color name="colorText">#000</color>
+    <color name="colorTitles">#006FBF</color>
+    <!-- Buttons -->
+    <color name="colorButtonGreen">#30823B</color>
+    <color name="colorButtonRed">#D0021B</color>
+    <!-- Elements like boxes or seperators -->
+    <color name="colorLayout">#30823B</color>
     <color name="colorPrimary">#30823B</color>
     <color name="colorPrimaryDark">#30823B</color>
     <color name="colorAccent">#006FBF</color>
-    <!-- Normal text -->
-    <color name="colorText">000</color>
-    <!-- View titles -->
-    <color name="colorTitles">#006FBF</color>
-    <!-- Buttons -->
-    <color name="colorBottonGreen">#30823B</color>
-    <color name="colorBottonRed">#D0021B</color>
-    <!-- Elements like boxes or seperators -->
-    <color name="colorLayout">#30823B</color>
 </resources>

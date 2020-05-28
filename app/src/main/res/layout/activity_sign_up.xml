@@ -86,7 +86,7 @@
         android:id="@+id/signin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorBottonGreen"
+        android:background="@color/colorButtonGreen"
         android:text="@string/register_btn"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
