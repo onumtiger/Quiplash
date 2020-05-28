@@ -3,7 +3,7 @@ package com.example.quiplash
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class JoinGameActivity : AppCompatActivity() {
+class Join_GameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".FriendsActivity"></activity>
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".JoinGameActivity" />
-        <activity android:name=".NewGameCategoryActivity" />
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".Profile_RegisteredActivity" />
+        <activity android:name=".Join_GameActivity" />
+        <activity android:name=".New_GameActivity" />
+        <activity android:name=".LandingActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SignInActivity" />
         <activity android:name=".MainActivity">

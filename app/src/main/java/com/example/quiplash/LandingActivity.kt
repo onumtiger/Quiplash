@@ -5,11 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 
-class HomeActivity : AppCompatActivity() {
+class LandingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home_screen)
+        setContentView(R.layout.activity_landing)
 
         val btnNewGame = findViewById<Button>(R.id.mainNewGame)
         val btnJoinGame = findViewById<Button>(R.id.mainJoinGame)
@@ -17,17 +17,17 @@ class HomeActivity : AppCompatActivity() {
         val btnFriends = findViewById<Button>(R.id.mainFriends)
 
         btnNewGame.setOnClickListener() {
-            val intent = Intent(this, NewGameCategoryActivity::class.java);
+            val intent = Intent(this, New_GameActivity::class.java);
             startActivity(intent);
         }
 
         btnJoinGame.setOnClickListener() {
-            val intent = Intent(this, JoinGameActivity::class.java);
+            val intent = Intent(this, Join_GameActivity::class.java);
             startActivity(intent);
         }
 
         btnProfile.setOnClickListener() {
-            val intent = Intent(this, ProfileActivity::class.java);
+            val intent = Intent(this, Profile_RegisteredActivity::class.java);
             startActivity(intent);
         }
 
