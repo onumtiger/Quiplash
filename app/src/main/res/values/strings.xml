@@ -12,7 +12,7 @@
     <string name="Enter_answer">Enter your answer to the question</string>
     <string name="wait_choosing">The other players choose the best answers</string>
     <!-- Dialogs -->
-    <string name="delete_interaction">Do you really want to delete your Account</string>
+    <string name="delete_interaction">Do you really want to delete your Account?</string>
     <string name="enter_username_interaction">Enter Username</string>
     <!-- Placeholders -->
     <string name="e_mail_placeholder">username@quiplash.com</string>
@@ -63,6 +63,7 @@
     <!-- others -->
     <string name="friends">Friends</string>
     <string name="invite_player">Invite Player</string>
+    <string name="delete_account">Delete Account</string>
     <string name="username">Username</string>
     <string name="game_starts">Game starts</string>
     <string name="e_mail">E-Mail</string>
