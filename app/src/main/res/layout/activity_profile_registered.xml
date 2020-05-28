@@ -22,7 +22,7 @@
         android:id="@+id/textViewProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your profile"
+        android:text="@string/profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Change profile photo"
+        android:text="@string/change_profile_photo_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="44dp"
-        android:text="Delete Account"
+        android:text="@string/delete_account_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -98,6 +98,7 @@
 
     <EditText
         android:id="@+id/editTextName"
+        android:hint="@string/username_placeholder"
         android:layout_width="219dp"
         android:layout_height="39dp"
         android:layout_marginTop="28dp"
@@ -110,6 +111,7 @@
 
     <EditText
         android:id="@+id/editTextMail"
+        android:hint="@string/e_mail_placeholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -122,6 +124,7 @@
 
     <EditText
         android:id="@+id/editTextPw"
+        android:hint="@string/password_placeholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="79dp"

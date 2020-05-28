@@ -1,13 +1,6 @@
 <resources>
     <string name="app_name">Quiplash</string>
-    <!-- others -->
-    <string name="friends">Friends</string>
-    <string name="invite_player">Invite Player</string>
-    <string name="username">Username</string>
-    <string name="game_starts">Game starts</string>
-    <string name="e_mail">E-Mail</string>
-    <string name="score">Score</string>
-    <string name="add_player">Add Player</string>
+
     <!-- View Titles -->
     <string name="your_friends">Your Friends</string>
     <string name="new_game">New Game</string>
@@ -24,6 +17,7 @@
     <!-- Placeholders -->
     <string name="e_mail_placeholder">username@quiplash.com</string>
     <string name="username_placeholder">Username</string>
+    <string name="password_placeholder">••••••••••••</string>
     <!-- Buttons -->
     <string name="start_game_btn">Start Game</string>
     <string name="invite_players_btn">Invite Players</string>
@@ -35,6 +29,8 @@
     <string name="delete_account_btn">Delete Account</string>
     <string name="ready_btn">Ready</string>
     <string name="go_home_btn">Go Home</string>
+    <string name="change_profile_photo_btn">Change profile photo</string>
+    <string name="sign_in_btn">Sign In</string>
     <!-- Actions -->
     <string name="cancel">CANCEL</string>
     <string name="invite">INVITE</string>
@@ -63,4 +59,15 @@
     <string name="eight_rounds">8 Rounds</string>
     <string name="nine_rounds">9 Rounds</string>
     <string name="ten_rounds">10 Rounds</string>
+
+    <!-- others -->
+    <string name="friends">Friends</string>
+    <string name="invite_player">Invite Player</string>
+    <string name="username">Username</string>
+    <string name="game_starts">Game starts</string>
+    <string name="e_mail">E-Mail</string>
+    <string name="score">Score</string>
+    <string name="add_player">Add Player</string>
+    <string name="password">Password</string>
+    <string name="password_retype">Retype Password</string>
 </resources>
