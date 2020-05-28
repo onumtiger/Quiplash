@@ -6,4 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".FriendsActivity">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="41dp"
+        android:contentDescription="go_back_arrow"
+        android:src="@drawable/ic_go_back_arrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView"
+        android:layout_width="200dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="logo"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="151dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="132dp"
+        android:text="@string/friends"
+        android:textColor="@color/colorTitles"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
