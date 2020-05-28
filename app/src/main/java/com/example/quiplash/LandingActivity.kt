@@ -11,10 +11,10 @@ class LandingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing)
 
-        val btnNewGame = findViewById<Button>(R.id.mainNewGame)
-        val btnJoinGame = findViewById<Button>(R.id.mainJoinGame)
-        val btnProfile = findViewById<Button>(R.id.mainProfile)
-        val btnFriends = findViewById<Button>(R.id.mainFriends)
+        val btnNewGame = findViewById<Button>(R.id.landing_new_game)
+        val btnJoinGame = findViewById<Button>(R.id.landing_join_game)
+        val btnProfile = findViewById<Button>(R.id.landing_profile)
+        val btnFriends = findViewById<Button>(R.id.landing_friends)
 
         btnNewGame.setOnClickListener() {
             val intent = Intent(this, New_GameActivity::class.java);
