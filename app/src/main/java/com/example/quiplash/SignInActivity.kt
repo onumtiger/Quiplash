@@ -48,12 +48,19 @@ class SignInActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBarLogin)
         val btnSignup = findViewById<Button>(R.id.signupBtn)
         val btnLogin = findViewById<Button>(R.id.signinBtn)
+        val btnDB = findViewById<Button>(R.id.database)
+
         val textviewError = findViewById<TextView>(R.id.textErrorLogin)
 
 
         btnSignup.setOnClickListener{
             startActivity(Intent(this@SignInActivity, SignUpActivity::class.java))
             finish()
+        }
+
+        btnDB.setOnClickListener{
+            val intent = Intent(this@SignInActivity, Database::class.java);
+            startActivity(intent);
         }
 
 

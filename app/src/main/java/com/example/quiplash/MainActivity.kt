@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         val btnSignIn = findViewById<Button>(R.id.sign_in)
         val btnSignUp = findViewById<Button>(R.id.sign_up)
         val btnStart = findViewById<Button>(R.id.start)
+        val btnDB = findViewById<Button>(R.id.database)
 
 
 
@@ -56,6 +57,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, HomeActivity::class.java);
             startActivity(intent);
         }
+
+        btnDB.setOnClickListener() {
+            val intent = Intent(this, Database::class.java);
+            startActivity(intent);
+        }
+
     }
 
     override fun onStart() {
