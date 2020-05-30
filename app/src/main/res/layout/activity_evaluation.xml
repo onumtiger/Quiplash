@@ -4,18 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FriendsActivity">
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="41dp"
-        android:contentDescription="go_back_arrow"
-        android:src="@drawable/ic_go_back_arrow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.042"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".EvaluationActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView"
@@ -33,7 +22,7 @@
         android:layout_width="151dp"
         android:layout_height="43dp"
         android:layout_marginTop="132dp"
-        android:text="@string/friends"
+        android:text="@string/scoreboard"
         android:textColor="@color/colorTitles"
         android:textSize="30sp"
         android:textStyle="bold"

@@ -1,9 +1,74 @@
 <resources>
     <string name="app_name">Quiplash</string>
-    <string name="signin_btn">Sign In</string>
-    <string name="signup_btn">Sign Up</string>
-    <string name="email_label">e-mail</string>
-    <string name="password_label">Password:</string>
-    <string name="auth_failed">Authentication failed, please check your email and password.</string>
-    <string name="password2_label">Retype Password:</string>
+
+    <!-- View Titles -->
+    <string name="your_friends">Your Friends</string>
+    <string name="new_game">New Game</string>
+    <string name="join_game">Join Game</string>
+    <string name="profile">Profile</string>
+    <string name="waiting_for_players">Waiting for Players</string>
+    <string name="scoreboard">Scoreboard</string>
+    <string name="choose_answer">Choose the best answer</string>
+    <string name="Enter_answer">Enter your answer to the question</string>
+    <string name="wait_choosing">The other players choose the best answers</string>
+    <!-- Dialogs -->
+    <string name="delete_interaction">Do you really want to delete your Account?</string>
+    <string name="enter_username_interaction">Enter Username</string>
+    <!-- Placeholders -->
+    <string name="e_mail_placeholder">username@quiplash.com</string>
+    <string name="username_placeholder">Username</string>
+    <string name="password_placeholder">••••••••••••</string>
+    <!-- Buttons -->
+    <string name="start_game_btn">Start Game</string>
+    <string name="invite_players_btn">Invite Players</string>
+    <string name="end_game_btn">End Game</string>
+    <string name="leave_game_btn">Leave Game</string>
+    <string name="register_btn">Register</string>
+    <string name="save_btn">Save</string>
+    <string name="edit_account_btn">Edit Account</string>
+    <string name="delete_account_btn">Delete Account</string>
+    <string name="ready_btn">Ready</string>
+    <string name="go_home_btn">Go Home</string>
+    <string name="change_profile_photo_btn">Change profile photo</string>
+    <string name="sign_in_btn">Sign In</string>
+    <!-- Actions -->
+    <string name="cancel">CANCEL</string>
+    <string name="invite">INVITE</string>
+    <string name="delete">DELETE</string>
+    <string name="add">ADD</string>
+    <!-- Game Categories -->
+    <string name="standard">Standard</string>
+    <string name="funny">Funny</string>
+    <string name="harsh">Harsh</string>
+    <string name="poetic">Poetic</string>
+    <!-- Amount Players -->
+    <string name="three_players">3 Players</string>
+    <string name="four_players">4 Players</string>
+    <string name="five_players">5 Players</string>
+    <string name="six_players">6 Players</string>
+    <string name="seven_players">7 Players</string>
+    <string name="eight_players">8 Players</string>
+    <string name="nine_players">9 Players</string>
+    <string name="ten_players">10 Players</string>
+    <!-- Amount Rounds -->
+    <string name="three_rounds">3 Rounds</string>
+    <string name="four_rounds">4 Rounds</string>
+    <string name="five_rounds">5 Rounds</string>
+    <string name="six_rounds">6 Rounds</string>
+    <string name="seven_rounds">7 Rounds</string>
+    <string name="eight_rounds">8 Rounds</string>
+    <string name="nine_rounds">9 Rounds</string>
+    <string name="ten_rounds">10 Rounds</string>
+
+    <!-- others -->
+    <string name="friends">Friends</string>
+    <string name="invite_player">Invite Player</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="username">Username</string>
+    <string name="game_starts">Game starts</string>
+    <string name="e_mail">E-Mail</string>
+    <string name="score">Score</string>
+    <string name="add_player">Add Player</string>
+    <string name="password">Password</string>
+    <string name="password_retype">Retype Password</string>
 </resources>
