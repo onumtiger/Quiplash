@@ -1,8 +1,10 @@
 package com.example.quiplash
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
@@ -11,8 +13,8 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
@@ -27,14 +29,24 @@ class SignUpActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: DocumentReference
-    private val collectionUser: String = "Users" //TODO: namen an den aus der DB anpassen
+    private val collectionQuiplash: String = "quiplash"
+    private val dbUsersPath = "users"
+    val dbUserAttributesPath = "userattributes"
+
+    //Local-Storage
+    private val PREF_NAME = "Quiplash"
+    private var PRIVATE_MODE = 0
+    var sharedPreference: SharedPreferences? = null
+    val prefKey = "guestid"
+    val prefDefValue = "noguest"
 
     //UserInfo
-    var userFB: FirebaseUser? = null
-
+    var isUser: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreference =  getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+
         setContentView(R.layout.activity_sign_up)
 
         //Get Firebase auth instance
@@ -42,11 +54,12 @@ class SignUpActivity : AppCompatActivity() {
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
-        //db = FirebaseFirestore.getInstance().document(collectionUser)
+        db = FirebaseFirestore.getInstance().collection(collectionQuiplash).document(dbUsersPath)
 
         val btnSignIn = findViewById<Button>(R.id.signinBtn)
         val btnSignUp = findViewById<Button>(R.id.signupBtn)
         val btnSubmit = findViewById<Button>(R.id.submitBtn)
+        val btnAnonymous = findViewById<Button>(R.id.anonymousBtn)
         val inputEmail = findViewById<EditText>(R.id.emailFieldSU)
         val inputPassword = findViewById<EditText>(R.id.passwordFieldSU)
         val inputPassword2 = findViewById<EditText>(R.id.passwordRetypeFieldSU)
@@ -61,12 +74,9 @@ class SignUpActivity : AppCompatActivity() {
         val out = AnimationUtils.loadAnimation(this, android.R.anim.fade_out)
 
         // set the animation type to ViewFlipper
-
-        // set the animation type to ViewFlipper
         simpleViewFlipper.setInAnimation(inAni)
         simpleViewFlipper.setOutAnimation(out)
 
-        val inflaterDialog = layoutInflater
 
         //set onClickListener for buttons
         btnSignIn.setOnClickListener {
@@ -76,8 +86,6 @@ class SignUpActivity : AppCompatActivity() {
 
         btnSubmit.setOnClickListener {
             createUser()
-            startActivity(Intent(this@SignUpActivity, HomeActivity::class.java))
-            finish()
         }
 
         btnSignUp.setOnClickListener {
@@ -94,7 +102,7 @@ class SignUpActivity : AppCompatActivity() {
 
                             if (task.isSuccessful) {
                                 // Sign in success, update UI with the signed-in user's information
-                                userFB = auth.getCurrentUser()
+                                isUser = true
                                 simpleViewFlipper.showNext()
 
                             } else {
@@ -131,7 +139,32 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
+        btnAnonymous.setOnClickListener {
+            anonymousLogin()
+        }
 
+
+    }
+
+    private fun anonymousLogin() {
+        auth.signInAnonymously()
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("SUCCESS", "signInAnonymously:success")
+                    isUser = false
+                    simpleViewFlipper.showNext()
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("ERROR", "signInAnonymously:failure", task.exception)
+                    Toast.makeText(
+                        baseContext, "Authentication failed." + task.exception,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                // ...
+            }
     }
 
     private fun checkInput(): Boolean {
@@ -140,14 +173,30 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun createUser() {
-        /*val user = User(userFB?.uid, inputUsername.text.toString())
-        db.set(user)
-            .addOnSuccessListener {
-                Toast.makeText(this, "DocumentSnapshot successfully written!", Toast.LENGTH_LONG).show()
-                Log.d("SUCCESS", "DocumentSnapshot successfully written!")
+        //if user is guest...
+        if (!isUser) {
+            //save id local
+            val editor = sharedPreference?.edit()
+            editor?.putString(prefKey, auth.currentUser?.uid.toString())
+            editor?.apply()
+        }
 
-            }.addOnFailureListener {
-                    e -> Log.e("ERROR", "Error writing document", e)
-            }*/
+        //create user-object
+        val user = User(auth.currentUser?.uid, editTextUsername.text.toString(), isUser, 0)
+
+        //save user in game-manager (for easy access in further dev)
+        GameManager().setUserinfo(user)
+
+        //save user (name, score,...) in database
+        db.collection(auth.currentUser?.uid.toString()).document(dbUserAttributesPath)
+            .set(user)
+            .addOnSuccessListener {
+                Log.d("SUCCESS", "DocumentSnapshot successfully written!");
+                startActivity(Intent(this@SignUpActivity, HomeActivity::class.java))
+                finish()
+            }
+            .addOnFailureListener { e -> Log.w("ERROR", "Error writing document", e) }
+
     }
+
 }
