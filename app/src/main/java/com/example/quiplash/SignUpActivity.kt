@@ -192,7 +192,7 @@ class SignUpActivity : AppCompatActivity() {
             .set(user)
             .addOnSuccessListener {
                 Log.d("SUCCESS", "DocumentSnapshot successfully written!");
-                startActivity(Intent(this@SignUpActivity, HomeActivity::class.java))
+                startActivity(Intent(this@SignUpActivity, LandingActivity::class.java))
                 finish()
             }
             .addOnFailureListener { e -> Log.w("ERROR", "Error writing document", e) }

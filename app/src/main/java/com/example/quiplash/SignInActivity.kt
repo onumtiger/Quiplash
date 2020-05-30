@@ -144,7 +144,7 @@ class SignInActivity : AppCompatActivity() {
                 GameManager().setUserinfo(user)
             }
         }
-        val intent = Intent(this@SignInActivity, HomeActivity::class.java)
+        val intent = Intent(this@SignInActivity, LandingActivity::class.java)
         startActivity(intent)
         finish()
 

@@ -70,7 +70,7 @@
                 app:layout_constraintVertical_bias="0.326" />
 
             <Button
-                android:id="@+id/signin"
+                android:id="@+id/signupBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/colorButtonGreen"
@@ -138,21 +138,31 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/signupBtn"
+                android:id="@+id/signinBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/signup_btn"
-                app:layout_constraintBottom_toTopOf="@+id/signinBtn"
-                app:layout_constraintHorizontal_bias="0.498"
+                android:text="@string/sign_in_btn"
+                android:background="@color/colorButtonGreen"
+                android:textColor="@color/colorWhite"
+                android:textColorHighlight="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textColorLink="@color/colorWhite"
+                app:layout_constraintBottom_toTopOf="@+id/anonymousBtn"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textError" />
+                app:layout_constraintTop_toBottomOf="@+id/signupBtn" />
 
             <Button
                 android:id="@+id/anonymousBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="guest login"
+                android:layout_marginBottom="24dp"
+                android:text="@string/guest_sign_up_btn"
+                android:background="@color/colorButtonGreen"
+                android:textColor="@color/colorWhite"
+                android:textColorHighlight="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textColorLink="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -168,7 +178,7 @@
                 android:id="@+id/editTextUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="choose your username"
+                android:hint="@string/set_username"
                 android:inputType="text"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -181,7 +191,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="submit"
+                android:text="@string/submit_btn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.51"
                 app:layout_constraintStart_toStartOf="parent"

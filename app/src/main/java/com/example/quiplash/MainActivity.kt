@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         sharedPreference =  getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         db = FirebaseFirestore.getInstance().collection(collectionQuiplash).document(dbUsersPath)
 
-        // Get Firebase auth instance
         FirebaseApp.initializeApp(this);
         // Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             val user = firebaseAuth.currentUser
             if (user != null) {
                 // launch login activity
-                startActivity(Intent(this@MainActivity, HomeActivity::class.java))
+                startActivity(Intent(this@MainActivity, LandingActivity::class.java))
                 finish()
             } else{
                 checkGuestLogin()
@@ -101,16 +100,16 @@ class MainActivity : AppCompatActivity() {
      * **/
     fun fetchGuest(){
         //Set Database-Instance
-        val userRef = FirebaseFirestore.getInstance().collection(collectionQuiplash).document(dbUsersPath).collection(sharedPreference?.getString(prefKey,prefDefValue).toString()).document(dbUsersPath)
+        //val userRef = db.collection(sharedPreference?.getString(prefKey,prefDefValue).toString()).document(dbUsersPath)
 
         //fetch Data
-        userRef.get().addOnSuccessListener { documentSnapshot ->
-            val guest = documentSnapshot.toObject(User::class.java)
-            if (guest != null) {
+        db.collection(sharedPreference?.getString(prefKey,prefDefValue).toString()).document(dbUserAttributesPath).get().addOnSuccessListener { documentSnapshot ->
                 //save fetched data in GameManager
-                GameManager().setUserinfo(guest)
-                startActivity(Intent(this@MainActivity, HomeActivity::class.java))
-                finish()
+                val guest = documentSnapshot.toObject(User::class.java)
+                if (guest?.userID != null) {
+                    GameManager().setUserinfo(guest)
+                    startActivity(Intent(this@MainActivity, LandingActivity::class.java))
+                    finish()
             } else {
                 Toast.makeText(
                     this@MainActivity,
