@@ -1,17 +1,22 @@
 package com.example.quiplash
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
+import kotlin.collections.HashMap
 
 class Database : AppCompatActivity() {
 
-    lateinit var _db: DatabaseReference
+    //Firestore DB
+    lateinit var db: DocumentReference
+    lateinit var db2: DocumentReference
 
     //Add Question
     lateinit var saveButton: Button
@@ -22,14 +27,13 @@ class Database : AppCompatActivity() {
     lateinit var saveButtonUser: Button
     lateinit var user_name: EditText
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_database)
 
-        //Firebase DB
-        _db = FirebaseDatabase.getInstance().reference
+        //Firebase DB (Firestore)
+        db = FirebaseFirestore.getInstance().document("quiplash/questions")
+        db2 = FirebaseFirestore.getInstance().document("quiplash/users")
 
         //Questions DB
         saveButton = findViewById(R.id.save)
@@ -40,52 +44,72 @@ class Database : AppCompatActivity() {
         saveButtonUser = findViewById(R.id.save_user)
         user_name = findViewById(R.id.user_name)
 
-
         saveButton.setOnClickListener {
-            saveQuestion()
+            insert_question_into_db()
         }
-
         saveButtonUser.setOnClickListener {
-            saveUser()
+            insert_user_into_db()
         }
-
 
     }
 
-
-    private fun saveQuestion() {
+    private fun insert_question_into_db(){
         val question = question_text.text.toString().trim()
-        if (question.isEmpty()){
-            question_text.error = "Desch Feld isch leer!"
-            return
-        }
-        val ref = FirebaseDatabase.getInstance().getReference("questions")
-        val questionId = ref.push().key
-        val ques = Question(questionId, question, "0")
+        val type = question_type.text.toString().trim()
 
-        if (questionId != null) {
-            ref.child(questionId).setValue(ques).addOnCompleteListener {
-                Toast.makeText(applicationContext, "Question saved successfully", Toast.LENGTH_LONG).show()
-            }
+        if (question != "" && type != "") {
+            saveQuestion(question, type)
+        } else {
+            Toast.makeText(this, "Füll den Spass aus!", Toast.LENGTH_LONG).show()
         }
     }
 
+    private fun insert_user_into_db(){
+        val user_name = user_name.text.toString().trim()
+        val guest = true
+        val score = 0
 
-    private fun saveUser() {
-        val user = user_name.text.toString().trim()
-        if (user.isEmpty()){
-            user_name.error = "Desch Feld isch leer!"
-            return
+        if (user_name != "") {
+            saveUser(user_name, guest, score)
+        } else {
+            Toast.makeText(this, "Füll den Spass aus!", Toast.LENGTH_LONG).show()
         }
-        val ref = FirebaseDatabase.getInstance().getReference("users")
-        val userId = ref.push().key
-        val usr = User(userId, user, false, 0)
+    }
 
-        if (userId != null) {
-            ref.child(userId).setValue(user).addOnCompleteListener {
-                Toast.makeText(applicationContext, "User saved successfully", Toast.LENGTH_LONG).show()
-            }
+    public fun saveQuestion(question_text: String, question_type: String){
+        var ID = createID().toString()
+        val attributes = HashMap<String, Any>()
+        attributes.put("text", question_text)
+        attributes.put("ID", ID)
+        attributes.put("Type", question_type)
+
+
+        Toast.makeText(this, question_type, Toast.LENGTH_LONG).show()
+        db.collection(question_text).document("questionattributes").set(attributes).addOnSuccessListener {
+                void: Void? -> Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
+        }.addOnFailureListener {
+                exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
         }
+    }
+
+    public fun saveUser(user_name: String, guest: Boolean, score: Int) {
+        var ID = createID().toString()
+        val attributes = HashMap<String, Any>()
+        attributes.put("name", user_name)
+        attributes.put("ID", ID)
+        attributes.put("guest", guest)
+        attributes.put("score", score)
+
+        db2.collection(user_name).document("userattributes").set(attributes).addOnSuccessListener {
+                void: Void? -> Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
+        }.addOnFailureListener {
+                exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
+        }
+    }
+
+    @Throws(Exception::class)
+    fun createID(): String? {
+        return UUID.randomUUID().toString()
     }
 
     private fun editUser(){
