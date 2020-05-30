@@ -17,8 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_go_back_arrow" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView"
@@ -68,7 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            app:srcCompat="@drawable/join_game_star" />
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/category_icon" />
 
         <TextView
             android:id="@+id/new_game_category"
@@ -112,7 +112,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            app:srcCompat="@drawable/join_game_star" />
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/heart_icon" />
 
         <TextView
             android:id="@+id/new_game_players"
@@ -156,7 +157,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            app:srcCompat="@drawable/join_game_star" />
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/timer_icon" />
 
         <TextView
             android:id="@+id/new_game_rounds"
