@@ -1,6 +1,7 @@
 package com.example.quiplash
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -16,6 +17,7 @@ class Database : AppCompatActivity() {
 
     //Firestore DB
     lateinit var db: DocumentReference
+    //lateinit var db2: FirebaseFirestore
     lateinit var db2: DocumentReference
 
     //Add Question
@@ -34,6 +36,7 @@ class Database : AppCompatActivity() {
         //Firebase DB (Firestore)
         db = FirebaseFirestore.getInstance().document("quiplash/questions")
         db2 = FirebaseFirestore.getInstance().document("quiplash/users")
+        val db2 = FirebaseFirestore.getInstance()
 
         //Questions DB
         saveButton = findViewById(R.id.save)
@@ -100,13 +103,16 @@ class Database : AppCompatActivity() {
         attributes.put("guest", guest)
         attributes.put("score", score)
 
-        db2.collection(user_name).document("userattributes").set(attributes).addOnSuccessListener {
-                void: Void? -> Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
-        }.addOnFailureListener {
-                exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
-        }
-    }
+        val uf = User(ID, user_name, true, score)
 
+        //db.collection("users").add(user).addOnSuccessListener { documentReference ->Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")}
+        db2.collection(ID).document("userattributes").set(attributes).addOnSuccessListener { void: Void? -> Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show() }.addOnFailureListener { exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show() }
+        //db2.collection("users").document(ID).set(uf)
+
+        //db2.collection(user_name).add(attributes).addOnSuccessListener { documentReference -> Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()}
+
+
+    }
     @Throws(Exception::class)
     fun createID(): String? {
         return UUID.randomUUID().toString()
