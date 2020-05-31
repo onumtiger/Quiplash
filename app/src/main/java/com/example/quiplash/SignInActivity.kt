@@ -70,6 +70,7 @@ class SignInActivity : AppCompatActivity() {
         val btnSignup = findViewById<Button>(R.id.signupBtn)
         val btnLogin = findViewById<Button>(R.id.signinBtn)
         val btnLoginGuest = findViewById<Button>(R.id.signinGuestBtn)
+        val btnResetPassword = findViewById<Button>(R.id.btnResetPassword)
         val btnDB = findViewById<Button>(R.id.database)
         val textviewError = findViewById<TextView>(R.id.textErrorLogin)
 
@@ -80,7 +81,18 @@ class SignInActivity : AppCompatActivity() {
         }
 
         btnLoginGuest.setOnClickListener{
-            setUser(sharedPreference?.getString(prefKey,prefDefValue).toString())
+            if(sharedPreference?.getString(prefKey,prefDefValue) != prefDefValue){
+                setUser(sharedPreference?.getString(prefKey,prefDefValue).toString())
+            } else{
+                Toast.makeText(
+                    this@SignInActivity,
+                    "No Guest-Account available. Register as Guest or User",
+                    Toast.LENGTH_LONG
+                ).show()
+
+                val intent = Intent(this@SignInActivity, SignUpActivity::class.java);
+                startActivity(intent);
+            }
         }
 
         btnDB.setOnClickListener{
@@ -88,7 +100,10 @@ class SignInActivity : AppCompatActivity() {
             startActivity(intent);
         }
 
-
+        btnResetPassword.setOnClickListener{
+            val intent = Intent(this@SignInActivity, ResetPasswordActivity::class.java);
+            startActivity(intent);
+        }
 
         btnLogin.setOnClickListener{
             val email = inputEmail.text.toString()

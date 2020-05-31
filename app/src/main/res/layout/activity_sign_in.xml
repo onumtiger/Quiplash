@@ -132,12 +132,25 @@
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
         android:textColorLink="@color/colorWhite"
+        app:layout_constraintBottom_toTopOf="@+id/btnResetPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signupBtn" />
+
+    <Button
+        android:id="@+id/btnResetPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/forgot_password"
+        android:background="@color/colorButtonGreen"
+        android:textColor="@color/colorWhite"
+        android:textColorHighlight="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textColorLink="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupBtn"
+        app:layout_constraintTop_toBottomOf="@+id/database"
         app:layout_constraintVertical_bias="0.673" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

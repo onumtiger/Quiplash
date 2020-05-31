@@ -35,7 +35,9 @@
     <string name="sign_in_btn">Sign In</string>
     <string name="guest_sign_in_btn">Sign In as Guest</string>
     <string name="guest_sign_up_btn">Sign Up as Guest</string>
-    <string name="submit_btn">choose your username</string>
+    <string name="submit_btn">submit</string>
+    <string name="forgot_password">forgot password?</string>
+    <string name="reset_password">reset password</string>
     <!-- Actions -->
     <string name="cancel">CANCEL</string>
     <string name="invite">INVITE</string>
