@@ -16,6 +16,7 @@
         <activity android:name=".LandingActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SignInActivity" />
+        <activity android:name=".Host_WaitingActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
