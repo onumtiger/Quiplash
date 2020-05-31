@@ -13,9 +13,15 @@ class New_GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_game)
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.new_game_go_back_arrow)
+        val btnStart = findViewById<Button>(R.id.start_game)
 
         btnBack.setOnClickListener() {
             super.onBackPressed();
+        }
+
+        btnStart.setOnClickListener() {
+            val intent = Intent(this, Host_WaitingActivity::class.java);
+            startActivity(intent);
         }
     }
 }

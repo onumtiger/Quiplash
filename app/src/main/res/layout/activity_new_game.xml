@@ -181,7 +181,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/start2"
+        android:id="@+id/start_game"
         android:layout_width="282dp"
         android:layout_height="55dp"
         android:layout_marginTop="50dp"
