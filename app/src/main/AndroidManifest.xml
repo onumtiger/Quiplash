@@ -19,7 +19,14 @@
         <activity android:name=".SignInActivity" />
         <activity android:name=".Database" />
         <activity android:name=".Host_WaitingActivity" />
+        <activity android:name=".Game_LaunchingActivity" />
+        <activity android:name=".QuestionActivity" />
+        <activity android:name=".Prepare_AnswerActivity" />
+        <activity android:name=".Choose_AnswerActivity" />
+        <activity android:name=".EvaluationActivity" />
+        <activity android:name=".End_Of_GameActivity" />
         <activity android:name=".MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

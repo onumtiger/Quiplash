@@ -6,29 +6,90 @@
     android:layout_height="match_parent"
     tools:context=".EvaluationActivity">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/appCompatImageView"
-        android:layout_width="200dp"
-        android:layout_height="88dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="logo"
-        android:src="@drawable/logo"
+    <RelativeLayout
+        android:id="@+id/winner"
+        android:layout_width="296dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view4">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="321dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/green_seperator" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/join_game_star" />
+
+        <TextView
+            android:id="@+id/active_player"
+            android:layout_width="199dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="10dp"
+            android:text="player"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="273dp"
+        android:layout_height="137dp"
+        android:layout_marginTop="44dp"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <TextView
+        android:id="@+id/answer2"
+        android:layout_width="236dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="20dp"
+        android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/view4"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="@+id/view4"
+        app:layout_constraintTop_toTopOf="@+id/view4" />
+
+    <TextView
+        android:id="@+id/rounds4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="50dp"
+        android:text="1/10"
+        android:textColor="@color/colorGreen"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_width="151dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="132dp"
-        android:text="@string/scoreboard"
-        android:textColor="@color/colorTitles"
-        android:textSize="30sp"
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is a question"
+        android:textColor="@color/colorGreen"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.288" />
 </androidx.constraintlayout.widget.ConstraintLayout>

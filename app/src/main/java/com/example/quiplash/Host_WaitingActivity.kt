@@ -2,8 +2,8 @@ package com.example.quiplash
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
@@ -34,5 +34,13 @@ class Host_WaitingActivity : AppCompatActivity() {
         )
 
         playersList.adapter = adapter
+
+        if (playerArray.size == 5) {
+
+            Handler().postDelayed({
+                val intent = Intent(this, Game_LaunchingActivity::class.java);
+                startActivity(intent)
+            }, 3000)
+        }
     }
 }
