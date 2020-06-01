@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".LandingActivity">
 
-
     <ImageButton
         android:id="@+id/new_game_go_back_arrow"
         android:layout_width="32dp"
@@ -18,8 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_go_back_arrow" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView"
@@ -34,16 +32,168 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="151dp"
         android:layout_height="43dp"
         android:layout_marginTop="132dp"
+        android:gravity="center"
         android:text="@string/new_game"
         android:textColor="@color/colorTitles"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/new_game_category_card"
+        android:layout_width="310dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView">
+
+        <ImageView
+            android:id="@+id/category_border"
+            android:layout_width="304dp"
+            android:layout_height="72dp"
+            app:srcCompat="@drawable/green_seperator" />
+
+        <ImageView
+            android:id="@+id/category_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/category_icon" />
+
+        <TextView
+            android:id="@+id/new_game_category"
+            android:layout_width="199dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:text="Category"
+            android:textColor="#BBBBBB"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/category_dropdown"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="40dp"
+            android:entries="@array/array_categories"
+            android:spinnerMode="dropdown" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/new_game_players_card"
+        android:layout_width="310dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_game_category_card">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="304dp"
+            android:layout_height="72dp"
+            app:srcCompat="@drawable/green_seperator" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/heart_icon" />
+
+        <TextView
+            android:id="@+id/new_game_players"
+            android:layout_width="199dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:text="Amount of Players"
+            android:textColor="#BBBBBB"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/player_dropdown"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="40dp"
+            android:entries="@array/amount_players"
+            android:spinnerMode="dropdown" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/new_game_rounds_card"
+        android:layout_width="310dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_game_players_card">
+
+        <ImageView
+            android:id="@+id/rounds_border"
+            android:layout_width="304dp"
+            android:layout_height="72dp"
+            app:srcCompat="@drawable/green_seperator" />
+
+        <ImageView
+            android:id="@+id/rounds_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/timer_icon" />
+
+        <TextView
+            android:id="@+id/new_game_rounds"
+            android:layout_width="199dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:text="Amount of Rounds"
+            android:textColor="#BBBBBB"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/rounds_dropdown"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="40dp"
+            android:entries="@array/amount_rounds"
+            android:spinnerMode="dropdown" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/start_game"
+        android:layout_width="282dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorButtonGreen"
+        android:text="@string/start_game_btn"
+        android:textColor="@color/colorWhite"
+        android:textColorHighlight="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textColorLink="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_game_rounds_card" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

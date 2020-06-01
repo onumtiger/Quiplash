@@ -6,16 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".Host_WaitingActivity">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageButton
+        android:id="@+id/host_waiting_go_back_arrow"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginTop="41dp"
+        android:backgroundTint="#00FFFFFF"
         android:contentDescription="go_back_arrow"
         android:src="@drawable/ic_go_back_arrow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_go_back_arrow" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView"
@@ -30,16 +33,66 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_width="151dp"
-        android:layout_height="43dp"
+        android:id="@+id/textView4"
+        android:layout_width="317dp"
+        android:layout_height="51dp"
         android:layout_marginTop="132dp"
+        android:gravity="center"
         android:text="@string/waiting_for_players"
         android:textColor="@color/colorTitles"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ListView
+            android:id="@+id/players_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/start2"
+        android:layout_width="282dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginBottom="36dp"
+        android:background="@color/colorButtonGreen"
+        android:text="@string/invite_players_btn"
+        android:textColor="@color/colorWhite"
+        android:textColorHighlight="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textColorLink="@color/colorWhite"
+        app:layout_constraintBottom_toTopOf="@+id/end_game"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.959" />
+
+    <Button
+        android:id="@+id/end_game"
+        android:layout_width="282dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorButtonRed"
+        android:text="@string/end_game_btn"
+        android:textColor="@color/colorWhite"
+        android:textColorHighlight="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textColorLink="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
