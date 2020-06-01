@@ -9,13 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FriendsActivity"></activity>
+        <activity android:name=".ResetPasswordActivity"/>
+        <activity android:name=".FriendsActivity" />
         <activity android:name=".Profile_RegisteredActivity" />
         <activity android:name=".Join_GameActivity" />
         <activity android:name=".New_GameActivity" />
         <activity android:name=".LandingActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SignInActivity" />
+        <activity android:name=".Database" />
         <activity android:name=".Host_WaitingActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

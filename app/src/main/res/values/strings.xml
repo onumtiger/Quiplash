@@ -14,10 +14,12 @@
     <!-- Dialogs -->
     <string name="delete_interaction">Do you really want to delete your Account?</string>
     <string name="enter_username_interaction">Enter Username</string>
+    <string name="auth_failed">Authentication failed, please check your email and password.</string>
     <!-- Placeholders -->
     <string name="e_mail_placeholder">username@quiplash.com</string>
     <string name="username_placeholder">Username</string>
     <string name="password_placeholder">••••••••••••</string>
+    <string name="set_username">your username</string>
     <!-- Buttons -->
     <string name="start_game_btn">Start Game</string>
     <string name="invite_players_btn">Invite Players</string>
@@ -31,6 +33,11 @@
     <string name="go_home_btn">Go Home</string>
     <string name="change_profile_photo_btn">Change profile photo</string>
     <string name="sign_in_btn">Sign In</string>
+    <string name="guest_sign_in_btn">Sign In as Guest</string>
+    <string name="guest_sign_up_btn">Sign Up as Guest</string>
+    <string name="submit_btn">submit</string>
+    <string name="forgot_password">forgot password?</string>
+    <string name="reset_password">reset password</string>
     <!-- Actions -->
     <string name="cancel">CANCEL</string>
     <string name="invite">INVITE</string>
