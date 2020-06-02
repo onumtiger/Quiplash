@@ -44,7 +44,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
         btnSave.setOnClickListener() {
             val username = viewUsername.text.toString()
             val email = viewEmail.text.toString()
-            val paswword = viewPassword.text.toString()
+            val password = viewPassword.text.toString()
 
             // TO DO: Save user data to firebase
 
