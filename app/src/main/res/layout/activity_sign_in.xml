@@ -79,8 +79,8 @@
 
     <Button
         android:id="@+id/signinBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:background="@color/colorButtonGreen"
         android:text="@string/sign_in_btn"
         android:textColor="@color/colorWhite"
@@ -94,10 +94,10 @@
 
     <Button
         android:id="@+id/signinGuestBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/guest_sign_in_btn"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:background="@color/colorButtonGreen"
+        android:text="@string/guest_sign_in_btn"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
@@ -109,10 +109,10 @@
 
     <Button
         android:id="@+id/signupBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/register_btn"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:background="@color/colorButtonGreen"
+        android:text="@string/register_btn"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
@@ -124,10 +124,10 @@
 
     <Button
         android:id="@+id/database"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="db"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:background="@color/colorButtonGreen"
+        android:text="db"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
@@ -139,10 +139,10 @@
 
     <Button
         android:id="@+id/btnResetPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/forgot_password"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:background="@color/colorButtonGreen"
+        android:text="@string/forgot_password"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"

@@ -62,8 +62,8 @@
 
     <Button
         android:id="@+id/start2"
-        android:layout_width="282dp"
-        android:layout_height="55dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_marginTop="400dp"
         android:layout_marginBottom="36dp"
         android:background="@color/colorButtonGreen"
@@ -81,8 +81,8 @@
 
     <Button
         android:id="@+id/end_game"
-        android:layout_width="282dp"
-        android:layout_height="55dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:background="@color/colorButtonRed"
         android:text="@string/end_game_btn"
