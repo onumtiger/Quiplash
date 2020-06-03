@@ -71,7 +71,7 @@
         app:layout_constraintVertical_bias="0.929" />
 
     <TextView
-        android:id="@+id/interaction_delete_btn"
+        android:id="@+id/interaction_add_btn"
         android:layout_width="55dp"
         android:layout_height="20dp"
         android:gravity="center"

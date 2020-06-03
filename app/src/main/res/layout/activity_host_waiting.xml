@@ -61,7 +61,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/start2"
+        android:id="@+id/invite_players_btn"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="400dp"
@@ -93,6 +93,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/start2" />
+        app:layout_constraintTop_toBottomOf="@+id/invite_players_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

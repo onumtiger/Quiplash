@@ -1,5 +1,6 @@
 package com.example.quiplash
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,7 @@ import androidx.appcompat.widget.AppCompatImageButton
 
 class New_GameActivity : AppCompatActivity() {
 
+    @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_game)
