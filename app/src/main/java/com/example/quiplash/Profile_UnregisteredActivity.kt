@@ -13,7 +13,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
@@ -27,10 +27,8 @@ class Profile_UnregisteredActivity : AppCompatActivity() {
     private var errotext: String = ""
 
     //Firestore
-    lateinit var db: DocumentReference
-    private val collectionQuiplash: String = "quiplash"
+    lateinit var db: CollectionReference
     private val dbUsersPath = "users"
-    val dbUserAttributesPath = "userattributes"
 
     //Local-Storage
     private val PREF_NAME = "Quiplash"
@@ -46,13 +44,13 @@ class Profile_UnregisteredActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile_unregistered)
 
         //Get Firebase auth instance
-        FirebaseApp.initializeApp(this);
+        FirebaseApp.initializeApp(this)
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
         sharedPreference =  getSharedPreferences(PREF_NAME, PRIVATE_MODE)
 
-        db = FirebaseFirestore.getInstance().collection(collectionQuiplash).document(dbUsersPath)
+        db = FirebaseFirestore.getInstance().collection(dbUsersPath)
 
         val btnSignUp = findViewById<Button>(R.id.btnSignupGuest)
         val inputEmail = findViewById<EditText>(R.id.emailFieldGuest)
@@ -84,7 +82,7 @@ class Profile_UnregisteredActivity : AppCompatActivity() {
                 } else {
                     //else if guest was already logged out (the anonymous-user doesn't exist anymore on Firebase) -> we have to create a new User in Firebase
                     //Remove Guest-data from DB
-                    db.collection(sharedPreference?.getString(prefKey,prefDefValue).toString()).document(dbUserAttributesPath).delete()
+                    db.document(sharedPreference?.getString(prefKey,prefDefValue).toString()).delete()
                         .addOnSuccessListener { Log.d("SUCCESS", "DocumentSnapshot successfully deleted!")
                             val editor = sharedPreference?.edit()
                             editor?.clear()
@@ -156,10 +154,10 @@ class Profile_UnregisteredActivity : AppCompatActivity() {
         GameManager().setUserinfo(user)
 
         //save user (name, score,...) in database
-        db.collection(auth.currentUser?.uid.toString()).document(dbUserAttributesPath)
+        db.document(auth.currentUser?.uid.toString())
             .set(user)
             .addOnSuccessListener {
-                Log.d("SUCCESS", "DocumentSnapshot successfully written!");
+                Log.d("SUCCESS", "DocumentSnapshot successfully written!")
                 startActivity(Intent(this@Profile_UnregisteredActivity, LandingActivity::class.java))
                 finish()
             }
