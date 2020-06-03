@@ -25,6 +25,7 @@
         <activity android:name=".Choose_AnswerActivity" />
         <activity android:name=".EvaluationActivity" />
         <activity android:name=".End_Of_GameActivity" />
+        <activity android:name=".Edit_ProfileActivity"/>
         <activity android:name=".MainActivity">
 
             <intent-filter>

@@ -55,8 +55,8 @@
 
     <Button
         android:id="@+id/btnHome"
-        android:layout_width="282dp"
-        android:layout_height="55dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_marginTop="300dp"
         android:background="@color/colorButtonGreen"
         android:text="@string/go_home_btn"
