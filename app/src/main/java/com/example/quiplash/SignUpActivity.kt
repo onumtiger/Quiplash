@@ -180,7 +180,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         //create user-object
-        val user = User(auth.currentUser?.uid, editTextUsername.text.toString(), isUser, 0)
+        val user = User(auth.currentUser?.uid, editTextUsername.text.toString(), !isUser, 0)
 
         //save user in game-manager (for easy access in further dev)
         GameManager().setUserinfo(user)
