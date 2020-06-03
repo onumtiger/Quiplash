@@ -149,7 +149,7 @@ class Profile_UnregisteredActivity : AppCompatActivity() {
     private fun createUser() {
 
         //create user-object
-        val user = User(auth.currentUser?.uid, GameManager().getUserInfo().userName, true, GameManager().getUserInfo().score)
+        val user = User(auth.currentUser?.uid, GameManager().getUserInfo().userName, false, GameManager().getUserInfo().score)
 
         //save user in game-manager (for easy access in further dev)
         GameManager().setUserinfo(user)
