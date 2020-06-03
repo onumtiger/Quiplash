@@ -44,7 +44,15 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         }
 
         btnDeleteAccount.setOnClickListener(){
-            // TO DO
+            val dialogFragment = Delete_Account()
+            val ft = supportFragmentManager.beginTransaction()
+            val prev = supportFragmentManager.findFragmentByTag("delete")
+            if (prev != null)
+            {
+                ft.remove(prev)
+            }
+            ft.addToBackStack(null)
+            dialogFragment.show(ft, "delete")
         }
     }
 
