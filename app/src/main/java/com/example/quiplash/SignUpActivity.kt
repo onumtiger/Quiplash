@@ -13,7 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
@@ -28,10 +28,8 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var simpleViewFlipper: ViewFlipper
 
     //Firestore
-    lateinit var db: DocumentReference
-    private val collectionQuiplash: String = "quiplash"
+    lateinit var db: CollectionReference
     private val dbUsersPath = "users"
-    val dbUserAttributesPath = "userattributes"
 
     //Local-Storage
     private val PREF_NAME = "Quiplash"
@@ -54,7 +52,7 @@ class SignUpActivity : AppCompatActivity() {
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance().collection(collectionQuiplash).document(dbUsersPath)
+        db = FirebaseFirestore.getInstance().collection(dbUsersPath)
 
         val btnSignIn = findViewById<Button>(R.id.signinBtn)
         val btnSignUp = findViewById<Button>(R.id.signupBtn)
@@ -188,7 +186,7 @@ class SignUpActivity : AppCompatActivity() {
         GameManager().setUserinfo(user)
 
         //save user (name, score,...) in database
-        db.collection(auth.currentUser?.uid.toString()).document(dbUserAttributesPath)
+        db.document(auth.currentUser?.uid.toString())
             .set(user)
             .addOnSuccessListener {
                 Log.d("SUCCESS", "DocumentSnapshot successfully written!");
