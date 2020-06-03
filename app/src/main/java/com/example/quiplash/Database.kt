@@ -19,6 +19,7 @@ class Database : AppCompatActivity() {
     lateinit var db: DocumentReference
     //lateinit var db2: FirebaseFirestore
     lateinit var db2: DocumentReference
+    val db3 = FirebaseFirestore.getInstance()
 
     //Add Question
     lateinit var saveButton: Button
@@ -86,11 +87,11 @@ class Database : AppCompatActivity() {
         attributes.put("ID", ID)
         attributes.put("Type", question_type)
 
+        var qustn = Question(ID, question_text, question_type)
 
-        Toast.makeText(this, question_type, Toast.LENGTH_LONG).show()
-        db.collection(question_text).document("questionattributes").set(attributes).addOnSuccessListener {
-                void: Void? -> Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
-        }.addOnFailureListener {
+        db3.collection("questions").add(qustn).addOnSuccessListener {
+            Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
+        }.addOnFailureListener{
                 exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
         }
     }
@@ -102,16 +103,12 @@ class Database : AppCompatActivity() {
         attributes.put("ID", ID)
         attributes.put("guest", guest)
         attributes.put("score", score)
-
-        val uf = User(ID, user_name, true, score)
-
-        //db.collection("users").add(user).addOnSuccessListener { documentReference ->Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")}
-        db2.collection(ID).document("userattributes").set(attributes).addOnSuccessListener { void: Void? -> Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show() }.addOnFailureListener { exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show() }
-        //db2.collection("users").document(ID).set(uf)
-
-        //db2.collection(user_name).add(attributes).addOnSuccessListener { documentReference -> Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()}
-
-
+        val usr = User(ID, user_name, true, score)
+        db3.collection("users").add(usr).addOnSuccessListener {
+            Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
+        }.addOnFailureListener{
+            exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
+        }
     }
     @Throws(Exception::class)
     fun createID(): String? {
