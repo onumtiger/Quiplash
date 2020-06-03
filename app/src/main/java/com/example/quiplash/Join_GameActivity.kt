@@ -8,9 +8,14 @@ import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class Join_GameActivity : AppCompatActivity() {
+    lateinit var gameList: MutableList<Game>
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +24,8 @@ class Join_GameActivity : AppCompatActivity() {
 
         val btnNewGameActivity = findViewById<AppCompatImageButton>(R.id.join_new_game_btn)
         val btnBack = findViewById<AppCompatImageButton>(R.id.join_game_go_back_arrow)
+        val activeGamesList = findViewById<ListView>(R.id.active_games_list)
+        gameList = mutableListOf()
 
         btnNewGameActivity.setOnClickListener() {
             val intent = Intent(this, New_GameActivity::class.java);
@@ -29,19 +36,25 @@ class Join_GameActivity : AppCompatActivity() {
             super.onBackPressed();
         }
 
-        val activeGamesList = findViewById<ListView>(R.id.active_games_list)
-        val activeGamesArray = arrayOfNulls<String>(5)
 
-        for (i in 0 until activeGamesArray.size) {
-            activeGamesArray[i] = "Active Game $i"
-        }
+        val ref = FirebaseDatabase.getInstance().getReference().child("active_games")
 
-        val adapter = ArrayAdapter<String>(
-            this, R.layout.active_game_list_item,
-            R.id.active_player, activeGamesArray
-        )
+        ref.addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
 
-        activeGamesList.adapter = adapter
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0!!.exists()) {
+                    for (game in p0.children) {
+                        val activeGame =  game.getValue(Game::class.java)
+                        gameList.add(activeGame!!)
+                    }
+                    val adapter = GameListAdapter(applicationContext, R.layout.active_game_list_item, gameList)
+                    activeGamesList.adapter = adapter
+                }
+            }
+        })
 
 
     }
