@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quiplash.DBMethods.DBCalls.Companion.allUsers
+import com.example.quiplash.DBMethods.DBCalls.Companion.getQuestions
 import com.example.quiplash.DBMethods.DBCalls.Companion.getUsers
 import com.example.quiplash.DBMethods.DBCalls.Companion.saveQuestion
 import com.example.quiplash.DBMethods.DBCalls.Companion.saveUser
@@ -20,6 +22,7 @@ class Database : AppCompatActivity() {
     lateinit var question_text: EditText
     lateinit var question_type: EditText
     lateinit var show_users2: EditText
+    lateinit var test: ArrayList<User>
 
     //Add User
     lateinit var saveButtonUser: Button
@@ -49,14 +52,18 @@ class Database : AppCompatActivity() {
         }
 
         show_users.setOnClickListener {
-            //var all_users = editUser()
-            //var frst = editUser().size
-            //Toast.makeText(this, frst.toString(), Toast.LENGTH_LONG).show()
 
-            //show_users2.setText(frst?.userName)
-            //var lu = DBMethods.DBCalls._users
-            //var lel = lu.first()
+
+            Toast.makeText(this, test.first().userName, Toast.LENGTH_LONG).show()
         }
+
+
+        val callback = object: Callback<ArrayList<User>> {
+            override fun onTaskComplete(result: ArrayList<User>) {
+                test = result
+            }
+        }
+        getUsers(callback)
     }
 
 

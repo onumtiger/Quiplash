@@ -12,13 +12,39 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
+
+
+/*
+ALL METHODS:
+
+- saveQuestion(question_text: String, question_type: String) -> save a Question in DB
+- saveUser(user_name: String, guest: Boolean, score: Int) -> save a User in DB
+- getUsers(callback: Callback<ArrayList<User>>) -> get an Arraylist with all Users, Callback as a parameter (Example for Callback below)
+- getQuestions(callback: Callback<ArrayList<User>>) -> -""-
+- getRandomQuestion() -> returns a rondom Question, that was asked yet
+- deleteUser()
+- deleteQuestion()
+- editUser()
+- editQuestion()
+
+ */
+
+
+
+
 class DBMethods {
 
     class DBCalls {
         companion object {
+
             val db = FirebaseFirestore.getInstance()
             lateinit var res: QuerySnapshot
             var _users: MutableLiveData<ArrayList<User>> = MutableLiveData<ArrayList<User>>()
+            var allUsers = ArrayList<User>()
+            var allQuestions = ArrayList<Question>()
+            var GameQuestions = ArrayList<Question>()
+            var actual = false
+
 
 
             public fun saveQuestion(question_text: String, question_type: String){
@@ -53,8 +79,17 @@ class DBMethods {
             }
 
             //returns arraylist with all users
-            public fun getUsers(): ArrayList<User> {
-                var allUsers = ArrayList<User>()
+
+            /*
+            val callback = object: Callback<ArrayList<User>> {
+                override fun onTaskComplete(result: ArrayList<User>) {
+                youVar = result
+                }
+            }
+            getUsers(callback)
+            */
+
+            public fun getUsers(callback: Callback<ArrayList<User>>) {
                 db.collection("users")
                     //.whereEqualTo("capital", true)
                     .get()
@@ -71,17 +106,18 @@ class DBMethods {
                                 }
                             }
                         }
+                        callback.onTaskComplete(allUsers)
                     }
                     .addOnFailureListener { exception ->
                         Log.w(ContentValues.TAG, "Error getting documents: ", exception)
                     }
-                return allUsers
             }
 
 
+
+
             //returns arraylist with all Questions
-            public fun getQuestions(): ArrayList<Question> {
-                var allQuestions = ArrayList<Question>()
+            public fun getQuestions(callback: Callback<ArrayList<Question>>) {
                 db.collection("questions")
                     //.whereEqualTo("capital", true)
                     .get()
@@ -101,7 +137,23 @@ class DBMethods {
                     .addOnFailureListener { exception ->
                         Log.w(ContentValues.TAG, "Error getting documents: ", exception)
                     }
-                return allQuestions
+            }
+
+            //to get a random question
+            public fun getRandomQuestion(): Question {
+                if (actual == false || GameQuestions.size > 0){
+                    val callback = object: Callback<ArrayList<Question>> {
+                        override fun onTaskComplete(result: ArrayList<Question>) {
+                            GameQuestions = result
+                            actual = true
+                        }
+                    }
+                    getQuestions(callback)
+                }
+                    var position = (0..GameQuestions.size-1).random()
+                    var question = GameQuestions[position]
+                    GameQuestions.drop(position)
+                    return question
             }
 
             public fun editUser() {
