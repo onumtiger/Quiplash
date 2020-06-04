@@ -1,30 +1,25 @@
 package com.example.quiplash
 
+import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
-import java.util.*
-import kotlin.collections.HashMap
+import com.example.quiplash.DBMethods.DBCalls.Companion.getUsers
+import com.example.quiplash.DBMethods.DBCalls.Companion.saveQuestion
+import com.example.quiplash.DBMethods.DBCalls.Companion.saveUser
 
 class Database : AppCompatActivity() {
 
-    //Firestore DB
-    lateinit var db: DocumentReference
-    //lateinit var db2: FirebaseFirestore
-    lateinit var db2: DocumentReference
-    val db3 = FirebaseFirestore.getInstance()
 
     //Add Question
     lateinit var saveButton: Button
+    lateinit var show_users: Button
     lateinit var question_text: EditText
     lateinit var question_type: EditText
+    lateinit var show_users2: EditText
 
     //Add User
     lateinit var saveButtonUser: Button
@@ -34,10 +29,6 @@ class Database : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_database)
 
-        //Firebase DB (Firestore)
-        db = FirebaseFirestore.getInstance().document("quiplash/questions")
-        db2 = FirebaseFirestore.getInstance().document("quiplash/users")
-        val db2 = FirebaseFirestore.getInstance()
 
         //Questions DB
         saveButton = findViewById(R.id.save)
@@ -47,6 +38,8 @@ class Database : AppCompatActivity() {
         //Users DB
         saveButtonUser = findViewById(R.id.save_user)
         user_name = findViewById(R.id.user_name)
+        show_users = findViewById(R.id.show_users)
+        show_users2 = findViewById(R.id.plain_text_input)
 
         saveButton.setOnClickListener {
             insert_question_into_db()
@@ -55,7 +48,18 @@ class Database : AppCompatActivity() {
             insert_user_into_db()
         }
 
+        show_users.setOnClickListener {
+            //var all_users = editUser()
+            //var frst = editUser().size
+            //Toast.makeText(this, frst.toString(), Toast.LENGTH_LONG).show()
+
+            //show_users2.setText(frst?.userName)
+            //var lu = DBMethods.DBCalls._users
+            //var lel = lu.first()
+        }
     }
+
+
 
     private fun insert_question_into_db(){
         val question = question_text.text.toString().trim()
@@ -78,52 +82,5 @@ class Database : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Füll den Spass aus!", Toast.LENGTH_LONG).show()
         }
-    }
-
-    public fun saveQuestion(question_text: String, question_type: String){
-        var ID = createID().toString()
-        val attributes = HashMap<String, Any>()
-        attributes.put("text", question_text)
-        attributes.put("ID", ID)
-        attributes.put("Type", question_type)
-
-        var qustn = Question(ID, question_text, question_type)
-
-        db3.collection("questions").add(qustn).addOnSuccessListener {
-            Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
-        }.addOnFailureListener{
-                exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
-        }
-    }
-
-    public fun saveUser(user_name: String, guest: Boolean, score: Int) {
-        var ID = createID().toString()
-        val attributes = HashMap<String, Any>()
-        attributes.put("name", user_name)
-        attributes.put("ID", ID)
-        attributes.put("guest", guest)
-        attributes.put("score", score)
-        val usr = User(ID, user_name, true, score)
-        db3.collection("users").add(usr).addOnSuccessListener {
-            Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
-        }.addOnFailureListener{
-            exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
-        }
-    }
-    @Throws(Exception::class)
-    fun createID(): String? {
-        return UUID.randomUUID().toString()
-    }
-
-    private fun editUser(){
-    }
-
-    private fun deleteUser(){
-    }
-
-    private fun editQuestion(){
-    }
-
-    private fun deleteQuestion(){
     }
 }
