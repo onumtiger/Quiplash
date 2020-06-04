@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quiplash.DBMethods.DBCalls.Companion.allUsers
+import com.example.quiplash.DBMethods.DBCalls.Companion.editUser
 import com.example.quiplash.DBMethods.DBCalls.Companion.getQuestions
 import com.example.quiplash.DBMethods.DBCalls.Companion.getUsers
 import com.example.quiplash.DBMethods.DBCalls.Companion.saveQuestion
@@ -53,6 +54,9 @@ class Database : AppCompatActivity() {
 
         show_users.setOnClickListener {
 
+
+            val user = User("test", "Juli<3<3>", false, 0)
+            editUser("sSl61HRtniQLZI92Ifj2", user)
 
             Toast.makeText(this, test.first().userName, Toast.LENGTH_LONG).show()
         }

@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
+import com.example.quiplash.DBMethods.DBCalls.Companion.editUser
 import com.google.firebase.auth.FirebaseAuth
 
 class Edit_ProfileActivity : AppCompatActivity() {
@@ -45,6 +46,10 @@ class Edit_ProfileActivity : AppCompatActivity() {
             val username = viewUsername.text.toString()
             val email = viewEmail.text.toString()
             val password = viewPassword.text.toString()
+
+            val ID = ""
+            val user = User(ID, username, false, 0)
+            editUser(ID, user)
 
             // TO DO: Save user data to firebase
 
