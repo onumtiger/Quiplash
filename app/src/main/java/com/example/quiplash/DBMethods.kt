@@ -24,8 +24,8 @@ ALL METHODS:
 - getRandomQuestion() -> returns a rondom Question, that was asked yet
 - deleteUser()
 - deleteQuestion()
-- editUser()
-- editQuestion()
+- editUser(ID :String, question :User) -> Edit a user(found by firestore ID)
+- editQuestion(ID :String, question :Question) -> Edit a question(found by firestore ID)
 
  */
 
@@ -156,7 +156,12 @@ class DBMethods {
                     return question
             }
 
-            public fun editUser() {
+            public fun editUser(ID :String, user :User) {
+                db.collection("users").document(ID).set(user).addOnSuccessListener {
+                    //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
+                }.addOnFailureListener{
+                    //exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
+                }
             }
 
             public fun deleteUser(){
@@ -165,7 +170,12 @@ class DBMethods {
             public fun editQuestion(){
             }
 
-            public fun deleteQuestion(){
+            public fun deleteQuestion(ID :String, question :Question){
+                db.collection("questions").document(ID).set(question).addOnSuccessListener {
+                    //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
+                }.addOnFailureListener{
+                    //exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
+                }
             }
 
 
