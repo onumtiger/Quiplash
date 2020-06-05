@@ -53,6 +53,7 @@ class Profile_UnregisteredActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance().collection(dbUsersPath)
 
         val btnSignUp = findViewById<Button>(R.id.btnSignupGuest)
+        val inputUsername: EditText = findViewById(R.id.usernameFieldGuest)
         val inputEmail = findViewById<EditText>(R.id.emailFieldGuest)
         val inputPassword = findViewById<EditText>(R.id.passwordFieldGuest)
         val inputPassword2 = findViewById<EditText>(R.id.passwordRetypeFieldGuest)

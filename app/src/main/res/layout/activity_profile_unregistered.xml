@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".Profile_UnregisteredActivity">
 
+    <EditText
+        android:id="@+id/usernameFieldGuest"
+        android:layout_width="245dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="80dp"
+        android:ems="10"
+        android:hint="@string/username_placeholder"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="@+id/textViewName"
+        app:layout_constraintTop_toBottomOf="@+id/labelUsername" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageBack"
         android:layout_width="32dp"
@@ -52,7 +65,6 @@
         android:layout_marginTop="24dp"
         android:indeterminateDrawable="@drawable/progress_circle"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/labelEmailGuest"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textGuestProfile" />
@@ -63,13 +75,25 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/e_mail"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameFieldGuest" />
+
+    <TextView
+        android:id="@+id/labelUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/username"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBarGuestSignup" />
 
     <EditText
         android:id="@+id/emailFieldGuest"
-        android:layout_width="wrap_content"
+        android:layout_width="245dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/e_mail_placeholder"
@@ -84,13 +108,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/password"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailFieldGuest" />
 
     <EditText
         android:id="@+id/passwordFieldGuest"
-        android:layout_width="wrap_content"
+        android:layout_width="245dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/password_placeholder"
@@ -105,13 +130,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/password_retype"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordFieldGuest" />
 
     <EditText
         android:id="@+id/passwordRetypeFieldGuest"
-        android:layout_width="wrap_content"
+        android:layout_width="245dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/password_placeholder"
@@ -134,8 +160,8 @@
 
     <Button
         android:id="@+id/btnSignupGuest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:background="@color/colorButtonGreen"
         android:text="@string/register_btn"
         android:textColor="@color/colorWhite"
