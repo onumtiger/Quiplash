@@ -3,6 +3,7 @@ package com.example.quiplash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
@@ -12,6 +13,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class Join_GameActivity : AppCompatActivity() {
@@ -36,26 +39,38 @@ class Join_GameActivity : AppCompatActivity() {
             super.onBackPressed();
         }
 
+       /* val db = FirebaseFirestore.getInstance()
+        val docRef = db.collection("games").document("MvFTny0fZz3dFtiiqYtr")
+        docRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot != null) {
+                    Log.d("exists", "DocumentSnapshot data ${documentSnapshot.data}")
+                    val activeGame = documentSnapshot.toObject(Game::class.java)
+                    gameList.add(activeGame!!)
+                } else {
+                    Log.d("does not exist", "no such data")
+                }
 
-        val ref = FirebaseDatabase.getInstance().getReference().child("active_games")
+                val adapter = GameListAdapter(applicationContext, R.layout.active_game_list_item, gameList)
+                activeGamesList.adapter = adapter
+            }*/
 
-        ref.addValueEventListener(object: ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0!!.exists()) {
-                    for (game in p0.children) {
-                        val activeGame =  game.getValue(Game::class.java)
-                        gameList.add(activeGame!!)
-                    }
+        val db = FirebaseFirestore.getInstance()
+        val docRef = db.collection("games")
+        docRef.get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d("TAG", "${document.id} => ${document.data}")
+                    val activeGame = document.toObject(Game::class.java)
+                    gameList.add(activeGame!!)
                     val adapter = GameListAdapter(applicationContext, R.layout.active_game_list_item, gameList)
                     activeGamesList.adapter = adapter
                 }
             }
-        })
+            .addOnFailureListener { exception ->
+                Log.d("TAG", "Error getting documents: ", exception)
 
+            }
 
     }
 }

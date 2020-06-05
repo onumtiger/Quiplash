@@ -7,7 +7,7 @@ package com.example.quiplash
  * Like the user-information.
  * **/
 
-class Game(val active_round: Int, val category: String, val game_id: String, val player_number: Int, val rounds: Int, val users: HashMap<String, String>) {
+class Game(val activeRound: Int, val category: String, val gameID: String, val playerNumbers: Int, val rounds: Int, val users: HashMap<String, String>) {
 
     constructor() : this(0, "", "", 0, 0, HashMap())
 

@@ -51,7 +51,7 @@
 
         <TextView
             android:id="@+id/join_active_game_players"
-            android:layout_width="50dp"
+            android:layout_width="62dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="250dp"
             android:layout_marginTop="10dp"

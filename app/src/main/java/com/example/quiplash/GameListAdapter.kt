@@ -19,9 +19,9 @@ class GameListAdapter(val mCtx: Context, val layoutResId: Int, val gameList: Lis
         val imageViewSeperator: ImageView = view.findViewById<ImageView>(R.id.imageViewSeperator)
 
         val game = gameList[position]
-        textViewGame.text = game.game_id
+        textViewGame.text = "Active Game"//game.gameID
         textViewCategory.text = "Category: " + game.category
-        textViewPlayers.text =  game.users.size.toString() + " / " + game.player_number.toString()
+        textViewPlayers.text =  game.users.size.toString() + " / " + game.playerNumbers.toString()
         imageViewStar.setImageResource(R.drawable.join_game_star)
         imageViewSeperator.setImageResource(R.drawable.green_seperator)
 
