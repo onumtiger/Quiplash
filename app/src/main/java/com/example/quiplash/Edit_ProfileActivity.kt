@@ -38,7 +38,8 @@ class Edit_ProfileActivity : AppCompatActivity() {
         viewPassword.hint = userinfo[2]
 
         btnBack.setOnClickListener() {
-            super.onBackPressed();
+            val intent = Intent(this, Profile_RegisteredActivity::class.java);
+            startActivity(intent);
         }
 
         btnEditPicture.setOnClickListener(){

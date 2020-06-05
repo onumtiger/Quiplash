@@ -39,7 +39,8 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         viewScore.text = userinfo[2]
 
         btnBack.setOnClickListener() {
-            super.onBackPressed();
+            val intent = Intent(this, LandingActivity::class.java);
+            startActivity(intent);
         }
 
         btnEditProfile.setOnClickListener() {
