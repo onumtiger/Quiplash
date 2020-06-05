@@ -3,11 +3,9 @@ package com.example.quiplash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import com.google.firebase.auth.FirebaseAuth
@@ -29,7 +27,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
         val btnEditPicture = findViewById<Button>(R.id.btnPrrofilePic)
         // TO DO: load userinformation
         val viewProfilePic: ImageView = findViewById(R.id.imageView)
-        var viewUsername : EditText = findViewById(R.id.username)
+        var viewUsername : EditText = findViewById(R.id.usernameFieldGuest)
         var viewEmail: EditText = findViewById(R.id.email)
         var viewPassword: EditText = findViewById(R.id.password)
 

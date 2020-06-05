@@ -27,7 +27,7 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         val btnDeleteAccount = findViewById<Button>(R.id.btnDeleteAccount)
         // TO DO: load userinformation
         val viewProfilePic: ImageView = findViewById(R.id.imageView)
-        var viewUsernamme : TextView = findViewById<TextView>(R.id.username)
+        var viewUsernamme : TextView = findViewById<TextView>(R.id.usernameFieldGuest)
         var viewEmail : TextView = findViewById<TextView>(R.id.email)
 
         val userinfo = getUserInfo()
