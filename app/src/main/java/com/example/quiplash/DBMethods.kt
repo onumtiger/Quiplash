@@ -27,8 +27,10 @@ ALL METHODS:
 - editUser(ID :String, question :User) -> Edit a user(found by firestore ID)
 - editQuestion(ID :String, question :Question) -> Edit a question(found by firestore ID)
 
+
  */
 
+// GetUser
 
 
 
