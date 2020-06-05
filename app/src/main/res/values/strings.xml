@@ -20,6 +20,7 @@
     <string name="username_placeholder">Username</string>
     <string name="password_placeholder">••••••••••••</string>
     <string name="set_username">your username</string>
+    <string name="score_placeholder">Score: 123456789</string>
     <!-- Buttons -->
     <string name="start_game_btn">Start Game</string>
     <string name="invite_players_btn">Invite Players</string>
