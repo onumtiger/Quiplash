@@ -27,12 +27,16 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         val btnDeleteAccount = findViewById<Button>(R.id.btnDeleteAccount)
         // TO DO: load userinformation
         val viewProfilePic: ImageView = findViewById(R.id.imageView)
-        var viewUsernamme : TextView = findViewById<TextView>(R.id.username)
+        var viewUsername : TextView = findViewById<TextView>(R.id.username)
         var viewEmail : TextView = findViewById<TextView>(R.id.email)
+        var viewScore : TextView = findViewById<TextView>(R.id.score)
+        var viewUsernameBig : TextView = findViewById<TextView>(R.id.usernameBig)
 
         val userinfo = getUserInfo()
-        viewUsernamme.text = userinfo[0]
+        viewUsername.text = userinfo[0]
+        viewUsernameBig.text = userinfo[0]
         viewEmail.text = userinfo[1]
+        viewScore.text = userinfo[2]
 
         btnBack.setOnClickListener() {
             super.onBackPressed();
@@ -60,10 +64,12 @@ class Profile_RegisteredActivity : AppCompatActivity() {
     fun getUserInfo(): Array<String> {
         var username: String = "No Username found"
         var email: String = "No Email found"
+        var score: String = "Score: 123456789"
 
         val userinfo = arrayOf(
             username,
-            email
+            email,
+            score
         )
 
         return userinfo

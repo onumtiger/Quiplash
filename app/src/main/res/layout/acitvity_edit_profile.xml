@@ -121,7 +121,7 @@
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/usernameFieldGuest"
         android:layout_width="245dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -144,7 +144,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="@+id/textViewMail"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameFieldGuest" />
 
     <EditText
         android:id="@+id/password"
