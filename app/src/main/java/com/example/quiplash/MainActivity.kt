@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -19,10 +20,8 @@ class MainActivity : AppCompatActivity() {
     private var authListener: FirebaseAuth.AuthStateListener? = null
 
     //Firestore
-    lateinit var db: DocumentReference
-    private val collectionQuiplash: String = "quiplash"
+    lateinit var db: CollectionReference
     private val dbUsersPath = "users"
-    val dbUserAttributesPath = "userattributes"
 
     //Local-Storage
     private val PREF_NAME = "Quiplash"
@@ -35,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         sharedPreference =  getSharedPreferences(PREF_NAME, PRIVATE_MODE)
-        db = FirebaseFirestore.getInstance().collection(collectionQuiplash).document(dbUsersPath)
+        db = FirebaseFirestore.getInstance().collection(dbUsersPath)
 
         FirebaseApp.initializeApp(this);
         // Get Firebase auth instance
@@ -103,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         //val userRef = db.collection(sharedPreference?.getString(prefKey,prefDefValue).toString()).document(dbUsersPath)
 
         //fetch Data
-        db.collection(sharedPreference?.getString(prefKey,prefDefValue).toString()).document(dbUserAttributesPath).get().addOnSuccessListener { documentSnapshot ->
+        db.document(sharedPreference?.getString(prefKey,prefDefValue).toString()).get().addOnSuccessListener { documentSnapshot ->
                 //save fetched data in GameManager
                 val guest = documentSnapshot.toObject(User::class.java)
                 if (guest?.userID != null) {

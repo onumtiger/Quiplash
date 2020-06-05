@@ -13,6 +13,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -27,10 +28,8 @@ class SignInActivity : AppCompatActivity() {
     private var errotext: String = ""
 
     //Firestore
-    lateinit var db: DocumentReference
-    private val collectionQuiplash: String = "quiplash"
+    lateinit var db: CollectionReference
     private val dbUsersPath = "users"
-    val dbUserAttributesPath = "userattributes"
 
     //Local-Storage
     private val PREF_NAME = "Quiplash"
@@ -51,7 +50,7 @@ class SignInActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         sharedPreference =  getSharedPreferences(PREF_NAME, PRIVATE_MODE)
-        db = FirebaseFirestore.getInstance().collection(collectionQuiplash).document(dbUsersPath)
+        db = FirebaseFirestore.getInstance().collection(dbUsersPath)
 
         //First check, if user is logged in
         authListener = AuthStateListener { firebaseAuth: FirebaseAuth ->
@@ -149,10 +148,8 @@ class SignInActivity : AppCompatActivity() {
     /**User-information will be fetched by id (which we got after login) and saved in GameManager.
      * Then the User is logged in an the view changes to Home-Screen**/
     private fun setUser(userid: String) {
-        //create Instance of DB
-        val userRef = FirebaseFirestore.getInstance().collection(collectionQuiplash).document(dbUsersPath).collection(userid).document(dbUserAttributesPath)
         //fetch User-Data
-        userRef.get().addOnSuccessListener { documentSnapshot ->
+        FirebaseFirestore.getInstance().collection(dbUsersPath).document(userid).get().addOnSuccessListener { documentSnapshot ->
             val user = documentSnapshot.toObject(User::class.java)
             if (user != null) {
                 //if user exist save fetched user-data in GameManager

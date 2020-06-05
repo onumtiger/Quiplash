@@ -1,5 +1,6 @@
 package com.example.quiplash
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 class New_GameActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
+    @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_game)
