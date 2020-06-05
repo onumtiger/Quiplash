@@ -33,6 +33,11 @@ class Edit_ProfileActivity : AppCompatActivity() {
         var viewEmail: EditText = findViewById(R.id.email)
         var viewPassword: EditText = findViewById(R.id.password)
 
+        val userinfo = getUserInfo()
+        viewUsername.hint = userinfo[0]
+        viewEmail.hint = userinfo[1]
+        viewPassword.hint = userinfo[2]
+
         btnBack.setOnClickListener() {
             super.onBackPressed();
         }
@@ -47,9 +52,30 @@ class Edit_ProfileActivity : AppCompatActivity() {
             val password = viewPassword.text.toString()
 
             // TO DO: Save user data to firebase
+            setUserInfo(username, email, password)
 
             val intent = Intent(this, Profile_RegisteredActivity::class.java);
             startActivity(intent);
         }
+    }
+
+    // TO DO: GET USER INFO
+    fun getUserInfo(): Array<String> {
+        var username: String = "No Username found"
+        var email: String = "No Email found"
+        var password: String = "••••••••••••"
+
+        val userinfo = arrayOf(
+            username,
+            email,
+            password
+        )
+
+        return userinfo
+    }
+
+    // TO DO: SET USER INFO
+    fun setUserInfo(username: String, email: String, password: String) {
+
     }
 }
