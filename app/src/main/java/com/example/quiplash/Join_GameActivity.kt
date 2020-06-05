@@ -39,21 +39,6 @@ class Join_GameActivity : AppCompatActivity() {
             super.onBackPressed();
         }
 
-       /* val db = FirebaseFirestore.getInstance()
-        val docRef = db.collection("games").document("MvFTny0fZz3dFtiiqYtr")
-        docRef.get()
-            .addOnSuccessListener { documentSnapshot ->
-                if (documentSnapshot != null) {
-                    Log.d("exists", "DocumentSnapshot data ${documentSnapshot.data}")
-                    val activeGame = documentSnapshot.toObject(Game::class.java)
-                    gameList.add(activeGame!!)
-                } else {
-                    Log.d("does not exist", "no such data")
-                }
-
-                val adapter = GameListAdapter(applicationContext, R.layout.active_game_list_item, gameList)
-                activeGamesList.adapter = adapter
-            }*/
 
         val db = FirebaseFirestore.getInstance()
         val docRef = db.collection("games")

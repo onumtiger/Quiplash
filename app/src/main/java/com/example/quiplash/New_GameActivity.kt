@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Spinner
 import androidx.appcompat.widget.AppCompatImageButton
+import com.example.quiplash.DBMethods.DBCalls.Companion.setGame
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -45,12 +46,9 @@ class New_GameActivity : AppCompatActivity() {
         val roundSpinner = roundsSpinner.selectedItem.toString()
         val rounds = roundSpinner.substringBefore(' ').toInt()
         val activeRound = 1
-        val gameID = "12345"
         val users: HashMap<String, String> = hashMapOf("userID" to auth.currentUser?.uid.toString())
 
-        val newGame = Game(activeRound, category, gameID, playerNumbers, rounds, users)
-
-        val db = FirebaseFirestore.getInstance().collection("games")
-        db.document().set(newGame)
+        val newGame = Game(activeRound, category, playerNumbers, rounds, users)
+        setGame(newGame)
     }
 }

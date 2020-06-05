@@ -67,7 +67,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="320dp"
-        android:layout_marginTop="632dp"
+        android:layout_marginTop="532dp"
         android:backgroundTint="#00FFFFFF"
         android:clickable="true"
         android:focusable="true"
