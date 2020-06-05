@@ -50,9 +50,13 @@ class Edit_ProfileActivity : AppCompatActivity() {
             val email = viewEmail.text.toString()
             val password = viewPassword.text.toString()
 
-            val ID = ""
-            val user = User(ID, username, false, 0)
-            editUser(ID, user)
+            authListener = FirebaseAuth.AuthStateListener { firebaseAuth: FirebaseAuth ->
+                val ID = firebaseAuth.currentUser?.uid
+                val user = User(ID, username, false, 0)
+                if (ID != null) {
+                    editUser(ID, user)
+                }
+            }
 
             // TO DO: Save user data to firebase
             setUserInfo(username, email, password)
