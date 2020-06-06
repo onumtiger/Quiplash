@@ -31,11 +31,12 @@ class New_GameActivity : AppCompatActivity() {
         btnStart.setOnClickListener() {
             createNewGame()
             val intent = Intent(this, Host_WaitingActivity::class.java);
+            intent.putExtra("gameID", createNewGame())
             startActivity(intent);
         }
     }
 
-    fun createNewGame() {
+    fun createNewGame(): String {
         val categorySpinner: Spinner = findViewById<Spinner>(R.id.category_dropdown)
         val playerSpinner: Spinner = findViewById<Spinner>(R.id.player_dropdown)
         val roundsSpinner: Spinner = findViewById<Spinner>(R.id.rounds_dropdown)
@@ -46,9 +47,10 @@ class New_GameActivity : AppCompatActivity() {
         val roundSpinner = roundsSpinner.selectedItem.toString()
         val rounds = roundSpinner.substringBefore(' ').toInt()
         val activeRound = 1
-        val users: HashMap<String, String> = hashMapOf("userID" to auth.currentUser?.uid.toString())
+        val users: HashMap<String, String> = hashMapOf("userID1" to auth.currentUser?.uid.toString())
+        val gameID = ""
 
-        val newGame = Game(activeRound, category, playerNumbers, rounds, users)
-        setGame(newGame)
+        val newGame = Game(activeRound, category, playerNumbers, rounds, users, gameID)
+        return setGame(newGame)
     }
 }

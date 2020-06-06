@@ -181,8 +181,21 @@ class DBMethods {
                 }
             }
 
-            public fun setGame(game: Game) {
-                db.collection("games").document().set(game)
+            public fun setGame(game: Game): String {
+                val ref = db.collection("games").document()
+                game.gameID = ref.id
+                ref.set(game)
+
+                return game.gameID
+            }
+
+
+            public fun updateGameUsers(game: Game) {
+                val gameID = game.gameID
+                val ref = db.collection("games").document(gameID)
+                ref.update("users", game.users)
+                    .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
+                    .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
             }
 
             @Throws(Exception::class)

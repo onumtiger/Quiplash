@@ -20,53 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/editTextUsername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/set_username"
-                android:inputType="text"
-                android:textAlignment="viewStart"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textErrorUsername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:textColor="#FF1744"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/editTextUsername"
-                tools:visibility="visible" />
-
-            <Button
-                android:id="@+id/submitBtn"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="24dp"
-                android:background="@color/colorButtonGreen"
-                android:text="@string/submit_btn"
-                android:textColor="@color/colorWhite"
-                android:textColorHighlight="@color/colorWhite"
-                android:textColorHint="@color/colorWhite"
-                android:textColorLink="@color/colorWhite"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textErrorUsername" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
             <ProgressBar
                 android:id="@+id/progressBarSignup"
                 android:layout_width="40dp"
@@ -87,7 +40,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:text="@string/e_mail"
-                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/progressBarSignup" />
@@ -98,7 +50,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:text="@string/password"
-                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailFieldSU" />
@@ -137,7 +88,6 @@
                 android:textColorHint="@color/colorWhite"
                 android:textColorLink="@color/colorWhite"
                 app:layout_constraintBottom_toTopOf="@+id/signinBtn"
-                app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textError" />
@@ -148,7 +98,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:text="@string/password_retype"
-                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/passwordFieldSU" />
@@ -207,8 +156,54 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/signinBtn" />
 
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/editTextUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/set_username"
+                android:inputType="text"
+                android:textAlignment="viewStart"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textErrorUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:textColor="#FF1744"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextUsername"
+                tools:visibility="visible" />
+
+            <Button
+                android:id="@+id/submitBtn"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/colorButtonGreen"
+                android:text="@string/submit_btn"
+                android:textColor="@color/colorWhite"
+                android:textColorHighlight="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textColorLink="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textErrorUsername" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ViewFlipper>
 </androidx.constraintlayout.widget.ConstraintLayout>

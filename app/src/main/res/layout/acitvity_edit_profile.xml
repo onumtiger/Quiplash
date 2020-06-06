@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/root_layout"
     tools:context=".Profile_RegisteredActivity">
 
     <ImageButton
@@ -117,6 +118,22 @@
         android:textColorHint="@color/colorWhite"
         android:textColorLink="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
+
+    <Button
+        android:id="@+id/edit_rest"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="76dp"
+        android:background="@color/colorButtonGreen"
+        android:text="Change Mail / PW"
+        android:textColor="@color/colorWhite"
+        android:textColorHighlight="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textColorLink="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
