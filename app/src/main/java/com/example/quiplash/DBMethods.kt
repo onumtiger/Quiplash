@@ -45,7 +45,6 @@ class DBMethods {
             var allUsers = ArrayList<User>()
             var allQuestions = ArrayList<Question>()
             var GameQuestions = ArrayList<Question>()
-            var allGames = mutableListOf<Game>()
             var actual = false
 
 
@@ -153,10 +152,10 @@ class DBMethods {
                     }
                     getQuestions(callback)
                 }
-                var position = (0..GameQuestions.size-1).random()
-                var question = GameQuestions[position]
-                GameQuestions.drop(position)
-                return question
+                    var position = (0..GameQuestions.size-1).random()
+                    var question = GameQuestions[position]
+                    GameQuestions.drop(position)
+                    return question
             }
 
             public fun editUser(ID :String, user :User) {
@@ -181,29 +180,13 @@ class DBMethods {
                 }
             }
 
-            public fun setGame(game: Game): String {
-                val ref = db.collection("games").document()
-                game.gameID = ref.id
-                ref.set(game)
 
-                return game.gameID
-            }
-
-
-            public fun updateGameUsers(game: Game) {
-                val gameID = game.gameID
-                val ref = db.collection("games").document(gameID)
-                ref.update("users", game.users)
-                    .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
-                    .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
-            }
-
-            @Throws(Exception::class)
-            fun createID(): String? {
-                return UUID.randomUUID().toString()
-            }
+        @Throws(Exception::class)
+        fun createID(): String? {
+            return UUID.randomUUID().toString()
+        }
         }
     }
 
 
-}
+    }
