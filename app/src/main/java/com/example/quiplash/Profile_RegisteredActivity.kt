@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
+import com.example.quiplash.DBMethods.DBCalls.Companion.getUser
 import com.google.firebase.auth.FirebaseAuth
 
 class Profile_RegisteredActivity : AppCompatActivity() {
@@ -36,6 +37,7 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         viewEmail.text = userinfo[1]
         viewScore.text = userinfo[2]
 
+
         btnBack.setOnClickListener() {
             val intent = Intent(this, LandingActivity::class.java);
             startActivity(intent);
@@ -61,7 +63,11 @@ class Profile_RegisteredActivity : AppCompatActivity() {
 
     // TO DO: GET USER INFO
     fun getUserInfo(): Array<String> {
-        var username: String = "No Username found"
+
+        var user = getUser()
+
+
+        var username: String =  "No username found"
         var email: String = "No Email found"
         var score: String = "Score: 123456789"
 

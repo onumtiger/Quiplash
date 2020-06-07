@@ -6,6 +6,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import java.util.*
@@ -41,14 +43,12 @@ class DBMethods {
 
             val db = FirebaseFirestore.getInstance()
             lateinit var res: QuerySnapshot
-            var _users: MutableLiveData<ArrayList<User>> = MutableLiveData<ArrayList<User>>()
             var allUsers = ArrayList<User>()
             var allQuestions = ArrayList<Question>()
             var GameQuestions = ArrayList<Question>()
             var allGames = mutableListOf<Game>()
             var actual = false
-
-
+            private var auth: FirebaseAuth? = FirebaseAuth.getInstance()
 
             public fun saveQuestion(question_text: String, question_type: String){
                 var ID = createID().toString()
@@ -57,7 +57,8 @@ class DBMethods {
                 attributes.put("ID", ID)
                 attributes.put("Type", question_type)
 
-                var qustn = Question(ID, question_text, question_type)
+
+                var qustn = Question(ID, question_text, question_type, "")
 
                 db.collection("questions").document().set(qustn).addOnSuccessListener {
                     //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
@@ -79,6 +80,11 @@ class DBMethods {
                 }.addOnFailureListener{
                     //exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
                 }
+            }
+
+            public fun getUser(): FirebaseUser? {
+                var user = auth?.currentUser
+                return user
             }
 
             //returns arraylist with all users

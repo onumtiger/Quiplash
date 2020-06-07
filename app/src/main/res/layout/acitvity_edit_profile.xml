@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/root_layout"
     tools:context=".Profile_RegisteredActivity">
 
     <ImageButton
@@ -51,8 +51,9 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -61,7 +62,7 @@
         android:id="@+id/btnPrrofilePic"
         android:layout_width="192dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:background="@color/colorButtonGreen"
         android:text="@string/change_profile_photo_btn"
         android:textColor="@color/colorWhite"
@@ -77,7 +78,7 @@
         android:id="@+id/textViewPw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="56dp"
         android:text="Password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.091"
@@ -88,7 +89,7 @@
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="76dp"
         android:text="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.085"
@@ -99,7 +100,7 @@
         android:id="@+id/textViewMail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="44dp"
         android:text="E-Mail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.085"
@@ -110,24 +111,9 @@
         android:id="@+id/btnSave"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:background="@color/colorButtonGreen"
         android:text="@string/save_btn"
-        android:textColor="@color/colorWhite"
-        android:textColorHighlight="@color/colorWhite"
-        android:textColorHint="@color/colorWhite"
-        android:textColorLink="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
-
-    <Button
-        android:id="@+id/edit_rest"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="76dp"
-        android:background="@color/colorButtonGreen"
-        android:text="Change Mail / PW"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
@@ -137,16 +123,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
+    <Button
+        android:id="@+id/edit_rest"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorButtonGreen"
+        android:text="Change Mail / PW"
+        android:textColor="@color/colorWhite"
+        android:textColorHighlight="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textColorLink="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSave" />
+
     <EditText
         android:id="@+id/usernameFieldGuest"
         android:layout_width="245dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="@string/username_placeholder"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="@+id/textViewName"
         app:layout_constraintTop_toBottomOf="@+id/btnPrrofilePic" />
 
@@ -154,12 +155,12 @@
         android:id="@+id/email"
         android:layout_width="245dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:hint="@string/e_mail_placeholder"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="@+id/textViewMail"
         app:layout_constraintTop_toBottomOf="@+id/usernameFieldGuest" />
 
@@ -168,12 +169,12 @@
         android:layout_width="245dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/password_placeholder"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.016"
         app:layout_constraintStart_toStartOf="@+id/textViewPw"
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
