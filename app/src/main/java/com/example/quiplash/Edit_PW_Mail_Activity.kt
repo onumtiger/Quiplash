@@ -3,11 +3,13 @@ package com.example.quiplash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageButton
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 
@@ -16,6 +18,12 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
     private var authListener: FirebaseAuth.AuthStateListener? = null
     private lateinit var auth: FirebaseAuth
 
+    lateinit var view_oldPW :EditText
+    lateinit var view_newPW :EditText
+    lateinit var view_newPW2 :EditText
+    lateinit var view_mail :EditText
+
+    @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_pw_mail)
@@ -23,87 +31,91 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         val saveBtn = findViewById<Button>(R.id.btnEditProfileRest)
+        val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow)
 
-        val view_oldPW: EditText = findViewById(R.id.password_old)
-        val view_newPW: EditText = findViewById(R.id.password_new)
-        val view_newPW2: EditText = findViewById(R.id.password_new2)
-        val view_mail: EditText = findViewById(R.id.email_new)
+        view_oldPW = findViewById(R.id.password_old)
+        view_newPW = findViewById(R.id.password_new)
+        view_newPW2 = findViewById(R.id.password_new2)
+        view_mail = findViewById(R.id.email_new)
+
+        btnBack.setOnClickListener() {
+            val intent = Intent(this, Profile_RegisteredActivity::class.java);
+            startActivity(intent);
+        }
 
         saveBtn.setOnClickListener() {
-
             val oldPW = view_oldPW.text.toString()
             val newPW = view_newPW.text.toString()
             val newPW2 = view_newPW2.text.toString()
             val mail = view_mail.text.toString()
-            val old_mail = auth.currentUser?.email.toString()
-            val ID = auth.currentUser?.uid
 
             if (oldPW.isEmpty() == false){
                 if(newPW == newPW2){
                     if (mail.isEmpty()){
-                        var user = auth.currentUser
-                        val credential = EmailAuthProvider.getCredential(old_mail, oldPW)
-                        user?.reauthenticate(credential)?.addOnCompleteListener{
-                            if(it.isSuccessful){
-                                Toast.makeText(this, "reauthe nice", Toast.LENGTH_LONG).show()
-                                user.updatePassword(newPW).addOnCompleteListener { task ->
-                                    if (task.isSuccessful){
-                                        Toast.makeText(this, "Update Password", Toast.LENGTH_LONG).show()
-                                        val intent = Intent(this, Profile_RegisteredActivity::class.java);
-                                        startActivity(intent);
-                                    }
-                                }
-                            } else {
-                                Toast.makeText(this, "old password is false", Toast.LENGTH_LONG).show()
-                            }
-                        }
+                        changePW()
+                        val intent = Intent(this, Profile_RegisteredActivity::class.java);
+                        startActivity(intent);
                     } else {
-                        var user = auth.currentUser
-                        val credential = EmailAuthProvider.getCredential(old_mail, oldPW)
-                        user?.reauthenticate(credential)?.addOnCompleteListener{
-                            if(it.isSuccessful){
-                                Toast.makeText(this, "reauthe nice", Toast.LENGTH_LONG).show()
-                                user.updatePassword(newPW).addOnCompleteListener { task ->
-                                    if (task.isSuccessful){
-                                        Toast.makeText(this, "Update Password and Mail", Toast.LENGTH_LONG).show()
-                                        val intent = Intent(this, Profile_RegisteredActivity::class.java);
-                                        startActivity(intent);
-                                    }
-                                }
-                                user.updateEmail(mail)
-                            } else {
-                                Toast.makeText(this, "old password is false", Toast.LENGTH_LONG).show()
-                            }
-                        }
+                        changeMail()
+                        changePW()
+                        val intent = Intent(this, Profile_RegisteredActivity::class.java);
+                        startActivity(intent);
                     }
                 }
                 if(newPW.isEmpty() == newPW2.isEmpty()) {
                     if (mail.isEmpty() == false) {
-                        var user = auth.currentUser
-                        val credential = EmailAuthProvider.getCredential(old_mail, oldPW)
-                        user?.reauthenticate(credential)?.addOnCompleteListener {
-                            if (it.isSuccessful) {
-                                Toast.makeText(this, "reauthe nice", Toast.LENGTH_LONG).show()
-                                user.updateEmail(mail).addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        Toast.makeText(this, "Update Mail", Toast.LENGTH_LONG)
-                                            .show()
-                                        val intent =
-                                            Intent(this, Profile_RegisteredActivity::class.java);
-                                        startActivity(intent);
-                                    }
-                                }
-                            } else {
-                                Toast.makeText(this, "old password is false", Toast.LENGTH_LONG)
-                                    .show()
-                            }
-                        }
-
+                        changeMail()
+                        val intent = Intent(this, Profile_RegisteredActivity::class.java);
+                        startActivity(intent);
                     }
                 }
 
+            } else {
+                Toast.makeText(this, "Please Tip In Your Password", Toast.LENGTH_LONG).show()
             }
+
         }
 
+    }
+
+    fun changePW(){
+
+        val oldPW = view_oldPW.text.toString()
+        val newPW = view_newPW.text.toString()
+        val old_mail = auth.currentUser?.email.toString()
+
+        var user = auth.currentUser
+        val credential = EmailAuthProvider.getCredential(old_mail, oldPW)
+        user?.reauthenticate(credential)?.addOnCompleteListener{
+            if(it.isSuccessful){
+                user.updatePassword(newPW).addOnCompleteListener { task ->
+                    if (task.isSuccessful){
+                        Toast.makeText(this, "Update Password", Toast.LENGTH_LONG).show()
+                    }
+                }
+            } else {
+                Toast.makeText(this, "old password is false", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    fun changeMail(){
+        val oldPW = view_oldPW.text.toString()
+        val mail = view_mail.text.toString()
+        val old_mail = auth.currentUser?.email.toString()
+
+        var user = auth.currentUser
+        val credential = EmailAuthProvider.getCredential(old_mail, oldPW)
+        user?.reauthenticate(credential)?.addOnCompleteListener{
+            if(it.isSuccessful){
+                user.updateEmail(mail).addOnCompleteListener { task ->
+                    if (task.isSuccessful){
+                        Toast.makeText(this, "Update Mail", Toast.LENGTH_LONG).show()
+                    }
+                }
+            } else {
+                Toast.makeText(this, "old password is false", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }

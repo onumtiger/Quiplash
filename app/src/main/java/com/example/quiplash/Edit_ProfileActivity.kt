@@ -36,13 +36,9 @@ class Edit_ProfileActivity : AppCompatActivity() {
         // TO DO: load userinformation
         val viewProfilePic: ImageView = findViewById(R.id.imageView)
         var viewUsername: EditText = findViewById(R.id.usernameFieldGuest)
-        var viewEmail: EditText = findViewById(R.id.email)
-        var viewPassword: EditText = findViewById(R.id.password)
 
         val userinfo = getUserInfo()
         viewUsername.hint = userinfo[0]
-        viewEmail.hint = userinfo[1]
-        viewPassword.hint = userinfo[2]
 
         btnBack.setOnClickListener() {
             val intent = Intent(this, Profile_RegisteredActivity::class.java);
@@ -60,8 +56,6 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
         btnSave.setOnClickListener() {
             val username = viewUsername.text.toString()
-            val email = viewEmail.text.toString()
-            val password = viewPassword.text.toString()
             val ID = auth.currentUser?.uid.toString()
 
             val user = User(ID, username, false, 0)
@@ -69,6 +63,8 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
                 if (ID != null) {
                     editUser(ID, user)
+                    val intent = Intent(this, Profile_RegisteredActivity::class.java);
+                    startActivity(intent);
                 }
             } else {
                 Toast.makeText(this, "please tip in a new username", Toast.LENGTH_LONG).show()
