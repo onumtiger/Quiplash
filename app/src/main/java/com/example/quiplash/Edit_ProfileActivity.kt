@@ -33,17 +33,17 @@ import java.util.*
 
 class Edit_ProfileActivity : AppCompatActivity() {
 
-    //FirebaseAuth object
-    //private var auth: FirebaseAuth? = null
-    private var authListener: FirebaseAuth.AuthStateListener? = null
     private val CAMERA_REQUEST_CODE = 200
     private val PICK_IMAGE_REQUEST = 71
-    private lateinit var filePath: Uri
+    private var filePath: Uri? = null
+    lateinit var current_User: User
 
     //Firebase
+    //private var auth: FirebaseAuth? = null
+    private lateinit var auth: FirebaseAuth
+    private var authListener: FirebaseAuth.AuthStateListener? = null
     private var storage: FirebaseStorage? = null
     private var storageReference: StorageReference? = null
-    private lateinit var auth: FirebaseAuth
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,29 +52,51 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
+        storage = FirebaseStorage.getInstance();
         var fotostorage = FirebaseStorage.getInstance();
         var storageRef = fotostorage!!.reference
-        var spaceRef = storageRef.child("images/default-guest.png")
-        var storageReferenceFoto  = FirebaseStorage.getInstance().reference.child("images/default-guest.png")
+        var photoPath : String = "images/default-guest.png"
 
         var viewProfilePic: ImageView = findViewById(R.id.imageView)
-
-        spaceRef.downloadUrl
-            .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
-                Glide
-                    .with(getApplicationContext())
-                    .load(uri) // the uri you got from Firebase
-                    .into(viewProfilePic); //Your imageView variable
-            }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
-
         val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow)
         val btnSave = findViewById<Button>(R.id.btnSave)
         val btnEditPicture = findViewById<Button>(R.id.btnPrrofilePic)
         val btnChangeRest = findViewById<Button>(R.id.edit_rest)
         var viewUsername : EditText = findViewById(R.id.usernameFieldGuest)
 
-        val userinfo = getUserInfoDefault()
-        viewUsername.hint = userinfo[0]
+        val callback = object: Callback<User> {
+            override fun onTaskComplete(result :User) {
+                current_User = result
+                if (current_User.userName.toString() == "User") {
+                    // display default info if fetching data fails
+                    viewUsername.hint = "Username"
+                    // set default user image if fetchting data fails
+                    var spaceRef = storageRef.child(photoPath)
+                    spaceRef.downloadUrl
+                        .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
+                            Glide
+                                .with(getApplicationContext())
+                                .load(uri) // the uri you got from Firebase
+                                .into(viewProfilePic); //Your imageView variable
+                        }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
+
+                }
+                else {
+                    photoPath = current_User.photo.toString()
+                    viewUsername.hint = "Username"
+                    viewUsername.setText(current_User.userName.toString())
+                    var spaceRef = storageRef.child(photoPath)
+                    spaceRef.downloadUrl
+                        .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
+                            Glide
+                                .with(getApplicationContext())
+                                .load(uri) // the uri you got from Firebase
+                                .into(viewProfilePic); //Your imageView variable
+                        }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
+                }
+            }
+        }
+        DBMethods.DBCalls.getUser(callback)
 
         btnBack.setOnClickListener() {
             val intent = Intent(this, Profile_RegisteredActivity::class.java);
@@ -84,7 +106,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
         btnEditPicture.setOnClickListener(){
             // pickFromCamera()
             chooseImage()
-       }
+        }
 
         btnChangeRest.setOnClickListener() {
             val intent = Intent(this, Edit_PW_Mail_Activity::class.java);
@@ -92,24 +114,25 @@ class Edit_ProfileActivity : AppCompatActivity() {
         }
 
         btnSave.setOnClickListener() {
+            var uploadPath = uploadImage()
+            if (uploadPath != ""){
+                photoPath = uploadPath
+            }
+
             val username = viewUsername.text.toString()
             val ID = auth.currentUser?.uid.toString()
 
-            val user = User(ID, username, false, 0)
-            if (username.isEmpty() == false) {
+            val user = User(ID, username, false, 0, photoPath )
+             if (username.isEmpty() == false) {
 
-                if (ID != null) {
-                    editUser(ID, user)
-                    val intent = Intent(this, Profile_RegisteredActivity::class.java);
-                    startActivity(intent);
-                }
-            } else {
-                Toast.makeText(this, "please tip in a new username", Toast.LENGTH_LONG).show()
-            }
-
-            uploadImage()
-            val intent = Intent(this, Profile_RegisteredActivity::class.java);
-            startActivity(intent);
+                 if (ID != null) {
+                     editUser(ID, user)
+                     val intent = Intent(this, Profile_RegisteredActivity::class.java);
+                     startActivity(intent);
+                 }
+             } else {
+                 Toast.makeText(this, "please tip in a new username", Toast.LENGTH_LONG).show()
+             }
         }
     }
 
@@ -139,21 +162,6 @@ class Edit_ProfileActivity : AppCompatActivity() {
         }
     }
 
-    // TO DO: GET USER INFO
-    fun getUserInfoDefault(): Array<String> {
-        var username: String = "No Username found"
-        var email: String = "No Email found"
-        var password: String = "••••••••••••"
-
-        val userinfo = arrayOf(
-            username,
-            email,
-            password
-        )
-
-        return userinfo
-    }
-
     private fun pickFromCamera() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (takePictureIntent.resolveActivity(packageManager) != null) {
@@ -171,15 +179,17 @@ class Edit_ProfileActivity : AppCompatActivity() {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
     }
 
-    private fun uploadImage() {
+    private fun uploadImage(): String {
+        var photoPath: String = ""
         if (filePath != null) {
             val progressDialog = ProgressDialog(this)
             progressDialog.setTitle("Uploading...")
             progressDialog.show()
             storageReference = storage!!.getReference();
+            photoPath = "images/" + UUID.randomUUID().toString()
             val ref =
-                storageReference!!.child("images/" + UUID.randomUUID().toString())
-            ref.putFile(filePath)
+                storageReference!!.child(photoPath)
+            ref.putFile(filePath!!)
                 .addOnSuccessListener {
                     progressDialog.dismiss()
                     Toast.makeText(this@Edit_ProfileActivity, "Uploaded", Toast.LENGTH_SHORT).show()
@@ -189,8 +199,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
                     Toast.makeText(this@Edit_ProfileActivity, "Failed ", Toast.LENGTH_SHORT)
                         .show()
                 }
-
         }
+        return photoPath
     }
 }
-

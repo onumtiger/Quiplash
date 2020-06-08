@@ -55,7 +55,7 @@ class Database : AppCompatActivity() {
         show_users.setOnClickListener {
 
 
-            val user = User("test", "Juli<3<3>", false, 0)
+            val user = User("test", "Juli<3<3>", false, 0, "default-user.png")
             editUser("sSl61HRtniQLZI92Ifj2", user)
 
             Toast.makeText(this, test.first().userName, Toast.LENGTH_LONG).show()
@@ -87,9 +87,10 @@ class Database : AppCompatActivity() {
         val user_name = user_name.text.toString().trim()
         val guest = true
         val score = 0
+        val photo = "images/default-user.png"
 
         if (user_name != "") {
-            saveUser(user_name, guest, score)
+            saveUser(user_name, guest, score, photo)
         } else {
             Toast.makeText(this, "Füll den Spass aus!", Toast.LENGTH_LONG).show()
         }

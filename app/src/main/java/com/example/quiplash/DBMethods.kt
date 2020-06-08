@@ -68,14 +68,15 @@ class DBMethods {
                 }
             }
 
-            public fun saveUser(user_name: String, guest: Boolean, score: Int) {
+            public fun saveUser(user_name: String, guest: Boolean, score: Int, photo: String) {
                 var ID = createID().toString()
                 val attributes = HashMap<String, Any>()
                 attributes.put("name", user_name)
                 attributes.put("ID", ID)
                 attributes.put("guest", guest)
                 attributes.put("score", score)
-                val usr = User(ID, user_name, true, score)
+                attributes.put("photo", photo)
+                val usr = User(ID, user_name, true, score, photo)
                 db.collection("users").document().set(usr).addOnSuccessListener {
                     //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener{
