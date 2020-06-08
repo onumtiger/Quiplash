@@ -9,6 +9,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.AuthResult
@@ -43,7 +44,7 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedPreference =  getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+        sharedPreference = getSharedPreferences(PREF_NAME, PRIVATE_MODE)
 
         setContentView(R.layout.activity_sign_up)
 
@@ -63,6 +64,7 @@ class SignUpActivity : AppCompatActivity() {
         val inputPassword2 = findViewById<EditText>(R.id.passwordRetypeFieldSU)
         val inputUsername = findViewById<EditText>(R.id.editTextUsername)
         val textviewError = findViewById<TextView>(R.id.textError)
+        val textviewErrorUserName = findViewById<TextView>(R.id.textErrorUsername)
         progressBar = findViewById(R.id.progressBarSignup)
         simpleViewFlipper = findViewById(R.id.simpleViewFlipper) // get the reference of ViewFlipper
 
@@ -83,7 +85,39 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         btnSubmit.setOnClickListener {
-            createUser()
+            /* db.whereEqualTo("userName", inputUsername.text.toString()).get().addOnCompleteListener { task ->
+                 if (task.isSuccessful) {
+                     Log.d("TAG", "Inside onComplete function!");
+                     textviewError.text = getString(R.string.username_not_available)
+                 } else {
+                     createUser()
+                 }
+             }*/
+
+            var userExist = false;
+            db.get()
+                .addOnSuccessListener { userCollectionDB ->
+                    for (userItemDB in userCollectionDB) {
+                        val userDB = userItemDB.toObject(User::class.java)
+
+                        if (userDB.userName!!.toLowerCase() == inputUsername.text.toString().toLowerCase()) {
+                            textviewErrorUserName.text = getString(R.string.username_not_available)
+                            userExist = true
+                        }
+                        continue
+                    }
+                    if(userExist){
+                        textviewErrorUserName.text = getString(R.string.username_not_available)
+                    } else{
+                        createUser()
+                    }
+
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("ERROR", ""+exception);
+                    createUser()
+                }
+
         }
 
         btnSignUp.setOnClickListener {
@@ -169,6 +203,7 @@ class SignUpActivity : AppCompatActivity() {
         return (!TextUtils.isEmpty(emailFieldSU.text) && !TextUtils.isEmpty(passwordRetypeFieldSU.text) &&
                 !TextUtils.isEmpty(passwordFieldSU.text) && (passwordRetypeFieldSU.text.toString() == passwordFieldSU.text.toString()) && passwordFieldSU.text.length >= 6)
     }
+
 
     private fun createUser() {
         //if user is guest...

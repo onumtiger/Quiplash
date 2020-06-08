@@ -2,6 +2,7 @@ package com.example.quiplash
 
 import android.R.attr
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.Activity
 import android.app.PendingIntent.getActivity
 import android.app.ProgressDialog
@@ -19,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import com.bumptech.glide.Glide
 import com.example.quiplash.DBMethods.DBCalls.Companion.editUser
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
@@ -29,8 +32,9 @@ import java.util.*
 
 
 class Edit_ProfileActivity : AppCompatActivity() {
+
     //FirebaseAuth object
-    private var auth: FirebaseAuth? = null
+    //private var auth: FirebaseAuth? = null
     private var authListener: FirebaseAuth.AuthStateListener? = null
     private val CAMERA_REQUEST_CODE = 200
     private val PICK_IMAGE_REQUEST = 71
@@ -39,6 +43,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
     //Firebase
     private var storage: FirebaseStorage? = null
     private var storageReference: StorageReference? = null
+    private lateinit var auth: FirebaseAuth
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,10 +52,10 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        storage = FirebaseStorage.getInstance();
-        var storageRef = storage!!.reference
+        var fotostorage = FirebaseStorage.getInstance();
+        var storageRef = fotostorage!!.reference
         var spaceRef = storageRef.child("images/default-guest.png")
-        storageReference  = FirebaseStorage.getInstance().reference.child("images/default-guest.png")
+        var storageReferenceFoto  = FirebaseStorage.getInstance().reference.child("images/default-guest.png")
 
         var viewProfilePic: ImageView = findViewById(R.id.imageView)
 
@@ -65,15 +70,11 @@ class Edit_ProfileActivity : AppCompatActivity() {
         val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow)
         val btnSave = findViewById<Button>(R.id.btnSave)
         val btnEditPicture = findViewById<Button>(R.id.btnPrrofilePic)
-        // TO DO: load userinformation
+        val btnChangeRest = findViewById<Button>(R.id.edit_rest)
         var viewUsername : EditText = findViewById(R.id.usernameFieldGuest)
-        var viewEmail: EditText = findViewById(R.id.email)
-        var viewPassword: EditText = findViewById(R.id.password)
 
-        val userinfo = getUserInfo()
+        val userinfo = getUserInfoDefault()
         viewUsername.hint = userinfo[0]
-        viewEmail.hint = userinfo[1]
-        viewPassword.hint = userinfo[2]
 
         btnBack.setOnClickListener() {
             val intent = Intent(this, Profile_RegisteredActivity::class.java);
@@ -85,27 +86,33 @@ class Edit_ProfileActivity : AppCompatActivity() {
             chooseImage()
        }
 
+        btnChangeRest.setOnClickListener() {
+            val intent = Intent(this, Edit_PW_Mail_Activity::class.java);
+            startActivity(intent);
+        }
+
         btnSave.setOnClickListener() {
             val username = viewUsername.text.toString()
-            val email = viewEmail.text.toString()
-            val password = viewPassword.text.toString()
+            val ID = auth.currentUser?.uid.toString()
 
-            authListener = FirebaseAuth.AuthStateListener { firebaseAuth: FirebaseAuth ->
-                val ID = firebaseAuth.currentUser?.uid
-                val user = User(ID, username, false, 0)
+            val user = User(ID, username, false, 0)
+            if (username.isEmpty() == false) {
+
                 if (ID != null) {
                     editUser(ID, user)
+                    val intent = Intent(this, Profile_RegisteredActivity::class.java);
+                    startActivity(intent);
                 }
+            } else {
+                Toast.makeText(this, "please tip in a new username", Toast.LENGTH_LONG).show()
             }
-
-            // TO DO: Save user data to firebase
-            setUserInfo(username, email, password)
 
             uploadImage()
             val intent = Intent(this, Profile_RegisteredActivity::class.java);
             startActivity(intent);
         }
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -133,7 +140,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
     }
 
     // TO DO: GET USER INFO
-    fun getUserInfo(): Array<String> {
+    fun getUserInfoDefault(): Array<String> {
         var username: String = "No Username found"
         var email: String = "No Email found"
         var password: String = "••••••••••••"
@@ -145,11 +152,6 @@ class Edit_ProfileActivity : AppCompatActivity() {
         )
 
         return userinfo
-    }
-
-    // TO DO: SET USER INFO
-    fun setUserInfo(username: String, email: String, password: String) {
-
     }
 
     private fun pickFromCamera() {
@@ -187,8 +189,8 @@ class Edit_ProfileActivity : AppCompatActivity() {
                     Toast.makeText(this@Edit_ProfileActivity, "Failed ", Toast.LENGTH_SHORT)
                         .show()
                 }
-  
+
         }
     }
-
 }
+

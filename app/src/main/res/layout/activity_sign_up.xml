@@ -20,6 +20,51 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ProgressBar
+                android:id="@+id/progressBarSignup"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center|bottom"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:indeterminateDrawable="@drawable/progress_circle"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/email"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/e_mail"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressBarSignup" />
+
+            <TextView
+                android:id="@+id/password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/password"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailFieldSU" />
+
+            <EditText
+                android:id="@+id/emailFieldSU"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/e_mail_placeholder"
+                android:inputType="textEmailAddress"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email" />
+
             <TextView
                 android:id="@+id/textError"
                 android:layout_width="wrap_content"
@@ -32,70 +77,30 @@
                 app:layout_constraintTop_toBottomOf="@+id/passwordRetypeFieldSU"
                 tools:visibility="visible" />
 
-            <TextView
-                android:id="@+id/email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/e_mail"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.287" />
-
-            <TextView
-                android:id="@+id/password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/password"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.41" />
-
-            <EditText
-                android:id="@+id/emailFieldSU"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/e_mail_placeholder"
-                android:inputType="textEmailAddress"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.326" />
-
             <Button
                 android:id="@+id/signupBtn"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="480dp"
                 android:background="@color/colorButtonGreen"
                 android:text="@string/register_btn"
                 android:textColor="@color/colorWhite"
                 android:textColorHighlight="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:textColorLink="@color/colorWhite"
-                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintBottom_toTopOf="@+id/signinBtn"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/textError" />
 
             <TextView
                 android:id="@+id/password2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
                 android:text="@string/password_retype"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.539" />
+                app:layout_constraintTop_toBottomOf="@+id/passwordFieldSU" />
 
             <EditText
                 android:id="@+id/passwordRetypeFieldSU"
@@ -104,11 +109,9 @@
                 android:ems="10"
                 android:hint="@string/password_placeholder"
                 android:inputType="textPassword"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.587" />
+                app:layout_constraintTop_toBottomOf="@+id/password2" />
 
             <EditText
                 android:id="@+id/passwordFieldSU"
@@ -117,24 +120,10 @@
                 android:ems="10"
                 android:hint="@string/password_placeholder"
                 android:inputType="textPassword"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.453" />
+                app:layout_constraintTop_toBottomOf="@+id/password" />
 
-
-            <ProgressBar
-                android:id="@+id/progressBarSignup"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center|bottom"
-                android:indeterminateDrawable="@drawable/progress_circle"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toTopOf="@+id/email"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/signinBtn"
@@ -167,6 +156,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/signinBtn" />
 
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -179,24 +169,41 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/set_username"
                 android:inputType="text"
+                android:textAlignment="viewStart"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/submitBtn"
+            <TextView
+                android:id="@+id/textErrorUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="@string/submit_btn"
+                android:textColor="#FF1744"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.51"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextUsername" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@id/editTextUsername"
+                tools:visibility="visible" />
 
+            <Button
+                android:id="@+id/submitBtn"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/colorButtonGreen"
+                android:text="@string/submit_btn"
+                android:textColor="@color/colorWhite"
+                android:textColorHighlight="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textColorLink="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textErrorUsername" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ViewFlipper>
 </androidx.constraintlayout.widget.ConstraintLayout>

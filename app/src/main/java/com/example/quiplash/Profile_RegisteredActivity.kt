@@ -1,19 +1,27 @@
 package com.example.quiplash
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.util.Log
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
+import com.bumptech.glide.Glide
+import com.example.quiplash.DBMethods.DBCalls.Companion.getUser
+import com.example.quiplash.DBMethods.DBCalls.Companion.singleUser
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 
 class Profile_RegisteredActivity : AppCompatActivity() {
     //FirebaseAuth object
     private var auth: FirebaseAuth? = null
     private var authListener: FirebaseAuth.AuthStateListener? = null
+    lateinit var current_User: User
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,22 +29,51 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile_registered)
 
         auth = FirebaseAuth.getInstance()
+        var fotostorage = FirebaseStorage.getInstance();
+        var storageRef = fotostorage!!.reference
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow)
         val btnEditProfile = findViewById<Button>(R.id.btnEditProfile)
         val btnDeleteAccount = findViewById<Button>(R.id.btnDeleteAccount)
-        // TO DO: load userinformation
         val viewProfilePic: ImageView = findViewById(R.id.imageView)
-        var viewUsername : TextView = findViewById<TextView>(R.id.username)
+        var viewUsername : TextView = findViewById<TextView>(R.id.pw)
         var viewEmail : TextView = findViewById<TextView>(R.id.email)
         var viewScore : TextView = findViewById<TextView>(R.id.score)
         var viewUsernameBig : TextView = findViewById<TextView>(R.id.usernameBig)
 
-        val userinfo = getUserInfo()
-        viewUsername.text = userinfo[0]
-        viewUsernameBig.text = userinfo[0]
-        viewEmail.text = userinfo[1]
-        viewScore.text = userinfo[2]
+
+
+        val callback = object: Callback<User> {
+            override fun onTaskComplete(result :User) {
+                current_User = result
+                if (current_User.userName.toString() == "User") {
+                    // display default data if fetching user data fails
+                    val userinfodefault = getUserInfoDefault()
+                    viewUsername.text = userinfodefault[0]
+                    viewUsernameBig.text = userinfodefault[0]
+                    viewEmail.text = userinfodefault[1]
+                    viewScore.text = userinfodefault[2]
+
+                    // set default user image if fetchting data fails
+                    var spaceRef = storageRef.child("images/default-guest.png")
+                    spaceRef.downloadUrl
+                        .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
+                            Glide
+                                .with(getApplicationContext())
+                                .load(uri) // the uri you got from Firebase
+                                .into(viewProfilePic); //Your imageView variable
+                        }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
+
+                }
+                else {
+                    viewUsername.text = current_User.userName.toString()
+                    viewUsernameBig.text = current_User.userName.toString()
+                    viewEmail.text = auth?.currentUser?.email.toString()
+                    viewScore.text = current_User.score.toString()
+                }
+            }
+        }
+        getUser(callback)
 
         btnBack.setOnClickListener() {
             val intent = Intent(this, LandingActivity::class.java);
@@ -63,6 +100,22 @@ class Profile_RegisteredActivity : AppCompatActivity() {
 
     // TO DO: GET USER INFO
     fun getUserInfo(): Array<String> {
+
+
+        var username: String =  "singleUser.userName.toString()"
+        var email: String = "auth?.currentUser?.email.toString()"
+        var score: String = "singleUser.score.toString()"
+
+        val userinfo = arrayOf(
+            username,
+            email,
+            score
+        )
+
+        return userinfo
+    }
+
+    fun getUserInfoDefault(): Array<String> {
         var username: String = "No Username found"
         var email: String = "No Email found"
         var score: String = "Score: 123456789"
@@ -75,6 +128,7 @@ class Profile_RegisteredActivity : AppCompatActivity() {
 
         return userinfo
     }
+
 
     fun signOut() {
         auth?.signOut()

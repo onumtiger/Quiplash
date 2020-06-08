@@ -6,6 +6,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import java.util.*
@@ -41,14 +43,13 @@ class DBMethods {
 
             val db = FirebaseFirestore.getInstance()
             lateinit var res: QuerySnapshot
-            var _users: MutableLiveData<ArrayList<User>> = MutableLiveData<ArrayList<User>>()
             var allUsers = ArrayList<User>()
+            var singleUser :User = User()
             var allQuestions = ArrayList<Question>()
             var GameQuestions = ArrayList<Question>()
             var allGames = mutableListOf<Game>()
             var actual = false
-
-
+            private var auth: FirebaseAuth? = FirebaseAuth.getInstance()
 
             public fun saveQuestion(question_text: String, question_type: String){
                 var ID = createID().toString()
@@ -57,7 +58,8 @@ class DBMethods {
                 attributes.put("ID", ID)
                 attributes.put("Type", question_type)
 
-                var qustn = Question(ID, question_text, question_type)
+
+                var qustn = Question(ID, question_text, question_type, "")
 
                 db.collection("questions").document().set(qustn).addOnSuccessListener {
                     //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
@@ -79,6 +81,29 @@ class DBMethods {
                 }.addOnFailureListener{
                     //exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
                 }
+            }
+
+            public fun getUser(callback: Callback<User>) {
+                var user1 = auth?.currentUser
+                db.collection("users")
+                        .whereEqualTo("userID", user1?.uid)
+                        .get()
+                        .addOnSuccessListener { documents ->
+                            for (document in documents) {
+                                val documents2 = documents
+                                documents2.forEach{
+                                    val user = it.toObject(User::class.java)
+                                    singleUser = user
+                                    if (user != null) {
+                                        //Log.w(TAG,user.userID.toString() , e)
+                                    }
+                                }
+                            }
+                            callback.onTaskComplete(singleUser)
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+                        }
             }
 
             //returns arraylist with all users
@@ -115,6 +140,7 @@ class DBMethods {
                         Log.w(ContentValues.TAG, "Error getting documents: ", exception)
                     }
             }
+
 
 
 
@@ -181,8 +207,21 @@ class DBMethods {
                 }
             }
 
-            public fun setGame(game: Game) {
-                db.collection("games").document().set(game)
+            public fun setGame(game: Game): String {
+                val ref = db.collection("games").document()
+                game.gameID = ref.id
+                ref.set(game)
+
+                return game.gameID
+            }
+
+
+            public fun updateGameUsers(game: Game) {
+                val gameID = game.gameID
+                val ref = db.collection("games").document(gameID)
+                ref.update("users", game.users)
+                    .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
+                    .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
             }
 
             @Throws(Exception::class)
