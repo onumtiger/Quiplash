@@ -3,6 +3,7 @@ package com.example.quiplash
 import android.R.attr
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.PendingIntent.getActivity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
@@ -16,6 +17,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
+import com.bumptech.glide.Glide
 import com.example.quiplash.DBMethods.DBCalls.Companion.editUser
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -47,17 +49,18 @@ class Edit_ProfileActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         storage = FirebaseStorage.getInstance();
-        // storageReference = storage!!.getReference();
-        storageReference  = FirebaseStorage.getInstance().getReference().child("images/default-guest.png")
+        var storageRef = storage!!.reference
+        var spaceRef = storageRef.child("images/default-guest.png")
+        storageReference  = FirebaseStorage.getInstance().reference.child("images/default-guest.png")
 
         var viewProfilePic: ImageView = findViewById(R.id.imageView)
 
-        storageReference!!.getDownloadUrl()
+        spaceRef.downloadUrl
             .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
-                Log.d("Uri", uri.toString())
-                viewProfilePic.setImageURI(null)
-                viewProfilePic.setImageURI(uri)
-                Log.d("Test", " Success!")
+                Glide
+                    .with(getApplicationContext())
+                    .load(uri) // the uri you got from Firebase
+                    .into(viewProfilePic); //Your imageView variable
             }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow)
@@ -173,6 +176,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
             val progressDialog = ProgressDialog(this)
             progressDialog.setTitle("Uploading...")
             progressDialog.show()
+            storageReference = storage!!.getReference();
             val ref =
                 storageReference!!.child("images/" + UUID.randomUUID().toString())
             ref.putFile(filePath)
