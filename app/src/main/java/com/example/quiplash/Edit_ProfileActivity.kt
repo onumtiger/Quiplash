@@ -32,7 +32,6 @@ class Edit_ProfileActivity : AppCompatActivity() {
     //FirebaseAuth object
     private var auth: FirebaseAuth? = null
     private var authListener: FirebaseAuth.AuthStateListener? = null
-    private val GALLERY_REQUEST_CODE = 100
     private val CAMERA_REQUEST_CODE = 200
     private val PICK_IMAGE_REQUEST = 71
     private lateinit var filePath: Uri
@@ -82,7 +81,6 @@ class Edit_ProfileActivity : AppCompatActivity() {
         }
 
         btnEditPicture.setOnClickListener(){
-            // pickFromGallery()
             // pickFromCamera()
             chooseImage()
        }
