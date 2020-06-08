@@ -8,9 +8,10 @@
 
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/appCompatImageView3"
             android:layout_width="413dp"
             android:layout_height="165dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="15dp"
             android:contentDescription="logo"
             android:src="@drawable/logo"
             app:layout_constraintEnd_toEndOf="parent"
@@ -21,9 +22,9 @@
         <Button
             android:id="@+id/landing_new_game"
             android:layout_width="366dp"
-            android:layout_height="105dp"
+            android:layout_height="80dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="232dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/green_view_border"
             android:text="@string/new_game"
@@ -33,14 +34,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/appCompatImageView3" />
 
         <Button
             android:id="@+id/landing_join_game"
             android:layout_width="366dp"
-            android:layout_height="105dp"
+            android:layout_height="80dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="356dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/green_view_border"
             android:text="@string/join_game"
@@ -50,14 +51,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/landing_new_game" />
 
         <Button
             android:id="@+id/landing_profile"
             android:layout_width="366dp"
-            android:layout_height="105dp"
+            android:layout_height="80dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="484dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/green_view_border"
             android:text="@string/profile"
@@ -67,14 +68,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/landing_join_game" />
 
         <Button
             android:id="@+id/landing_friends"
             android:layout_width="366dp"
-            android:layout_height="105dp"
+            android:layout_height="80dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="608dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/green_view_border"
             android:text="@string/friends"
@@ -84,5 +85,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/landing_profile" />
 </androidx.constraintlayout.widget.ConstraintLayout>

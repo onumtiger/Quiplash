@@ -6,16 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".FriendsActivity">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageButton
+        android:id="@+id/friends_go_back_arrow"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginTop="41dp"
+        android:backgroundTint="#00FFFFFF"
         android:contentDescription="go_back_arrow"
-        android:src="@drawable/ic_go_back_arrow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_go_back_arrow" />
+
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView"

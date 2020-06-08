@@ -1,18 +1,22 @@
 package com.example.quiplash
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import com.example.quiplash.DBMethods.DBCalls.Companion.getUser
+import com.example.quiplash.DBMethods.DBCalls.Companion.singleUser
 import com.google.firebase.auth.FirebaseAuth
 
 class Profile_RegisteredActivity : AppCompatActivity() {
     //FirebaseAuth object
     private var auth: FirebaseAuth? = null
     private var authListener: FirebaseAuth.AuthStateListener? = null
+    lateinit var current_User: User
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,12 +35,21 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         var viewScore : TextView = findViewById<TextView>(R.id.score)
         var viewUsernameBig : TextView = findViewById<TextView>(R.id.usernameBig)
 
-        val userinfo = getUserInfo()
-        viewUsername.text = userinfo[0]
-        viewUsernameBig.text = userinfo[0]
-        viewEmail.text = userinfo[1]
-        viewScore.text = userinfo[2]
+        viewUsername.text = ""
+        viewUsernameBig.text = ""
+        viewEmail.text = ""
+        viewScore.text = ""
 
+        val callback = object: Callback<User> {
+            override fun onTaskComplete(result :User) {
+                current_User = result
+                viewUsername.text = current_User.userName.toString()
+                viewUsernameBig.text = current_User.userName.toString()
+                viewEmail.text = auth?.currentUser?.email.toString()
+                viewScore.text = current_User.score.toString()
+            }
+        }
+        getUser(callback)
 
         btnBack.setOnClickListener() {
             val intent = Intent(this, LandingActivity::class.java);
@@ -64,12 +77,10 @@ class Profile_RegisteredActivity : AppCompatActivity() {
     // TO DO: GET USER INFO
     fun getUserInfo(): Array<String> {
 
-        var user = getUser()
 
-
-        var username: String =  "No username found"
-        var email: String = "No Email found"
-        var score: String = "Score: 123456789"
+        var username: String =  "singleUser.userName.toString()"
+        var email: String = "auth?.currentUser?.email.toString()"
+        var score: String = "singleUser.score.toString()"
 
         val userinfo = arrayOf(
             username,

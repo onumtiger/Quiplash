@@ -45,6 +45,7 @@ class DBMethods {
             val db = FirebaseFirestore.getInstance()
             lateinit var res: QuerySnapshot
             var allUsers = ArrayList<User>()
+            var singleUser :User = User()
             var allQuestions = ArrayList<Question>()
             var GameQuestions = ArrayList<Question>()
             var allGames = mutableListOf<Game>()
@@ -83,9 +84,27 @@ class DBMethods {
                 }
             }
 
-            public fun getUser(): FirebaseUser? {
-                var user = auth?.currentUser
-                return user
+            public fun getUser(callback: Callback<User>) {
+                var user1 = auth?.currentUser
+                db.collection("users")
+                        .whereEqualTo("userID", user1?.uid)
+                        .get()
+                        .addOnSuccessListener { documents ->
+                            for (document in documents) {
+                                val documents2 = documents
+                                documents2.forEach{
+                                    val user = it.toObject(User::class.java)
+                                    singleUser = user
+                                    if (user != null) {
+                                        //Log.w(TAG,user.userID.toString() , e)
+                                    }
+                                }
+                            }
+                            callback.onTaskComplete(singleUser)
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+                        }
             }
 
             //returns arraylist with all users
@@ -122,6 +141,9 @@ class DBMethods {
                         Log.w(ContentValues.TAG, "Error getting documents: ", exception)
                     }
             }
+
+
+
 
 
             //returns arraylist with all Questions
