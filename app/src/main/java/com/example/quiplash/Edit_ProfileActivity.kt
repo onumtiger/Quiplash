@@ -6,10 +6,10 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -17,11 +17,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import com.example.quiplash.DBMethods.DBCalls.Companion.editUser
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.IOException
-import java.io.InputStream
 import java.util.*
 
 
@@ -46,7 +47,18 @@ class Edit_ProfileActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         storage = FirebaseStorage.getInstance();
-        storageReference = storage!!.getReference();
+        // storageReference = storage!!.getReference();
+        storageReference  = FirebaseStorage.getInstance().getReference().child("images/default-guest.png")
+
+        var viewProfilePic: ImageView = findViewById(R.id.imageView)
+
+        storageReference!!.getDownloadUrl()
+            .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
+                Log.d("Uri", uri.toString())
+                viewProfilePic.setImageURI(null)
+                viewProfilePic.setImageURI(uri)
+                Log.d("Test", " Success!")
+            }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow)
         val btnSave = findViewById<Button>(R.id.btnSave)
@@ -97,20 +109,6 @@ class Edit_ProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         var viewProfilePic: ImageView = findViewById(R.id.imageView)
-        // pick from gallery
-        if (resultCode === Activity.RESULT_OK && requestCode === GALLERY_REQUEST_CODE) {
-            try {
-                val selectedImage = data?.data
-                val imageStream: InputStream? = selectedImage?.let {
-                    contentResolver.openInputStream(
-                        it
-                    )
-                }
-                viewProfilePic.setImageBitmap(BitmapFactory.decodeStream(imageStream))
-            } catch (exception: IOException) {
-                exception.printStackTrace()
-            }
-        }
 
         // pick from camera
         if (requestCode === CAMERA_REQUEST_CODE && resultCode === Activity.RESULT_OK) {
@@ -153,19 +151,6 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
     }
 
-    private fun pickFromGallery() {
-        //Create an Intent with action as ACTION_PICK
-        val intent = Intent(Intent.ACTION_PICK)
-        // Sets the type as image/*. This ensures only components of type image are selected
-        intent.type = "image/*"
-        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
-        val mimeTypes =
-            arrayOf("image/jpeg", "image/png")
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-        // Launching the Intent
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_REQUEST_CODE)
-    }
-
     private fun pickFromCamera() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (takePictureIntent.resolveActivity(packageManager) != null) {
@@ -197,15 +182,10 @@ class Edit_ProfileActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener { e ->
                     progressDialog.dismiss()
-                    Toast.makeText(this@Edit_ProfileActivity, "Failed " + e.message, Toast.LENGTH_SHORT)
+                    Toast.makeText(this@Edit_ProfileActivity, "Failed ", Toast.LENGTH_SHORT)
                         .show()
                 }
-                .addOnProgressListener { taskSnapshot ->
-                    val progress =
-                        100.0 * taskSnapshot.bytesTransferred / taskSnapshot
-                            .totalByteCount
-                    progressDialog.setMessage("Uploaded " + progress.toInt() + "%")
-                }
+  
         }
     }
 
