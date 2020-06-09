@@ -1,29 +1,49 @@
 package com.example.quiplash
 
+import android.R.attr
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.Activity
+import android.app.PendingIntent.getActivity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
+import com.bumptech.glide.Glide
 import com.example.quiplash.DBMethods.DBCalls.Companion.editUser
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.EmailAuthProvider
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import java.io.IOException
-import java.io.InputStream
+import java.util.*
 
 
 class Edit_ProfileActivity : AppCompatActivity() {
-    //FirebaseAuth object
-    private var auth: FirebaseAuth? = null
-    private var authListener: FirebaseAuth.AuthStateListener? = null
-    private val GALLERY_REQUEST_CODE = 100
+
     private val CAMERA_REQUEST_CODE = 200
+    private val PICK_IMAGE_REQUEST = 71
+    private var filePath: Uri? = null
+    lateinit var current_User: UserQP
+
+    //Firebase
+    //private var auth: FirebaseAuth? = null
+    private lateinit var auth: FirebaseAuth
+    private var authListener: FirebaseAuth.AuthStateListener? = null
+    private var storage: FirebaseStorage? = null
+    private var storageReference: StorageReference? = null
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,104 +52,114 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
+        storage = FirebaseStorage.getInstance();
+        var fotostorage = FirebaseStorage.getInstance();
+        var storageRef = fotostorage!!.reference
+        var photoPath : String = "images/default-guest.png"
+
+        var viewProfilePic: ImageView = findViewById(R.id.imageView)
         val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow)
         val btnSave = findViewById<Button>(R.id.btnSave)
         val btnEditPicture = findViewById<Button>(R.id.btnPrrofilePic)
-        // TO DO: load userinformation
+        val btnChangeRest = findViewById<Button>(R.id.edit_rest)
         var viewUsername : EditText = findViewById(R.id.usernameFieldGuest)
-        var viewEmail: EditText = findViewById(R.id.email)
-        var viewPassword: EditText = findViewById(R.id.password)
 
-        val userinfo = getUserInfo()
-        viewUsername.hint = userinfo[0]
-        viewEmail.hint = userinfo[1]
-        viewPassword.hint = userinfo[2]
+        val callback = object: Callback<UserQP> {
+            override fun onTaskComplete(result :UserQP) {
+                current_User = result
+                if (current_User.userName.toString() == "User") {
+                    // display default info if fetching data fails
+                    viewUsername.hint = "Username"
+                    // set default user image if fetchting data fails
+                    var spaceRef = storageRef.child(photoPath)
+                    spaceRef.downloadUrl
+                        .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
+                            Glide
+                                .with(applicationContext)
+                                .load(uri)
+                                .into(viewProfilePic)
+                        }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
 
-        btnBack.setOnClickListener() {
-            super.onBackPressed();
-        }
-
-        btnEditPicture.setOnClickListener(){
-            // pickFromGallery()
-            pickFromCamera()
-       }
-
-        btnSave.setOnClickListener() {
-            val username = viewUsername.text.toString()
-            val email = viewEmail.text.toString()
-            val password = viewPassword.text.toString()
-
-            authListener = FirebaseAuth.AuthStateListener { firebaseAuth: FirebaseAuth ->
-                val ID = firebaseAuth.currentUser?.uid
-                val user = UserQP(ID, username, false, 0)
-                if (ID != null) {
-                    editUser(ID, user)
+                }
+                else {
+                    photoPath = current_User.photo.toString()
+                    viewUsername.hint = "Username"
+                    viewUsername.setText(current_User.userName.toString())
+                    var spaceRef = storageRef.child(photoPath)
+                    spaceRef.downloadUrl
+                        .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
+                            Glide
+                                .with(applicationContext)
+                                .load(uri)
+                                .into(viewProfilePic)
+                        }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
                 }
             }
+        }
+        DBMethods.DBCalls.getUser(callback)
 
-            // TO DO: Save user data to firebase
-            setUserInfo(username, email, password)
-
+        btnBack.setOnClickListener() {
             val intent = Intent(this, Profile_RegisteredActivity::class.java);
             startActivity(intent);
         }
+
+        btnEditPicture.setOnClickListener(){
+            // pickFromCamera()
+            chooseImage()
+        }
+
+        btnChangeRest.setOnClickListener() {
+            val intent = Intent(this, Edit_PW_Mail_Activity::class.java);
+            startActivity(intent);
+        }
+
+        btnSave.setOnClickListener() {
+            var uploadPath = uploadImage()
+            if (uploadPath != ""){
+                photoPath = uploadPath
+            }
+
+            val username = viewUsername.text.toString()
+            val ID = auth.currentUser?.uid.toString()
+
+            val user = UserQP(ID, username, false, 0, photoPath )
+             if (username.isEmpty() == false) {
+
+                 if (ID != null) {
+                     editUser(ID, user)
+                     val intent = Intent(this, Profile_RegisteredActivity::class.java);
+                     startActivity(intent);
+                 }
+             } else {
+                 Toast.makeText(this, "please tip in a new username", Toast.LENGTH_LONG).show()
+             }
+        }
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         var viewProfilePic: ImageView = findViewById(R.id.imageView)
-        if (resultCode === Activity.RESULT_OK && requestCode === GALLERY_REQUEST_CODE) {
-            try {
-                val selectedImage = data?.data
-                val imageStream: InputStream? = selectedImage?.let {
-                    contentResolver.openInputStream(
-                        it
-                    )
-                }
-                viewProfilePic.setImageBitmap(BitmapFactory.decodeStream(imageStream))
-            } catch (exception: IOException) {
-                exception.printStackTrace()
-            }
-        }
 
+        // pick from camera
         if (requestCode === CAMERA_REQUEST_CODE && resultCode === Activity.RESULT_OK) {
             val extras: Bundle? = data?.extras
             val imageBitmap = extras?.get("data") as Bitmap?
             viewProfilePic.setImageBitmap(imageBitmap)
         }
-    }
 
-    // TO DO: GET USER INFO
-    fun getUserInfo(): Array<String> {
-        var username: String = "No Username found"
-        var email: String = "No Email found"
-        var password: String = "••••••••••••"
-
-        val userinfo = arrayOf(
-            username,
-            email,
-            password
-        )
-
-        return userinfo
-    }
-
-    // TO DO: SET USER INFO
-    fun setUserInfo(username: String, email: String, password: String) {
-
-    }
-
-    private fun pickFromGallery() {
-        //Create an Intent with action as ACTION_PICK
-        val intent = Intent(Intent.ACTION_PICK)
-        // Sets the type as image/*. This ensures only components of type image are selected
-        intent.type = "image/*"
-        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
-        val mimeTypes =
-            arrayOf("image/jpeg", "image/png")
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-        // Launching the Intent
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_REQUEST_CODE)
+        // choose image
+        if (requestCode === PICK_IMAGE_REQUEST && resultCode === Activity.RESULT_OK && attr.data != null && data?.data != null
+        ) {
+            filePath = data?.data!!
+            try {
+                val bitmap =
+                    MediaStore.Images.Media.getBitmap(contentResolver, filePath)
+                viewProfilePic.setImageBitmap(bitmap)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
     }
 
     private fun pickFromCamera() {
@@ -139,4 +169,37 @@ class Edit_ProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun chooseImage() {
+        val intent = Intent()
+        intent.type = "image/*"
+        val mimeTypes =
+            arrayOf("image/jpeg", "image/png")
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
+    }
+
+    private fun uploadImage(): String {
+        var photoPath: String = ""
+        if (filePath != null) {
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setTitle("Uploading...")
+            progressDialog.show()
+            storageReference = storage!!.getReference();
+            photoPath = "images/" + UUID.randomUUID().toString()
+            val ref =
+                storageReference!!.child(photoPath)
+            ref.putFile(filePath!!)
+                .addOnSuccessListener {
+                    progressDialog.dismiss()
+                    Toast.makeText(this@Edit_ProfileActivity, "Uploaded", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e ->
+                    progressDialog.dismiss()
+                    Toast.makeText(this@Edit_ProfileActivity, "Failed ", Toast.LENGTH_SHORT)
+                        .show()
+                }
+        }
+        return photoPath
+    }
 }

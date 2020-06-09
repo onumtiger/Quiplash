@@ -57,7 +57,7 @@ class SignUpActivity : AppCompatActivity() {
 
         val btnSignIn = findViewById<Button>(R.id.signinBtn)
         val btnSignUp = findViewById<Button>(R.id.signupBtn)
-        val btnSubmit = findViewById<Button>(R.id.btnSigninRP)
+        val btnSubmit = findViewById<Button>(R.id.submitBtn)
         val btnAnonymous = findViewById<Button>(R.id.anonymousBtn)
         val inputEmail = findViewById<EditText>(R.id.emailFieldSU)
         val inputPassword = findViewById<EditText>(R.id.passwordFieldSU)
@@ -215,9 +215,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         //create user-object
-        val user =
-            UserQP(auth.currentUser?.uid, editTextUsername.text.toString(), !isUser, 0)
-
+        val user = UserQP(auth.currentUser?.uid, editTextUsername.text.toString(), !isUser, 0, "images/default-user.png")
 
         //save user in game-manager (for easy access in further dev)
         setUserinfo(user)
