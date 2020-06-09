@@ -14,8 +14,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.example.quiplash.GameManager.Companion.setUserinfo
 
 
 class SignInActivity : AppCompatActivity() {
@@ -150,10 +150,10 @@ class SignInActivity : AppCompatActivity() {
     private fun setUser(userid: String) {
         //fetch User-Data
         FirebaseFirestore.getInstance().collection(dbUsersPath).document(userid).get().addOnSuccessListener { documentSnapshot ->
-            val user = documentSnapshot.toObject(User::class.java)
+            val user = documentSnapshot.toObject(UserQP::class.java)
             if (user != null) {
                 //if user exist save fetched user-data in GameManager
-                GameManager().setUserinfo(user)
+                setUserinfo(user)
             }
         }
         val intent = Intent(this@SignInActivity, LandingActivity::class.java)

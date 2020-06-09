@@ -3,8 +3,6 @@ package com.example.quiplash
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
-import android.widget.Button
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
@@ -41,10 +39,11 @@ class DBMethods {
 
             val db = FirebaseFirestore.getInstance()
             lateinit var res: QuerySnapshot
-            var _users: MutableLiveData<ArrayList<User>> = MutableLiveData<ArrayList<User>>()
-            var allUsers = ArrayList<User>()
+            var _users: MutableLiveData<ArrayList<UserQP>> = MutableLiveData<ArrayList<UserQP>>()
+            var allUsers = ArrayList<UserQP>()
             var allQuestions = ArrayList<Question>()
             var GameQuestions = ArrayList<Question>()
+            var allGames = mutableListOf<Game>()
             var actual = false
 
 
@@ -72,7 +71,7 @@ class DBMethods {
                 attributes.put("ID", ID)
                 attributes.put("guest", guest)
                 attributes.put("score", score)
-                val usr = User(ID, user_name, true, score)
+                val usr = UserQP(ID, user_name, true, score)
                 db.collection("users").document().set(usr).addOnSuccessListener {
                     //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener{
@@ -91,7 +90,7 @@ class DBMethods {
             getUsers(callback)
             */
 
-            public fun getUsers(callback: Callback<ArrayList<User>>) {
+            public fun getUsers(callback: Callback<ArrayList<UserQP>>) {
                 db.collection("users")
                     //.whereEqualTo("capital", true)
                     .get()
@@ -100,7 +99,7 @@ class DBMethods {
                             Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
                             val documents2 = documents
                             documents2.forEach{
-                                val user = it.toObject(User::class.java)
+                                val user = it.toObject(UserQP::class.java)
                                 if (user != null) {
                                     user.userID = it.id
                                     allUsers.add(user)
@@ -152,13 +151,13 @@ class DBMethods {
                     }
                     getQuestions(callback)
                 }
-                    var position = (0..GameQuestions.size-1).random()
-                    var question = GameQuestions[position]
-                    GameQuestions.drop(position)
-                    return question
+                var position = (0..GameQuestions.size-1).random()
+                var question = GameQuestions[position]
+                GameQuestions.drop(position)
+                return question
             }
 
-            public fun editUser(ID :String, user :User) {
+            public fun editUser(ID :String, user :UserQP) {
                 db.collection("users").document(ID).set(user).addOnSuccessListener {
                     //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener{
@@ -180,13 +179,29 @@ class DBMethods {
                 }
             }
 
+            public fun setGame(game: Game): String {
+                val ref = db.collection("games").document()
+                game.gameID = ref.id
+                ref.set(game)
 
-        @Throws(Exception::class)
-        fun createID(): String? {
-            return UUID.randomUUID().toString()
-        }
+                return game.gameID
+            }
+
+
+            public fun updateGameUsers(game: Game) {
+                val gameID = game.gameID
+                val ref = db.collection("games").document(gameID)
+                ref.update("users", game.users)
+                    .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
+                    .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
+            }
+
+            @Throws(Exception::class)
+            fun createID(): String? {
+                return UUID.randomUUID().toString()
+            }
         }
     }
 
 
-    }
+}

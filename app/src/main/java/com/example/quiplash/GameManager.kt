@@ -9,17 +9,28 @@ package com.example.quiplash
 
 class GameManager {
 
-    var user = User()
-    //var score: Int?= null
+    companion object {
+        var user = UserQP()
+        var game = Game()
+        //var score: Int?= null
 
-    //getter
-    fun getUserInfo(): User {
-        return this.user
-    }
+        //getter
+        fun getUserInfo(): UserQP {
+            return this.user
+        }
 
-    // setter
-    fun setUserinfo(userinfo:User) {
-        this.user = userinfo
+        fun getGameInfo(): Game {
+            return this.game
+        }
+
+        // setter
+        fun setUserinfo(userinfo: UserQP) {
+            this.user = userinfo
+        }
+
+        fun setGameinfo(gameinfo: Game) {
+            this.game = gameinfo
+        }
     }
 
 }

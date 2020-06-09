@@ -13,9 +13,9 @@ class Choose_AnswerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_answer)
 
-        Handler().postDelayed({
+       /* Handler().postDelayed({
             val intent = Intent(this, EvaluationActivity::class.java);
             startActivity(intent)
-        }, 3000)
+        }, 3000)*/
     }
 }

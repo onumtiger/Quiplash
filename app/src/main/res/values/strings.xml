@@ -86,4 +86,8 @@
     <string name="password">Password</string>
     <string name="password_retype">Retype Password</string>
     <string name="username_not_available">Username already exists, please choose another username</string>
+    <string name="already_have_an_account">You already have an account?</string>
+    <string name="reset_password_success">We\'ve sent you an email to reset your password to your provided e-mail address</string>
+    <string name="back_to_login">Back to Login</string>
+    <string name="email_already_exists">This e-mail does not exist in our system. Please check your input</string>
 </resources>

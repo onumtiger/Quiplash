@@ -1,15 +1,11 @@
 package com.example.quiplash
 
-import android.content.ContentValues
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.quiplash.DBMethods.DBCalls.Companion.allUsers
 import com.example.quiplash.DBMethods.DBCalls.Companion.editUser
-import com.example.quiplash.DBMethods.DBCalls.Companion.getQuestions
 import com.example.quiplash.DBMethods.DBCalls.Companion.getUsers
 import com.example.quiplash.DBMethods.DBCalls.Companion.saveQuestion
 import com.example.quiplash.DBMethods.DBCalls.Companion.saveUser
@@ -23,7 +19,7 @@ class Database : AppCompatActivity() {
     lateinit var question_text: EditText
     lateinit var question_type: EditText
     lateinit var show_users2: EditText
-    lateinit var test: ArrayList<User>
+    lateinit var test: ArrayList<UserQP>
 
     //Add User
     lateinit var saveButtonUser: Button
@@ -55,15 +51,15 @@ class Database : AppCompatActivity() {
         show_users.setOnClickListener {
 
 
-            val user = User("test", "Juli<3<3>", false, 0)
+            val user = UserQP("test", "Juli<3<3>", false, 0)
             editUser("sSl61HRtniQLZI92Ifj2", user)
 
             Toast.makeText(this, test.first().userName, Toast.LENGTH_LONG).show()
         }
 
 
-        val callback = object: Callback<ArrayList<User>> {
-            override fun onTaskComplete(result: ArrayList<User>) {
+        val callback = object: Callback<ArrayList<UserQP>> {
+            override fun onTaskComplete(result: ArrayList<UserQP>) {
                 test = result
             }
         }

@@ -47,7 +47,7 @@ class New_GameActivity : AppCompatActivity() {
         val roundSpinner = roundsSpinner.selectedItem.toString()
         val rounds = roundSpinner.substringBefore(' ').toInt()
         val activeRound = 1
-        val users: HashMap<String, String> = hashMapOf("userID1" to auth.currentUser?.uid.toString())
+        val users: ArrayList<String> = arrayListOf(auth.currentUser?.uid.toString())
         val gameID = ""
 
         val newGame = Game(activeRound, category, playerNumbers, rounds, users, gameID)

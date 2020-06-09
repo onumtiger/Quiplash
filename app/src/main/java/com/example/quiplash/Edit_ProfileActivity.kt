@@ -1,6 +1,5 @@
 package com.example.quiplash
 
-import android.R.attr
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -62,7 +61,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
             authListener = FirebaseAuth.AuthStateListener { firebaseAuth: FirebaseAuth ->
                 val ID = firebaseAuth.currentUser?.uid
-                val user = User(ID, username, false, 0)
+                val user = UserQP(ID, username, false, 0)
                 if (ID != null) {
                     editUser(ID, user)
                 }
