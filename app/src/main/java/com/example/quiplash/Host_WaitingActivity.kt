@@ -29,13 +29,12 @@ class Host_WaitingActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: CollectionReference
-    private val dbGamesPath = "testGames"
+    private val dbGamesPath = "games"
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
-
 
         setContentView(R.layout.activity_host_waiting)
 
@@ -48,40 +47,39 @@ class Host_WaitingActivity : AppCompatActivity() {
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefresh)
         auth = FirebaseAuth.getInstance()
 
-        val gameID: String? = intent.getStringExtra("gameID")
-        getUsersList(playersListView, gameID!!, btnStartGame, btnEndGame, btnLeaveGame)
+        //val gameID: String? = intent.getStringExtra("gameID")
+        getUsersList(playersListView, game.gameID, btnStartGame, btnEndGame, btnLeaveGame)
 
         btnBack.setOnClickListener() {
             super.onBackPressed();
         }
 
         btnStartGame.setOnClickListener() {
-            startGame()
+            createAllRounds()
         }
 
         btnEndGame.setOnClickListener() {
-            deleteGame(gameID)
+            deleteGame(game.gameID)
             val intent = Intent(this, LandingActivity::class.java);
             startActivity(intent)
         }
 
         btnLeaveGame.setOnClickListener() {
-           // removeUserFromGame(gameID, auth.currentUser?.uid.toString())
+            // removeUserFromGame(gameID, auth.currentUser?.uid.toString())
             val intent = Intent(this, LandingActivity::class.java);
             startActivity(intent)
         }
 
         refreshLayout.setOnRefreshListener() {
-            getUsersList(playersListView, gameID!!, btnStartGame, btnEndGame, btnLeaveGame)
+            getUsersList(playersListView, game.gameID, btnStartGame, btnEndGame, btnLeaveGame)
             refreshLayout.isRefreshing = false
         }
 
-        btnInvite_Players.setOnClickListener(){
+        btnInvite_Players.setOnClickListener() {
             val dialogFragment = Invite_Player()
             val ft = supportFragmentManager.beginTransaction()
             val prev = supportFragmentManager.findFragmentByTag("invite")
-            if (prev != null)
-            {
+            if (prev != null) {
                 ft.remove(prev)
             }
             ft.addToBackStack(null)
@@ -99,46 +97,52 @@ class Host_WaitingActivity : AppCompatActivity() {
         }
     }
 
-    fun getUsersList(playersListView: ListView, gameID: String, btnStartGame: Button, btnEndGame: Button, btnLeaveGame: Button) {
-        var playersNames = mutableListOf<String>()
+    fun getUsersList(
+        playersListView: ListView,
+        gameID: String,
+        btnStartGame: Button,
+        btnEndGame: Button,
+        btnLeaveGame: Button
+    ) {
+        val playersNames = mutableListOf<String>()
         var userIDList = mutableListOf<String>()
         var currentGame: Game
-        val callback = object: Callback<Game> {
+        val callback = object : Callback<Game> {
             override fun onTaskComplete(result: Game) {
                 currentGame = result
                 setBtnVisibility(currentGame, btnStartGame, btnEndGame, btnLeaveGame)
                 var playerNumber = currentGame.playerNumber
                 var currentPlayerNumber = currentGame.users.size
                 val players = currentGame?.users
-                if (players != null) {
-                    userIDList = players.toMutableList()
-                    userIDList.forEach{
-                       val callbackUser = object : Callback<UserQP> {
-                           override fun onTaskComplete(result: UserQP) {
-                               var user = result
-                               playersNames.add(user.userName!!)
-                               val adapter = PlayersListAdapter(
-                                   applicationContext,
-                                   R.layout.host_waiting_list_item,
-                                   playersNames
-                               )
-                               playersListView.adapter = adapter
-                               setStartBtn(currentPlayerNumber, playerNumber, btnStartGame)
-                           }
-                       }
-                        getUserWithID(callbackUser, it)
+                userIDList = players.toMutableList()
+                userIDList.forEach {
+                    val callbackUser = object : Callback<UserQP> {
+                        override fun onTaskComplete(result: UserQP) {
+                            var user = result
+                            playersNames.add(user.userName!!)
+                            val adapter = PlayersListAdapter(
+                                applicationContext,
+                                R.layout.host_waiting_list_item,
+                                playersNames
+                            )
+                            playersListView.adapter = adapter
+                            setStartBtn(currentPlayerNumber, playerNumber, btnStartGame)
+                        }
                     }
+                    getUserWithID(callbackUser, it)
                 }
             }
         }
         getCurrentGame(callback, gameID)
     }
 
-    fun startGame() {
-        createAllRounds()
-    }
 
-    fun setBtnVisibility(game: Game, btnStartGame: Button, btnEndGame: Button, btnLeaveGame: Button) {
+    fun setBtnVisibility(
+        game: Game,
+        btnStartGame: Button,
+        btnEndGame: Button,
+        btnLeaveGame: Button
+    ) {
         if (game.users.contains(auth.currentUser?.uid.toString())) {
             btnStartGame.visibility = View.VISIBLE
             btnEndGame.visibility = View.VISIBLE
@@ -150,6 +154,21 @@ class Host_WaitingActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * All Rounds will be created here before game actually starts.
+     * At this point users-count is definitely sure and known.
+     * By the knowledge of participants-count and rounds, every round can be created.
+     * In a game round, each player competes once against each player in a duel to answer a question.
+     * In addition, the rounds created are multiplied by the required number of rounds.
+     * For example:
+     * Players = 3
+     * Rounds = 3
+     * [Round1.1: competeters = user1 & user2, voters = user3;
+     * Round1.2: competeters = user2 & user3; voters = user1;
+     * Round1.3: competeters = user1 & user3; voters = user2]
+     * --> This is one Round, so that it stays fair ;)
+     * --> total rounds = 9
+     * **/
     fun createAllRounds() {
         var allRoundCount = 1
         var jump = 1

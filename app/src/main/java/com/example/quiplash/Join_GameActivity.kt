@@ -27,7 +27,7 @@ class Join_GameActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: CollectionReference
-    private val dbGamesPath = "testGames"
+    private val dbGamesPath = "games"
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,8 +60,7 @@ class Join_GameActivity : AppCompatActivity() {
         activeGamesList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             // Get the selected item text from ListView
             val selectedItem = parent.getItemAtPosition(position) as Game
-            val userSize= selectedItem.users.size + 1
-            val userID = "userID$userSize"
+
             selectedItem.users.toMutableList().add(auth.currentUser?.uid.toString())
             updateGameUsers(selectedItem)
 

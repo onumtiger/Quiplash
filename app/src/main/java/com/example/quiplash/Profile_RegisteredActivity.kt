@@ -21,7 +21,7 @@ import com.google.firebase.storage.FirebaseStorage
 class Profile_RegisteredActivity : AppCompatActivity() {
     //FirebaseAuth object
     private var auth: FirebaseAuth? = null
-    lateinit var current_User: User
+    lateinit var current_User: UserQP
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +30,7 @@ class Profile_RegisteredActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         var fotostorage = FirebaseStorage.getInstance();
-        var storageRef = fotostorage!!.reference
+        var storageRef = fotostorage.reference
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow)
         val btnEditProfile = findViewById<Button>(R.id.btnEditProfile)
@@ -44,8 +44,8 @@ class Profile_RegisteredActivity : AppCompatActivity() {
 
 
 
-        val callback = object: Callback<User> {
-            override fun onTaskComplete(result :User) {
+        val callback = object: Callback<UserQP> {
+            override fun onTaskComplete(result :UserQP) {
                 current_User = result
                 if (current_User.userName.toString() == "User") {
                     // display default data if fetching user data fails
