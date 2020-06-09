@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import java.util.*
@@ -223,6 +224,75 @@ class DBMethods {
                 ref.update("users", game.users)
                     .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
                     .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
+            }
+
+            public fun getActiveGames(callback: Callback<MutableList<Game>>, gameList: MutableList<Game>) {
+                val docRef = db.collection("games")
+                docRef.get()
+                    .addOnSuccessListener { result ->
+                        for (document in result) {
+                            Log.d("TAG", "${document.id} => ${document.data}")
+                            val activeGame = document.toObject(Game::class.java)
+                            if (activeGame.playerNumber != activeGame.users.size) {
+                                gameList.add(activeGame)
+                            }
+                        }
+                        callback.onTaskComplete(gameList)
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.d("TAG", "Error getting documents: ", exception)
+                    }
+            }
+
+            public fun getCurrentGame(callback: Callback<Game>, gameID: String) {
+                var currentGame: Game = Game()
+                var playersList = mutableListOf<String>()
+                val docRef = db.collection("games").document(gameID)
+                docRef.get()
+                    .addOnSuccessListener { document ->
+                        if (document != null) {
+                            Log.d("TAG", "${document.id} => ${document.data}")
+                            val game = document.toObject (Game::class.java)
+                            if (game != null) {
+                                currentGame = game
+                                val players = game?.users?.values
+                                if (players != null) {
+                                    playersList = players.toMutableList()
+                                    Log.d("playersListSize", "${playersList.size}")
+                                }
+                            }
+                            callback.onTaskComplete(currentGame)
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.d("TAG", "Error getting documents: ", exception)
+
+                    }
+            }
+
+            public fun getUserWithID(callback: Callback<User>, userID: String) {
+               println(userID)
+                val docRef = db.collection("users").document(userID)
+                docRef.get()
+                    .addOnSuccessListener { document ->
+                        if (document != null) {
+                            Log.d("lALE", "${document.id} => ${document.data}")
+                            val user = document.toObject(User::class.java)!!
+                            callback.onTaskComplete(user)
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.d("TAG", "Error getting documents: ", exception)}
+            }
+
+            public fun deleteGame(gameID: String) {
+                val docRef = db.collection("games").document(gameID)
+                    docRef.delete()
+                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
+                        .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+            }
+
+            public fun removeUserFromGame(gameID: String, userID: String) {
             }
 
             @Throws(Exception::class)

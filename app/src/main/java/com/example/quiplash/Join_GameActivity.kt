@@ -11,6 +11,8 @@ import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.quiplash.DBMethods.DBCalls.Companion.getActiveGames
 import com.example.quiplash.DBMethods.DBCalls.Companion.updateGameUsers
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -34,7 +36,7 @@ class Join_GameActivity : AppCompatActivity() {
         val btnNewGameActivity = findViewById<AppCompatImageButton>(R.id.join_new_game_btn)
         val btnBack = findViewById<AppCompatImageButton>(R.id.join_game_go_back_arrow)
         val activeGamesList = findViewById<ListView>(R.id.active_games_list)
-        gameList = mutableListOf()
+        val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefresh)
 
         btnNewGameActivity.setOnClickListener() {
             val intent = Intent(this, New_GameActivity::class.java);
@@ -45,23 +47,12 @@ class Join_GameActivity : AppCompatActivity() {
             super.onBackPressed();
         }
 
-        val db = FirebaseFirestore.getInstance()
-        val docRef = db.collection("games")
-        docRef.get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d("TAG", "${document.id} => ${document.data}")
-                    val activeGame = document.toObject(Game::class.java)
-                    gameList.add(activeGame!!)
-                    val adapter = GameListAdapter(applicationContext, R.layout.active_game_list_item, gameList)
-                    activeGamesList.adapter = adapter
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.d("TAG", "Error getting documents: ", exception)
+        refreshLayout.setOnRefreshListener() {
+            getGamesList(activeGamesList)
+            refreshLayout.isRefreshing = false
+        }
 
-            }
-
+        getGamesList(activeGamesList)
         activeGamesList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             // Get the selected item text from ListView
             val selectedItem = parent.getItemAtPosition(position) as Game
@@ -73,9 +64,19 @@ class Join_GameActivity : AppCompatActivity() {
             val intent = Intent(this, Host_WaitingActivity::class.java);
             intent.putExtra("gameID",selectedItem.gameID)
             startActivity(intent);
-
         }
+    }
 
+    fun getGamesList(activeGamesList: ListView) {
+        gameList = mutableListOf()
+        val callback = object: Callback<MutableList<Game>> {
+            override fun onTaskComplete(result: MutableList<Game>) {
+                gameList = result
+                val adapter = GameListAdapter(applicationContext, R.layout.active_game_list_item, gameList)
+                activeGamesList.adapter = adapter
+            }
+        }
+        getActiveGames(callback, gameList)
     }
 }
 
