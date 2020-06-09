@@ -75,9 +75,9 @@ class Edit_ProfileActivity : AppCompatActivity() {
                     spaceRef.downloadUrl
                         .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
                             Glide
-                                .with(getApplicationContext())
-                                .load(uri) // the uri you got from Firebase
-                                .into(viewProfilePic); //Your imageView variable
+                                .with(applicationContext)
+                                .load(uri)
+                                .into(viewProfilePic)
                         }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
 
                 }
@@ -89,9 +89,9 @@ class Edit_ProfileActivity : AppCompatActivity() {
                     spaceRef.downloadUrl
                         .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
                             Glide
-                                .with(getApplicationContext())
-                                .load(uri) // the uri you got from Firebase
-                                .into(viewProfilePic); //Your imageView variable
+                                .with(applicationContext)
+                                .load(uri)
+                                .into(viewProfilePic)
                         }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
                 }
             }

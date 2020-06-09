@@ -21,7 +21,6 @@ import com.google.firebase.storage.FirebaseStorage
 class Profile_RegisteredActivity : AppCompatActivity() {
     //FirebaseAuth object
     private var auth: FirebaseAuth? = null
-    private var authListener: FirebaseAuth.AuthStateListener? = null
     lateinit var current_User: User
 
     @SuppressLint("WrongViewCast")
@@ -61,9 +60,9 @@ class Profile_RegisteredActivity : AppCompatActivity() {
                     spaceRef.downloadUrl
                         .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
                             Glide
-                                .with(getApplicationContext())
-                                .load(uri) // the uri you got from Firebase
-                                .into(viewProfilePic); //Your imageView variable
+                                .with(applicationContext)
+                                .load(uri)
+                                .into(viewProfilePic)
                         }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
 
                 }
@@ -74,17 +73,18 @@ class Profile_RegisteredActivity : AppCompatActivity() {
                     viewScore.text = current_User.score.toString()
 
                     photoPath = current_User.photo.toString()
+                    // timer is needed to load new photo is user edits its profile pic
                     val handler = Handler()
                     handler.postDelayed(Runnable {
                         var spaceRef = storageRef.child(photoPath)
                         spaceRef.downloadUrl
                             .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
                                 Glide
-                                    .with(getApplicationContext())
-                                    .load(uri) // the uri you got from Firebase
-                                    .into(viewProfilePic); //Your imageView variable
+                                    .with(applicationContext)
+                                    .load(uri)
+                                    .into(viewProfilePic)
                             }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
-                    }, 500)
+                    }, 200)
                 }
             }
         }
@@ -111,23 +111,6 @@ class Profile_RegisteredActivity : AppCompatActivity() {
             ft.addToBackStack(null)
             dialogFragment.show(ft, "delete")
         }
-    }
-
-    // TO DO: GET USER INFO
-    fun getUserInfo(): Array<String> {
-
-
-        var username: String =  "singleUser.userName.toString()"
-        var email: String = "auth?.currentUser?.email.toString()"
-        var score: String = "singleUser.score.toString()"
-
-        val userinfo = arrayOf(
-            username,
-            email,
-            score
-        )
-
-        return userinfo
     }
 
     fun getUserInfoDefault(): Array<String> {
