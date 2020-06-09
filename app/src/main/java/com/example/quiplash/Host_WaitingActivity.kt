@@ -13,16 +13,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.quiplash.DBMethods.DBCalls.Companion.deleteGame
 import com.example.quiplash.DBMethods.DBCalls.Companion.getCurrentGame
 import com.example.quiplash.DBMethods.DBCalls.Companion.getUserWithID
-import com.example.quiplash.DBMethods.DBCalls.Companion.removeUserFromGame
 import com.google.firebase.auth.FirebaseAuth
 import com.example.quiplash.GameManager.Companion.game
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import org.java_websocket.client.WebSocketClient
-import org.java_websocket.drafts.Draft
-import org.java_websocket.drafts.Draft_17
-import org.java_websocket.handshake.ServerHandshake
-import java.net.URI
+
 
 class Host_WaitingActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -47,35 +42,34 @@ class Host_WaitingActivity : AppCompatActivity() {
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefresh)
         auth = FirebaseAuth.getInstance()
 
-        //val gameID: String? = intent.getStringExtra("gameID")
         getUsersList(playersListView, game.gameID, btnStartGame, btnEndGame, btnLeaveGame)
 
-        btnBack.setOnClickListener() {
-            super.onBackPressed();
+        btnBack.setOnClickListener {
+            super.onBackPressed()
         }
 
-        btnStartGame.setOnClickListener() {
+        btnStartGame.setOnClickListener {
             createAllRounds()
         }
 
-        btnEndGame.setOnClickListener() {
+        btnEndGame.setOnClickListener {
             deleteGame(game.gameID)
-            val intent = Intent(this, LandingActivity::class.java);
+            val intent = Intent(this, LandingActivity::class.java)
             startActivity(intent)
         }
 
-        btnLeaveGame.setOnClickListener() {
+        btnLeaveGame.setOnClickListener {
             // removeUserFromGame(gameID, auth.currentUser?.uid.toString())
-            val intent = Intent(this, LandingActivity::class.java);
+            val intent = Intent(this, LandingActivity::class.java)
             startActivity(intent)
         }
 
-        refreshLayout.setOnRefreshListener() {
+        refreshLayout.setOnRefreshListener {
             getUsersList(playersListView, game.gameID, btnStartGame, btnEndGame, btnLeaveGame)
             refreshLayout.isRefreshing = false
         }
 
-        btnInvite_Players.setOnClickListener() {
+        btnInvite_Players.setOnClickListener {
             val dialogFragment = Invite_Player()
             val ft = supportFragmentManager.beginTransaction()
             val prev = supportFragmentManager.findFragmentByTag("invite")
@@ -113,7 +107,7 @@ class Host_WaitingActivity : AppCompatActivity() {
                 setBtnVisibility(currentGame, btnStartGame, btnEndGame, btnLeaveGame)
                 var playerNumber = currentGame.playerNumber
                 var currentPlayerNumber = currentGame.users.size
-                val players = currentGame?.users
+                val players = currentGame.users
                 userIDList = players.toMutableList()
                 userIDList.forEach {
                     val callbackUser = object : Callback<UserQP> {
@@ -215,7 +209,7 @@ class Host_WaitingActivity : AppCompatActivity() {
 
                 //myWebSocketClient.send(game.gameID)
 
-                val intent = Intent(this, Game_LaunchingActivity::class.java);
+                val intent = Intent(this, Game_LaunchingActivity::class.java)
                 startActivity(intent)
             }
             .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }

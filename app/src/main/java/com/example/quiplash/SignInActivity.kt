@@ -45,7 +45,7 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Get Firebase auth instance
-        FirebaseApp.initializeApp(this);
+        FirebaseApp.initializeApp(this)
         // Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
 
@@ -89,19 +89,19 @@ class SignInActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
 
-                val intent = Intent(this@SignInActivity, SignUpActivity::class.java);
-                startActivity(intent);
+                val intent = Intent(this@SignInActivity, SignUpActivity::class.java)
+                startActivity(intent)
             }
         }
 
         btnDB.setOnClickListener{
-            val intent = Intent(this@SignInActivity, Database::class.java);
-            startActivity(intent);
+            val intent = Intent(this@SignInActivity, Database::class.java)
+            startActivity(intent)
         }
 
         btnResetPassword.setOnClickListener{
-            val intent = Intent(this@SignInActivity, ResetPasswordActivity::class.java);
-            startActivity(intent);
+            val intent = Intent(this@SignInActivity, ResetPasswordActivity::class.java)
+            startActivity(intent)
         }
 
         btnLogin.setOnClickListener{

@@ -30,12 +30,6 @@ class Game {
         this.rounds = gameRounds
         this.users = gameUsers
         this.gameID = gameid
-        this.playrounds = listOf(
-            Round(
-                listOf("1ZqX1o543dZzMW4fCJL3pVvloZ83", "4FSb0bD9w9SkKoBm5OTu47dxi2v2"),
-                listOf("4VJCSPx5F8AhZ5GkdeEa", "70GSUacYuHT03uoos8iSBPhERGl1")
-            )
-        )
     }
 
     constructor(
