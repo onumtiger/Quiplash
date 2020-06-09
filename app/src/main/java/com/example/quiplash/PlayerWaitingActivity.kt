@@ -30,7 +30,7 @@ class PlayerWaitingActivity  : AppCompatActivity() {
                 Log.d("SUCCESS", "Current data: ${snapshot.data}")
                 game = snapshot.toObject(Game::class.java)!!
                 if(game.playrounds.size <0){
-                    val intent = Intent(this, Game_LaunchingActivity::class.java)
+                    val intent = Intent(this, GameLaunchingActivity::class.java)
                     startActivity(intent)
                 }
 

@@ -183,9 +183,8 @@ class Host_WaitingActivity : AppCompatActivity() {
                         votersarr += user
                     }
                 }
-                oneRound += (Round(
-                    listOf(game.users[roundCount], game.users[(roundCount + jump)]),
-                    voters
+                oneRound += (Round(voters,
+                    listOf(RoundUser(game.users[roundCount]), RoundUser(game.users[(roundCount + jump)]))
                 ))
 
                 roundCount += 1
@@ -209,7 +208,7 @@ class Host_WaitingActivity : AppCompatActivity() {
 
                 //myWebSocketClient.send(game.gameID)
 
-                val intent = Intent(this, Game_LaunchingActivity::class.java)
+                val intent = Intent(this, GameLaunchingActivity::class.java)
                 startActivity(intent)
             }
             .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
