@@ -5,13 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.ViewFlipper
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quiplash.DBMethods.DBCalls.Companion.getRandomQuestion
 import com.google.firebase.firestore.CollectionReference
 import com.example.quiplash.GameManager.Companion.game
+import com.example.quiplash.GameMethods.GameCalls.Companion.startTimer
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -60,9 +59,18 @@ class PrepareAnswerActivity : AppCompatActivity() {
         viewFlipper.inAnimation = inAni
         viewFlipper.outAnimation = out
 
+        var question_count = game.rounds*game.users.count()/2
 
 
-        viewQuestion.setOnClickListener {
+            Toast.makeText(this, game.questions?.first()?.question, Toast.LENGTH_SHORT).show()
+
+            startTimer(textViewTimer, 20)
+        //var question = getRandomQuestion()
+        //textViewQuestion.text = question.question
+        textViewQuestion.text = "lelele"
+
+
+            viewQuestion.setOnClickListener {
             viewFlipper.showNext()
         }
 

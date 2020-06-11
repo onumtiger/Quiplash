@@ -48,7 +48,7 @@ class New_GameActivity : AppCompatActivity() {
         val users: ArrayList<String> = arrayListOf(auth.currentUser?.uid.toString())
         val gameID = ""
 
-        val newGame = Game(activeRound, category, playerNumbers, rounds, users, gameID)
+        val newGame = Game(activeRound, category, playerNumbers, rounds, users, gameID, null)
         game = newGame
         return setGame(newGame)
     }

@@ -30,7 +30,7 @@ class GameMethods {
 
                 textView.text = "$minute:$seconds"
             }
-    
+
             private fun resetTimer(textView :TextView) {
                 time_in_milli_seconds = 60000L
                 updateTextUI(textView)

@@ -64,6 +64,9 @@ class Edit_ProfileActivity : AppCompatActivity() {
         val btnChangeRest = findViewById<Button>(R.id.edit_rest)
         var viewUsername : EditText = findViewById(R.id.usernameFieldGuest)
 
+        lateinit var test: ArrayList<UserQP>
+
+
         val callback = object: Callback<UserQP> {
             override fun onTaskComplete(result :UserQP) {
                 current_User = result
@@ -113,6 +116,20 @@ class Edit_ProfileActivity : AppCompatActivity() {
             startActivity(intent);
         }
 
+
+        val callback2 = object: Callback<ArrayList<UserQP>> {
+            override fun onTaskComplete(result: ArrayList<UserQP>) {
+                test = result
+
+                editUser("1ZqX1o543dZzMW4fCJL3pVvloZ83", test.first())
+                editUser("1ZqX1o543dZzMW4fCJL3pVvloZ83", test.last())
+                editUser("1ZqX1o543dZzMW4fCJL3pVvloZ83", test.get(2))
+
+            }
+        }
+        DBMethods.DBCalls.getUsers(callback2)
+
+
         btnSave.setOnClickListener() {
             var uploadPath = uploadImage()
             if (uploadPath != ""){
@@ -122,7 +139,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
             val username = viewUsername.text.toString()
             val ID = auth.currentUser?.uid.toString()
 
-            val user = UserQP(ID, username, false, 0, photoPath )
+            val user = UserQP(ID, username, false, 0, photoPath, null )
              if (username.isEmpty() == false) {
 
                  if (ID != null) {

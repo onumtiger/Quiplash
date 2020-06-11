@@ -34,53 +34,5 @@ class Choose_AnswerActivity : AppCompatActivity() {
         othertimer.visibility = View.INVISIBLE
 
         startTimer(timerView, 18)
-
-       /* Handler().postDelayed({
-            val intent = Intent(this, EvaluationActivity::class.java);
-            startActivity(intent)
-        }, 3000)*/
     }
-
-/*
-
-    private fun pauseTimer() {
-
-        countdown_timer.cancel()
-        isRunning = false
-    }
-
-    private fun startTimer(time_in_seconds: Long) {
-        countdown_timer = object : CountDownTimer(time_in_seconds, 1000) {
-            override fun onFinish() {
-            }
-
-            override fun onTick(p0: Long) {
-                time_in_milli_seconds = p0
-                updateTextUI()
-            }
-        }
-        countdown_timer.start()
-
-        isRunning = true
-
-
-    }
-
-    private fun resetTimer() {
-        time_in_milli_seconds = START_MILLI_SECONDS
-        updateTextUI()
-    }
-
-    private fun updateTextUI() {
-        val minute = (time_in_milli_seconds / 1000) / 60
-        val seconds = (time_in_milli_seconds / 1000) % 60
-
-        timerView.text = "$minute:$seconds"
-    }
-
- */
-
-
-
-
 }
