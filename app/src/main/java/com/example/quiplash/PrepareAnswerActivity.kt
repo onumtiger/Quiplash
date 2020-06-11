@@ -1,11 +1,14 @@
 package com.example.quiplash
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import android.widget.ViewFlipper
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.CollectionReference
 import com.example.quiplash.GameManager.Companion.game
@@ -22,14 +25,13 @@ class PrepareAnswerActivity : AppCompatActivity() {
     private var auth: FirebaseAuth? = null
 
     var userindex = 0
+    private lateinit var viewFlipper: ViewFlipper
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_prepare_answer)
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
         auth = FirebaseAuth.getInstance()
-
-
 
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
@@ -37,19 +39,32 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
                 userindex = game.playrounds[game.activeRound-1].opponents.indexOfFirst { it.userID == auth!!.currentUser?.uid }
 
-                /*if(game.playrounds[game.activeRound-1].opponents[0].userID == auth!!.currentUser?.uid.toString()){
-                        userindex = 0
-                    } else {
-                        userindex = 1
-                    }*/
-
             }
+        setContentView(R.layout.activity_prepare_answer)
 
-
-
-
+        val textViewTimer = findViewById<TextView>(R.id.timerView)
+        val textViewRound = findViewById<TextView>(R.id.roundCounterView)
+        val viewQuestion = findViewById<View>(R.id.viewQuestion)
+        val textViewQuestion = findViewById<TextView>(R.id.textViewQuestion)
+        val textViewQuestion2 = findViewById<TextView>(R.id.textViewQuestion2)
         val btnReady = findViewById<Button>(R.id.btnReady)
         val fieldAnswer = findViewById<EditText>(R.id.answerField)
+        viewFlipper = findViewById(R.id.viewFlipperQuestion) // get the reference of ViewFlipper
+
+
+        // Declare in and out animations and load them using AnimationUtils class
+        val inAni = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left)
+        val out = AnimationUtils.loadAnimation(this, android.R.anim.fade_out)
+
+        // set the animation type to ViewFlipper
+        viewFlipper.inAnimation = inAni
+        viewFlipper.outAnimation = out
+
+
+
+        viewQuestion.setOnClickListener {
+            viewFlipper.showNext()
+        }
 
         btnReady.setOnClickListener {
             game.playrounds[game.activeRound-1].opponents[userindex].answer = fieldAnswer.text.toString()
