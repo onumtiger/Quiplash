@@ -139,7 +139,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
             val username = viewUsername.text.toString()
             val ID = auth.currentUser?.uid.toString()
 
-            val user = UserQP(ID, username, false, 0, photoPath, null )
+            val user = UserQP(ID, username, false, 0, photoPath )
              if (username.isEmpty() == false) {
 
                  if (ID != null) {

@@ -215,7 +215,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         //create user-object
-        val user = UserQP(auth.currentUser?.uid, editTextUsername.text.toString(), !isUser, 0, "images/default-user.png", null)
+        val user = UserQP(auth.currentUser?.uid, editTextUsername.text.toString(), !isUser, 0, "images/default-user.png")
 
         //save user in game-manager (for easy access in further dev)
         setUserinfo(user)

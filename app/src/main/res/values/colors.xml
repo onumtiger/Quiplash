@@ -9,8 +9,13 @@
     <color name="colorText">#000</color>
     <color name="colorTitles">#006FBF</color>
     <!-- Buttons -->
+    <color name="colorButtonBlue">#00bfff</color>
     <color name="colorButtonGreen">#30823B</color>
     <color name="colorButtonRed">#D0021B</color>
+    <color name="colorButtonPurple">#8470ff</color>
+    <color name="colorButtonBordeaux">#b22222</color>
+    <color name="colorButtonLavender">#ff4081</color>
+    <color name="colorButtonHoneydew">#00bcd4</color>
     <!-- Elements like boxes or seperators -->
     <color name="colorLayout">#30823B</color>
     <color name="colorPrimary">#30823B</color>

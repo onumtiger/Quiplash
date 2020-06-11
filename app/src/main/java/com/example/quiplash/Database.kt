@@ -55,7 +55,7 @@ class Database : AppCompatActivity() {
         show_users.setOnClickListener {
 
 
-            val user = UserQP("test", "Juli<3<3>", false, 0, "default-user.png", null)
+            val user = UserQP("test", "Juli<3<3>", false, 0, "default-user.png")
             editUser("sSl61HRtniQLZI92Ifj2", user)
 
             Toast.makeText(this, test.first().userName, Toast.LENGTH_LONG).show()

@@ -35,12 +35,14 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow)
         val btnEditProfile = findViewById<Button>(R.id.btnEditProfile)
         val btnDeleteAccount = findViewById<Button>(R.id.btnDeleteAccount)
+        val btnaddQuestion = findViewById<Button>(R.id.btnaddQuestion)
         val viewProfilePic: ImageView = findViewById(R.id.imageView)
         var viewUsername : TextView = findViewById<TextView>(R.id.pw)
         var viewEmail : TextView = findViewById<TextView>(R.id.email)
         var viewScore : TextView = findViewById<TextView>(R.id.score)
         var viewUsernameBig : TextView = findViewById<TextView>(R.id.usernameBig)
         var photoPath = "images/default-guest.png"
+
 
 
 
@@ -89,6 +91,11 @@ class Profile_RegisteredActivity : AppCompatActivity() {
             }
         }
         getUser(callback)
+
+        btnaddQuestion.setOnClickListener() {
+            val intent = Intent(this, ChooseQuestionTypeActivity::class.java);
+            startActivity(intent);
+        }
 
         btnBack.setOnClickListener() {
             val intent = Intent(this, LandingActivity::class.java);

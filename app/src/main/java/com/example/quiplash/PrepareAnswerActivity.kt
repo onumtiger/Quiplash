@@ -61,9 +61,6 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
         var question_count = game.rounds*game.users.count()/2
 
-
-            Toast.makeText(this, game.questions?.first()?.question, Toast.LENGTH_SHORT).show()
-
             startTimer(textViewTimer, 20)
         //var question = getRandomQuestion()
         //textViewQuestion.text = question.question
