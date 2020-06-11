@@ -22,11 +22,11 @@ class GameLaunchingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game_launching)
 
 
-        if (game.playrounds[game.activeRound-1].opponents.filter { it.userID == auth!!.currentUser?.uid }.size > 0){
-            val intent = Intent(this, QuestionActivity::class.java)
+        if (game.playrounds[game.activeRound-1].voters.contains(auth!!.currentUser?.uid )){
+            val intent = Intent(this, Choose_AnswerActivity::class.java)
             startActivity(intent)
         }else{
-            val intent = Intent(this, Choose_AnswerActivity::class.java)
+            val intent = Intent(this, PrepareAnswerActivity::class.java)
             startActivity(intent)
         }
 

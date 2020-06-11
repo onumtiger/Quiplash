@@ -15,6 +15,7 @@ class Game {
     var users: List<String> = listOf()
     var gameID: String = ""
     var playrounds: List<Round> = listOf()
+    var isPublic: Boolean = false
 
     constructor(
         currentRound: Int,
@@ -39,6 +40,24 @@ class Game {
         gameRounds: Int,
         gameUsers: List<String>,
         gameid: String,
+        ispublic: Boolean
+    ) {
+        this.activeRound = currentRound
+        this.category = gameCategory
+        this.playerNumber = gamePlayerNumber
+        this.rounds = gameRounds
+        this.users = gameUsers
+        this.gameID = gameid
+        this.isPublic = ispublic
+    }
+
+    constructor(
+        currentRound: Int,
+        gameCategory: String,
+        gamePlayerNumber: Int,
+        gameRounds: Int,
+        gameUsers: List<String>,
+        gameid: String,
         gameplayrounds: List<Round>
     ) {
         this.activeRound = currentRound
@@ -48,6 +67,26 @@ class Game {
         this.users = gameUsers
         this.gameID = gameid
         this.playrounds = gameplayrounds
+    }
+
+    constructor(
+        currentRound: Int,
+        gameCategory: String,
+        gamePlayerNumber: Int,
+        gameRounds: Int,
+        gameUsers: List<String>,
+        gameid: String,
+        gameplayrounds: List<Round>,
+        ispublic: Boolean
+    ) {
+        this.activeRound = currentRound
+        this.category = gameCategory
+        this.playerNumber = gamePlayerNumber
+        this.rounds = gameRounds
+        this.users = gameUsers
+        this.gameID = gameid
+        this.playrounds = gameplayrounds
+        this.isPublic = ispublic
     }
 
     constructor()
