@@ -59,13 +59,9 @@ class PrepareAnswerActivity : AppCompatActivity() {
         viewFlipper.inAnimation = inAni
         viewFlipper.outAnimation = out
 
-        var question_count = game.rounds*game.users.count()/2
+        //var question_count = game.rounds*game.users.count()/2
 
             startTimer(textViewTimer, 20)
-        //var question = getRandomQuestion()
-        //textViewQuestion.text = question.question
-        textViewQuestion.text = "lelele"
-
 
             viewQuestion.setOnClickListener {
             viewFlipper.showNext()
