@@ -15,13 +15,14 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.FirebaseStorage
 
 
-class PlayersListAdapter(val mCtx: Context, val layoutResId: Int, val playerList: MutableList<UserQP>) : ArrayAdapter<UserQP>(mCtx, layoutResId, playerList) {
+class ScoreboardListAdapter(val mCtx: Context, val layoutResId: Int, val playerList: MutableList<UserQP>) : ArrayAdapter<UserQP>(mCtx, layoutResId, playerList) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         val view: View = layoutInflater.inflate(layoutResId, null)
-        val textViewGame = view.findViewById<TextView>(R.id.active_player)
-        val imageViewUser: ImageView = view.findViewById<ImageView>(R.id.players_star)
-        val imageViewSeperator: ImageView = view.findViewById<ImageView>(R.id.players_seperator)
+        val textViewGame = view.findViewById<TextView>(R.id.player_name)
+        val textViewScore = view.findViewById<TextView>(R.id.player_score)
+        val imageViewUser: ImageView = view.findViewById<ImageView>(R.id.player_image)
+        val imageViewSeperator: ImageView = view.findViewById<ImageView>(R.id.imageViewSeperator)
         var fotostorage = FirebaseStorage.getInstance();
         var storageRef = fotostorage.reference
         val playerPhoto: String
@@ -33,6 +34,7 @@ class PlayersListAdapter(val mCtx: Context, val layoutResId: Int, val playerList
             playerPhoto = "images/default-guest.png"
         }
 
+        textViewScore.text = "Score: ${player.score}"
         textViewGame.text = player.userName
         imageViewSeperator.setImageResource(R.drawable.green_seperator)
 

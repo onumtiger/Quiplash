@@ -61,10 +61,6 @@ class Join_GameActivity : AppCompatActivity() {
             // Get the selected item text from ListView
             val selectedItem = parent.getItemAtPosition(position) as Game
 
-            selectedItem.users.toMutableList().add(auth.currentUser?.uid.toString())
-            updateGameUsers(selectedItem)
-
-
             db.document(selectedItem.gameID).get()
                 .addOnSuccessListener { documentSnapshot ->
                     try {

@@ -232,9 +232,9 @@ class DBMethods {
                         for (document in result) {
                             Log.d("TAG", "${document.id} => ${document.data}")
                             val activeGame = document.toObject(Game::class.java)
-                            //if (activeGame.playerNumber != activeGame.users.size) {
+                            if (activeGame.playerNumber != activeGame.users.size) {
                                 gameList.add(activeGame)
-                            //}
+                            }
                         }
                         callback.onTaskComplete(gameList)
                     }
@@ -274,7 +274,7 @@ class DBMethods {
                 docRef.get()
                     .addOnSuccessListener { document ->
                         if (document != null) {
-                            Log.d("lALE", "${document.id} => ${document.data}")
+                            Log.d("TAG", "${document.id} => ${document.data}")
                             val user = document.toObject(UserQP::class.java)!!
                             callback.onTaskComplete(user)
                         }
