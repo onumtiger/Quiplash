@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import com.example.quiplash.GameManager.Companion.setUserinfo
+import com.example.quiplash.GameManager.Companion.getUserInfo
 
 class Profile_UnregisteredActivity : AppCompatActivity() {
 
@@ -149,10 +151,10 @@ class Profile_UnregisteredActivity : AppCompatActivity() {
     private fun createUser() {
 
         //create user-object
-        val user = User(auth.currentUser?.uid, GameManager().getUserInfo().userName, false, GameManager().getUserInfo().score, GameManager().getUserInfo().photo)
+        val user = UserQP(auth.currentUser?.uid, getUserInfo().userName, false, getUserInfo().score, getUserInfo().photo)
 
         //save user in game-manager (for easy access in further dev)
-        GameManager().setUserinfo(user)
+        setUserinfo(user)
 
         //save user (name, score,...) in database
         db.document(auth.currentUser?.uid.toString())

@@ -44,13 +44,19 @@ class DBMethods {
 
             val db = FirebaseFirestore.getInstance()
             lateinit var res: QuerySnapshot
-            var allUsers = ArrayList<User>()
-            var singleUser :User = User()
+            var allUsers = ArrayList<UserQP>()
+            var singleUser :UserQP = UserQP()
             var allQuestions = ArrayList<Question>()
             var GameQuestions = ArrayList<Question>()
             var allGames = mutableListOf<Game>()
             var actual = false
             private var auth: FirebaseAuth? = FirebaseAuth.getInstance()
+
+            var newQuestionType : Int? = null
+
+            val usersPath = "users"
+            val gamesPath = "games"
+            val questionsPath = "questions"
 
             public fun saveQuestion(question_text: String, question_type: String){
                 var ID = createID().toString()
@@ -62,7 +68,7 @@ class DBMethods {
 
                 var qustn = Question(ID, question_text, question_type, "")
 
-                db.collection("questions").document().set(qustn).addOnSuccessListener {
+                db.collection(questionsPath).document().set(qustn).addOnSuccessListener {
                     //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener{
                     //exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
@@ -77,28 +83,25 @@ class DBMethods {
                 attributes.put("guest", guest)
                 attributes.put("score", score)
                 attributes.put("photo", photo)
-                val usr = User(ID, user_name, true, score, photo)
-                db.collection("users").document().set(usr).addOnSuccessListener {
+                val usr = UserQP(ID, user_name, true, score, photo)
+                db.collection(usersPath).document().set(usr).addOnSuccessListener {
                     //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener{
                     //exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
                 }
             }
 
-            public fun getUser(callback: Callback<User>) {
+            public fun getUser(callback: Callback<UserQP>) {
                 var user1 = auth?.currentUser
-                db.collection("users")
+                db.collection(usersPath)
                         .whereEqualTo("userID", user1?.uid)
                         .get()
                         .addOnSuccessListener { documents ->
                             for (document in documents) {
                                 val documents2 = documents
                                 documents2.forEach{
-                                    val user = it.toObject(User::class.java)
+                                    val user = it.toObject(UserQP::class.java)
                                     singleUser = user
-                                    if (user != null) {
-                                        //Log.w(TAG,user.userID.toString() , e)
-                                    }
                                 }
                             }
                             callback.onTaskComplete(singleUser)
@@ -119,8 +122,8 @@ class DBMethods {
             getUsers(callback)
             */
 
-            public fun getUsers(callback: Callback<ArrayList<User>>) {
-                db.collection("users")
+            public fun getUsers(callback: Callback<ArrayList<UserQP>>) {
+                db.collection(usersPath)
                     //.whereEqualTo("capital", true)
                     .get()
                     .addOnSuccessListener { documents ->
@@ -128,12 +131,12 @@ class DBMethods {
                             Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
                             val documents2 = documents
                             documents2.forEach{
-                                val user = it.toObject(User::class.java)
-                                if (user != null) {
+                                val user = it.toObject(UserQP::class.java)
+
                                     user.userID = it.id
                                     allUsers.add(user)
                                     //Log.w(TAG,user.userID.toString() , e)
-                                }
+
                             }
                         }
                         callback.onTaskComplete(allUsers)
@@ -149,7 +152,7 @@ class DBMethods {
 
             //returns arraylist with all Questions
             public fun getQuestions(callback: Callback<ArrayList<Question>>) {
-                db.collection("questions")
+                db.collection(questionsPath)
                     //.whereEqualTo("capital", true)
                     .get()
                     .addOnSuccessListener { documents ->
@@ -158,10 +161,10 @@ class DBMethods {
                             val documents2 = documents
                             documents2.forEach{
                                 val question = it.toObject(Question::class.java)
-                                if (question != null) {
+
                                     allQuestions.add(question)
                                     //Log.w(TAG,user.userID.toString() , e)
-                                }
+
                             }
                         }
                     }
@@ -187,8 +190,8 @@ class DBMethods {
                 return question
             }
 
-            public fun editUser(ID :String, user :User) {
-                db.collection("users").document(ID).set(user).addOnSuccessListener {
+            public fun editUser(ID :String, user :UserQP) {
+                db.collection(usersPath).document(ID).set(user).addOnSuccessListener {
                     //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener{
                     //exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
@@ -202,7 +205,7 @@ class DBMethods {
             }
 
             public fun deleteQuestion(ID :String, question :Question){
-                db.collection("questions").document(ID).set(question).addOnSuccessListener {
+                db.collection(questionsPath).document(ID).set(question).addOnSuccessListener {
                     //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener{
                     //exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
@@ -210,7 +213,7 @@ class DBMethods {
             }
 
             public fun setGame(game: Game): String {
-                val ref = db.collection("games").document()
+                val ref = db.collection(gamesPath).document()
                 game.gameID = ref.id
                 ref.set(game)
 
@@ -218,24 +221,24 @@ class DBMethods {
             }
 
 
-            public fun updateGameUsers(game: Game) {
+            fun updateGameUsers(game: Game) {
                 val gameID = game.gameID
-                val ref = db.collection("games").document(gameID)
-                ref.update("users", game.users)
+                val ref = db.collection(gamesPath).document(gameID)
+                ref.update(usersPath, game.users)
                     .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
                     .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
             }
 
-            public fun getActiveGames(callback: Callback<MutableList<Game>>, gameList: MutableList<Game>) {
-                val docRef = db.collection("games")
+            fun getActiveGames(callback: Callback<MutableList<Game>>, gameList: MutableList<Game>) {
+                val docRef = db.collection(gamesPath)
                 docRef.get()
                     .addOnSuccessListener { result ->
                         for (document in result) {
                             Log.d("TAG", "${document.id} => ${document.data}")
                             val activeGame = document.toObject(Game::class.java)
-                            if (activeGame.playerNumber != activeGame.users.size) {
+                            //if (activeGame.playerNumber != activeGame.users.size) {
                                 gameList.add(activeGame)
-                            }
+                            //}
                         }
                         callback.onTaskComplete(gameList)
                     }
@@ -247,7 +250,7 @@ class DBMethods {
             public fun getCurrentGame(callback: Callback<Game>, gameID: String) {
                 var currentGame: Game = Game()
                 var playersList = mutableListOf<String>()
-                val docRef = db.collection("games").document(gameID)
+                val docRef = db.collection(gamesPath).document(gameID)
                 docRef.get()
                     .addOnSuccessListener { document ->
                         if (document != null) {
@@ -255,11 +258,10 @@ class DBMethods {
                             val game = document.toObject (Game::class.java)
                             if (game != null) {
                                 currentGame = game
-                                val players = game?.users?.values
-                                if (players != null) {
+                                val players = game.users
                                     playersList = players.toMutableList()
                                     Log.d("playersListSize", "${playersList.size}")
-                                }
+
                             }
                             callback.onTaskComplete(currentGame)
                         }
@@ -270,14 +272,14 @@ class DBMethods {
                     }
             }
 
-            public fun getUserWithID(callback: Callback<User>, userID: String) {
+            public fun getUserWithID(callback: Callback<UserQP>, userID: String) {
                println(userID)
-                val docRef = db.collection("users").document(userID)
+                val docRef = db.collection(usersPath).document(userID)
                 docRef.get()
                     .addOnSuccessListener { document ->
                         if (document != null) {
                             Log.d("lALE", "${document.id} => ${document.data}")
-                            val user = document.toObject(User::class.java)!!
+                            val user = document.toObject(UserQP::class.java)!!
                             callback.onTaskComplete(user)
                         }
                     }
@@ -286,7 +288,7 @@ class DBMethods {
             }
 
             public fun deleteGame(gameID: String) {
-                val docRef = db.collection("games").document(gameID)
+                val docRef = db.collection(gamesPath).document(gameID)
                     docRef.delete()
                         .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
                         .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }

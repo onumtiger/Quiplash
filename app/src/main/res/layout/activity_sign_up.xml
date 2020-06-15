@@ -63,7 +63,8 @@
                 android:inputType="textEmailAddress"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email" />
+                app:layout_constraintTop_toBottomOf="@+id/email"
+                android:autofillHints="" />
 
             <TextView
                 android:id="@+id/textError"
@@ -77,20 +78,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/passwordRetypeFieldSU"
                 tools:visibility="visible" />
 
-            <Button
-                android:id="@+id/signupBtn"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:background="@color/colorButtonGreen"
-                android:text="@string/register_btn"
-                android:textColor="@color/colorWhite"
-                android:textColorHighlight="@color/colorWhite"
-                android:textColorHint="@color/colorWhite"
-                android:textColorLink="@color/colorWhite"
-                app:layout_constraintBottom_toTopOf="@+id/signinBtn"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textError" />
 
             <TextView
                 android:id="@+id/password2"
@@ -111,7 +98,8 @@
                 android:inputType="textPassword"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/password2" />
+                app:layout_constraintTop_toBottomOf="@+id/password2"
+                android:autofillHints="" />
 
             <EditText
                 android:id="@+id/passwordFieldSU"
@@ -122,15 +110,15 @@
                 android:inputType="textPassword"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/password" />
-
+                app:layout_constraintTop_toBottomOf="@+id/password"
+                android:autofillHints="" />
 
             <Button
-                android:id="@+id/signinBtn"
+                android:id="@+id/signupBtn"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:background="@color/colorButtonGreen"
-                android:text="@string/sign_in_btn"
+                android:text="@string/register_btn"
                 android:textColor="@color/colorWhite"
                 android:textColorHighlight="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
@@ -138,23 +126,39 @@
                 app:layout_constraintBottom_toTopOf="@+id/anonymousBtn"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signupBtn" />
+                app:layout_constraintTop_toBottomOf="@+id/textError" />
+
 
             <Button
                 android:id="@+id/anonymousBtn"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
-                android:layout_marginBottom="24dp"
                 android:background="@color/colorButtonGreen"
                 android:text="@string/guest_sign_up_btn"
                 android:textColor="@color/colorWhite"
                 android:textColorHighlight="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:textColorLink="@color/colorWhite"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/signinBtn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signinBtn" />
+                app:layout_constraintTop_toBottomOf="@+id/signupBtn" />
+
+            <Button
+                android:id="@+id/signinBtn"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="24dp"
+                android:background="@color/colorWhite"
+                android:text="@string/already_have_an_account"
+                android:textColor="@color/colorButtonGreen"
+                android:textColorHighlight="@color/colorButtonGreen"
+                android:textColorHint="@color/colorButtonGreen"
+                android:textColorLink="@color/colorButtonGreen"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/anonymousBtn" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

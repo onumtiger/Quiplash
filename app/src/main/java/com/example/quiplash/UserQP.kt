@@ -1,6 +1,6 @@
 package com.example.quiplash
 
-class User {
+class UserQP {
     var userID: String? = null
     var userName: String? = null
     var guest: Boolean?= null

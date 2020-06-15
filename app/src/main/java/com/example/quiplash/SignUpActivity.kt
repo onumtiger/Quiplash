@@ -9,7 +9,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
+import com.example.quiplash.GameManager.Companion.setUserinfo
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.AuthResult
@@ -98,23 +98,25 @@ class SignUpActivity : AppCompatActivity() {
             db.get()
                 .addOnSuccessListener { userCollectionDB ->
                     for (userItemDB in userCollectionDB) {
-                        val userDB = userItemDB.toObject(User::class.java)
+                        val userDB = userItemDB.toObject(UserQP::class.java)
 
-                        if (userDB.userName!!.toLowerCase() == inputUsername.text.toString().toLowerCase()) {
+                        if (userDB.userName!!.toLowerCase() == inputUsername.text.toString()
+                                .toLowerCase()
+                        ) {
                             textviewErrorUserName.text = getString(R.string.username_not_available)
                             userExist = true
                         }
                         continue
                     }
-                    if(userExist){
+                    if (userExist) {
                         textviewErrorUserName.text = getString(R.string.username_not_available)
-                    } else{
+                    } else {
                         createUser()
                     }
 
                 }
                 .addOnFailureListener { exception ->
-                    Log.d("ERROR", ""+exception);
+                    Log.d("ERROR", "" + exception);
                     createUser()
                 }
 
@@ -183,12 +185,10 @@ class SignUpActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d("SUCCESS", "signInAnonymously:success")
                     isUser = false
                     simpleViewFlipper.showNext()
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w("ERROR", "signInAnonymously:failure", task.exception)
                     Toast.makeText(
                         baseContext, "Authentication failed." + task.exception,
                         Toast.LENGTH_SHORT
@@ -215,16 +215,16 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         //create user-object
-        val user = User(auth.currentUser?.uid, editTextUsername.text.toString(), !isUser, 0, "images/default-user.png")
+        val user = UserQP(auth.currentUser?.uid, editTextUsername.text.toString(), !isUser, 0, "images/default-user.png")
 
         //save user in game-manager (for easy access in further dev)
-        GameManager().setUserinfo(user)
+        setUserinfo(user)
+
 
         //save user (name, score,...) in database
         db.document(auth.currentUser?.uid.toString())
             .set(user)
             .addOnSuccessListener {
-                Log.d("SUCCESS", "DocumentSnapshot successfully written!");
                 startActivity(Intent(this@SignUpActivity, LandingActivity::class.java))
                 finish()
             }

@@ -23,7 +23,7 @@ class Database : AppCompatActivity() {
     lateinit var question_text: EditText
     lateinit var question_type: EditText
     lateinit var show_users2: EditText
-    lateinit var test: ArrayList<User>
+    lateinit var test: ArrayList<UserQP>
 
     //Add User
     lateinit var saveButtonUser: Button
@@ -55,16 +55,25 @@ class Database : AppCompatActivity() {
         show_users.setOnClickListener {
 
 
-            val user = User("test", "Juli<3<3>", false, 0, "default-user.png")
+            val user = UserQP("test", "Juli<3<3>", false, 0, "default-user.png")
             editUser("sSl61HRtniQLZI92Ifj2", user)
 
             Toast.makeText(this, test.first().userName, Toast.LENGTH_LONG).show()
         }
 
 
-        val callback = object: Callback<ArrayList<User>> {
-            override fun onTaskComplete(result: ArrayList<User>) {
+
+
+
+
+        val callback = object: Callback<ArrayList<UserQP>> {
+            override fun onTaskComplete(result: ArrayList<UserQP>) {
                 test = result
+
+                editUser("1ZqX1o543dZzMW4fCJL3pVvloZ83", test.first())
+                editUser("1ZqX1o543dZzMW4fCJL3pVvloZ83", test.last())
+                editUser("1ZqX1o543dZzMW4fCJL3pVvloZ83", test.get(2))
+
             }
         }
         getUsers(callback)

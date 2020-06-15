@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quiplash.GameManager.Companion.setUserinfo
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -104,9 +104,9 @@ class MainActivity : AppCompatActivity() {
         //fetch Data
         db.document(sharedPreference?.getString(prefKey,prefDefValue).toString()).get().addOnSuccessListener { documentSnapshot ->
                 //save fetched data in GameManager
-                val guest = documentSnapshot.toObject(User::class.java)
+                val guest = documentSnapshot.toObject(UserQP::class.java)
                 if (guest?.userID != null) {
-                    GameManager().setUserinfo(guest)
+                    setUserinfo(guest)
                     startActivity(Intent(this@MainActivity, LandingActivity::class.java))
                     finish()
             } else {

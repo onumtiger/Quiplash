@@ -15,23 +15,27 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.quiplash.DBMethods.DBCalls.Companion.getActiveGames
 import com.example.quiplash.DBMethods.DBCalls.Companion.updateGameUsers
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.example.quiplash.GameManager.Companion.game
+import com.example.quiplash.GameManager.Companion.setGameinfo
 
 
 class Join_GameActivity : AppCompatActivity() {
     lateinit var gameList: MutableList<Game>
     private lateinit var auth: FirebaseAuth
 
+    //Firestore
+    lateinit var db: CollectionReference
+    private val dbGamesPath = "games"
+
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_join_game)
         auth = FirebaseAuth.getInstance()
+
+        db = FirebaseFirestore.getInstance().collection(dbGamesPath)
 
         val btnNewGameActivity = findViewById<AppCompatImageButton>(R.id.join_new_game_btn)
         val btnBack = findViewById<AppCompatImageButton>(R.id.join_game_go_back_arrow)
@@ -56,14 +60,22 @@ class Join_GameActivity : AppCompatActivity() {
         activeGamesList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             // Get the selected item text from ListView
             val selectedItem = parent.getItemAtPosition(position) as Game
-            val userSize= selectedItem.users.size + 1
-            val userID = "userID$userSize"
-            selectedItem.users.put(userID, auth.currentUser?.uid.toString())
+
+            selectedItem.users.toMutableList().add(auth.currentUser?.uid.toString())
             updateGameUsers(selectedItem)
 
-            val intent = Intent(this, Host_WaitingActivity::class.java);
-            intent.putExtra("gameID",selectedItem.gameID)
-            startActivity(intent);
+
+            db.document(selectedItem.gameID).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    try {
+                        game = documentSnapshot.toObject(Game::class.java)!!
+                    } finally {
+                        val intent = Intent(this, Host_WaitingActivity::class.java);
+                        intent.putExtra("gameID", selectedItem.gameID)
+                        startActivity(intent);
+                    }
+
+                }
         }
     }
 

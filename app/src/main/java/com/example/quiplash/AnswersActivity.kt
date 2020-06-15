@@ -1,4 +1,12 @@
 package com.example.quiplash
 
-class AnswersActivity {
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+
+class AnswersActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_answers)
+    }
 }
