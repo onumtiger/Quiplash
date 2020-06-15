@@ -38,18 +38,22 @@ class Host_WaitingActivity : AppCompatActivity() {
         val btnStartGame = findViewById<Button>(R.id.start_game_btn)
         val btnEndGame = findViewById<Button>(R.id.end_game)
         val btnLeaveGame = findViewById<Button>(R.id.leave_game)
+        val btnJoinGame = findViewById<Button>(R.id.join_game_btn)
         val playersListView = findViewById<ListView>(R.id.players_list)
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefresh)
         auth = FirebaseAuth.getInstance()
 
-        getUsersList(playersListView, game.gameID, btnStartGame, btnEndGame, btnLeaveGame)
+        getUsersList(playersListView, game.gameID, btnStartGame, btnEndGame, btnLeaveGame, btnJoinGame)
 
         btnBack.setOnClickListener {
             super.onBackPressed()
         }
 
         btnStartGame.setOnClickListener {
-            createAllRounds()
+            //createAllRounds()
+            val intent = Intent(this, End_Of_GameActivity::class.java)
+            intent.putExtra("gameID", game.gameID)
+            startActivity(intent)
         }
 
         btnEndGame.setOnClickListener {
@@ -59,13 +63,21 @@ class Host_WaitingActivity : AppCompatActivity() {
         }
 
         btnLeaveGame.setOnClickListener {
-            // removeUserFromGame(gameID, auth.currentUser?.uid.toString())
+            removeUserFromGame()
             val intent = Intent(this, LandingActivity::class.java)
             startActivity(intent)
         }
 
+        btnJoinGame.setOnClickListener {
+            addUserToGame()
+            btnLeaveGame.visibility = View.VISIBLE
+            btnJoinGame.visibility = View.INVISIBLE
+            getUsersList(playersListView, game.gameID, btnStartGame, btnEndGame, btnLeaveGame, btnJoinGame)
+            refreshLayout.isRefreshing = false
+        }
+
         refreshLayout.setOnRefreshListener {
-            getUsersList(playersListView, game.gameID, btnStartGame, btnEndGame, btnLeaveGame)
+            getUsersList(playersListView, game.gameID, btnStartGame, btnEndGame, btnLeaveGame, btnJoinGame)
             refreshLayout.isRefreshing = false
         }
 
@@ -79,6 +91,19 @@ class Host_WaitingActivity : AppCompatActivity() {
             ft.addToBackStack(null)
             dialogFragment.show(ft, "invite")
         }
+    }
+
+    fun addUserToGame() {
+        val selectedItem = game
+        selectedItem.users = selectedItem.users + auth.currentUser?.uid.toString()
+        DBMethods.DBCalls.updateGameUsers(selectedItem)
+    }
+
+    fun removeUserFromGame() {
+        val selectedItem = game
+        val filteredUsers = selectedItem.users.filterIndexed { index, s -> (s != auth.currentUser?.uid.toString())  }
+        selectedItem.users = filteredUsers
+        DBMethods.DBCalls.updateGameUsers(selectedItem)
     }
 
     fun setStartBtn(currentPlayerNumber: Int, playerNumber: Int, btnStartGame: Button) {
@@ -96,15 +121,16 @@ class Host_WaitingActivity : AppCompatActivity() {
         gameID: String,
         btnStartGame: Button,
         btnEndGame: Button,
-        btnLeaveGame: Button
+        btnLeaveGame: Button,
+        btnJoinGame: Button
     ) {
-        val playersNames = mutableListOf<String>()
+        val playersNames = mutableListOf<UserQP>()
         var userIDList = mutableListOf<String>()
         var currentGame: Game
         val callback = object : Callback<Game> {
             override fun onTaskComplete(result: Game) {
                 currentGame = result
-                setBtnVisibility(currentGame, btnStartGame, btnEndGame, btnLeaveGame)
+                setBtnVisibility(currentGame, btnStartGame, btnEndGame, btnLeaveGame, btnJoinGame)
                 var playerNumber = currentGame.playerNumber
                 var currentPlayerNumber = currentGame.users.size
                 val players = currentGame.users
@@ -113,7 +139,7 @@ class Host_WaitingActivity : AppCompatActivity() {
                     val callbackUser = object : Callback<UserQP> {
                         override fun onTaskComplete(result: UserQP) {
                             var user = result
-                            playersNames.add(user.userName!!)
+                            playersNames.add(user)
                             val adapter = PlayersListAdapter(
                                 applicationContext,
                                 R.layout.host_waiting_list_item,
@@ -135,16 +161,24 @@ class Host_WaitingActivity : AppCompatActivity() {
         game: Game,
         btnStartGame: Button,
         btnEndGame: Button,
-        btnLeaveGame: Button
+        btnLeaveGame: Button,
+        btnJoinGame: Button
     ) {
-        if (game.users.contains(auth.currentUser?.uid.toString())) {
+        if (game.users[0] == auth.currentUser?.uid.toString()) {
             btnStartGame.visibility = View.VISIBLE
             btnEndGame.visibility = View.VISIBLE
             btnLeaveGame.visibility = View.INVISIBLE
-        } else {
+            btnJoinGame.visibility = View.INVISIBLE
+        } else if (game.users.contains(auth.currentUser?.uid.toString())) {
             btnStartGame.visibility = View.INVISIBLE
             btnEndGame.visibility = View.INVISIBLE
             btnLeaveGame.visibility = View.VISIBLE
+            btnJoinGame.visibility = View.INVISIBLE
+        } else {
+            btnStartGame.visibility = View.INVISIBLE
+            btnEndGame.visibility = View.INVISIBLE
+            btnLeaveGame.visibility = View.INVISIBLE
+            btnJoinGame.visibility = View.VISIBLE
         }
     }
 
