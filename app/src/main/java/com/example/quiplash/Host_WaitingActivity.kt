@@ -50,10 +50,10 @@ class Host_WaitingActivity : AppCompatActivity() {
         }
 
         btnStartGame.setOnClickListener {
-            //createAllRounds()
-            val intent = Intent(this, End_Of_GameActivity::class.java)
+            createAllRounds()
+           /* val intent = Intent(this, End_Of_GameActivity::class.java)
             intent.putExtra("gameID", game.gameID)
-            startActivity(intent)
+            startActivity(intent)*/
         }
 
         btnEndGame.setOnClickListener {
