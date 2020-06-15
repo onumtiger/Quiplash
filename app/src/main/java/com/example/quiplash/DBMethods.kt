@@ -3,12 +3,7 @@ package com.example.quiplash
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
-import android.widget.Button
-import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import java.util.*
@@ -75,7 +70,7 @@ class DBMethods {
                 }
             }
 
-            public fun saveUser(user_name: String, guest: Boolean, score: Int, photo: String) {
+            public fun saveUser(user_name: String, guest: Boolean, score: Int, photo: String, friends: List<String>) {
                 var ID = createID().toString()
                 val attributes = HashMap<String, Any>()
                 attributes.put("name", user_name)
@@ -83,7 +78,8 @@ class DBMethods {
                 attributes.put("guest", guest)
                 attributes.put("score", score)
                 attributes.put("photo", photo)
-                val usr = UserQP(ID, user_name, true, score, photo)
+                attributes.put("friends", friends)
+                val usr = UserQP(ID, user_name, true, score, photo, friends)
                 db.collection(usersPath).document().set(usr).addOnSuccessListener {
                     //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener{

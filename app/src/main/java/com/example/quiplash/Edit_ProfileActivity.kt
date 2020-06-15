@@ -2,9 +2,7 @@ package com.example.quiplash
 
 import android.R.attr
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.Activity
-import android.app.PendingIntent.getActivity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
@@ -20,13 +18,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import com.bumptech.glide.Glide
 import com.example.quiplash.DBMethods.DBCalls.Companion.editUser
-import com.google.firebase.auth.AuthCredential
-import com.google.firebase.auth.EmailAuthProvider
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.android.synthetic.main.activity_friends.*
 import java.io.IOException
 import java.util.*
 
@@ -56,6 +53,9 @@ class Edit_ProfileActivity : AppCompatActivity() {
         var fotostorage = FirebaseStorage.getInstance();
         var storageRef = fotostorage!!.reference
         var photoPath : String = "images/default-guest.png"
+        var score = 0
+        var friends = emptyList<String>()
+
 
         var viewProfilePic: ImageView = findViewById(R.id.imageView)
         val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow)
@@ -88,6 +88,8 @@ class Edit_ProfileActivity : AppCompatActivity() {
                     photoPath = current_User.photo.toString()
                     viewUsername.hint = "Username"
                     viewUsername.setText(current_User.userName.toString())
+                    score = current_User.score!!
+                    friends = current_User.friends
                     var spaceRef = storageRef.child(photoPath)
                     spaceRef.downloadUrl
                         .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
@@ -139,7 +141,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
             val username = viewUsername.text.toString()
             val ID = auth.currentUser?.uid.toString()
 
-            val user = UserQP(ID, username, false, 0, photoPath )
+            val user = UserQP(ID, username, false, score, photoPath, friends)
              if (username.isEmpty() == false) {
 
                  if (ID != null) {

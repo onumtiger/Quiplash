@@ -1,15 +1,11 @@
 package com.example.quiplash
 
-import android.content.ContentValues
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.quiplash.DBMethods.DBCalls.Companion.allUsers
 import com.example.quiplash.DBMethods.DBCalls.Companion.editUser
-import com.example.quiplash.DBMethods.DBCalls.Companion.getQuestions
 import com.example.quiplash.DBMethods.DBCalls.Companion.getUsers
 import com.example.quiplash.DBMethods.DBCalls.Companion.saveQuestion
 import com.example.quiplash.DBMethods.DBCalls.Companion.saveUser
@@ -55,7 +51,7 @@ class Database : AppCompatActivity() {
         show_users.setOnClickListener {
 
 
-            val user = UserQP("test", "Juli<3<3>", false, 0, "default-user.png")
+            val user = UserQP("test", "Juli<3<3>", false, 0, "default-user.png", emptyList<String>())
             editUser("sSl61HRtniQLZI92Ifj2", user)
 
             Toast.makeText(this, test.first().userName, Toast.LENGTH_LONG).show()
@@ -97,9 +93,10 @@ class Database : AppCompatActivity() {
         val guest = true
         val score = 0
         val photo = "images/default-user.png"
+        val friends = emptyList<String>()
 
         if (user_name != "") {
-            saveUser(user_name, guest, score, photo)
+            saveUser(user_name, guest, score, photo, friends)
         } else {
             Toast.makeText(this, "Füll den Spass aus!", Toast.LENGTH_LONG).show()
         }
