@@ -16,4 +16,8 @@ class EvaluationActivity : AppCompatActivity() {
             startActivity(intent)
         }, 3000)
     }
+
+    override fun onBackPressed() {
+        println("do nothing")
+    }
 }

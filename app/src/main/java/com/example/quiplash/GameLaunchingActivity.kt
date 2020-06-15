@@ -2,13 +2,11 @@ package com.example.quiplash
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quiplash.DBMethods.DBCalls.Companion.getQuestions
-import com.example.quiplash.DBMethods.DBCalls.Companion.getUsers
+import com.example.quiplash.GameManager.Companion.game
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.example.quiplash.GameManager.Companion.game
 
 
 class GameLaunchingActivity : AppCompatActivity() {
@@ -24,7 +22,6 @@ class GameLaunchingActivity : AppCompatActivity() {
         // Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
         setContentView(R.layout.activity_game_launching)
-
 
 
         val callback = object: Callback<ArrayList<Question>> {
@@ -47,5 +44,9 @@ class GameLaunchingActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    override fun onBackPressed() {
+        println("do nothing")
     }
 }

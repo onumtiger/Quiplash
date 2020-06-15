@@ -61,4 +61,8 @@ class End_Of_GameActivity : AppCompatActivity() {
         )
         scoreboardList.adapter = adapter
     }
+
+    override fun onBackPressed() {
+        println("do nothing")
+    }
 }

@@ -80,4 +80,8 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
         }
     }
+
+    override fun onBackPressed() {
+        println("do nothing")
+    }
 }

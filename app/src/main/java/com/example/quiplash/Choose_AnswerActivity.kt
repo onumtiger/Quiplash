@@ -35,4 +35,8 @@ class Choose_AnswerActivity : AppCompatActivity() {
 
         startTimer(timerView, 18)
     }
+
+    override fun onBackPressed() {
+        println("do nothing")
+    }
 }

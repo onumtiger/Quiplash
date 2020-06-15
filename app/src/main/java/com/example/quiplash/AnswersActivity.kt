@@ -9,4 +9,8 @@ class AnswersActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_answers)
     }
+
+    override fun onBackPressed() {
+        println("do nothing")
+    }
 }
