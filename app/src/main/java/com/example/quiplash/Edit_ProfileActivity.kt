@@ -141,6 +141,11 @@ class Edit_ProfileActivity : AppCompatActivity() {
             val username = viewUsername.text.toString()
             val ID = auth.currentUser?.uid.toString()
 
+            // TO DO: löschen
+           /* Log.d("friends", friends.toString())
+            Log.d("id", ID)
+            Log.d("users", test[1].userName.toString())*/
+
             val user = UserQP(ID, username, false, score, photoPath, friends)
              if (username.isEmpty() == false) {
 

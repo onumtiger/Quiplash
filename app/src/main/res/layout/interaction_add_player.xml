@@ -42,7 +42,7 @@
         app:layout_constraintVertical_bias="0.39" />
 
     <EditText
-        android:id="@+id/interaction_username"
+        android:id="@+id/interaction_username_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
