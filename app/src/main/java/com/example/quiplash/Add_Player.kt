@@ -80,26 +80,26 @@ class Add_Player : DialogFragment() {
                         Log.d("user not found", "Failed!")
                         dismiss()
                     }
+                    else {
+                        var newfriendsListFriend = emptyList<String>().toMutableList()
+                        for(i in 0..friendsListFriend.size-1) {
+                            newfriendsListFriend.add(i, friendsListFriend[i])
+                        }
+                        newfriendsListFriend.add(0, current_User.userName.toString())
+                        friend.friends = newfriendsListFriend
+
+                        var newfriendsListCurrentUser = emptyList<String>().toMutableList()
+                        for(i in 0..friendsListFriend.size-1) {
+                            newfriendsListCurrentUser.add(i, friendsListCurrentUser[i])
+                        }
+                        newfriendsListCurrentUser.add(0, friend.userName.toString())
+                        current_User.friends = newfriendsListCurrentUser
+
+                        // update users
+                        current_User.userID?.let { it1 -> DBMethods.DBCalls.editUser(it1, current_User) }
+                        friend.userID?.let { it1 -> DBMethods.DBCalls.editUser(it1, friend) }
+                    }
                 }
-
-                var newfriendsListFriend = emptyList<String>().toMutableList()
-                for(i in 0..friendsListFriend.size-1) {
-                    newfriendsListFriend.add(i, friendsListFriend[i])
-                }
-                newfriendsListFriend.add(0, current_User.userName.toString())
-                friend.friends = newfriendsListFriend
-
-                var newfriendsListCurrentUser = emptyList<String>().toMutableList()
-                for(i in 0..friendsListFriend.size-1) {
-                    newfriendsListCurrentUser.add(i, friendsListCurrentUser[i])
-                }
-                newfriendsListCurrentUser.add(0, friend.userName.toString())
-                current_User.friends = newfriendsListCurrentUser
-
-                // update users
-                current_User.userID?.let { it1 -> DBMethods.DBCalls.editUser(it1, current_User) }
-                friend.userID?.let { it1 -> DBMethods.DBCalls.editUser(it1, friend) }
-
             }
             dismiss()
         }
