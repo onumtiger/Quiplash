@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.auth.FirebaseAuth
 import java.util.ArrayList
 import kotlin.math.log
@@ -27,8 +28,9 @@ class Add_Player : DialogFragment() {
         val btnAdd = view.findViewById<TextView>(R.id.interaction_add_btn)
         val btnCancel = view.findViewById<TextView>(R.id.interaction_cancel_btn)
         val viewUsername: EditText = view.findViewById(R.id.interaction_username_add)
+        val refreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.friends_swiperefresh)
 
-        // new
+
         lateinit var otherUsers: ArrayList<UserQP>
         var friendsListCurrentUser = emptyList<String>()
         var friendsListFriend = emptyList<String>()
@@ -89,8 +91,8 @@ class Add_Player : DialogFragment() {
                         friend.friends = newfriendsListFriend
 
                         var newfriendsListCurrentUser = emptyList<String>().toMutableList()
-                        for(i in 0..friendsListFriend.size-1) {
-                            newfriendsListCurrentUser.add(i, friendsListCurrentUser[i])
+                        for(i in 0..friendsListCurrentUser.size-1) {
+                            newfriendsListCurrentUser.add(i,friendsListCurrentUser[i])
                         }
                         newfriendsListCurrentUser.add(0, friend.userName.toString())
                         current_User.friends = newfriendsListCurrentUser
@@ -98,6 +100,7 @@ class Add_Player : DialogFragment() {
                         // update users
                         current_User.userID?.let { it1 -> DBMethods.DBCalls.editUser(it1, current_User) }
                         friend.userID?.let { it1 -> DBMethods.DBCalls.editUser(it1, friend) }
+                        //refreshLayout.isRefreshing = true
                     }
                 }
             }

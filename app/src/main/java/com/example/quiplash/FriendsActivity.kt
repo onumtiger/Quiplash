@@ -2,11 +2,17 @@ package com.example.quiplash
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import java.util.ArrayList
 
 class FriendsActivity : AppCompatActivity() {
-
+    lateinit var current_User: UserQP
+    lateinit var friend : UserQP
+    lateinit var otherUsers: ArrayList<UserQP>
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,6 +21,11 @@ class FriendsActivity : AppCompatActivity() {
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.friends_go_back_arrow)
         val btnFriend = findViewById<AppCompatImageButton>(R.id.add_friend_btn)
+        val friendsListView = findViewById<ListView>(R.id.friends)
+        val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.friends_swiperefresh)
+
+        // fetch friends from db
+        getFriendsList(friendsListView)
 
         btnBack.setOnClickListener() {
             super.onBackPressed();
@@ -32,7 +43,56 @@ class FriendsActivity : AppCompatActivity() {
             dialogFragment.show(ft, "delete")
         }
 
+        refreshLayout.setOnRefreshListener {
+            getFriendsList(friendsListView)
+            refreshLayout.isRefreshing = false
+        }
+
 
     }
 
+    fun getFriendsList (friendsListView: ListView) {
+        var friendsListCurrentUser = emptyList<String>()
+        val friendsUserList = mutableListOf<UserQP>()
+
+        val callbackGetUsers = object: Callback<ArrayList<UserQP>> {
+            override fun onTaskComplete(result: ArrayList<UserQP>) {
+                otherUsers = result
+
+                val callbackGetUser = object: Callback<UserQP> {
+                    override fun onTaskComplete(result :UserQP) {
+                        current_User = result
+                        friendsListCurrentUser = current_User.friends
+
+
+                        Log.d("current user", current_User.userName)
+                        Log.d("friendslist", friendsListCurrentUser.toString())
+                        Log.d("other users", otherUsers.toString())
+
+                        for(i in 0 .. friendsListCurrentUser.size-1) {
+                            for(j in 0 .. otherUsers.size-1) {
+                                // get friend information
+                                if(friendsListCurrentUser[i] == otherUsers[j].userName.toString()) {
+                                    Log.d("true", "true")
+                                    friend = otherUsers[j]
+                                    Log.d("friend", friend.userName)
+                                    friendsUserList.add(friend)
+                                    break
+                                }
+                            }
+                        }
+
+                        val adapter = FriendsListAdapter(
+                            applicationContext,
+                            R.layout.friends_list_item,
+                            friendsUserList
+                        )
+                        friendsListView.adapter = adapter
+                    }
+                }
+                DBMethods.DBCalls.getUser(callbackGetUser)
+            }
+        }
+        DBMethods.DBCalls.getUsers(callbackGetUsers)
+    }
 }
