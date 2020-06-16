@@ -55,6 +55,7 @@ class Add_Player : DialogFragment() {
 
         btnAdd.setOnClickListener(){
             var usernameFriend = viewUsername.text.toString()
+            var alreadyfriends = false
 
             // check if empty
             if (!usernameFriend.isEmpty()) {
@@ -62,45 +63,51 @@ class Add_Player : DialogFragment() {
                 for (i in 0..friendsListCurrentUser.size - 1) {
                     if (friendsListCurrentUser[i].toLowerCase() == usernameFriend.toLowerCase()) {
                         Log.d("already friends", "Failed!")
-                        dismiss()
+                        alreadyfriends = true
+                        break
                     }
                 }
-                // check if input = username
-                if (usernameFriend.toLowerCase() == current_User.userName.toString().toLowerCase()) {
-                    Log.d("Can't add yourself", "Failed!")
+                if (alreadyfriends) {
                     dismiss()
-                } else {
-                    // check if friend user exists and get other user and its friendlist
-                    for (i in 0..otherUsers.size - 1) {
-                        if (otherUsers[i].userName.toString().toLowerCase() == usernameFriend.toLowerCase()) {
-                            friend = otherUsers[i]
-                            friendsListFriend = friend.friends
-                            Log.d("friend fround", friend.userName.toString())
-                        }
-                    }
-                    if (friendsListFriend.isEmpty()){
-                        Log.d("user not found", "Failed!")
+                }
+                else {
+                    // check if input = username
+                    if (usernameFriend.toLowerCase() == current_User.userName.toString().toLowerCase()) {
+                        Log.d("Can't add yourself", "Failed!")
                         dismiss()
-                    }
-                    else {
-                        var newfriendsListFriend = emptyList<String>().toMutableList()
-                        for(i in 0..friendsListFriend.size-1) {
-                            newfriendsListFriend.add(i, friendsListFriend[i])
+                    } else {
+                        // check if friend user exists and get other user and its friendlist
+                        for (i in 0..otherUsers.size - 1) {
+                            if (otherUsers[i].userName.toString().toLowerCase() == usernameFriend.toLowerCase()) {
+                                friend = otherUsers[i]
+                                friendsListFriend = friend.friends
+                                Log.d("friend fround", friend.userName.toString())
+                            }
                         }
-                        newfriendsListFriend.add(0, current_User.userName.toString())
-                        friend.friends = newfriendsListFriend
-
-                        var newfriendsListCurrentUser = emptyList<String>().toMutableList()
-                        for(i in 0..friendsListCurrentUser.size-1) {
-                            newfriendsListCurrentUser.add(i,friendsListCurrentUser[i])
+                        if (friendsListFriend.isEmpty()){
+                            Log.d("user not found", "Failed!")
+                            dismiss()
                         }
-                        newfriendsListCurrentUser.add(0, friend.userName.toString())
-                        current_User.friends = newfriendsListCurrentUser
+                        else {
+                            var newfriendsListFriend = emptyList<String>().toMutableList()
+                            for(i in 0..friendsListFriend.size-1) {
+                                newfriendsListFriend.add(i, friendsListFriend[i])
+                            }
+                            newfriendsListFriend.add(0, current_User.userName.toString())
+                            friend.friends = newfriendsListFriend
 
-                        // update users
-                        current_User.userID?.let { it1 -> DBMethods.DBCalls.editUser(it1, current_User) }
-                        friend.userID?.let { it1 -> DBMethods.DBCalls.editUser(it1, friend) }
-                        //refreshLayout.isRefreshing = true
+                            var newfriendsListCurrentUser = emptyList<String>().toMutableList()
+                            for(i in 0..friendsListCurrentUser.size-1) {
+                                newfriendsListCurrentUser.add(i,friendsListCurrentUser[i])
+                            }
+                            newfriendsListCurrentUser.add(0, friend.userName.toString())
+                            current_User.friends = newfriendsListCurrentUser
+
+                            // update users
+                            current_User.userID?.let { it1 -> DBMethods.DBCalls.editUser(it1, current_User) }
+                            friend.userID?.let { it1 -> DBMethods.DBCalls.editUser(it1, friend) }
+                            //refreshLayout.isRefreshing = true
+                        }
                     }
                 }
             }
