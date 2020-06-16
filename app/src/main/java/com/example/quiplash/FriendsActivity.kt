@@ -2,12 +2,11 @@ package com.example.quiplash
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import java.util.ArrayList
+import java.util.*
 
 class FriendsActivity : AppCompatActivity() {
     lateinit var current_User: UserQP
@@ -47,8 +46,6 @@ class FriendsActivity : AppCompatActivity() {
             getFriendsList(friendsListView)
             refreshLayout.isRefreshing = false
         }
-
-
     }
 
     fun getFriendsList (friendsListView: ListView) {
@@ -64,18 +61,11 @@ class FriendsActivity : AppCompatActivity() {
                         current_User = result
                         friendsListCurrentUser = current_User.friends
 
-
-                        Log.d("current user", current_User.userName)
-                        Log.d("friendslist", friendsListCurrentUser.toString())
-                        Log.d("other users", otherUsers.toString())
-
                         for(i in 0 .. friendsListCurrentUser.size-1) {
                             for(j in 0 .. otherUsers.size-1) {
                                 // get friend information
                                 if(friendsListCurrentUser[i] == otherUsers[j].userName.toString()) {
-                                    Log.d("true", "true")
                                     friend = otherUsers[j]
-                                    Log.d("friend", friend.userName)
                                     friendsUserList.add(friend)
                                     break
                                 }

@@ -28,13 +28,10 @@ class Add_Player : DialogFragment() {
         val btnAdd = view.findViewById<TextView>(R.id.interaction_add_btn)
         val btnCancel = view.findViewById<TextView>(R.id.interaction_cancel_btn)
         val viewUsername: EditText = view.findViewById(R.id.interaction_username_add)
-        val refreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.friends_swiperefresh)
-
 
         lateinit var otherUsers: ArrayList<UserQP>
         var friendsListCurrentUser = emptyList<String>()
         var friendsListFriend = emptyList<String>()
-
 
         val callbackGetUsers = object: Callback<ArrayList<UserQP>> {
             override fun onTaskComplete(result: ArrayList<UserQP>) {
@@ -51,7 +48,6 @@ class Add_Player : DialogFragment() {
             }
         }
         DBMethods.DBCalls.getUser(callbackGetUser)
-
 
         btnAdd.setOnClickListener(){
             var usernameFriend = viewUsername.text.toString()
@@ -106,7 +102,6 @@ class Add_Player : DialogFragment() {
                             // update users
                             current_User.userID?.let { it1 -> DBMethods.DBCalls.editUser(it1, current_User) }
                             friend.userID?.let { it1 -> DBMethods.DBCalls.editUser(it1, friend) }
-                            //refreshLayout.isRefreshing = true
                         }
                     }
                 }
