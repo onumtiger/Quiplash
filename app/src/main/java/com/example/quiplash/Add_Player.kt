@@ -54,10 +54,10 @@ class Add_Player : DialogFragment() {
             var alreadyfriends = false
 
             // check if empty
-            if (!usernameFriend.isEmpty()) {
+            if (usernameFriend.isNotEmpty()) {
                 // check if already friends
                 for (i in 0..friendsListCurrentUser.size - 1) {
-                    if (friendsListCurrentUser[i].toLowerCase() == usernameFriend.toLowerCase()) {
+                    if (friendsListCurrentUser[i].equals(usernameFriend, true)) {
                         Log.d("already friends", "Failed!")
                         alreadyfriends = true
                         break
@@ -68,13 +68,13 @@ class Add_Player : DialogFragment() {
                 }
                 else {
                     // check if input = username
-                    if (usernameFriend.toLowerCase() == current_User.userName.toString().toLowerCase()) {
+                    if (usernameFriend.equals(current_User.userName.toString(), true)) {
                         Log.d("Can't add yourself", "Failed!")
                         dismiss()
                     } else {
                         // check if friend user exists and get other user and its friendlist
                         for (i in 0..otherUsers.size - 1) {
-                            if (otherUsers[i].userName.toString().toLowerCase() == usernameFriend.toLowerCase()) {
+                            if (otherUsers[i].userName.toString().equals(usernameFriend, true)) {
                                 friend = otherUsers[i]
                                 friendsListFriend = friend.friends
                                 Log.d("friend fround", friend.userName.toString())
