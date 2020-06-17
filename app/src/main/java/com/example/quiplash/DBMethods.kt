@@ -125,15 +125,9 @@ class DBMethods {
                     .addOnSuccessListener { documents ->
                         for (document in documents) {
                             Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
-                            val documents2 = documents
-                            documents2.forEach{
-                                val user = it.toObject(UserQP::class.java)
-
-                                    user.userID = it.id
-                                    allUsers.add(user)
-                                    //Log.w(TAG,user.userID.toString() , e)
-
-                            }
+                            val user = document.toObject(UserQP::class.java)
+                            allUsers.add(user)
+                            println(allUsers.size)
                         }
                         callback.onTaskComplete(allUsers)
                     }
@@ -141,9 +135,6 @@ class DBMethods {
                         Log.w(ContentValues.TAG, "Error getting documents: ", exception)
                     }
             }
-
-
-
 
 
             //returns arraylist with all Questions
