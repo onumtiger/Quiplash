@@ -1,6 +1,6 @@
 package com.example.quiplash
 
-class RoundUser {
+class Opponent {
     var userID: String? =null
     var answer: String = ""
     var answerScore: Int = 0
@@ -14,7 +14,7 @@ class RoundUser {
         this.userID = userid
     }
 
-    constructor(userid: String, answer:String, score:Int) {
+    constructor(answer:String, score:Int, userid: String) {
         this.answer = answer
         this.answerScore = score
         this.userID = userid

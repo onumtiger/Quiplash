@@ -25,6 +25,7 @@
         <activity android:name=".Database" />
         <activity android:name=".Host_WaitingActivity" />
         <activity android:name=".GameLaunchingActivity" />
+        <activity android:name=".GlobalScoreboard_Activity" />
         <activity android:name=".AddQuestion" />
         <activity android:name=".ChooseQuestionTypeActivity"></activity>
         <activity android:name=".AnswersActivity" />

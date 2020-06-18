@@ -15,6 +15,7 @@ class LandingActivity : AppCompatActivity() {
         val btnJoinGame = findViewById<Button>(R.id.landing_join_game)
         val btnProfile = findViewById<Button>(R.id.landing_profile)
         val btnFriends = findViewById<Button>(R.id.landing_friends)
+        val btnScoreBoard = findViewById<Button>(R.id.landing_scoreboard)
 
         btnNewGame.setOnClickListener() {
             val intent = Intent(this, New_GameActivity::class.java);
@@ -33,6 +34,11 @@ class LandingActivity : AppCompatActivity() {
 
         btnFriends.setOnClickListener() {
             val intent = Intent(this, FriendsActivity::class.java);
+            startActivity(intent);
+        }
+
+        btnScoreBoard.setOnClickListener() {
+            val intent = Intent(this, GlobalScoreboard_Activity::class.java);
             startActivity(intent);
         }
     }

@@ -6,4 +6,125 @@
     android:layout_height="match_parent"
     tools:context=".AnswersActivity">
 
+    <TextView
+        android:id="@+id/titleAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/other_players_choose_answer"
+        android:textColor="@color/colorBlue"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25" />
+
+    <TextView
+        android:id="@+id/questionAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="This is a question"
+        android:textColor="@color/colorGreen"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleAnswer" />
+
+    <TextView
+        android:id="@+id/timer3A"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"
+        android:text="60sec"
+        android:textColor="@color/colorGreen"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/timer2A"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"
+        android:minWidth="125dp"
+        android:minHeight="125dp"
+        android:text="60sec"
+        android:textColor="@color/colorGreen"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/viewAnswer1A"
+        android:layout_width="273dp"
+        android:layout_height="137dp"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        app:layout_constraintBottom_toTopOf="@+id/viewAnswer2A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionAnswer" />
+
+    <View
+        android:id="@+id/viewAnswer2A"
+        android:layout_width="273dp"
+        android:layout_height="137dp"
+        android:layout_marginBottom="64dp"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewAnswer1A" />
+
+    <TextView
+        android:id="@+id/answer1"
+        android:layout_width="236dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="20dp"
+        android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/viewAnswer1A"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="@+id/viewAnswer1A"
+        app:layout_constraintTop_toTopOf="@+id/viewAnswer1A" />
+
+    <TextView
+        android:id="@+id/answerRoundWinner"
+        android:layout_width="236dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="16dp"
+        android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/viewAnswer2A"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="@+id/viewAnswer2A"
+        app:layout_constraintTop_toTopOf="@+id/viewAnswer2A" />
+
+
+    <TextView
+        android:id="@+id/roundsA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="50dp"
+        android:text="1/10"
+        android:textColor="@color/colorGreen"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

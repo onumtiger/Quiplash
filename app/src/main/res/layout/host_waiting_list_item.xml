@@ -30,7 +30,7 @@
             app:srcCompat="@drawable/join_game_star" />
 
         <TextView
-            android:id="@+id/active_player"
+            android:id="@+id/textRoundWinnerName"
             android:layout_width="199dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"

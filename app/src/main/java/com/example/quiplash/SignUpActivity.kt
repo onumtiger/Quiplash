@@ -49,7 +49,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         //Get Firebase auth instance
-        FirebaseApp.initializeApp(this);
+        FirebaseApp.initializeApp(this)
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
@@ -74,8 +74,8 @@ class SignUpActivity : AppCompatActivity() {
         val out = AnimationUtils.loadAnimation(this, android.R.anim.fade_out)
 
         // set the animation type to ViewFlipper
-        simpleViewFlipper.setInAnimation(inAni)
-        simpleViewFlipper.setOutAnimation(out)
+        simpleViewFlipper.inAnimation = inAni
+        simpleViewFlipper.outAnimation = out
 
 
         //set onClickListener for buttons
@@ -94,13 +94,13 @@ class SignUpActivity : AppCompatActivity() {
                  }
              }*/
 
-            var userExist = false;
+            var userExist = false
             db.get()
                 .addOnSuccessListener { userCollectionDB ->
                     for (userItemDB in userCollectionDB) {
                         val userDB = userItemDB.toObject(UserQP::class.java)
 
-                        if (userDB.userName!!.toLowerCase() == inputUsername.text.toString()
+                        if (userDB.userName.toLowerCase() == inputUsername.text.toString()
                                 .toLowerCase()
                         ) {
                             textviewErrorUserName.text = getString(R.string.username_not_available)
@@ -116,7 +116,7 @@ class SignUpActivity : AppCompatActivity() {
 
                 }
                 .addOnFailureListener { exception ->
-                    Log.d("ERROR", "" + exception);
+                    Log.d("ERROR", "" + exception)
                     createUser()
                 }
 
@@ -215,7 +215,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         //create user-object
-        val user = UserQP(auth.currentUser?.uid, editTextUsername.text.toString(), !isUser, 0, "images/default-user.png", emptyList<String>())
+        val user = UserQP(auth.currentUser?.uid.toString(), editTextUsername.text.toString(), !isUser, 0, "images/default-user.png", emptyList<String>())
 
         //save user in game-manager (for easy access in further dev)
         setUserinfo(user)

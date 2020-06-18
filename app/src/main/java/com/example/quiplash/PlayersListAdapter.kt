@@ -19,7 +19,7 @@ class PlayersListAdapter(val mCtx: Context, val layoutResId: Int, val playerList
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         val view: View = layoutInflater.inflate(layoutResId, null)
-        val textViewGame = view.findViewById<TextView>(R.id.active_player)
+        val textViewGame = view.findViewById<TextView>(R.id.textRoundWinnerName)
         val imageViewUser: ImageView = view.findViewById<ImageView>(R.id.players_star)
         val imageViewSeperator: ImageView = view.findViewById<ImageView>(R.id.players_seperator)
         var fotostorage = FirebaseStorage.getInstance();

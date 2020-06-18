@@ -12,6 +12,7 @@ class GameManager {
     companion object {
         var user = UserQP()
         var game = Game()
+        val startSeconds = 60L
         //var score: Int?= null
 
         //getter
