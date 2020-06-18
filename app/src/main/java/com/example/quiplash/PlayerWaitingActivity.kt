@@ -7,20 +7,23 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.quiplash.GameManager.Companion.game
+import com.google.firebase.firestore.ListenerRegistration
 
-class PlayerWaitingActivity  : AppCompatActivity() {
+class PlayerWaitingActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: CollectionReference
     private val dbGamessPath = "games"
+
+    lateinit var awaitGamestart: ListenerRegistration
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player_waiting)
         db = FirebaseFirestore.getInstance().collection(dbGamessPath)
 
-        val docRef = db.document(game.gameID)
-        docRef.addSnapshotListener { snapshot, e ->
+        awaitGamestart = db.document(game.gameID).addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.w("ERROR", "Listen failed.", e)
                 return@addSnapshotListener
@@ -29,20 +32,28 @@ class PlayerWaitingActivity  : AppCompatActivity() {
             if (snapshot != null && snapshot.exists()) {
                 Log.d("SUCCESS", "Current data: ${snapshot.data}")
                 game = snapshot.toObject(Game::class.java)!!
-                if(game.playrounds.size <0){
-                    val intent = Intent(this, GameLaunchingActivity::class.java)
-                    startActivity(intent)
+                if (game.playrounds.size < 0) {
+                    gotoGameLaunch()
                 }
 
             } else {
                 Log.d("ERROR", "Current data: null")
-                val intent = Intent(this, LandingActivity::class.java)
-                startActivity(intent)
+                gotoGameLanding()
             }
         }
+
     }
 
 
+    private fun gotoGameLaunch() {
+        awaitGamestart.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
+        val intent = Intent(this, GameLaunchingActivity::class.java)
+        startActivity(intent)
+    }
 
-
+    private fun gotoGameLanding() {
+        awaitGamestart.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
+        val intent = Intent(this, LandingActivity::class.java)
+        startActivity(intent)
+    }
 }

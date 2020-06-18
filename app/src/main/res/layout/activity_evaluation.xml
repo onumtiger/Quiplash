@@ -10,19 +10,19 @@
         android:id="@+id/winner"
         android:layout_width="296dp"
         android:layout_height="66dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4">
+        app:layout_constraintTop_toBottomOf="@+id/viewDraw">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/imageRoundWinner"
             android:layout_width="321dp"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/green_seperator" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/imageRoundWinnerPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -30,7 +30,7 @@
             app:srcCompat="@drawable/join_game_star" />
 
         <TextView
-            android:id="@+id/active_player"
+            android:id="@+id/textRoundWinnerName"
             android:layout_width="199dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="75dp"
@@ -41,35 +41,122 @@
 
     </RelativeLayout>
 
+
+    <TextView
+        android:id="@+id/textViewScore"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="40dp"
+        android:background="@color/colorGreen"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/winner"
+        app:layout_constraintEnd_toEndOf="@+id/winner"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/winner" />
+
+    <RelativeLayout
+        android:id="@+id/winnerDraw"
+        android:layout_width="296dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="32dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/winner">
+
+        <ImageView
+            android:id="@+id/imageRoundWinnerDraw"
+            android:layout_width="321dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/green_seperator" />
+
+        <ImageView
+            android:id="@+id/imageRoundWinnerPhotoDraw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/join_game_star" />
+
+        <TextView
+            android:id="@+id/textRoundWinnerNameDraw"
+            android:layout_width="199dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="10dp"
+            android:text="player"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textViewScoreDraw"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="40dp"
+        android:background="@color/colorGreen"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/winnerDraw"
+        app:layout_constraintEnd_toEndOf="@+id/winnerDraw"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/winnerDraw" />
+
     <View
         android:id="@+id/view4"
         android:layout_width="273dp"
         android:layout_height="137dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="24dp"
         android:background="@android:drawable/dialog_holo_light_frame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/questionEval" />
 
     <TextView
-        android:id="@+id/answer2"
+        android:id="@+id/answerRoundWinner"
         android:layout_width="236dp"
         android:layout_height="98dp"
         android:layout_marginTop="20dp"
-        android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/view4"
-        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="@+id/view4"
         app:layout_constraintTop_toTopOf="@+id/view4" />
 
+    <View
+        android:id="@+id/viewDraw"
+        android:layout_width="273dp"
+        android:layout_height="137dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view4" />
+
     <TextView
-        android:id="@+id/rounds4"
+        android:id="@+id/answerRoundWinnerDraw"
+        android:layout_width="236dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/viewDraw"
+        app:layout_constraintStart_toStartOf="@+id/viewDraw"
+        app:layout_constraintTop_toTopOf="@+id/viewDraw" />
+
+    <TextView
+        android:id="@+id/roundsEval"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="50dp"
         android:text="1/10"
         android:textColor="@color/colorGreen"
@@ -79,7 +166,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/questionEval"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="This is a question"
@@ -88,8 +175,23 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.288" />
+        app:layout_constraintVertical_bias="0.13" />
+
+    <Button
+        android:id="@+id/buttonNext"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="@color/colorButtonGreen"
+        android:text="@string/next_round"
+        android:textColor="@color/colorWhite"
+        android:textColorHighlight="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textColorLink="@color/colorWhite"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/winnerDraw" />
 </androidx.constraintlayout.widget.ConstraintLayout>

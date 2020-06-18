@@ -1,10 +1,9 @@
 package com.example.quiplash
 
 /**
- * GAMEMANAGER:
- * In the GameManager-class all game-relevant data,
- * which will be called up frequently is stored here.
- * Like the user-information.
+ * Game:
+ * The Game-Object-class contains all game-relevant data,
+ * which will be saved in Firestore-DB
  * **/
 
 class Game {
@@ -16,22 +15,10 @@ class Game {
     var gameID: String = ""
     var playrounds: List<Round> = listOf()
     var isPublic: Boolean = false
+    var hostID: String = ""
+    var gameTitle: String = ""
+    var subRounds = 0
 
-    constructor(
-        currentRound: Int,
-        gameCategory: String,
-        gamePlayerNumber: Int,
-        gameRounds: Int,
-        gameUsers: List<String>,
-        gameid: String
-    ) {
-        this.activeRound = currentRound
-        this.category = gameCategory
-        this.playerNumber = gamePlayerNumber
-        this.rounds = gameRounds
-        this.users = gameUsers
-        this.gameID = gameid
-    }
 
     constructor(
         currentRound: Int,
@@ -40,7 +27,9 @@ class Game {
         gameRounds: Int,
         gameUsers: List<String>,
         gameid: String,
-        ispublic: Boolean
+        hostid: String,
+        ispublic: Boolean,
+        gametitle: String
     ) {
         this.activeRound = currentRound
         this.category = gameCategory
@@ -48,36 +37,23 @@ class Game {
         this.rounds = gameRounds
         this.users = gameUsers
         this.gameID = gameid
+        this.hostID = hostid
         this.isPublic = ispublic
+        this.gameTitle = gametitle
     }
 
-    constructor(
-        currentRound: Int,
-        gameCategory: String,
-        gamePlayerNumber: Int,
-        gameRounds: Int,
-        gameUsers: List<String>,
-        gameid: String,
-        gameplayrounds: List<Round>
-    ) {
-        this.activeRound = currentRound
-        this.category = gameCategory
-        this.playerNumber = gamePlayerNumber
-        this.rounds = gameRounds
-        this.users = gameUsers
-        this.gameID = gameid
-        this.playrounds = gameplayrounds
-    }
 
     constructor(
-        currentRound: Int,
-        gameCategory: String,
-        gamePlayerNumber: Int,
-        gameRounds: Int,
-        gameUsers: List<String>,
         gameid: String,
+        gamePlayerNumber: Int,
+        ispublic: Boolean,
+        currentRound: Int,
         gameplayrounds: List<Round>,
-        ispublic: Boolean
+        gameHostid: String,
+        gametitle: String,
+        gameCategory: String,
+        gameRounds: Int,
+        gameUsers: List<String>
     ) {
         this.activeRound = currentRound
         this.category = gameCategory
@@ -87,6 +63,9 @@ class Game {
         this.gameID = gameid
         this.playrounds = gameplayrounds
         this.isPublic = ispublic
+        this.hostID = gameHostid
+        this.gameTitle = gametitle
+        this.subRounds = gameplayrounds.size
     }
 
     constructor()

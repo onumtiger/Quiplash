@@ -42,22 +42,22 @@ class Join_GameActivity : AppCompatActivity() {
         val activeGamesList = findViewById<ListView>(R.id.active_games_list)
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefresh)
 
-        btnNewGameActivity.setOnClickListener() {
-            val intent = Intent(this, New_GameActivity::class.java);
-            startActivity(intent);
+        btnNewGameActivity.setOnClickListener {
+            val intent = Intent(this, New_GameActivity::class.java)
+            startActivity(intent)
         }
 
-        btnBack.setOnClickListener() {
-            super.onBackPressed();
+        btnBack.setOnClickListener {
+            super.onBackPressed()
         }
 
-        refreshLayout.setOnRefreshListener() {
+        refreshLayout.setOnRefreshListener {
             getGamesList(activeGamesList)
             refreshLayout.isRefreshing = false
         }
 
         getGamesList(activeGamesList)
-        activeGamesList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        activeGamesList.onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
             // Get the selected item text from ListView
             val selectedItem = parent.getItemAtPosition(position) as Game
 
@@ -66,9 +66,9 @@ class Join_GameActivity : AppCompatActivity() {
                     try {
                         game = documentSnapshot.toObject(Game::class.java)!!
                     } finally {
-                        val intent = Intent(this, Host_WaitingActivity::class.java);
+                        val intent = Intent(this, Host_WaitingActivity::class.java)
                         intent.putExtra("gameID", selectedItem.gameID)
-                        startActivity(intent);
+                        startActivity(intent)
                     }
 
                 }

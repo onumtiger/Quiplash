@@ -102,13 +102,13 @@
         app:layout_constraintTop_toBottomOf="@+id/new_game_category_card">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/imageRoundWinner"
             android:layout_width="304dp"
             android:layout_height="72dp"
             app:srcCompat="@drawable/green_seperator" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/imageRoundWinnerPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"

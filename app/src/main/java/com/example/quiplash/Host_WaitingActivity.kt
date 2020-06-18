@@ -51,9 +51,6 @@ class Host_WaitingActivity : AppCompatActivity() {
 
         btnStartGame.setOnClickListener {
             createAllRounds()
-           /* val intent = Intent(this, End_Of_GameActivity::class.java)
-            intent.putExtra("gameID", game.gameID)
-            startActivity(intent)*/
         }
 
         btnEndGame.setOnClickListener {
@@ -101,7 +98,7 @@ class Host_WaitingActivity : AppCompatActivity() {
 
     fun removeUserFromGame() {
         val selectedItem = game
-        val filteredUsers = selectedItem.users.filterIndexed { index, s -> (s != auth.currentUser?.uid.toString())  }
+        val filteredUsers = selectedItem.users.filterIndexed { _, s -> (s != auth.currentUser?.uid.toString())  }
         selectedItem.users = filteredUsers
         DBMethods.DBCalls.updateGameUsers(selectedItem)
     }
@@ -125,7 +122,7 @@ class Host_WaitingActivity : AppCompatActivity() {
         btnJoinGame: Button
     ) {
         val playersNames = mutableListOf<UserQP>()
-        var userIDList = mutableListOf<String>()
+        var userIDList: MutableList<String>
         var currentGame: Game
         val callback = object : Callback<Game> {
             override fun onTaskComplete(result: Game) {
@@ -208,17 +205,15 @@ class Host_WaitingActivity : AppCompatActivity() {
 
             while (roundCount < game.users.size - jump) {
 
-                val voters = mutableListOf<String>()
-                var votersarr = arrayOf<String>()
+                val voters = mutableListOf<Voter>()
                 for (user in game.users) {
 
                     if (game.users.indexOf(user) != roundCount && game.users.indexOf(user) != (roundCount + jump)) {
-                        voters += user
-                        votersarr += user
+                        voters += Voter(user)
                     }
                 }
                 oneRound += (Round(voters,
-                    listOf(RoundUser(game.users[roundCount]), RoundUser(game.users[(roundCount + jump)]))
+                    listOf(Opponent( game.users[roundCount]), Opponent( game.users[(roundCount + jump)]))
                 ))
 
                 roundCount += 1
@@ -235,6 +230,7 @@ class Host_WaitingActivity : AppCompatActivity() {
         }
 
         game.playrounds = allRounds
+        game.subRounds = allRounds.size
         db.document(game.gameID)
             .set(game)
             .addOnSuccessListener {
