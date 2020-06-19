@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".Profile_RegisteredActivity">
 
+    <Button
+        android:id="@+id/btnDeleteAccount"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorButtonRed"
+        android:text="@string/delete_account_btn"
+        android:textColor="@color/colorWhite"
+        android:textColorHighlight="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textColorLink="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditProfileRest" />
+
     <ImageButton
         android:id="@+id/profile_game_go_back_arrow"
         android:layout_width="32dp"

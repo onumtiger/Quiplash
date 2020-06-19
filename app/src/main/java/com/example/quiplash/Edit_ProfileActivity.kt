@@ -21,9 +21,10 @@ import com.example.quiplash.DBMethods.DBCalls.Companion.editUser
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.activity_friends.*
 import java.io.IOException
 import java.util.*
 
@@ -116,6 +117,28 @@ class Edit_ProfileActivity : AppCompatActivity() {
         btnChangeRest.setOnClickListener() {
             val intent = Intent(this, Edit_PW_Mail_Activity::class.java);
             startActivity(intent);
+
+
+/*
+            val fm = FirebaseMessaging.getInstance()
+            fm.send(
+                RemoteMessage.Builder(current_User.userID.toString()+"@fcm.googleapis.com")
+                .setMessageId(Integer.toString(1))
+                .addData("my_message", "Hello World")
+                .addData("my_action", "SAY_HELLO")
+                .build())
+
+            val fm = FirebaseMessaging.getInstance()
+
+            fm.send(
+                RemoteMessage.Builder(current_User.userID.toString() + "@gcm.googleapis.com")
+                    .setMessageId(getMsgId())
+                    .addData("key1", "a value")
+                    .addData("key2", "another value")
+                    .build()
+            )
+
+ */
         }
 
 
