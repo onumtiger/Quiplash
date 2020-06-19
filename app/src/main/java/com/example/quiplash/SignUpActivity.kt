@@ -37,7 +37,6 @@ class SignUpActivity : AppCompatActivity() {
     private var PRIVATE_MODE = 0
     var sharedPreference: SharedPreferences? = null
     val prefKey = "guestid"
-    val prefDefValue = "noguest"
 
     //UserInfo
     var isUser: Boolean = false
@@ -45,7 +44,10 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPreference = getSharedPreferences(PREF_NAME, PRIVATE_MODE)
-
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         setContentView(R.layout.activity_sign_up)
 
         //Get Firebase auth instance
@@ -85,15 +87,6 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         btnSubmit.setOnClickListener {
-            /* db.whereEqualTo("userName", inputUsername.text.toString()).get().addOnCompleteListener { task ->
-                 if (task.isSuccessful) {
-                     Log.d("TAG", "Inside onComplete function!");
-                     textviewError.text = getString(R.string.username_not_available)
-                 } else {
-                     createUser()
-                 }
-             }*/
-
             var userExist = false
             db.get()
                 .addOnSuccessListener { userCollectionDB ->
@@ -195,7 +188,6 @@ class SignUpActivity : AppCompatActivity() {
                     ).show()
                 }
 
-                // ...
             }
     }
 

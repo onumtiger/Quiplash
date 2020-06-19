@@ -19,7 +19,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class Host_WaitingActivity : AppCompatActivity() {
+class HostWaitingActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     //Firestore
@@ -30,7 +30,10 @@ class Host_WaitingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
-
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         setContentView(R.layout.activity_host_waiting)
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.host_waiting_go_back_arrow)
@@ -230,8 +233,6 @@ class Host_WaitingActivity : AppCompatActivity() {
         db.document(game.gameID)
             .set(game)
             .addOnSuccessListener {
-                Log.d("Success", "DocumentSnapshot successfully written!")
-
                 //myWebSocketClient.send(game.gameID)
 
                 val intent = Intent(this, GameLaunchingActivity::class.java)

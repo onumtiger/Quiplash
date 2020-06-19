@@ -17,6 +17,10 @@ class New_GameActivity : AppCompatActivity() {
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         setContentView(R.layout.activity_new_game)
         auth = FirebaseAuth.getInstance()
 
@@ -28,7 +32,7 @@ class New_GameActivity : AppCompatActivity() {
         }
 
         btnStart.setOnClickListener {
-            val intent = Intent(this, Host_WaitingActivity::class.java)
+            val intent = Intent(this, HostWaitingActivity::class.java)
             intent.putExtra("gameID", createNewGame())
             startActivity(intent)
         }

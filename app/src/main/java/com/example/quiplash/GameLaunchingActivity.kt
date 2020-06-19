@@ -2,6 +2,7 @@ package com.example.quiplash
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quiplash.DBMethods.DBCalls.Companion.getQuestions
 import com.example.quiplash.GameManager.Companion.game
@@ -15,7 +16,7 @@ class GameLaunchingActivity : AppCompatActivity() {
 
     //FirebaseAuth object
     private var auth: FirebaseAuth? = null
-    var all_questions: ArrayList<Question>? = null
+    private var allQuestions: ArrayList<Question>? = null
 
     //Firestore
     lateinit var db: CollectionReference
@@ -27,13 +28,21 @@ class GameLaunchingActivity : AppCompatActivity() {
         // Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
-
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         setContentView(R.layout.activity_game_launching)
 
+        val gamelaunchTitle = findViewById<TextView>(R.id.textViewTitleGL)
+
+        if(game.activeRound >1){
+            gamelaunchTitle.text = getString(R.string.next_round_starts)
+        }
 
         val callback = object: Callback<ArrayList<Question>> {
             override fun onTaskComplete(result: ArrayList<Question>) {
-                all_questions = result
+                allQuestions = result
             }
         }
         getQuestions(callback)
@@ -41,12 +50,20 @@ class GameLaunchingActivity : AppCompatActivity() {
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
                 game = documentSnapshot.toObject(Game::class.java)!!
+                if(game.playrounds.size>= game.activeRound) {
 
-                if (game.playrounds[ game.activeRound - 1].opponents[0].userID.equals(auth!!.currentUser?.uid.toString()) || game.playrounds[game.activeRound - 1].opponents[1].userID.equals(auth!!.currentUser?.uid.toString())){
-                    val intent = Intent(this, PrepareAnswerActivity::class.java)
-                    startActivity(intent)
-                }else{
-                    val intent = Intent(this, Choose_AnswerActivity::class.java)
+                    if (game.playrounds[game.activeRound - 1].opponents[0].userID.equals(auth!!.currentUser?.uid.toString()) || game.playrounds[game.activeRound - 1].opponents[1].userID.equals(
+                            auth!!.currentUser?.uid.toString()
+                        )
+                    ) {
+                        val intent = Intent(this, PrepareAnswerActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        val intent = Intent(this, ChooseAnswerActivity::class.java)
+                        startActivity(intent)
+                    }
+                } else{
+                    val intent = Intent(this, LandingActivity::class.java)
                     startActivity(intent)
                 }
             }

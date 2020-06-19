@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Choose_AnswerActivity">
+    tools:context=".ChooseAnswerActivity">
 
     <TextView
             android:id="@+id/roundsCA2"

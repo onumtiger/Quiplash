@@ -29,7 +29,10 @@ class AnswersActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
-
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         setContentView(R.layout.activity_answers)
         timerView = findViewById(R.id.timer2A)
         val othertimer = findViewById<TextView>(R.id.timer3A)
@@ -41,7 +44,6 @@ class AnswersActivity : AppCompatActivity() {
 
         db.document(game.gameID).get()
             .addOnSuccessListener {
-                Log.d("SUCCESS1", "DocumentSnapshot successfully deleted!")
                 game = it.toObject(Game::class.java)!!
                 questionTV.text = game.playrounds[game.activeRound - 1].question
                 answerTV1.text = game.playrounds[game.activeRound - 1].opponents[0].answer

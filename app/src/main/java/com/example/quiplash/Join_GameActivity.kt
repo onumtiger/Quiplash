@@ -3,22 +3,16 @@ package com.example.quiplash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.quiplash.DBMethods.DBCalls.Companion.getActiveGames
-import com.example.quiplash.DBMethods.DBCalls.Companion.updateGameUsers
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.quiplash.GameManager.Companion.game
-import com.example.quiplash.GameManager.Companion.setGameinfo
 
 
 class Join_GameActivity : AppCompatActivity() {
@@ -32,10 +26,15 @@ class Join_GameActivity : AppCompatActivity() {
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_join_game)
         auth = FirebaseAuth.getInstance()
 
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
+        setContentView(R.layout.activity_join_game)
+
 
         val btnNewGameActivity = findViewById<AppCompatImageButton>(R.id.join_new_game_btn)
         val btnBack = findViewById<AppCompatImageButton>(R.id.join_game_go_back_arrow)
@@ -66,7 +65,7 @@ class Join_GameActivity : AppCompatActivity() {
                     try {
                         game = documentSnapshot.toObject(Game::class.java)!!
                     } finally {
-                        val intent = Intent(this, Host_WaitingActivity::class.java)
+                        val intent = Intent(this, HostWaitingActivity::class.java)
                         intent.putExtra("gameID", selectedItem.gameID)
                         startActivity(intent)
                     }

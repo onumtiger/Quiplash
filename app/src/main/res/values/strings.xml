@@ -93,4 +93,7 @@
     <string name="other_players_choose_answer">The other players choose the best answer</string>
     <string name="waiting_answers">Waiting for all answers to arrive.</string>
     <string name="next_round">Next Round</string>
+    <string name="your_answer">Your Answer</string>
+    <string name="next_round_starts">Next Round starts</string>
+    <string name="show_scoreboard">Show Scoreboard</string>
 </resources>

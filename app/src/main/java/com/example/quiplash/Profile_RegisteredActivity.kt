@@ -26,6 +26,10 @@ class Profile_RegisteredActivity : AppCompatActivity() {
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         setContentView(R.layout.activity_profile_registered)
 
         auth = FirebaseAuth.getInstance()
@@ -37,10 +41,10 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         val btnDeleteAccount = findViewById<Button>(R.id.btnDeleteAccount)
         val btnaddQuestion = findViewById<Button>(R.id.btnaddQuestion)
         val viewProfilePic: ImageView = findViewById(R.id.imageView)
-        var viewUsername : TextView = findViewById<TextView>(R.id.pw)
-        var viewEmail : TextView = findViewById<TextView>(R.id.email)
-        var viewScore : TextView = findViewById<TextView>(R.id.score)
-        var viewUsernameBig : TextView = findViewById<TextView>(R.id.usernameBig)
+        val viewUsername : TextView = findViewById(R.id.pw)
+        val viewEmail : TextView = findViewById(R.id.email)
+        val viewScore : TextView = findViewById(R.id.score)
+        val viewUsernameBig : TextView = findViewById(R.id.usernameBig)
         var photoPath = "images/default-guest.png"
 
 
@@ -58,7 +62,7 @@ class Profile_RegisteredActivity : AppCompatActivity() {
                     viewScore.text = userinfodefault[2]
 
                     // set default user image if fetchting data fails
-                    var spaceRef = storageRef.child(photoPath)
+                    val spaceRef = storageRef.child(photoPath)
                     spaceRef.downloadUrl
                         .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
                             Glide
@@ -78,7 +82,7 @@ class Profile_RegisteredActivity : AppCompatActivity() {
                     // timer is needed to load new photo is user edits its profile pic
                     val handler = Handler()
                     handler.postDelayed(Runnable {
-                        var spaceRef = storageRef.child(photoPath)
+                        val spaceRef = storageRef.child(photoPath)
                         spaceRef.downloadUrl
                             .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
                                 Glide
@@ -92,22 +96,22 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         }
         getUser(callback)
 
-        btnaddQuestion.setOnClickListener() {
-            val intent = Intent(this, ChooseQuestionTypeActivity::class.java);
-            startActivity(intent);
+        btnaddQuestion.setOnClickListener {
+            val intent = Intent(this, ChooseQuestionTypeActivity::class.java)
+            startActivity(intent)
         }
 
-        btnBack.setOnClickListener() {
-            val intent = Intent(this, LandingActivity::class.java);
-            startActivity(intent);
+        btnBack.setOnClickListener {
+            val intent = Intent(this, LandingActivity::class.java)
+            startActivity(intent)
         }
 
-        btnEditProfile.setOnClickListener() {
-            val intent = Intent(this, Edit_ProfileActivity::class.java);
-            startActivity(intent);
+        btnEditProfile.setOnClickListener {
+            val intent = Intent(this, Edit_ProfileActivity::class.java)
+            startActivity(intent)
         }
 
-        btnDeleteAccount.setOnClickListener(){
+        btnDeleteAccount.setOnClickListener{
             val dialogFragment = Delete_Account()
             val ft = supportFragmentManager.beginTransaction()
             val prev = supportFragmentManager.findFragmentByTag("delete")
@@ -121,9 +125,9 @@ class Profile_RegisteredActivity : AppCompatActivity() {
     }
 
     fun getUserInfoDefault(): Array<String> {
-        var username: String = "No Username found"
-        var email: String = "No Email found"
-        var score: String = "Score: 123456789"
+        val username = "No Username found"
+        val email = "No Email found"
+        val score = "Score: 123456789"
 
         val userinfo = arrayOf(
             username,

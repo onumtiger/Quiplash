@@ -45,13 +45,17 @@ class Edit_ProfileActivity : AppCompatActivity() {
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         setContentView(R.layout.acitvity_edit_profile)
 
         auth = FirebaseAuth.getInstance()
 
         storage = FirebaseStorage.getInstance();
         var fotostorage = FirebaseStorage.getInstance();
-        var storageRef = fotostorage!!.reference
+        var storageRef = fotostorage.reference
         var photoPath : String = "images/default-guest.png"
         var score = 0
         var friends = emptyList<String>()

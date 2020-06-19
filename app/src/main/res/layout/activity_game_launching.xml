@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView2" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textViewTitleGL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/game_starts"
@@ -55,6 +55,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/viewQuestion"
         app:layout_constraintEnd_toEndOf="@+id/viewQuestion"
         app:layout_constraintStart_toStartOf="@+id/viewQuestion"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitleGL" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

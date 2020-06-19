@@ -23,14 +23,14 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SignInActivity" />
         <activity android:name=".Database" />
-        <activity android:name=".Host_WaitingActivity" />
+        <activity android:name=".HostWaitingActivity" />
         <activity android:name=".GameLaunchingActivity" />
         <activity android:name=".GlobalScoreboard_Activity" />
         <activity android:name=".AddQuestion" />
-        <activity android:name=".ChooseQuestionTypeActivity"></activity>
+        <activity android:name=".ChooseQuestionTypeActivity" />
         <activity android:name=".AnswersActivity" />
         <activity android:name=".PrepareAnswerActivity" />
-        <activity android:name=".Choose_AnswerActivity" />
+        <activity android:name=".ChooseAnswerActivity" />
         <activity android:name=".EvaluationActivity" />
         <activity android:name=".End_Of_GameActivity" />
         <activity android:name=".Edit_ProfileActivity" />

@@ -3,6 +3,7 @@ package com.example.quiplash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -17,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.storage.FirebaseStorage
 import kotlin.math.ceil
+import com.example.quiplash.GameMethods.GameCalls.Companion.startTimer
 
 class EvaluationActivity : AppCompatActivity() {
 
@@ -32,17 +34,19 @@ class EvaluationActivity : AppCompatActivity() {
     private var winnerName: TextView? = null
     private var imageWinnerPhoto: ImageView? = null
     private var scoreView: TextView? = null
+    private var frameProfile: RelativeLayout? = null
+
     private var answerViewWinnerDraw: TextView? = null
     private var winnerNameDraw: TextView? = null
     private var imageWinnerPhotoDraw: ImageView? = null
     private var scoreViewDraw: TextView? = null
     private var answerViewWinnerFrameDraw: View? = null
-    private var answerViewWinnerFrame: View? = null
-    private var winnerFrame: RelativeLayout? = null
+    private var frameProfileDraw: RelativeLayout? = null
 
     private var playerPhoto = ""
     lateinit var awaitNextRound: ListenerRegistration
-
+    private var nextroundFlag = false
+    var oldRound = 0
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,44 +56,45 @@ class EvaluationActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         setPoints()
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         setContentView(R.layout.activity_evaluation)
 
 
         val questionEval = findViewById<TextView>(R.id.questionEval)
+        val textViewTimer = findViewById<TextView>(R.id.timerViewEval)
         answerViewWinner = findViewById(R.id.answerRoundWinner)
         winnerName = findViewById(R.id.textRoundWinnerName)
         imageWinnerPhoto = findViewById(R.id.imageRoundWinnerPhoto)
+        scoreView = findViewById(R.id.textViewScore)
+        frameProfile = findViewById(R.id.winner)
+
+        answerViewWinnerDraw = findViewById(R.id.answerRoundWinnerDraw)
         winnerNameDraw = findViewById(R.id.textRoundWinnerNameDraw)
         answerViewWinnerFrameDraw = findViewById(R.id.viewDraw)
         imageWinnerPhotoDraw = findViewById(R.id.imageRoundWinnerPhotoDraw)
         val roundViewEval = findViewById<TextView>(R.id.roundsEval)
-        scoreView = findViewById(R.id.textViewScore)
         scoreViewDraw = findViewById(R.id.textViewScoreDraw)
-        winnerFrame = findViewById(R.id.winnerDraw)
+        frameProfileDraw = findViewById(R.id.winnerDraw)
+
         val nextBtn = findViewById<TextView>(R.id.buttonNext)
-        val oldRound = game.activeRound
+
+        oldRound = game.activeRound
 
 
         questionEval.text = game.playrounds[game.activeRound - 1].question
-        roundViewEval.text = "${ceil(game.activeRound.toDouble()/3).toInt()} / ${game.rounds}"
+        roundViewEval.text = "${ceil(game.activeRound.toDouble() / 3).toInt()} / ${game.rounds}"
+        startTimer(textViewTimer, GameManager.startSeconds)
 
 
-        if (game.hostID == auth!!.currentUser?.uid) {
-            nextBtn.visibility = View.VISIBLE
-        }
-
-        if(game.activeRound == game.playrounds.size){
-            nextBtn.text = "Show Scoreboard"
+        if (game.activeRound == game.playrounds.size) {
+            nextBtn.text = getString(R.string.show_scoreboard)
         }
 
         nextBtn.setOnClickListener {
-            game.activeRound = game.activeRound +1
-            db.document(game.gameID)
-                .set(game)
-                .addOnSuccessListener {
-                    gotoNextRound()
-                }
-                .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
+            setNextRound()
         }
 
 
@@ -102,29 +107,47 @@ class EvaluationActivity : AppCompatActivity() {
             }
 
             if (snapshot != null && snapshot.exists()) {
-                Log.d("SUCCESS", "Current data: ${snapshot.data}")
-                Log.d("SUCCESS", "Current data: $oldRound")
-
                 game = snapshot.toObject(Game::class.java)!!
                 if (game.activeRound > oldRound) { //is activeRound new?
-                    gotoNextRound()
+                    if(!nextroundFlag){
+                        gotoNextRound()
+                    }
+
                 }
 
             }
         }
 
 
+        Handler().postDelayed({
+            if (!nextroundFlag) {
+                setNextRound()
+            }
+        }, 60000)
+
+
     }
 
 
+    private fun setNextRound() {
+        game.activeRound = game.activeRound + 1
+        db.document(game.gameID)
+            .set(game)
+            .addOnSuccessListener {
+                gotoNextRound()
+            }
+            .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
+    }
 
-    private fun gotoNextRound(){
+    private fun gotoNextRound() {
         awaitNextRound.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
-        if(game.activeRound <= game.playrounds.size){
-            val intent = Intent(this, GameLaunchingActivity::class.java)
-            startActivity(intent)
-        } else{
+        nextroundFlag = true
+
+        if ( game.activeRound > game.playrounds.size) {
             val intent = Intent(this, End_Of_GameActivity::class.java)
+            startActivity(intent)
+        } else {
+            val intent = Intent(this, GameLaunchingActivity::class.java)
             startActivity(intent)
         }
 
@@ -171,13 +194,42 @@ class EvaluationActivity : AppCompatActivity() {
             .addOnSuccessListener { documentSnapshot ->
                 game = documentSnapshot.toObject(Game::class.java)!!
                 if (game.playrounds[game.activeRound - 1].opponents[0].answerScore > game.playrounds[game.activeRound - 1].opponents[1].answerScore) {
-                    setWinnerInfo(0, answerViewWinnerFrame, answerViewWinner, scoreView, winnerName, imageWinnerPhoto)
+                    setWinnerInfo(
+                        0,
+                        frameProfile,
+                        answerViewWinner,
+                        scoreView,
+                        winnerName,
+                        imageWinnerPhoto
+                    )
                 } else if (game.playrounds[game.activeRound - 1].opponents[0].answerScore < game.playrounds[game.activeRound - 1].opponents[1].answerScore) {
-                    setWinnerInfo(1, answerViewWinnerFrame, answerViewWinner, scoreView, winnerName, imageWinnerPhoto)
+                    setWinnerInfo(
+                        1,
+                        frameProfileDraw,
+                        answerViewWinner,
+                        scoreView,
+                        winnerName,
+                        imageWinnerPhoto
+                    )
                 } else if (game.playrounds[game.activeRound - 1].opponents[0].answerScore == game.playrounds[game.activeRound - 1].opponents[1].answerScore) {
-                    setWinnerInfo(0, answerViewWinnerFrame, answerViewWinner, scoreView, winnerName, imageWinnerPhoto)
-                    setWinnerInfo(1, answerViewWinnerFrameDraw, answerViewWinnerDraw, scoreViewDraw, winnerNameDraw, imageWinnerPhotoDraw)
-                    winnerFrame?.visibility = RelativeLayout.VISIBLE
+                    setWinnerInfo(
+                        0,
+                        frameProfile,
+                        answerViewWinner,
+                        scoreView,
+                        winnerName,
+                        imageWinnerPhoto
+                    )
+                    setWinnerInfo(
+                        1,
+                        frameProfileDraw,
+                        answerViewWinnerDraw,
+                        scoreViewDraw,
+                        winnerNameDraw,
+                        imageWinnerPhotoDraw
+                    )
+                    answerViewWinnerFrameDraw?.visibility = RelativeLayout.VISIBLE
+                    scoreViewDraw?.visibility = RelativeLayout.VISIBLE
                 }
 
             }
@@ -185,10 +237,18 @@ class EvaluationActivity : AppCompatActivity() {
 
 
     @SuppressLint("SetTextI18n")
-    private fun setWinnerInfo(winnerIndex: Int, frameView: View?, answerView: TextView?, scoreView: TextView?, nameView: TextView?, profileView: ImageView?) {
+    private fun setWinnerInfo(
+        winnerIndex: Int,
+        frameView: View?,
+        answerView: TextView?,
+        scoreView: TextView?,
+        nameView: TextView?,
+        profileView: ImageView?
+    ) {
         frameView?.visibility = View.VISIBLE
-        answerView?.text =game.playrounds[game.activeRound - 1].opponents[winnerIndex].answer
-        scoreView?.text = "+" + game.playrounds[game.activeRound - 1].opponents[winnerIndex].answerScore.toString()
+        answerView?.text = game.playrounds[game.activeRound - 1].opponents[winnerIndex].answer
+        scoreView?.text =
+            "+" + game.playrounds[game.activeRound - 1].opponents[winnerIndex].answerScore.toString()
         dbUsers.document(game.playrounds[game.activeRound - 1].opponents[winnerIndex].userID.toString())
             .get()
             .addOnSuccessListener {
@@ -200,7 +260,7 @@ class EvaluationActivity : AppCompatActivity() {
     }
 
 
-    private fun setProfilePicture(player: UserQP, profileView: ImageView?){
+    private fun setProfilePicture(player: UserQP, profileView: ImageView?) {
 
         val storageRef = FirebaseStorage.getInstance().reference
 
@@ -221,7 +281,6 @@ class EvaluationActivity : AppCompatActivity() {
                 }
             }.addOnFailureListener { Log.d("Test", " Failed!") }
     }
-
 
 
 }
