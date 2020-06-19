@@ -34,7 +34,7 @@ class Host_WaitingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_host_waiting)
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.host_waiting_go_back_arrow)
-        val btnInvite_Players = findViewById<Button>(R.id.invite_players_btn)
+        val btnInvitePlayers = findViewById<Button>(R.id.invite_players_btn)
         val btnStartGame = findViewById<Button>(R.id.start_game_btn)
         val btnEndGame = findViewById<Button>(R.id.end_game)
         val btnLeaveGame = findViewById<Button>(R.id.leave_game)
@@ -43,7 +43,7 @@ class Host_WaitingActivity : AppCompatActivity() {
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefresh)
         auth = FirebaseAuth.getInstance()
 
-        getUsersList(playersListView, game.gameID, btnStartGame, btnEndGame, btnLeaveGame, btnJoinGame)
+        getUsersList(playersListView, game.gameID)
 
         btnBack.setOnClickListener {
             super.onBackPressed()
@@ -69,16 +69,16 @@ class Host_WaitingActivity : AppCompatActivity() {
             addUserToGame()
             btnLeaveGame.visibility = View.VISIBLE
             btnJoinGame.visibility = View.INVISIBLE
-            getUsersList(playersListView, game.gameID, btnStartGame, btnEndGame, btnLeaveGame, btnJoinGame)
+            getUsersList(playersListView, game.gameID)
             refreshLayout.isRefreshing = false
         }
 
         refreshLayout.setOnRefreshListener {
-            getUsersList(playersListView, game.gameID, btnStartGame, btnEndGame, btnLeaveGame, btnJoinGame)
+            getUsersList(playersListView, game.gameID)
             refreshLayout.isRefreshing = false
         }
 
-        btnInvite_Players.setOnClickListener {
+        btnInvitePlayers.setOnClickListener {
             val dialogFragment = Invite_Player()
             val ft = supportFragmentManager.beginTransaction()
             val prev = supportFragmentManager.findFragmentByTag("invite")
@@ -103,10 +103,37 @@ class Host_WaitingActivity : AppCompatActivity() {
         DBMethods.DBCalls.updateGameUsers(selectedItem)
     }
 
-    fun setStartBtn(currentPlayerNumber: Int, playerNumber: Int, btnStartGame: Button) {
+    fun setBtnVisibility(currentGame: Game, currentPlayerNumber: Int, playerNumber: Int) {
+        val btnInvitePlayers = findViewById<Button>(R.id.invite_players_btn)
+        val btnStartGame = findViewById<Button>(R.id.start_game_btn)
+        val btnEndGame = findViewById<Button>(R.id.end_game)
+        val btnLeaveGame = findViewById<Button>(R.id.leave_game)
+        val btnJoinGame = findViewById<Button>(R.id.join_game_btn)
+
+        if (currentGame.users[0] == auth.currentUser?.uid.toString()) {
+            btnStartGame.visibility = View.VISIBLE
+            btnEndGame.visibility = View.VISIBLE
+            btnLeaveGame.visibility = View.INVISIBLE
+            btnJoinGame.visibility = View.INVISIBLE
+            btnInvitePlayers.visibility = View.VISIBLE
+        } else if (currentGame.users.contains(auth.currentUser?.uid.toString())) {
+            btnStartGame.visibility = View.INVISIBLE
+            btnEndGame.visibility = View.INVISIBLE
+            btnLeaveGame.visibility = View.VISIBLE
+            btnJoinGame.visibility = View.INVISIBLE
+            btnInvitePlayers.visibility = View.VISIBLE
+        } else {
+            btnStartGame.visibility = View.INVISIBLE
+            btnEndGame.visibility = View.INVISIBLE
+            btnLeaveGame.visibility = View.INVISIBLE
+            btnJoinGame.visibility = View.VISIBLE
+            btnInvitePlayers.visibility = View.INVISIBLE
+        }
+
         if (currentPlayerNumber == playerNumber) {
             btnStartGame.isClickable = true
             btnStartGame.setBackgroundResource(R.color.colorButtonGreen)
+            btnInvitePlayers.visibility = View.INVISIBLE
         } else {
             btnStartGame.isClickable = false
             btnStartGame.setBackgroundResource(R.color.colorGray)
@@ -115,11 +142,7 @@ class Host_WaitingActivity : AppCompatActivity() {
 
     fun getUsersList(
         playersListView: ListView,
-        gameID: String,
-        btnStartGame: Button,
-        btnEndGame: Button,
-        btnLeaveGame: Button,
-        btnJoinGame: Button
+        gameID: String
     ) {
         val playersNames = mutableListOf<UserQP>()
         var userIDList: MutableList<String>
@@ -127,7 +150,6 @@ class Host_WaitingActivity : AppCompatActivity() {
         val callback = object : Callback<Game> {
             override fun onTaskComplete(result: Game) {
                 currentGame = result
-                setBtnVisibility(currentGame, btnStartGame, btnEndGame, btnLeaveGame, btnJoinGame)
                 var playerNumber = currentGame.playerNumber
                 var currentPlayerNumber = currentGame.users.size
                 val players = currentGame.users
@@ -143,7 +165,7 @@ class Host_WaitingActivity : AppCompatActivity() {
                                 playersNames
                             )
                             playersListView.adapter = adapter
-                            setStartBtn(currentPlayerNumber, playerNumber, btnStartGame)
+                            setBtnVisibility(currentGame, currentPlayerNumber, playerNumber)
                         }
                     }
                     getUserWithID(callbackUser, it)
@@ -151,32 +173,6 @@ class Host_WaitingActivity : AppCompatActivity() {
             }
         }
         getCurrentGame(callback, gameID)
-    }
-
-
-    fun setBtnVisibility(
-        game: Game,
-        btnStartGame: Button,
-        btnEndGame: Button,
-        btnLeaveGame: Button,
-        btnJoinGame: Button
-    ) {
-        if (game.users[0] == auth.currentUser?.uid.toString()) {
-            btnStartGame.visibility = View.VISIBLE
-            btnEndGame.visibility = View.VISIBLE
-            btnLeaveGame.visibility = View.INVISIBLE
-            btnJoinGame.visibility = View.INVISIBLE
-        } else if (game.users.contains(auth.currentUser?.uid.toString())) {
-            btnStartGame.visibility = View.INVISIBLE
-            btnEndGame.visibility = View.INVISIBLE
-            btnLeaveGame.visibility = View.VISIBLE
-            btnJoinGame.visibility = View.INVISIBLE
-        } else {
-            btnStartGame.visibility = View.INVISIBLE
-            btnEndGame.visibility = View.INVISIBLE
-            btnLeaveGame.visibility = View.INVISIBLE
-            btnJoinGame.visibility = View.VISIBLE
-        }
     }
 
     /**
