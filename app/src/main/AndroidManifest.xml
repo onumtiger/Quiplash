@@ -24,6 +24,7 @@
         <activity android:name=".SignInActivity" />
         <activity android:name=".Database" />
         <activity android:name=".HostWaitingActivity" />
+        <activity android:name=".InviteFriendsToGameActivity" />
         <activity android:name=".GameLaunchingActivity" />
         <activity android:name=".GlobalScoreboard_Activity" />
         <activity android:name=".AddQuestion" />

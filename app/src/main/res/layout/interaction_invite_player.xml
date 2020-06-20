@@ -1,87 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Delete Account Overlay -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     android:gravity="center"
     android:padding="20dp">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="280dp"
-    android:layout_height="248dp"
-    android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/interaction_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/invite_player"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.114"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.131" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="237dp"
+        android:layout_height="181dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/interaction_headline"
-        android:layout_width="103dp"
-        android:layout_height="21dp"
-        android:text="@string/enter_username_interaction"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.12"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39" />
 
-    <EditText
-        android:id="@+id/interaction_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/username_placeholder"
-        android:inputType="textEmailAddress"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.187"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.591" />
+        <TextView
+            android:id="@+id/interaction_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sorry!"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.153" />
 
-    <TextView
-        android:id="@+id/interaction_cancel_btn"
-        android:layout_width="55dp"
-        android:layout_height="20dp"
-        android:gravity="center"
-        android:text="@string/cancel"
-        android:textColor="@color/colorGreen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.093"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.929" />
+        <TextView
+            android:id="@+id/interaction_headline"
+            android:layout_width="215dp"
+            android:layout_height="68dp"
+            android:text="You must be registered to invite players to a game. Please sign in or sign up after this game."
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.518"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/interaction_invite_btn"
-        android:layout_width="55dp"
-        android:layout_height="20dp"
-        android:gravity="center"
-        android:text="@string/invite"
-        android:textColor="@color/colorRed"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.88"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.929" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/interaction_cancel_btn"
+            android:layout_width="55dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center"
+            android:text="Close"
+            android:textColor="@color/colorGreen"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.818" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

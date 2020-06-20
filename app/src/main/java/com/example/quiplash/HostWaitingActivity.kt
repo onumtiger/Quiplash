@@ -82,15 +82,31 @@ class HostWaitingActivity : AppCompatActivity() {
         }
 
         btnInvitePlayers.setOnClickListener {
-            val dialogFragment = Invite_Player()
-            val ft = supportFragmentManager.beginTransaction()
-            val prev = supportFragmentManager.findFragmentByTag("invite")
-            if (prev != null) {
-                ft.remove(prev)
+            val callbackUser = object : Callback<UserQP> {
+                override fun onTaskComplete(result: UserQP) {
+                    var user = result
+                    if (user.guest!!) {
+                        val dialogFragment = Invite_Player()
+                        val ft = supportFragmentManager.beginTransaction()
+                        val prev = supportFragmentManager.findFragmentByTag("invite")
+                        if (prev != null) {
+                            ft.remove(prev)
+                        }
+                        ft.addToBackStack(null)
+                        dialogFragment.show(ft, "invite")
+                    } else {
+                        seeFriendsList()
+                    }
+                }
             }
-            ft.addToBackStack(null)
-            dialogFragment.show(ft, "invite")
+            getUserWithID(callbackUser, auth.currentUser?.uid.toString())
+
         }
+    }
+    fun seeFriendsList() {
+        val intent = Intent(this, InviteFriendsToGameActivity::class.java)
+        intent.putExtra("gameID", game.gameID)
+        startActivity(intent)
     }
 
     fun addUserToGame() {
