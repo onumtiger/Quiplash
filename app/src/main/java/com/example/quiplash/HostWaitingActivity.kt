@@ -57,9 +57,14 @@ class HostWaitingActivity : AppCompatActivity() {
         }
 
         btnEndGame.setOnClickListener {
-            deleteGame(game.gameID)
-            val intent = Intent(this, LandingActivity::class.java)
-            startActivity(intent)
+            val callbackSuccess = object : Callback<Boolean> {
+                override fun onTaskComplete(result: Boolean) {
+                    Log.d("GAMEDELETE", "deleted? = $result")
+                    val intent = Intent(this@HostWaitingActivity, LandingActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+            deleteGame(game.gameID,callbackSuccess)
         }
 
         btnLeaveGame.setOnClickListener {
@@ -84,7 +89,7 @@ class HostWaitingActivity : AppCompatActivity() {
         btnInvitePlayers.setOnClickListener {
             val callbackUser = object : Callback<UserQP> {
                 override fun onTaskComplete(result: UserQP) {
-                    var user = result
+                    val user = result
                     if (user.guest!!) {
                         val dialogFragment = Invite_Player()
                         val ft = supportFragmentManager.beginTransaction()
@@ -169,14 +174,14 @@ class HostWaitingActivity : AppCompatActivity() {
         val callback = object : Callback<Game> {
             override fun onTaskComplete(result: Game) {
                 currentGame = result
-                var playerNumber = currentGame.playerNumber
-                var currentPlayerNumber = currentGame.users.size
+                val playerNumber = currentGame.playerNumber
+                val currentPlayerNumber = currentGame.users.size
                 val players = currentGame.users
                 userIDList = players.toMutableList()
                 userIDList.forEach {
                     val callbackUser = object : Callback<UserQP> {
                         override fun onTaskComplete(result: UserQP) {
-                            var user = result
+                            val user = result
                             playersNames.add(user)
                             val adapter = PlayersListAdapter(
                                 applicationContext,
@@ -245,9 +250,8 @@ class HostWaitingActivity : AppCompatActivity() {
         }
 
         game.playrounds = allRounds
-        game.subRounds = allRounds.size
         db.document(game.gameID)
-            .set(game)
+            .update("playrounds", allRounds)
             .addOnSuccessListener {
                 //myWebSocketClient.send(game.gameID)
 

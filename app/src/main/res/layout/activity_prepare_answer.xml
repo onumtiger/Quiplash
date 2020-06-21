@@ -49,7 +49,7 @@
 
             <View
                 android:id="@+id/viewQuestion"
-                android:layout_width="270dp"
+                android:layout_width="0dp"
                 android:layout_height="239dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
@@ -61,8 +61,12 @@
 
             <TextView
                 android:id="@+id/textViewQuestion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="54dp"
                 android:text="This is a question"
                 android:textColor="@color/colorGreen"
                 android:textSize="30sp"

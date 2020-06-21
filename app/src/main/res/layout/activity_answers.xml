@@ -19,10 +19,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.18" />
 
     <TextView
         android:id="@+id/questionAnswer"
@@ -37,7 +36,6 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleAnswer" />
 
@@ -72,8 +70,12 @@
 
     <View
         android:id="@+id/viewAnswer1A"
-        android:layout_width="273dp"
-        android:layout_height="137dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="16dp"
         android:background="@android:drawable/dialog_holo_light_frame"
         app:layout_constraintBottom_toTopOf="@+id/viewAnswer2A"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,40 +84,49 @@
 
     <View
         android:id="@+id/viewAnswer2A"
-        android:layout_width="273dp"
-        android:layout_height="137dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         android:layout_marginBottom="64dp"
         android:background="@android:drawable/dialog_holo_light_frame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewAnswer1A" />
 
     <TextView
         android:id="@+id/answer1"
-        android:layout_width="236dp"
-        android:layout_height="98dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="48dp"
         android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/viewAnswer1A"
         app:layout_constraintEnd_toEndOf="@+id/viewAnswer1A"
-        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="@+id/viewAnswer1A"
         app:layout_constraintTop_toTopOf="@+id/viewAnswer1A" />
 
     <TextView
         android:id="@+id/answerRoundWinner"
-        android:layout_width="236dp"
-        android:layout_height="98dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="48dp"
         android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/viewAnswer2A"
         app:layout_constraintEnd_toEndOf="@+id/viewAnswer2A"
-        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="@+id/viewAnswer2A"
         app:layout_constraintTop_toTopOf="@+id/viewAnswer2A" />
 

@@ -2,7 +2,6 @@ package com.example.quiplash
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -10,12 +9,11 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.example.quiplash.DBMethods.DBCalls.Companion.getRandomQuestion
-import com.google.firebase.firestore.CollectionReference
 import com.example.quiplash.GameManager.Companion.game
 import com.example.quiplash.GameManager.Companion.startSeconds
-import com.example.quiplash.GameMethods.GameCalls.Companion.startTimer
+import com.example.quiplash.GameMethods.Companion.startTimer
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlin.math.ceil
@@ -31,8 +29,6 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
     var userindex = 0
     private lateinit var viewFlipper: ViewFlipper
-    var nextFlag = false
-
 
     lateinit var awaitAllAnswers: ListenerRegistration
 
@@ -68,7 +64,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
         val textAnswerState = findViewById<TextView>(R.id.textViewAnswerSaved)
         viewFlipper = findViewById(R.id.viewFlipperQuestion) // get the reference of ViewFlipper
 
-        textViewRound.text = "${ceil(game.activeRound.toDouble()/3).toInt()}/${game.rounds}"
+        textViewRound.text = "${ceil(game.activeRound.toDouble() / 3).toInt()}/${game.rounds}"
         textViewQuestion.text = game.playrounds[game.activeRound - 1].question
         textViewQuestion2.text = game.playrounds[game.activeRound - 1].question
 
@@ -82,7 +78,13 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
         //var question_count = game.rounds*game.users.count()/2
 
-        startTimer(textViewTimer, startSeconds)
+        val callbackTimer = object : Callback<Boolean> {
+            override fun onTaskComplete(result: Boolean) {
+                Log.d("TIMER", "finished? = $result")
+                gotoAnswers()
+            }
+        }
+        startTimer(textViewTimer, startSeconds, callbackTimer)
 
         viewQuestion.setOnClickListener {
             viewFlipper.showNext()
@@ -125,21 +127,13 @@ class PrepareAnswerActivity : AppCompatActivity() {
             }
         }
 
-
-
-        Handler().postDelayed({
-            if(!nextFlag) {
-                val intent = Intent(this, AnswersActivity::class.java)
-                startActivity(intent)
-            }
-        }, startSeconds * 1000)
     }
 
     private fun gotoAnswers() {
-        nextFlag = true
         awaitAllAnswers.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
         val intent = Intent(this, AnswersActivity::class.java)
         startActivity(intent)
+
     }
 
 

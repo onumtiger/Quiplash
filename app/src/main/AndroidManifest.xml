@@ -33,7 +33,7 @@
         <activity android:name=".PrepareAnswerActivity" />
         <activity android:name=".ChooseAnswerActivity" />
         <activity android:name=".EvaluationActivity" />
-        <activity android:name=".End_Of_GameActivity" />
+        <activity android:name=".EndOfGameActivity" />
         <activity android:name=".Edit_ProfileActivity" />
         <activity android:name=".Edit_PW_Mail_Activity" />
         <activity android:name=".MainActivity">

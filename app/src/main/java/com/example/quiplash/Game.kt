@@ -17,7 +17,6 @@ class Game {
     var isPublic: Boolean = false
     var hostID: String = ""
     var gameTitle: String = ""
-    var subRounds = 0
 
 
     constructor(
@@ -65,7 +64,6 @@ class Game {
         this.isPublic = ispublic
         this.hostID = gameHostid
         this.gameTitle = gametitle
-        this.subRounds = gameplayrounds.size
     }
 
     constructor()

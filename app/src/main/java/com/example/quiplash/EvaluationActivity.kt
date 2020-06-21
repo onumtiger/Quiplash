@@ -18,7 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.storage.FirebaseStorage
 import kotlin.math.ceil
-import com.example.quiplash.GameMethods.GameCalls.Companion.startTimer
+import com.example.quiplash.GameMethods.Companion.startTimer
 
 class EvaluationActivity : AppCompatActivity() {
 
@@ -86,7 +86,14 @@ class EvaluationActivity : AppCompatActivity() {
 
         questionEval.text = game.playrounds[game.activeRound - 1].question
         roundViewEval.text = "${ceil(game.activeRound.toDouble() / 3).toInt()} / ${game.rounds}"
-        startTimer(textViewTimer, GameManager.startSeconds)
+
+        val callbackTimer = object : Callback<Boolean> {
+            override fun onTaskComplete(result: Boolean) {
+                Log.d("TIMER", "finished? = $result")
+                setNextRound()
+            }
+        }
+        startTimer(textViewTimer, GameManager.startSeconds, callbackTimer)
 
 
         if (game.activeRound == game.playrounds.size) {
@@ -119,35 +126,37 @@ class EvaluationActivity : AppCompatActivity() {
         }
 
 
-        Handler().postDelayed({
-            if (!nextroundFlag) {
-                setNextRound()
-            }
-        }, 60000)
-
-
     }
 
 
     private fun setNextRound() {
         game.activeRound = game.activeRound + 1
+
         db.document(game.gameID)
+            .update("activeRound", oldRound+1)
+            .addOnSuccessListener { Log.d("SUCCESS", "DocumentSnapshot successfully updated!") }
+            .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
+
+
+        /*db.document(game.gameID)
             .set(game)
             .addOnSuccessListener {
                 gotoNextRound()
             }
-            .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
+            .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }*/
     }
 
     private fun gotoNextRound() {
         awaitNextRound.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
         nextroundFlag = true
+        Log.d("EVALUTATION", " oldRound = $oldRound")
+        Log.d("EVALUTATION", " rundengröße = ${game.playrounds.size}")
+        Log.d("EVALUTATION", " result = ${oldRound >= game.playrounds.size}")
 
-        if ( game.activeRound > game.playrounds.size) {
-            val intent = Intent(this, End_Of_GameActivity::class.java)
-            startActivity(intent)
+        if ( oldRound < game.playrounds.size) {
+            GameMethods.playerAllocation(this.applicationContext, auth!!.currentUser?.uid.toString())
         } else {
-            val intent = Intent(this, GameLaunchingActivity::class.java)
+            val intent = Intent(this, EndOfGameActivity::class.java)
             startActivity(intent)
         }
 

@@ -13,9 +13,10 @@ import android.widget.ViewFlipper
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quiplash.GameManager.Companion.game
 import com.example.quiplash.GameManager.Companion.startSeconds
-import com.example.quiplash.GameMethods.GameCalls.Companion.startTimer
+import com.example.quiplash.GameMethods.Companion.startTimer
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlin.math.ceil
@@ -68,7 +69,13 @@ class ChooseAnswerActivity : AppCompatActivity() {
             findViewById(R.id.simpleViewFlipperCA) // get the reference of ViewFlipper
         othertimer.visibility = View.INVISIBLE
 
-        startTimer(timerViewWaiting, startSeconds)
+        val callbackTimerWaiting = object : Callback<Boolean> {
+            override fun onTaskComplete(result: Boolean) {
+                Log.d("TIMER", "finished? = $result")
+                simpleViewFlipper.showNext()
+            }
+        }
+        startTimer(timerViewWaiting, startSeconds, callbackTimerWaiting)
         roundView.text = "${ceil(game.activeRound.toDouble()/3).toInt()} / ${game.rounds}"
 
 
@@ -104,32 +111,37 @@ class ChooseAnswerActivity : AppCompatActivity() {
                     showAnswersFlag = true
                     simpleViewFlipper.showNext()
 
-                    db.document(game.gameID).get()
+                    /*db.document(game.gameID).get()
                         .addOnSuccessListener { documentSnapshot ->
                             game = documentSnapshot.toObject(Game::class.java)!!
                             questionTV.text = game.playrounds[game.activeRound - 1].question
                             answerTV1.text = game.playrounds[game.activeRound - 1].opponents[0].answer
                             answerTV2.text = game.playrounds[game.activeRound - 1].opponents[1].answer
-                        }
+                        }*/
 
-                    startTimer(timerView, startSeconds)
+                    val callbackGame = object : Callback<Game> {
+                        override fun onTaskComplete(result: Game) {
+                            game = result
+                            questionTV.text = game.playrounds[game.activeRound - 1].question
+                            answerTV1.text = game.playrounds[game.activeRound - 1].opponents[0].answer
+                            answerTV2.text = game.playrounds[game.activeRound - 1].opponents[1].answer
+                        }
+                    }
+                    DBMethods.DBCalls.getCurrentGame(callbackGame,game.gameID)
+
+                    val callbackTimer = object : Callback<Boolean> {
+                        override fun onTaskComplete(result: Boolean) {
+                            Log.d("TIMER", "finished? = $result")
+                            val intent = Intent(this@ChooseAnswerActivity, EvaluationActivity::class.java)
+                            startActivity(intent)
+                        }
+                    }
+                    startTimer(timerView, startSeconds, callbackTimer)
                 }
 
             }
         }
 
-        Handler().postDelayed({
-            if(!showAnswersFlag) {
-                simpleViewFlipper.showNext()
-            }
-        }, START_MILLI_SECONDS )
-
-        Handler().postDelayed({
-            if(!chooseAnswerFlag) {
-                val intent = Intent(this, EvaluationActivity::class.java)
-                startActivity(intent)
-            }
-        }, START_MILLI_SECONDS * 2)
     }
 
     override fun onBackPressed() {
@@ -142,8 +154,16 @@ class ChooseAnswerActivity : AppCompatActivity() {
     }
 
     fun saveVote(answerIndex: Int) {
+
         game.playrounds[game.activeRound - 1].voters[getVotersIndex(auth!!.currentUser?.uid.toString()) + 1].voteUserID =
             game.playrounds[game.activeRound - 1].opponents[answerIndex].userID.toString()
+
+        // Atomically add a new region to the "regions" array field.
+// Atomically remove a region from the "regions" array field.
+       // db.document(game.gameID).update("playrounds/${0}", FieldValue.arrayRemove(Voter(auth!!.currentUser?.uid.toString(), "")))
+        //db.document(game.gameID).update("playrounds/${0}", FieldValue.arrayUnion(Voter(auth!!.currentUser?.uid.toString(), game.playrounds[game.activeRound - 1].opponents[answerIndex].userID.toString())))
+
+
         db.document(game.gameID)
             .set(game)
             .addOnSuccessListener {

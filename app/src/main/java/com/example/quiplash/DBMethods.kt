@@ -28,8 +28,6 @@ ALL METHODS:
 
  */
 
-// GetUser
-
 
 
 class DBMethods {
@@ -53,15 +51,15 @@ class DBMethods {
             val gamesPath = "games"
             val questionsPath = "questions"
 
-            public fun saveQuestion(question_text: String, question_type: String){
-                var ID = createID().toString()
+            fun saveQuestion(question_text: String, question_type: String){
+                val ID = createID().toString()
                 val attributes = HashMap<String, Any>()
                 attributes.put("text", question_text)
                 attributes.put("ID", ID)
                 attributes.put("Type", question_type)
 
 
-                var qustn = Question(ID, question_text, question_type, "")
+                val qustn = Question(ID, question_text, question_type, "")
 
                 db.collection(questionsPath).document().set(qustn).addOnSuccessListener {
                     //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
@@ -70,8 +68,8 @@ class DBMethods {
                 }
             }
 
-            public fun saveUser(user_name: String, guest: Boolean, score: Int, photo: String, friends: List<String>) {
-                var ID = createID().toString()
+            fun saveUser(user_name: String, guest: Boolean, score: Int, photo: String, friends: List<String>) {
+                val ID = createID().toString()
                 val attributes = HashMap<String, Any>()
                 attributes.put("name", user_name)
                 attributes.put("ID", ID)
@@ -87,8 +85,8 @@ class DBMethods {
                 }
             }
 
-            public fun getUser(callback: Callback<UserQP>) {
-                var user1 = auth?.currentUser
+            fun getUser(callback: Callback<UserQP>) {
+                val user1 = auth?.currentUser
                 db.collection(usersPath)
                         .whereEqualTo("userID", user1?.uid)
                         .get()
@@ -118,7 +116,7 @@ class DBMethods {
             getUsers(callback)
             */
 
-            public fun getUsers(callback: Callback<ArrayList<UserQP>>) {
+            fun getUsers(callback: Callback<ArrayList<UserQP>>) {
                 db.collection(usersPath)
                     //.whereEqualTo("capital", true)
                     .get()
@@ -138,7 +136,7 @@ class DBMethods {
 
 
             //returns arraylist with all Questions
-            public fun getQuestions(callback: Callback<ArrayList<Question>>) {
+            fun getQuestions(callback: Callback<ArrayList<Question>>) {
                 db.collection(questionsPath)
                     //.whereEqualTo("capital", true)
                     .get()
@@ -161,8 +159,8 @@ class DBMethods {
             }
 
             //to get a random question
-            public fun getRandomQuestion(): Question {
-                if (actual == false || GameQuestions.size > 0){
+            fun getRandomQuestion(): Question {
+                if (!actual || GameQuestions.size > 0){
                     val callback = object: Callback<ArrayList<Question>> {
                         override fun onTaskComplete(result: ArrayList<Question>) {
                             GameQuestions = result
@@ -171,13 +169,13 @@ class DBMethods {
                     }
                     getQuestions(callback)
                 }
-                var position = (0..GameQuestions.size-1).random()
-                var question = GameQuestions[position]
+                val position = (0..GameQuestions.size-1).random()
+                val question = GameQuestions[position]
                 GameQuestions.drop(position)
                 return question
             }
 
-            public fun editUser(ID :String, user :UserQP) {
+            fun editUser(ID :String, user :UserQP) {
                 db.collection(usersPath).document(ID).set(user).addOnSuccessListener {
                     //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener{
@@ -185,13 +183,13 @@ class DBMethods {
                 }
             }
 
-            public fun deleteUser(){
+            fun deleteUser(){
             }
 
-            public fun editQuestion(){
+            fun editQuestion(){
             }
 
-            public fun deleteQuestion(ID :String, question :Question){
+            fun deleteQuestion(ID :String, question :Question){
                 db.collection(questionsPath).document(ID).set(question).addOnSuccessListener {
                     //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener{
@@ -199,7 +197,7 @@ class DBMethods {
                 }
             }
 
-            public fun setGame(game: Game): String {
+            fun setGame(game: Game): String {
                 val ref = db.collection(gamesPath).document()
                 game.gameID = ref.id
                 ref.set(game)
@@ -234,7 +232,7 @@ class DBMethods {
                     }
             }
 
-            public fun getCurrentGame(callback: Callback<Game>, gameID: String) {
+            fun getCurrentGame(callback: Callback<Game>, gameID: String) {
                 var currentGame: Game = Game()
                 var playersList = mutableListOf<String>()
                 val docRef = db.collection(gamesPath).document(gameID)
@@ -259,7 +257,7 @@ class DBMethods {
                     }
             }
 
-            public fun getUserWithID(callback: Callback<UserQP>, userID: String) {
+            fun getUserWithID(callback: Callback<UserQP>, userID: String) {
                println(userID)
                 val docRef = db.collection(usersPath).document(userID)
                 docRef.get()
@@ -274,14 +272,16 @@ class DBMethods {
                         Log.d("TAG", "Error getting documents: ", exception)}
             }
 
-            public fun deleteGame(gameID: String) {
+            fun deleteGame(gameID: String, callback: Callback<Boolean>) {
                 val docRef = db.collection(gamesPath).document(gameID)
                     docRef.delete()
-                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
-                        .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!")
+                            callback.onTaskComplete(true)}
+                        .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e)
+                            callback.onTaskComplete(false)}
             }
 
-            public fun removeUserFromGame(gameID: String, userID: String) {
+            fun removeUserFromGame(gameID: String, userID: String) {
             }
 
             @Throws(Exception::class)

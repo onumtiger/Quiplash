@@ -8,7 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.quiplash.GameMethods.GameCalls.Companion.startTimer
+import com.example.quiplash.GameMethods.Companion.startTimer
 import com.example.quiplash.GameManager.Companion.game
 import com.example.quiplash.GameManager.Companion.startSeconds
 import com.google.firebase.firestore.CollectionReference
@@ -42,7 +42,18 @@ class AnswersActivity : AppCompatActivity() {
         val roundTextView = findViewById<TextView>(R.id.roundsA)
         othertimer.visibility = View.INVISIBLE
 
-        db.document(game.gameID).get()
+        val callbackGame = object : Callback<Game> {
+            override fun onTaskComplete(result: Game) {
+                game = result
+                questionTV.text = game.playrounds[game.activeRound - 1].question
+                answerTV1.text = game.playrounds[game.activeRound - 1].opponents[0].answer
+                answerTV2.text = game.playrounds[game.activeRound - 1].opponents[1].answer
+                roundTextView.text = "${ceil(game.activeRound.toDouble()/3).toInt()}/${game.rounds}"
+            }
+        }
+        DBMethods.DBCalls.getCurrentGame(callbackGame,game.gameID)
+
+        /*db.document(game.gameID).get()
             .addOnSuccessListener {
                 game = it.toObject(Game::class.java)!!
                 questionTV.text = game.playrounds[game.activeRound - 1].question
@@ -50,15 +61,17 @@ class AnswersActivity : AppCompatActivity() {
                 answerTV2.text = game.playrounds[game.activeRound - 1].opponents[1].answer
                 roundTextView.text = "${ceil(game.activeRound.toDouble()/3).toInt()}/${game.rounds}"
             }
-            .addOnFailureListener { e -> Log.w("ERROR", "Error deleting document", e) }
+            .addOnFailureListener { e -> Log.w("ERROR", "Error deleting document", e) }*/
 
-        startTimer(timerView, startSeconds)
+        val callbackTimer = object : Callback<Boolean> {
+            override fun onTaskComplete(result: Boolean) {
+                Log.d("TIMER", "finished? = $result")
+                val intent = Intent(this@AnswersActivity, EvaluationActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        startTimer(timerView, startSeconds, callbackTimer)
 
-
-        Handler().postDelayed({
-            val intent = Intent(this, EvaluationActivity::class.java)
-            startActivity(intent)
-        }, startSeconds*1000)
 
     }
 

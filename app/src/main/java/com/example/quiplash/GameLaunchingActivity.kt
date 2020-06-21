@@ -1,6 +1,5 @@
 package com.example.quiplash
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -50,22 +49,7 @@ class GameLaunchingActivity : AppCompatActivity() {
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
                 game = documentSnapshot.toObject(Game::class.java)!!
-                if(game.playrounds.size>= game.activeRound) {
-
-                    if (game.playrounds[game.activeRound - 1].opponents[0].userID.equals(auth!!.currentUser?.uid.toString()) || game.playrounds[game.activeRound - 1].opponents[1].userID.equals(
-                            auth!!.currentUser?.uid.toString()
-                        )
-                    ) {
-                        val intent = Intent(this, PrepareAnswerActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        val intent = Intent(this, ChooseAnswerActivity::class.java)
-                        startActivity(intent)
-                    }
-                } else{
-                    val intent = Intent(this, LandingActivity::class.java)
-                    startActivity(intent)
-                }
+                GameMethods.playerAllocation(this.applicationContext, auth!!.currentUser?.uid.toString())
             }
 
     }
