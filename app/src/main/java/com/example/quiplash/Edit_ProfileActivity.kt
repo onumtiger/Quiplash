@@ -18,12 +18,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import com.bumptech.glide.Glide
 import com.example.quiplash.DBMethods.DBCalls.Companion.editUser
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.activity_friends.*
 import java.io.IOException
 import java.util.*
 
@@ -70,6 +73,31 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
         lateinit var test: ArrayList<UserQP>
 
+        /*
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    return@OnCompleteListener
+                }
+
+
+                // Get new Instance ID token
+                val token1 = task.result?.token
+                Log.d("myTag", token1);
+                System.out.println("tag = " + token1)
+                val user11 = UserQP(auth?.currentUser!!.uid, "plsss", false, 0, null, emptyList<String>(), token1.toString())
+                //constructor(userID: String, userName: String, guest: Boolean?, score: Int, photo: String?, friends: List<String>) {
+
+                editUser(auth?.currentUser!!.uid, user11)
+                // Log and toast
+                FirebaseInstanceId.getInstance().getInstanceId()
+                //val msg = getString(R.string.msg_token_fmt, token)
+                Toast.makeText(baseContext, token1, Toast.LENGTH_LONG).show()
+            })
+
+
+
+         */
 
         val callback = object: Callback<UserQP> {
             override fun onTaskComplete(result :UserQP) {
@@ -120,6 +148,28 @@ class Edit_ProfileActivity : AppCompatActivity() {
         btnChangeRest.setOnClickListener() {
             val intent = Intent(this, Edit_PW_Mail_Activity::class.java);
             startActivity(intent);
+
+
+/*
+            val fm = FirebaseMessaging.getInstance()
+            fm.send(
+                RemoteMessage.Builder(current_User.userID.toString()+"@fcm.googleapis.com")
+                .setMessageId(Integer.toString(1))
+                .addData("my_message", "Hello World")
+                .addData("my_action", "SAY_HELLO")
+                .build())
+
+            val fm = FirebaseMessaging.getInstance()
+
+            fm.send(
+                RemoteMessage.Builder(current_User.userID.toString() + "@gcm.googleapis.com")
+                    .setMessageId(getMsgId())
+                    .addData("key1", "a value")
+                    .addData("key2", "another value")
+                    .build()
+            )
+
+ */
         }
 
 
@@ -150,7 +200,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
             Log.d("id", ID)
             Log.d("users", test[1].userName.toString())*/
 
-            val user = UserQP(ID, username, false, score, photoPath, friends)
+            val user = UserQP(ID, username, false, score, photoPath, friends, "")
              if (username.isEmpty() == false) {
 
                  if (ID != null) {

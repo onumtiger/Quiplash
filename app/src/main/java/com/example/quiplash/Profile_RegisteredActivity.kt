@@ -9,19 +9,27 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.example.quiplash.DBMethods.DBCalls.Companion.getUser
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+
 
 class Profile_RegisteredActivity : AppCompatActivity() {
     //FirebaseAuth object
     private var auth: FirebaseAuth? = null
     lateinit var current_User: UserQP
+    lateinit var db: CollectionReference
+    private val dbUsersPath = "users"
+
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,13 +41,16 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile_registered)
 
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance().collection(dbUsersPath)
+
         var fotostorage = FirebaseStorage.getInstance();
         var storageRef = fotostorage.reference
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow)
         val btnEditProfile = findViewById<Button>(R.id.btnEditProfile)
-        val btnDeleteAccount = findViewById<Button>(R.id.btnDeleteAccount)
         val btnaddQuestion = findViewById<Button>(R.id.btnaddQuestion)
+        val btnSignOut = findViewById<Button>(R.id.sign_out)
+
         val viewProfilePic: ImageView = findViewById(R.id.imageView)
         val viewUsername : TextView = findViewById(R.id.pw)
         val viewEmail : TextView = findViewById(R.id.email)
@@ -101,9 +112,15 @@ class Profile_RegisteredActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btnBack.setOnClickListener {
-            val intent = Intent(this, LandingActivity::class.java)
-            startActivity(intent)
+        btnSignOut.setOnClickListener() {
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(this, MainActivity::class.java);
+            startActivity(intent);
+        }
+
+        btnBack.setOnClickListener() {
+            val intent = Intent(this, LandingActivity::class.java);
+            startActivity(intent);
         }
 
         btnEditProfile.setOnClickListener {
@@ -111,6 +128,7 @@ class Profile_RegisteredActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+/*
         btnDeleteAccount.setOnClickListener{
             val dialogFragment = Delete_Account()
             val ft = supportFragmentManager.beginTransaction()
@@ -122,6 +140,8 @@ class Profile_RegisteredActivity : AppCompatActivity() {
             ft.addToBackStack(null)
             dialogFragment.show(ft, "delete")
         }
+
+ */
     }
 
     fun getUserInfoDefault(): Array<String> {
@@ -137,6 +157,8 @@ class Profile_RegisteredActivity : AppCompatActivity() {
 
         return userinfo
     }
+
+
 
 
     fun signOut() {

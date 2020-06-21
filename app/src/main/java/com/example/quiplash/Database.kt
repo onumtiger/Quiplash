@@ -39,7 +39,7 @@ class Database : AppCompatActivity() {
         saveButtonUser = findViewById(R.id.save_user)
         user_name = findViewById(R.id.user_name)
         show_users = findViewById(R.id.show_users)
-        show_users2 = findViewById(R.id.plain_text_input)
+        //show_users2 = findViewById(R.id.plain_text_input)
 
         saveButton.setOnClickListener {
             insert_question_into_db()
@@ -51,7 +51,7 @@ class Database : AppCompatActivity() {
         show_users.setOnClickListener {
 
 
-            val user = UserQP("test", "Juli<3<3>", false, 0, "default-user.png", emptyList<String>())
+            val user = UserQP("test", "Juli<3<3>", false, 0, "default-user.png", emptyList<String>(), "")
             editUser("sSl61HRtniQLZI92Ifj2", user)
 
             Toast.makeText(this, test.first().userName, Toast.LENGTH_LONG).show()

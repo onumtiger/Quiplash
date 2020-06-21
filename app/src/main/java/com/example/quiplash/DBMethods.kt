@@ -77,7 +77,7 @@ class DBMethods {
                 attributes.put("score", score)
                 attributes.put("photo", photo)
                 attributes.put("friends", friends)
-                val usr = UserQP(ID, user_name, true, score, photo, friends)
+                val usr = UserQP(ID, user_name, true, score, photo, friends, "")
                 db.collection(usersPath).document().set(usr).addOnSuccessListener {
                     //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener{
