@@ -3,7 +3,6 @@ package com.example.quiplash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -80,7 +79,6 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
         val callbackTimer = object : Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
-                Log.d("TIMER", "finished? = $result")
                 gotoAnswers()
             }
         }
@@ -91,21 +89,28 @@ class PrepareAnswerActivity : AppCompatActivity() {
         }
 
         btnReady.setOnClickListener {
-            game.playrounds[game.activeRound - 1].opponents[userindex].answer =
-                fieldAnswer.text.toString()
-            db.document(game.gameID)
-                .set(game)
-                .addOnSuccessListener {
-                    Log.d("Success", "DocumentSnapshot successfully written!")
-                    imageCheckmark.visibility = ImageView.VISIBLE
-                    textAnswerState.visibility = TextView.VISIBLE
+            val callbackGame = object : Callback<Game> {
+                override fun onTaskComplete(result: Game) {
+                    game = result
+                    game.playrounds[game.activeRound - 1].opponents[userindex].answer =
+                        fieldAnswer.text.toString()
+                    db.document(game.gameID)
+                        .set(game)
+                        .addOnSuccessListener {
+                            Log.d("Success", "DocumentSnapshot successfully written!")
+                            imageCheckmark.visibility = ImageView.VISIBLE
+                            textAnswerState.visibility = TextView.VISIBLE
 
+                        }
+                        .addOnFailureListener { e ->
+                            Log.w("Error", "Error writing document", e)
+                            imageCheckmark.visibility = ImageView.INVISIBLE
+                            textAnswerState.text = "Your Answer could not be saved"
+                        }
                 }
-                .addOnFailureListener { e ->
-                    Log.w("Error", "Error writing document", e)
-                    imageCheckmark.visibility = ImageView.INVISIBLE
-                    textAnswerState.text = "Your Answer could not be saved"
-                }
+            }
+            DBMethods.DBCalls.getCurrentGame(callbackGame,game.gameID)
+
 
         }
 

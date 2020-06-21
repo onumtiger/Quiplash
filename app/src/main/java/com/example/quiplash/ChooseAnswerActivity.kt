@@ -3,8 +3,6 @@ package com.example.quiplash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -16,7 +14,6 @@ import com.example.quiplash.GameManager.Companion.startSeconds
 import com.example.quiplash.GameMethods.Companion.startTimer
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlin.math.ceil
@@ -26,11 +23,11 @@ class ChooseAnswerActivity : AppCompatActivity() {
     lateinit var timerView: TextView
     lateinit var timerViewWaiting: TextView
 
-    var START_MILLI_SECONDS = 60000L
+    //var START_MILLI_SECONDS = 60000L
 
-    lateinit var countdown_timer: CountDownTimer
-    var isRunning: Boolean = false
-    var time_in_milli_seconds = 0L
+    //lateinit var countdown_timer: CountDownTimer
+    //var isRunning: Boolean = false
+    //var time_in_milli_seconds = 0L
 
     private lateinit var simpleViewFlipper: ViewFlipper
 
@@ -111,14 +108,6 @@ class ChooseAnswerActivity : AppCompatActivity() {
                     showAnswersFlag = true
                     simpleViewFlipper.showNext()
 
-                    /*db.document(game.gameID).get()
-                        .addOnSuccessListener { documentSnapshot ->
-                            game = documentSnapshot.toObject(Game::class.java)!!
-                            questionTV.text = game.playrounds[game.activeRound - 1].question
-                            answerTV1.text = game.playrounds[game.activeRound - 1].opponents[0].answer
-                            answerTV2.text = game.playrounds[game.activeRound - 1].opponents[1].answer
-                        }*/
-
                     val callbackGame = object : Callback<Game> {
                         override fun onTaskComplete(result: Game) {
                             game = result
@@ -153,25 +142,27 @@ class ChooseAnswerActivity : AppCompatActivity() {
         return game.playrounds[game.activeRound - 1].voters.indexOf(Voter(userid))
     }
 
-    fun saveVote(answerIndex: Int) {
+    private fun saveVote(answerIndex: Int) {
 
-        game.playrounds[game.activeRound - 1].voters[getVotersIndex(auth!!.currentUser?.uid.toString()) + 1].voteUserID =
-            game.playrounds[game.activeRound - 1].opponents[answerIndex].userID.toString()
+        val callbackGame = object : Callback<Game> {
+            override fun onTaskComplete(result: Game) {
+                game = result
+                game.playrounds[game.activeRound - 1].voters[getVotersIndex(auth!!.currentUser?.uid.toString()) + 1].voteUserID =
+                    game.playrounds[game.activeRound - 1].opponents[answerIndex].userID.toString()
 
-        // Atomically add a new region to the "regions" array field.
-// Atomically remove a region from the "regions" array field.
-       // db.document(game.gameID).update("playrounds/${0}", FieldValue.arrayRemove(Voter(auth!!.currentUser?.uid.toString(), "")))
-        //db.document(game.gameID).update("playrounds/${0}", FieldValue.arrayUnion(Voter(auth!!.currentUser?.uid.toString(), game.playrounds[game.activeRound - 1].opponents[answerIndex].userID.toString())))
-
-
-        db.document(game.gameID)
-            .set(game)
-            .addOnSuccessListener {
-                Log.d("Success", "DocumentSnapshot successfully written!")
-                chooseAnswerFlag = true
-                val intent = Intent(this, EvaluationActivity::class.java)
-                startActivity(intent)
+                db.document(game.gameID)
+                    .set(game)
+                    .addOnSuccessListener {
+                        Log.d("Success", "DocumentSnapshot successfully written!")
+                        chooseAnswerFlag = true
+                        val intent = Intent(this@ChooseAnswerActivity, EvaluationActivity::class.java)
+                        startActivity(intent)
+                    }
+                    .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
             }
-            .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
+        }
+        DBMethods.DBCalls.getCurrentGame(callbackGame,game.gameID)
+
+
     }
 }
