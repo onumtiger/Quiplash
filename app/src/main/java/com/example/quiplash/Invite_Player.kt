@@ -14,15 +14,10 @@ class Invite_Player : DialogFragment() {
     }
     override fun onViewCreated(view:View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val btnInvite = view.findViewById<TextView>(R.id.interaction_invite_btn)
+
         val btnCancel = view.findViewById<TextView>(R.id.interaction_cancel_btn)
-        val viewUsername: EditText = view.findViewById(R.id.interaction_username)
 
-        var username = viewUsername.text.toString()
 
-        btnInvite.setOnClickListener(){
-            // TO DO: Invite Player to game
-        }
 
         btnCancel.setOnClickListener {
             dismiss()

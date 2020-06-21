@@ -20,7 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlin.math.ceil
 
-class Choose_AnswerActivity : AppCompatActivity() {
+class ChooseAnswerActivity : AppCompatActivity() {
 
     lateinit var timerView: TextView
     lateinit var timerViewWaiting: TextView
@@ -47,6 +47,10 @@ class Choose_AnswerActivity : AppCompatActivity() {
     @SuppressLint("WrongViewCast", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         setContentView(R.layout.activity_choose_answer)
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)

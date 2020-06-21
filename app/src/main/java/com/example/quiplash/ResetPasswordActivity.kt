@@ -12,19 +12,21 @@ class ResetPasswordActivity : AppCompatActivity() {
 
     //FirebaseAuth object
     private lateinit var auth: FirebaseAuth
-    private var authListener: FirebaseAuth.AuthStateListener? = null
 
     //view objects
     private lateinit var progressBar: ProgressBar
-    private var errotext: String = ""
     private lateinit var simpleViewFlipper: ViewFlipper
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         setContentView(R.layout.activity_reset_password)
 
-        FirebaseApp.initializeApp(this);
+        FirebaseApp.initializeApp(this)
         // Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
 
@@ -45,8 +47,8 @@ class ResetPasswordActivity : AppCompatActivity() {
         simpleViewFlipper.outAnimation = out
 
         btnBackSignIn.setOnClickListener{
-            val intent = Intent(this@ResetPasswordActivity, SignInActivity::class.java);
-            startActivity(intent);
+            val intent = Intent(this@ResetPasswordActivity, SignInActivity::class.java)
+            startActivity(intent)
         }
 
         btnSignIn.setOnClickListener{

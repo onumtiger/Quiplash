@@ -21,7 +21,7 @@ import com.example.quiplash.GameManager.Companion.setUserinfo
 class SignInActivity : AppCompatActivity() {
     //FirebaseAuth object
     private lateinit var auth: FirebaseAuth
-    private var authListener: FirebaseAuth.AuthStateListener? = null
+    private var authListener: AuthStateListener? = null
 
     //view objects
     private lateinit var progressBar: ProgressBar
@@ -38,8 +38,6 @@ class SignInActivity : AppCompatActivity() {
     val prefKey = "guestid"
     val prefDefValue = "noguest"
 
-    //UserInfo
-    var isUser: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +58,10 @@ class SignInActivity : AppCompatActivity() {
                 setUser(auth.currentUser?.uid.toString())
             }
         }
-
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         setContentView(R.layout.activity_sign_in)
 
         val inputEmail = findViewById<EditText>(R.id.emailFieldSU)

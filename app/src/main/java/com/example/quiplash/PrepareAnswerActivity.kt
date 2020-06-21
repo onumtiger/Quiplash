@@ -2,6 +2,7 @@ package com.example.quiplash
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -35,7 +36,6 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
     lateinit var awaitAllAnswers: ListenerRegistration
 
-
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +50,11 @@ class PrepareAnswerActivity : AppCompatActivity() {
                     game.playrounds[game.activeRound - 1].opponents.indexOfFirst { it.userID == auth!!.currentUser?.uid }
 
             }
+
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         setContentView(R.layout.activity_prepare_answer)
 
         val textViewTimer = findViewById<TextView>(R.id.timerView)
@@ -59,6 +64,8 @@ class PrepareAnswerActivity : AppCompatActivity() {
         val textViewQuestion2 = findViewById<TextView>(R.id.textViewQuestion2)
         val btnReady = findViewById<Button>(R.id.btnReady)
         val fieldAnswer = findViewById<EditText>(R.id.answerField)
+        val imageCheckmark = findViewById<ImageView>(R.id.imageCheckmark)
+        val textAnswerState = findViewById<TextView>(R.id.textViewAnswerSaved)
         viewFlipper = findViewById(R.id.viewFlipperQuestion) // get the reference of ViewFlipper
 
         textViewRound.text = "${ceil(game.activeRound.toDouble()/3).toInt()}/${game.rounds}"
@@ -88,8 +95,15 @@ class PrepareAnswerActivity : AppCompatActivity() {
                 .set(game)
                 .addOnSuccessListener {
                     Log.d("Success", "DocumentSnapshot successfully written!")
+                    imageCheckmark.visibility = ImageView.VISIBLE
+                    textAnswerState.visibility = TextView.VISIBLE
+
                 }
-                .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
+                .addOnFailureListener { e ->
+                    Log.w("Error", "Error writing document", e)
+                    imageCheckmark.visibility = ImageView.INVISIBLE
+                    textAnswerState.text = "Your Answer could not be saved"
+                }
 
         }
 

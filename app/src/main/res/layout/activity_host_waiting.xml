@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Host_WaitingActivity">
+    tools:context=".HostWaitingActivity">
 
     <ImageButton
         android:id="@+id/host_waiting_go_back_arrow"
@@ -48,11 +48,12 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="200dp"
-        android:layout_marginBottom="100dp"
+        android:layout_width="408dp"
+        android:layout_height="301dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -69,9 +70,9 @@
 
     <Button
         android:id="@+id/invite_players_btn"
-        android:layout_width="300dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="300dp"
         android:background="@color/colorGreen"
         android:text="@string/invite_players_btn"
         android:textColor="@color/colorWhite"
@@ -81,45 +82,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/start_game_btn" />
+        app:layout_constraintTop_toTopOf="@+id/relativeLayout2" />
 
     <Button
         android:id="@+id/start_game_btn"
-        android:layout_width="300dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="5dp"
         android:text="@string/start_game_btn"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
         android:textColorLink="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView4" />
-
-
-    <Button
-        android:id="@+id/end_game"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/colorButtonRed"
-        android:text="@string/end_game_btn"
-        android:textColor="@color/colorWhite"
-        android:textColorHighlight="@color/colorWhite"
-        android:textColorHint="@color/colorWhite"
-        android:textColorLink="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/invite_players_btn" />
 
+
     <Button
         android:id="@+id/leave_game"
-        android:layout_width="300dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:background="@color/colorButtonRed"
         android:text="@string/leave_game_btn"
         android:textColor="@color/colorWhite"
@@ -127,15 +111,15 @@
         android:textColorHint="@color/colorWhite"
         android:textColorLink="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/invite_players_btn" />
 
     <Button
         android:id="@+id/join_game_btn"
-        android:layout_width="300dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:background="@color/colorGreen"
         android:text="@string/join_game"
         android:textColor="@color/colorWhite"
@@ -145,6 +129,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/invite_players_btn" />
+
+    <Button
+        android:id="@+id/end_game"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="50dp"
+        android:background="@color/colorButtonRed"
+        android:text="@string/end_game_btn"
+        android:textColor="@color/colorWhite"
+        android:textColorHighlight="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textColorLink="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/invite_players_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,10 @@ class ChooseQuestionTypeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         setContentView(R.layout.activity_choose_question_type)
 
         val btnStandard = findViewById<Button>(R.id.btnStandard)

@@ -33,6 +33,10 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         setContentView(R.layout.activity_edit_pw_mail)
 
         auth = FirebaseAuth.getInstance()

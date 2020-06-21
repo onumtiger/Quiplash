@@ -10,14 +10,12 @@
         android:id="@+id/timerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="20sec"
+        android:text="0:59"
         android:textColor="@color/colorGreen"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/roundCounterView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,15 +23,13 @@
         android:id="@+id/roundCounterView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
-        android:text="1/10"
+        android:layout_marginEnd="50dp"
+        android:text=""
         android:textColor="@color/colorGreen"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/timerView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ViewFlipper
@@ -85,9 +81,12 @@
 
             <TextView
                 android:id="@+id/textViewQuestion2"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
                 android:text="This is a question"
+                android:textAlignment="center"
                 android:textColor="@color/colorGreen"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -103,11 +102,42 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Your Answer"
+                android:hint="@string/your_answer"
+                android:inputType="text"
                 app:layout_constraintBottom_toTopOf="@+id/btnReady"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewQuestion2" />
+
+            <ImageView
+                android:id="@+id/imageCheckmark"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="24dp"
+                android:contentDescription="checkmark"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/answerField"
+                app:srcCompat="@drawable/checkmark_green" />
+
+            <TextView
+                android:id="@+id/textViewAnswerSaved"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="32dp"
+                android:text="Your Answer has been saved successfully!"
+                android:textAlignment="center"
+                android:textColor="@color/colorButtonGreen"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/btnReady"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageCheckmark" />
 
             <Button
                 android:id="@+id/btnReady"

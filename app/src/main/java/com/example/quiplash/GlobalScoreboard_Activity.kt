@@ -1,8 +1,8 @@
 package com.example.quiplash
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
@@ -12,14 +12,19 @@ import java.util.ArrayList
 class GlobalScoreboard_Activity : AppCompatActivity() {
     lateinit var users: ArrayList<UserQP>
 
+    @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         setContentView(R.layout.activity_global_scoreboard)
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.scoreboard_go_back_arrow)
 
-        btnBack.setOnClickListener() {
-            val intent = Intent(this, LandingActivity::class.java);
+        btnBack.setOnClickListener{
+            val intent = Intent(this, LandingActivity::class.java)
             startActivity(intent)
         }
 
@@ -29,7 +34,7 @@ class GlobalScoreboard_Activity : AppCompatActivity() {
             override fun onTaskComplete(result: ArrayList<UserQP>) {
                 users = result
                 println(users)
-                users.sortWith(Comparator { s1: UserQP, s2: UserQP -> s2.score!! - s1.score!! })
+                users.sortWith(Comparator { s1: UserQP, s2: UserQP -> s2.score - s1.score })
                 val adapter = ScoreboardListAdapter(
                     applicationContext,
                     R.layout.scoreboard_list_item,

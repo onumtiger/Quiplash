@@ -8,7 +8,7 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import java.util.*
 
-class FriendsActivity : AppCompatActivity() {
+class InviteFriendsToGameActivity : AppCompatActivity() {
     lateinit var current_User: UserQP
     lateinit var friend : UserQP
     lateinit var otherUsers: ArrayList<UserQP>
@@ -20,39 +20,39 @@ class FriendsActivity : AppCompatActivity() {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
         }
-        setContentView(R.layout.activity_friends)
+        setContentView(R.layout.activity_invite_friends_to_game)
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.friends_go_back_arrow)
-        val btnFriend = findViewById<AppCompatImageButton>(R.id.add_friend_btn)
         val friendsListView = findViewById<ListView>(R.id.friends)
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.friends_swiperefresh)
 
-        // fetch friends from db
-        getFriendsList(friendsListView)
+        val gameID = intent.getStringExtra("gameID")
+        getCurrentGame(gameID, friendsListView)
 
         btnBack.setOnClickListener() {
             super.onBackPressed();
         }
 
-        btnFriend.setOnClickListener(){
-            val dialogFragment = Add_Player()
-            val ft = supportFragmentManager.beginTransaction()
-            val prev = supportFragmentManager.findFragmentByTag("add")
-            if (prev != null)
-            {
-                ft.remove(prev)
-            }
-            ft.addToBackStack(null)
-            dialogFragment.show(ft, "delete")
-        }
-
         refreshLayout.setOnRefreshListener {
-            getFriendsList(friendsListView)
+            getCurrentGame(gameID, friendsListView)
             refreshLayout.isRefreshing = false
         }
+
     }
 
-    fun getFriendsList (friendsListView: ListView) {
+    fun getCurrentGame(gameID: String, friendsListView: ListView) {
+        var currentGame: Game
+        val callback = object : Callback<Game> {
+            override fun onTaskComplete(result: Game) {
+                currentGame = result
+                // fetch friends from db
+                getFriendsList(friendsListView, currentGame)
+            }
+        }
+        DBMethods.DBCalls.getCurrentGame(callback, gameID)
+    }
+
+    fun getFriendsList (friendsListView: ListView, currentGame: Game) {
         var friendsListCurrentUser = emptyList<String>()
         val friendsUserList = mutableListOf<UserQP>()
 
@@ -70,15 +70,17 @@ class FriendsActivity : AppCompatActivity() {
                                 // get friend information
                                 if(friendsListCurrentUser[i] == otherUsers[j].userName.toString()) {
                                     friend = otherUsers[j]
-                                    friendsUserList.add(friend)
+                                    if(!currentGame.users.contains(friend.userID)) {
+                                        friendsUserList.add(friend)
+                                    }
                                     break
                                 }
                             }
                         }
 
-                        val adapter = FriendsListAdapter(
+                        val adapter = InviteFriendsToGameListAdapter(
                             applicationContext,
-                            R.layout.friends_list_item,
+                            R.layout.invite_friends_to_game_list_item,
                             friendsUserList
                         )
                         friendsListView.adapter = adapter
