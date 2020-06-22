@@ -35,6 +35,7 @@ class GlobalScoreboard_Activity : AppCompatActivity() {
         val callback = object: Callback<ArrayList<UserQP>> {
             override fun onTaskComplete(result: ArrayList<UserQP>) {
                 users = result
+                println("LALEUSER")
                 println(users)
                 users.sortWith(Comparator { s1: UserQP, s2: UserQP -> s2.score - s1.score })
                 val adapter = ScoreboardListAdapter(
