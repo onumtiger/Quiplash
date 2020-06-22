@@ -9,10 +9,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
-import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.example.quiplash.DBMethods.DBCalls.Companion.getUser
 import com.google.android.gms.tasks.OnFailureListener
@@ -56,7 +54,7 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         val viewEmail : TextView = findViewById(R.id.email)
         val viewScore : TextView = findViewById(R.id.score)
         val viewUsernameBig : TextView = findViewById(R.id.usernameBig)
-        var photoPath = "images/default-guest.png"
+        var photoPath = "images/default-user.png"
 
 
 
@@ -89,7 +87,13 @@ class Profile_RegisteredActivity : AppCompatActivity() {
                     viewEmail.text = auth?.currentUser?.email.toString()
                     viewScore.text = current_User.score.toString()
 
-                    photoPath = current_User.photo.toString()
+                    if(current_User.photo == null){
+                        photoPath = "images/default-user.png"
+                    }
+                    else {
+                        photoPath = current_User.photo.toString()
+                    }
+
                     // timer is needed to load new photo is user edits its profile pic
                     val handler = Handler()
                     handler.postDelayed(Runnable {
@@ -108,28 +112,38 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         getUser(callback)
 
         btnaddQuestion.setOnClickListener {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, ChooseQuestionTypeActivity::class.java)
             startActivity(intent)
         }
 
         btnSignOut.setOnClickListener() {
+            Sounds.playClickSound(this)
+
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(this, MainActivity::class.java);
             startActivity(intent);
         }
 
         btnBack.setOnClickListener() {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, LandingActivity::class.java);
             startActivity(intent);
         }
 
         btnEditProfile.setOnClickListener {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, Edit_ProfileActivity::class.java)
             startActivity(intent)
         }
 
 /*
         btnDeleteAccount.setOnClickListener{
+                    Sounds.playClickSound(this)
+
             val dialogFragment = Delete_Account()
             val ft = supportFragmentManager.beginTransaction()
             val prev = supportFragmentManager.findFragmentByTag("delete")

@@ -17,10 +17,14 @@ class Delete_Account : DialogFragment() {
         val btnCancel = view.findViewById<TextView>(R.id.interaction_cancel_btn)
 
         btnDelete.setOnClickListener(){
+            context?.let { it1 -> Sounds.playClickSound(it1) }
+
             // TO DO: Delete Account
         }
 
         btnCancel.setOnClickListener {
+            context?.let { it1 -> Sounds.playClickSound(it1) }
+
             dismiss()
         }
     }

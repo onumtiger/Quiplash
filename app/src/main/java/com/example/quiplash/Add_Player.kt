@@ -7,12 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.firebase.auth.FirebaseAuth
 import java.util.ArrayList
-import kotlin.math.log
 
 class Add_Player : DialogFragment() {
     lateinit var current_User: UserQP
@@ -50,6 +46,8 @@ class Add_Player : DialogFragment() {
         DBMethods.DBCalls.getUser(callbackGetUser)
 
         btnAdd.setOnClickListener(){
+            context?.let { it1 -> Sounds.playClickSound(it1) }
+
             var usernameFriend = viewUsername.text.toString()
             var alreadyfriends = false
 
@@ -78,9 +76,10 @@ class Add_Player : DialogFragment() {
                                 friend = otherUsers[i]
                                 friendsListFriend = friend.friends
                                 Log.d("friend fround", friend.userName.toString())
+                                Log.d("friend list", friendsListFriend.toString())
                             }
                         }
-                        if (friendsListFriend.isEmpty()){
+                        if (friend == null){
                             Log.d("user not found", "Failed!")
                             dismiss()
                         }
@@ -110,6 +109,7 @@ class Add_Player : DialogFragment() {
         }
 
         btnCancel.setOnClickListener {
+            context?.let { it1 -> Sounds.playClickSound(it1) }
             dismiss()
         }
     }

@@ -18,13 +18,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import com.bumptech.glide.Glide
 import com.example.quiplash.DBMethods.DBCalls.Companion.editUser
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.RemoteMessage
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.IOException
@@ -59,7 +55,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance();
         var fotostorage = FirebaseStorage.getInstance();
         var storageRef = fotostorage.reference
-        var photoPath : String = "images/default-guest.png"
+        var photoPath : String = "images/default-user.png"
         var score = 0
         var friends = emptyList<String>()
 
@@ -136,16 +132,22 @@ class Edit_ProfileActivity : AppCompatActivity() {
         DBMethods.DBCalls.getUser(callback)
 
         btnBack.setOnClickListener() {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, Profile_RegisteredActivity::class.java);
             startActivity(intent);
         }
 
         btnEditPicture.setOnClickListener(){
+            Sounds.playClickSound(this)
+
             // pickFromCamera()
             chooseImage()
         }
 
         btnChangeRest.setOnClickListener() {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, Edit_PW_Mail_Activity::class.java);
             startActivity(intent);
 
@@ -187,6 +189,8 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
 
         btnSave.setOnClickListener() {
+            Sounds.playClickSound(this)
+
             var uploadPath = uploadImage()
             if (uploadPath != ""){
                 photoPath = uploadPath

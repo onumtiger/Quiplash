@@ -22,24 +22,31 @@ class ChooseQuestionTypeActivity : AppCompatActivity() {
         val btnHarsh = findViewById<Button>(R.id.btnHarsh)
 
         btnStandard.setOnClickListener {
+            Sounds.playClickSound(this)
             newQuestionType = 1
             val intent = Intent(this, AddQuestion::class.java);
             startActivity(intent);
         }
 
         btnFunny.setOnClickListener {
+            Sounds.playClickSound(this)
+
             newQuestionType = 2
             val intent = Intent(this, AddQuestion::class.java);
             startActivity(intent);
         }
 
         btnPoetic.setOnClickListener {
+            Sounds.playClickSound(this)
+
             newQuestionType = 3
             val intent = Intent(this, AddQuestion::class.java);
             startActivity(intent);
         }
 
         btnHarsh.setOnClickListener {
+            Sounds.playClickSound(this)
+
             newQuestionType = 4
             val intent = Intent(this, AddQuestion::class.java);
             startActivity(intent);

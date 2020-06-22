@@ -47,15 +47,20 @@ class Join_GameActivity : AppCompatActivity() {
         noActiveGameInfo.visibility = View.INVISIBLE
 
         btnNewGameActivity.setOnClickListener {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, New_GameActivity::class.java)
             startActivity(intent)
         }
 
         btnBack.setOnClickListener {
+            Sounds.playClickSound(this)
+
             super.onBackPressed()
         }
 
         refreshLayout.setOnRefreshListener {
+            Sounds.playRefreshSound(this)
             getGamesList(activeGamesList)
             refreshLayout.isRefreshing = false
         }

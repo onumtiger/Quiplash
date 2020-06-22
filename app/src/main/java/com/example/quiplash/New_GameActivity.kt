@@ -2,14 +2,19 @@ package com.example.quiplash
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Button
 import android.widget.Spinner
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import com.example.quiplash.DBMethods.DBCalls.Companion.setGame
-import com.google.firebase.auth.FirebaseAuth
 import com.example.quiplash.GameManager.Companion.game
+import com.google.firebase.auth.FirebaseAuth
+
 
 class New_GameActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -26,12 +31,71 @@ class New_GameActivity : AppCompatActivity() {
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.new_game_go_back_arrow)
         val btnStart = findViewById<Button>(R.id.start_game)
+        val categorySpinner: Spinner = findViewById(R.id.category_dropdown)
+        val playerSpinner: Spinner = findViewById(R.id.player_dropdown)
+        val roundsSpinner: Spinner = findViewById(R.id.rounds_dropdown)
+        var check = 0
+
+        categorySpinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(
+                parentView: AdapterView<*>?,
+                selectedItemView: View,
+                position: Int,
+                id: Long
+            ) {
+                if(++check > 3) {
+                    Log.d("check cat", check.toString())
+                    Sounds.playClickSound(this@New_GameActivity)
+                }
+            }
+        }
+
+        playerSpinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(
+                parentView: AdapterView<*>?,
+                selectedItemView: View,
+                position: Int,
+                id: Long
+            ) {
+                if(++check > 3) {
+                    Log.d("check play", check.toString())
+                    Sounds.playClickSound(this@New_GameActivity)
+                }
+            }
+        }
+
+        roundsSpinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(
+                parentView: AdapterView<*>?,
+                selectedItemView: View,
+                position: Int,
+                id: Long
+            ) {
+                if(++check > 3) {
+                    Log.d("check round", check.toString())
+                    Sounds.playClickSound(this@New_GameActivity)
+                }
+            }
+        }
 
         btnBack.setOnClickListener {
+            Sounds.playClickSound(this)
+
             super.onBackPressed()
         }
 
         btnStart.setOnClickListener {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, HostWaitingActivity::class.java)
             intent.putExtra("gameID", createNewGame())
             startActivity(intent)

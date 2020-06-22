@@ -34,6 +34,8 @@ class InviteFriendsToGameActivity : AppCompatActivity() {
         getCurrentGame(gameID, friendsListView)
 
         btnBack.setOnClickListener() {
+            Sounds.playClickSound(this)
+
             super.onBackPressed();
         }
 
