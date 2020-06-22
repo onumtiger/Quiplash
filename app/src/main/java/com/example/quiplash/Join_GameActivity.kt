@@ -55,6 +55,7 @@ class Join_GameActivity : AppCompatActivity() {
         }
 
         refreshLayout.setOnRefreshListener {
+            Sounds.playRefreshSound(this)
             getGamesList(activeGamesList)
             refreshLayout.isRefreshing = false
         }

@@ -9,5 +9,9 @@ class Sounds {
             val mp: MediaPlayer = MediaPlayer.create(context, R.raw.click)
             mp.start()
         }
+        fun playRefreshSound(context: Context) {
+            val mp: MediaPlayer = MediaPlayer.create(context, R.raw.refresh)
+            mp.start()
+        }
     }
 }

@@ -88,6 +88,7 @@ class HostWaitingActivity : AppCompatActivity() {
         }
 
         refreshLayout.setOnRefreshListener {
+            Sounds.playRefreshSound(this)
             getUsersList(playersListView, game.gameID)
             refreshLayout.isRefreshing = false
         }

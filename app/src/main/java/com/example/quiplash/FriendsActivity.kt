@@ -51,6 +51,7 @@ class FriendsActivity : AppCompatActivity() {
         }
 
         refreshLayout.setOnRefreshListener {
+            Sounds.playRefreshSound(this)
             getFriendsList(friendsListView)
             refreshLayout.isRefreshing = false
         }
