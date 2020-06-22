@@ -10,7 +10,8 @@ import android.widget.TextView
 import android.widget.ViewFlipper
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quiplash.GameManager.Companion.game
-import com.example.quiplash.GameManager.Companion.startSeconds
+import com.example.quiplash.GameManager.Companion.startSecondsVoting
+import com.example.quiplash.GameManager.Companion.startSecondsAnswer
 import com.example.quiplash.GameMethods.Companion.startTimer
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -80,7 +81,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
                 }
             }
         }
-        startTimer(timerViewWaiting, startSeconds, callbackTimerWaiting)
+        startTimer(timerViewWaiting, startSecondsAnswer, callbackTimerWaiting)
 
         roundView.text = "${ceil(game.activeRound.toDouble() / 3).toInt()} / ${game.rounds}"
 
@@ -166,7 +167,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-        startTimer(timerView, startSeconds, callbackTimer)
+        startTimer(timerView, startSecondsVoting, callbackTimer)
     }
 
     private fun getVotersIndex(userid: String): String {

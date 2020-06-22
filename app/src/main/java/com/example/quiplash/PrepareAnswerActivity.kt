@@ -9,11 +9,10 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quiplash.GameManager.Companion.game
-import com.example.quiplash.GameManager.Companion.startSeconds
+import com.example.quiplash.GameManager.Companion.startSecondsAnswer
 import com.example.quiplash.GameMethods.Companion.startTimer
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlin.math.ceil
@@ -90,7 +89,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
                 }
             }
         }
-        startTimer(textViewTimer, startSeconds, callbackTimer)
+        startTimer(textViewTimer, startSecondsAnswer, callbackTimer)
 
         viewQuestion.setOnClickListener {
             Sounds.playClickSound(this)

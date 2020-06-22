@@ -12,16 +12,13 @@ class GameManager {
     companion object {
         var user = UserQP()
         var game = Game()
-        val startSeconds = 60L
-        //var score: Int?= null
+        const val startSecondsAnswer = 90L
+        const val startSecondsVoting = 15L
+        const val startSecondsIdle = 60L
 
         //getter
         fun getUserInfo(): UserQP {
             return this.user
-        }
-
-        fun getGameInfo(): Game {
-            return this.game
         }
 
         // setter
@@ -29,9 +26,6 @@ class GameManager {
             this.user = userinfo
         }
 
-        fun setGameinfo(gameinfo: Game) {
-            this.game = gameinfo
-        }
     }
 
 }
