@@ -2,7 +2,9 @@ package com.example.quiplash
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -25,8 +27,10 @@ class FriendsActivity : AppCompatActivity() {
         val btnBack = findViewById<AppCompatImageButton>(R.id.friends_go_back_arrow)
         val btnFriend = findViewById<AppCompatImageButton>(R.id.add_friend_btn)
         val friendsListView = findViewById<ListView>(R.id.friends)
+        val noFriendsAdded = findViewById<TextView>(R.id.no_friends)
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.friends_swiperefresh)
 
+        noFriendsAdded.visibility = View.INVISIBLE
         // fetch friends from db
         getFriendsList(friendsListView)
 
@@ -53,6 +57,7 @@ class FriendsActivity : AppCompatActivity() {
     }
 
     fun getFriendsList (friendsListView: ListView) {
+        val noFriendsAdded = findViewById<TextView>(R.id.no_friends)
         var friendsListCurrentUser = emptyList<String>()
         val friendsUserList = mutableListOf<UserQP>()
 
@@ -76,6 +81,9 @@ class FriendsActivity : AppCompatActivity() {
                             }
                         }
 
+                        if (friendsUserList.isNullOrEmpty()) {
+                            noFriendsAdded.visibility = View.VISIBLE
+                        }
                         val adapter = FriendsListAdapter(
                             applicationContext,
                             R.layout.friends_list_item,
