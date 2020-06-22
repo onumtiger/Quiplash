@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quiplash.DBMethods.DBCalls.Companion.updateUserScores
 import com.example.quiplash.GameManager.Companion.game
 
 class EndOfGameActivity : AppCompatActivity() {
@@ -24,7 +25,6 @@ class EndOfGameActivity : AppCompatActivity() {
 
         btnHome.setOnClickListener {
             Sounds.playClickSound(this)
-
             deleteGame()
         }
 
@@ -43,16 +43,27 @@ class EndOfGameActivity : AppCompatActivity() {
                     val callbackUser = object : Callback<UserQP> {
                         override fun onTaskComplete(result: UserQP) {
                             val user = result
+                            println(user.userID)
+                            var score = 0
+                            currentGame.playrounds.forEach {
+                                it.value.opponents.forEach {
+                                    if (it.value.userID == user.userID) {
+                                        user.score = score + it.value.answerScore
+                                        score = user.score
+                                    }
+                                }
+                            }
+
+                            user.score = score
                             scoreboardArray.add(user)
                             scoreboardArray.sortWith(Comparator { s1: UserQP, s2: UserQP -> s2.score - s1.score })
-                            println("Final array : ")
-                            scoreboardArray.forEach { println(it.score) }
                             val adapter = ScoreboardListAdapter(
                                 applicationContext,
                                 R.layout.scoreboard_list_item,
                                 scoreboardArray
                             )
                             scoreboardList.adapter = adapter
+                            updateUserScores(user.userID, score)
                         }
                     }
                     DBMethods.DBCalls.getUserWithID(callbackUser, it)
@@ -77,7 +88,6 @@ class EndOfGameActivity : AppCompatActivity() {
             }
         }
         DBMethods.DBCalls.deleteGame(game.gameID,callbackSuccess)
-
     }
 
     override fun onBackPressed() {

@@ -231,6 +231,21 @@ class DBMethods {
                     .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
             }
 
+            fun updateUserScores(userID: String, gameScore: Int) {
+                val callbackUser = object : Callback<UserQP> {
+                    override fun onTaskComplete(result: UserQP) {
+                        val user = result
+                        val newScore = user.score + gameScore
+
+                        val ref = db.collection(usersPath).document(userID)
+                        ref.update("score", newScore)
+                            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
+                            .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
+                    }
+                }
+                getUserWithID(callbackUser, userID)
+            }
+
             fun getActiveGames(callback: Callback<MutableList<Game>>, gameList: MutableList<Game>) {
                 val docRef = db.collection(gamesPath)
                 docRef.get()
