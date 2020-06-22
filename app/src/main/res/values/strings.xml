@@ -28,7 +28,7 @@
     <string name="leave_game_btn">Leave Game</string>
     <string name="register_btn">Register</string>
     <string name="save_btn">Save</string>
-    <string name="edit_account_btn">Edit Account</string>
+    <string name="edit_account_btn">Edit Profile</string>
     <string name="delete_account_btn">Delete Account</string>
     <string name="ready_btn">Ready</string>
     <string name="go_home_btn">Go Home</string>

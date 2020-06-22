@@ -3,9 +3,11 @@ package com.example.quiplash
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.iid.FirebaseInstanceId
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -103,6 +105,20 @@ class DBMethods {
                         .addOnFailureListener { exception ->
                             Log.w(ContentValues.TAG, "Error getting documents: ", exception)
                         }
+            }
+
+            fun addToken(user_t: UserQP){
+                FirebaseInstanceId.getInstance().instanceId
+                    .addOnCompleteListener(OnCompleteListener { task ->
+                        if (!task.isSuccessful) {
+                            return@OnCompleteListener
+                        }
+                        // Get new Instance ID token
+                        val token_new = task.result?.token
+                        FirebaseInstanceId.getInstance().getInstanceId()
+                        user_t.token = token_new.toString()
+                        editUser(user_t.userID, user_t)
+                    })
             }
 
             //returns arraylist with all users
