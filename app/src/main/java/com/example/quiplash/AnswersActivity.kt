@@ -45,27 +45,17 @@ class AnswersActivity : AppCompatActivity() {
         val callbackGame = object : Callback<Game> {
             override fun onTaskComplete(result: Game) {
                 game = result
-                questionTV.text = game.playrounds[game.activeRound - 1].question
-                answerTV1.text = game.playrounds[game.activeRound - 1].opponents[0].answer
-                answerTV2.text = game.playrounds[game.activeRound - 1].opponents[1].answer
+                questionTV.text = game.playrounds.getValue("round${game.activeRound-1}").question
+                answerTV1.text = game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent0").answer
+                answerTV2.text = game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent1").answer
                 roundTextView.text = "${ceil(game.activeRound.toDouble()/3).toInt()}/${game.rounds}"
             }
         }
         DBMethods.DBCalls.getCurrentGame(callbackGame,game.gameID)
 
-        /*db.document(game.gameID).get()
-            .addOnSuccessListener {
-                game = it.toObject(Game::class.java)!!
-                questionTV.text = game.playrounds[game.activeRound - 1].question
-                answerTV1.text = game.playrounds[game.activeRound - 1].opponents[0].answer
-                answerTV2.text = game.playrounds[game.activeRound - 1].opponents[1].answer
-                roundTextView.text = "${ceil(game.activeRound.toDouble()/3).toInt()}/${game.rounds}"
-            }
-            .addOnFailureListener { e -> Log.w("ERROR", "Error deleting document", e) }*/
 
         val callbackTimer = object : Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
-                Log.d("TIMER", "finished? = $result")
                 val intent = Intent(this@AnswersActivity, EvaluationActivity::class.java)
                 startActivity(intent)
             }

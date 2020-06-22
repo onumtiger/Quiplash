@@ -83,13 +83,12 @@ class EvaluationActivity : AppCompatActivity() {
 
         oldRound = game.activeRound
 
+        questionEval.text = game.playrounds.getValue("round${game.activeRound - 1}").question
+        roundViewEval.text = "${ceil(game.activeRound.toDouble() / 3).toInt()}/${game.rounds}"
 
-        questionEval.text = game.playrounds[game.activeRound - 1].question
-        roundViewEval.text = "${ceil(game.activeRound.toDouble() / 3).toInt()} / ${game.rounds}"
 
         val callbackTimer = object : Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
-                Log.d("TIMER", "finished? = $result")
                 setNextRound()
             }
         }
@@ -118,7 +117,7 @@ class EvaluationActivity : AppCompatActivity() {
             if (snapshot != null && snapshot.exists()) {
                 game = snapshot.toObject(Game::class.java)!!
                 if (game.activeRound > oldRound) { //is activeRound new?
-                    if(!nextroundFlag){
+                    if (!nextroundFlag) {
                         gotoNextRound()
                     }
 
@@ -132,31 +131,22 @@ class EvaluationActivity : AppCompatActivity() {
 
 
     private fun setNextRound() {
-        game.activeRound = game.activeRound + 1
-
         db.document(game.gameID)
-            .update("activeRound", oldRound+1)
+            .update("activeRound", oldRound + 1)
             .addOnSuccessListener { Log.d("SUCCESS", "DocumentSnapshot successfully updated!") }
             .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
 
-
-        /*db.document(game.gameID)
-            .set(game)
-            .addOnSuccessListener {
-                gotoNextRound()
-            }
-            .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }*/
     }
 
     private fun gotoNextRound() {
         awaitNextRound.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
         nextroundFlag = true
-        Log.d("EVALUTATION", " oldRound = $oldRound")
-        Log.d("EVALUTATION", " rundengröße = ${game.playrounds.size}")
-        Log.d("EVALUTATION", " result = ${oldRound >= game.playrounds.size}")
 
-        if ( oldRound < game.playrounds.size) {
-            GameMethods.playerAllocation(this.applicationContext, auth!!.currentUser?.uid.toString())
+        if (oldRound < game.playrounds.size) {
+            GameMethods.playerAllocation(
+                this.applicationContext,
+                auth!!.currentUser?.uid.toString()
+            )
         } else {
             val intent = Intent(this, EndOfGameActivity::class.java)
             startActivity(intent)
@@ -169,32 +159,45 @@ class EvaluationActivity : AppCompatActivity() {
     }
 
     private fun setPoints() {
-        db.document(game.gameID).get()
-            .addOnSuccessListener { documentSnapshot ->
-                game = documentSnapshot.toObject(Game::class.java)!!
+        val callbackGame = object : Callback<Game> {
+            override fun onTaskComplete(result: Game) {
+                game = result
 
-                game.playrounds[game.activeRound - 1].voters.forEach {
-                    if (it.voteUserID == game.playrounds[game.activeRound - 1].opponents[0].userID) {
-                        game.playrounds[game.activeRound - 1].opponents[0].answerScore += 10
-                    } else if (it.voteUserID == game.playrounds[game.activeRound - 1].opponents[1].userID) {
-                        game.playrounds[game.activeRound - 1].opponents[1].answerScore += 10
-                    }
-                }
-                if (game.playrounds[game.activeRound - 1].opponents[0].answerScore > game.playrounds[game.activeRound - 1].opponents[1].answerScore) {
-                    game.playrounds[game.activeRound - 1].opponents[0].answerScore += 50
-                } else if (game.playrounds[game.activeRound - 1].opponents[0].answerScore < game.playrounds[game.activeRound - 1].opponents[1].answerScore) {
-                    game.playrounds[game.activeRound - 1].opponents[1].answerScore += 50
+                game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answer
+
+                if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answerScore > game.playrounds.getValue(
+                        "round${game.activeRound - 1}"
+                    ).opponents.getValue("opponent1").answerScore
+                ) {
+                    game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answerScore += 50
+                } else if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                        "opponent0"
+                    ).answerScore < game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                        "opponent1"
+                    ).answerScore
+                ) {
+                    game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent1").answerScore += 50
                 }
 
                 db.document(game.gameID)
-                    .set(game)
+                    .update(
+                        mapOf(
+                            "playrounds.round${game.activeRound - 1}.opponents.opponent0.answerScore" to game.playrounds.getValue(
+                                "round${game.activeRound - 1}"
+                            ).opponents.getValue("opponent0").answerScore,
+                            "playrounds.round${game.activeRound - 1}.opponents.opponent1.answerScore" to game.playrounds.getValue(
+                                "round${game.activeRound - 1}"
+                            ).opponents.getValue("opponent1").answerScore
+                        )
+                    )
                     .addOnSuccessListener {
+                        Log.d("SUCCESS", "DocumentSnapshot successfully updated!")
                         getWinner()
                     }
-                    .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
-                return@addOnSuccessListener
-
+                    .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
             }
+        }
+        DBMethods.DBCalls.getCurrentGame(callbackGame, game.gameID)
 
 
     }
@@ -204,7 +207,10 @@ class EvaluationActivity : AppCompatActivity() {
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
                 game = documentSnapshot.toObject(Game::class.java)!!
-                if (game.playrounds[game.activeRound - 1].opponents[0].answerScore > game.playrounds[game.activeRound - 1].opponents[1].answerScore) {
+                if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answerScore > game.playrounds.getValue(
+                        "round${game.activeRound - 1}"
+                    ).opponents.getValue("opponent1").answerScore
+                ) {
                     setWinnerInfo(
                         0,
                         frameProfile,
@@ -213,7 +219,12 @@ class EvaluationActivity : AppCompatActivity() {
                         winnerName,
                         imageWinnerPhoto
                     )
-                } else if (game.playrounds[game.activeRound - 1].opponents[0].answerScore < game.playrounds[game.activeRound - 1].opponents[1].answerScore) {
+                } else if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                        "opponent0"
+                    ).answerScore < game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                        "opponent1"
+                    ).answerScore
+                ) {
                     setWinnerInfo(
                         1,
                         frameProfileDraw,
@@ -222,7 +233,12 @@ class EvaluationActivity : AppCompatActivity() {
                         winnerName,
                         imageWinnerPhoto
                     )
-                } else if (game.playrounds[game.activeRound - 1].opponents[0].answerScore == game.playrounds[game.activeRound - 1].opponents[1].answerScore) {
+                } else if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                        "opponent0"
+                    ).answerScore == game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                        "opponent1"
+                    ).answerScore
+                ) {
                     setWinnerInfo(
                         0,
                         frameProfile,
@@ -257,10 +273,17 @@ class EvaluationActivity : AppCompatActivity() {
         profileView: ImageView?
     ) {
         frameView?.visibility = View.VISIBLE
-        answerView?.text = game.playrounds[game.activeRound - 1].opponents[winnerIndex].answer
+
+        answerView?.text =
+            game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent$winnerIndex").answer
         scoreView?.text =
-            "+" + game.playrounds[game.activeRound - 1].opponents[winnerIndex].answerScore.toString()
-        dbUsers.document(game.playrounds[game.activeRound - 1].opponents[winnerIndex].userID.toString())
+            "+" + game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent$winnerIndex").answerScore.toString()
+
+        dbUsers.document(
+            game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                "opponent$winnerIndex"
+            ).userID.toString()
+        )
             .get()
             .addOnSuccessListener {
                 val winner = it.toObject(UserQP::class.java)
