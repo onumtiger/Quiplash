@@ -76,9 +76,10 @@ class Add_Player : DialogFragment() {
                                 friend = otherUsers[i]
                                 friendsListFriend = friend.friends
                                 Log.d("friend fround", friend.userName.toString())
+                                Log.d("friend list", friendsListFriend.toString())
                             }
                         }
-                        if (friendsListFriend.isEmpty()){
+                        if (friend == null){
                             Log.d("user not found", "Failed!")
                             dismiss()
                         }
