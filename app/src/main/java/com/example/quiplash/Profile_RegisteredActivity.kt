@@ -54,7 +54,7 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         val viewEmail : TextView = findViewById(R.id.email)
         val viewScore : TextView = findViewById(R.id.score)
         val viewUsernameBig : TextView = findViewById(R.id.usernameBig)
-        var photoPath = "images/default-guest.png"
+        var photoPath = "images/default-user.png"
 
 
 
@@ -87,7 +87,13 @@ class Profile_RegisteredActivity : AppCompatActivity() {
                     viewEmail.text = auth?.currentUser?.email.toString()
                     viewScore.text = current_User.score.toString()
 
-                    photoPath = current_User.photo.toString()
+                    if(current_User.photo == null){
+                        photoPath = "images/default-user.png"
+                    }
+                    else {
+                        photoPath = current_User.photo.toString()
+                    }
+
                     // timer is needed to load new photo is user edits its profile pic
                     val handler = Handler()
                     handler.postDelayed(Runnable {
