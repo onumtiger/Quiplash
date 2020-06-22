@@ -95,6 +95,7 @@ class HostWaitingActivity : AppCompatActivity() {
         }
 
         btnInvitePlayers.setOnClickListener {
+            Sounds.playClickSound(this)
             val callbackUser = object : Callback<UserQP> {
                 override fun onTaskComplete(result: UserQP) {
                     val user = result

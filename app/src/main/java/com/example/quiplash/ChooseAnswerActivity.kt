@@ -98,7 +98,6 @@ class ChooseAnswerActivity : AppCompatActivity() {
                 saveVote(0)
             }
             Sounds.playClickSound(this)
-            Sounds.playVotingSound(this)
         }
 
         answerView2.setOnClickListener {
@@ -106,7 +105,6 @@ class ChooseAnswerActivity : AppCompatActivity() {
                 saveVote(1)
             }
             Sounds.playClickSound(this)
-            Sounds.playVotingSound(this)
         }
 
 

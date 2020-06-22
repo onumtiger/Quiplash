@@ -4,16 +4,16 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.quiplash.GameMethods.Companion.startTimer
 import com.example.quiplash.GameManager.Companion.game
 import com.example.quiplash.GameManager.Companion.startSeconds
+import com.example.quiplash.GameMethods.Companion.startTimer
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.math.ceil
+
 
 class AnswersActivity : AppCompatActivity() {
 
@@ -27,6 +27,7 @@ class AnswersActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Sounds.playVotingSound(this)
 
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
         try {

@@ -1,39 +1,58 @@
 package com.example.quiplash
 
+import android.R
 import android.content.Context
 import android.media.MediaPlayer
-import android.widget.AdapterView
+import com.example.quiplash.R.*
+
 
 class Sounds {
     companion object {
+            // var mp: MediaPlayer = MediaPlayer()
+            var mp: MediaPlayer? = null
 
         fun playClickSound(context: Context) {
-            val mp: MediaPlayer = MediaPlayer.create(context, R.raw.click)
-            mp.start()
+            stopPlaying()
+            mp = MediaPlayer.create(context, raw.click)
+            mp!!.start()
         }
         fun playRefreshSound(context: Context) {
-            val mp: MediaPlayer = MediaPlayer.create(context, R.raw.refresh)
-            mp.start()
+            stopPlaying()
+            mp = MediaPlayer.create(context, raw.refresh)
+            mp!!.start()
         }
         fun playStartSound(context: Context) {
-            val mp: MediaPlayer = MediaPlayer.create(context, R.raw.start)
-            mp.start()
+            stopPlaying()
+            mp = MediaPlayer.create(context, raw.start)
+            mp!!.start()
         }
         fun playVotingSound(context: Context) {
-            val mp: MediaPlayer = MediaPlayer.create(context, R.raw.voting)
-            mp.start()
+            stopPlaying()
+            mp = MediaPlayer.create(context, raw.voting)
+            mp!!.start()
         }
         fun playScoreSound(context: Context) {
-            val mp: MediaPlayer = MediaPlayer.create(context, R.raw.score)
-            mp.start()
+            stopPlaying()
+            mp = MediaPlayer.create(context, raw.score)
+            mp!!.start()
         }
         fun playAnswerSound(context: Context) {
-            val mp: MediaPlayer = MediaPlayer.create(context, R.raw.answer)
-            mp.start()
+            stopPlaying()
+            // hier muss ein anderer sound rein
+            //mp = MediaPlayer.create(context, raw.answer)
+            //mp!!.start()
         }
         fun playEndSound(context: Context) {
-            val mp: MediaPlayer = MediaPlayer.create(context, R.raw.end)
-            mp.start()
+            stopPlaying()
+            mp = MediaPlayer.create(context, raw.end)
+            mp!!.start()
+        }
+        fun stopPlaying() {
+            if (mp != null) {
+                mp!!.stop()
+                mp!!.release()
+                mp = null
+            }
         }
     }
 }
