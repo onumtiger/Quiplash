@@ -20,6 +20,8 @@ class Invite_Player : DialogFragment() {
 
 
         btnCancel.setOnClickListener {
+            context?.let { it1 -> Sounds.playClickSound(it1) }
+
             dismiss()
         }
     }

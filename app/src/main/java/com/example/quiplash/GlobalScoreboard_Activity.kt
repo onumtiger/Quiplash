@@ -24,6 +24,8 @@ class GlobalScoreboard_Activity : AppCompatActivity() {
         val btnBack = findViewById<AppCompatImageButton>(R.id.scoreboard_go_back_arrow)
 
         btnBack.setOnClickListener{
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, LandingActivity::class.java)
             startActivity(intent)
         }

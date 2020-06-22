@@ -28,10 +28,14 @@ class New_GameActivity : AppCompatActivity() {
         val btnStart = findViewById<Button>(R.id.start_game)
 
         btnBack.setOnClickListener {
+            Sounds.playClickSound(this)
+
             super.onBackPressed()
         }
 
         btnStart.setOnClickListener {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, HostWaitingActivity::class.java)
             intent.putExtra("gameID", createNewGame())
             startActivity(intent)

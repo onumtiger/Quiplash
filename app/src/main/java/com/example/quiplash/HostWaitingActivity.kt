@@ -49,14 +49,20 @@ class HostWaitingActivity : AppCompatActivity() {
         getUsersList(playersListView, game.gameID)
 
         btnBack.setOnClickListener {
+            Sounds.playClickSound(this)
+
             super.onBackPressed()
         }
 
         btnStartGame.setOnClickListener {
+            Sounds.playClickSound(this)
+
             createAllRounds()
         }
 
         btnEndGame.setOnClickListener {
+            Sounds.playClickSound(this)
+
             val callbackSuccess = object : Callback<Boolean> {
                 override fun onTaskComplete(result: Boolean) {
                     Log.d("GAMEDELETE", "deleted? = $result")

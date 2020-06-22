@@ -76,11 +76,15 @@ class SignInActivity : AppCompatActivity() {
 
 
         btnSignup.setOnClickListener{
+            Sounds.playClickSound(this)
+
             startActivity(Intent(this@SignInActivity, SignUpActivity::class.java))
             finish()
         }
 
         btnLoginGuest.setOnClickListener{
+            Sounds.playClickSound(this)
+
             if(sharedPreference?.getString(prefKey,prefDefValue) != prefDefValue){
                 setUser(sharedPreference?.getString(prefKey,prefDefValue).toString())
             } else{
@@ -96,16 +100,22 @@ class SignInActivity : AppCompatActivity() {
         }
 
         btnDB.setOnClickListener{
+            Sounds.playClickSound(this)
+
             val intent = Intent(this@SignInActivity, Database::class.java)
             startActivity(intent)
         }
 
         btnResetPassword.setOnClickListener{
+            Sounds.playClickSound(this)
+
             val intent = Intent(this@SignInActivity, ResetPasswordActivity::class.java)
             startActivity(intent)
         }
 
         btnLogin.setOnClickListener{
+            Sounds.playClickSound(this)
+
             val email = inputEmail.text.toString()
             val password = inputPassword.text.toString()
 

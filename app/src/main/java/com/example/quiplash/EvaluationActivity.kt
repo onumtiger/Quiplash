@@ -101,6 +101,8 @@ class EvaluationActivity : AppCompatActivity() {
         }
 
         nextBtn.setOnClickListener {
+            Sounds.playClickSound(this)
+
             setNextRound()
         }
 

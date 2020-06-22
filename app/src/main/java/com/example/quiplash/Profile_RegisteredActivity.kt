@@ -108,28 +108,38 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         getUser(callback)
 
         btnaddQuestion.setOnClickListener {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, ChooseQuestionTypeActivity::class.java)
             startActivity(intent)
         }
 
         btnSignOut.setOnClickListener() {
+            Sounds.playClickSound(this)
+
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(this, MainActivity::class.java);
             startActivity(intent);
         }
 
         btnBack.setOnClickListener() {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, LandingActivity::class.java);
             startActivity(intent);
         }
 
         btnEditProfile.setOnClickListener {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, Edit_ProfileActivity::class.java)
             startActivity(intent)
         }
 
 /*
         btnDeleteAccount.setOnClickListener{
+                    Sounds.playClickSound(this)
+
             val dialogFragment = Delete_Account()
             val ft = supportFragmentManager.beginTransaction()
             val prev = supportFragmentManager.findFragmentByTag("delete")

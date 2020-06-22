@@ -50,6 +50,8 @@ class Add_Player : DialogFragment() {
         DBMethods.DBCalls.getUser(callbackGetUser)
 
         btnAdd.setOnClickListener(){
+            context?.let { it1 -> Sounds.playClickSound(it1) }
+
             var usernameFriend = viewUsername.text.toString()
             var alreadyfriends = false
 
@@ -110,6 +112,7 @@ class Add_Player : DialogFragment() {
         }
 
         btnCancel.setOnClickListener {
+            context?.let { it1 -> Sounds.playClickSound(it1) }
             dismiss()
         }
     }

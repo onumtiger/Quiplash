@@ -31,10 +31,14 @@ class FriendsActivity : AppCompatActivity() {
         getFriendsList(friendsListView)
 
         btnBack.setOnClickListener() {
+            Sounds.playClickSound(this)
+
             super.onBackPressed();
         }
 
         btnFriend.setOnClickListener(){
+            Sounds.playClickSound(this)
+
             val dialogFragment = Add_Player()
             val ft = supportFragmentManager.beginTransaction()
             val prev = supportFragmentManager.findFragmentByTag("add")

@@ -21,6 +21,8 @@ class EndOfGameActivity : AppCompatActivity() {
         val btnHome = findViewById<Button>(R.id.btnHome)
 
         btnHome.setOnClickListener {
+            Sounds.playClickSound(this)
+
             deleteGame()
         }
 

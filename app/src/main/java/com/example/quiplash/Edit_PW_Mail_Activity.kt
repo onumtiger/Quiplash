@@ -52,11 +52,15 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount)
 
         btnBack.setOnClickListener() {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, Profile_RegisteredActivity::class.java);
             startActivity(intent);
         }
 
         btnDeleteAccount.setOnClickListener(){
+            Sounds.playClickSound(this)
+
             val del_user = FirebaseAuth.getInstance().currentUser
 
             val oldPW = view_oldPW.text.toString()
@@ -87,6 +91,8 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
         }
 
         saveBtn.setOnClickListener() {
+            Sounds.playClickSound(this)
+
             val oldPW = view_oldPW.text.toString()
             val newPW = view_newPW.text.toString()
             val newPW2 = view_newPW2.text.toString()

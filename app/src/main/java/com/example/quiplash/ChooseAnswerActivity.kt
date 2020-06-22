@@ -85,10 +85,14 @@ class ChooseAnswerActivity : AppCompatActivity() {
         simpleViewFlipper.outAnimation = out
 
         answerView1.setOnClickListener {
+            Sounds.playClickSound(this)
+
             saveVote(0)
         }
 
         answerView2.setOnClickListener {
+            Sounds.playClickSound(this)
+
             saveVote(1)
         }
 

@@ -42,11 +42,15 @@ class Join_GameActivity : AppCompatActivity() {
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefresh)
 
         btnNewGameActivity.setOnClickListener {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, New_GameActivity::class.java)
             startActivity(intent)
         }
 
         btnBack.setOnClickListener {
+            Sounds.playClickSound(this)
+
             super.onBackPressed()
         }
 

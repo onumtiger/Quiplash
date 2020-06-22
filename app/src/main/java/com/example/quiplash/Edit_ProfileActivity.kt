@@ -136,16 +136,22 @@ class Edit_ProfileActivity : AppCompatActivity() {
         DBMethods.DBCalls.getUser(callback)
 
         btnBack.setOnClickListener() {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, Profile_RegisteredActivity::class.java);
             startActivity(intent);
         }
 
         btnEditPicture.setOnClickListener(){
+            Sounds.playClickSound(this)
+
             // pickFromCamera()
             chooseImage()
         }
 
         btnChangeRest.setOnClickListener() {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, Edit_PW_Mail_Activity::class.java);
             startActivity(intent);
 
@@ -187,6 +193,8 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
 
         btnSave.setOnClickListener() {
+            Sounds.playClickSound(this)
+
             var uploadPath = uploadImage()
             if (uploadPath != ""){
                 photoPath = uploadPath

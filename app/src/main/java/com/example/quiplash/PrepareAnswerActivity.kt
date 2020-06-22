@@ -85,10 +85,14 @@ class PrepareAnswerActivity : AppCompatActivity() {
         startTimer(textViewTimer, startSeconds, callbackTimer)
 
         viewQuestion.setOnClickListener {
+            Sounds.playClickSound(this)
+
             viewFlipper.showNext()
         }
 
         btnReady.setOnClickListener {
+            Sounds.playClickSound(this)
+
             val callbackGame = object : Callback<Game> {
                 override fun onTaskComplete(result: Game) {
                     game = result
