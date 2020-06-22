@@ -53,7 +53,7 @@ class HostWaitingActivity : AppCompatActivity() {
         }
 
         btnStartGame.setOnClickListener {
-            createAllRounds()
+                    savePlayrounds()
         }
 
         btnEndGame.setOnClickListener {
@@ -170,13 +170,12 @@ class HostWaitingActivity : AppCompatActivity() {
     ) {
         val playersNames = mutableListOf<UserQP>()
         var userIDList: MutableList<String>
-        var currentGame: Game
         val callback = object : Callback<Game> {
             override fun onTaskComplete(result: Game) {
-                currentGame = result
-                val playerNumber = currentGame.playerNumber
-                val currentPlayerNumber = currentGame.users.size
-                val players = currentGame.users
+                game = result
+                val playerNumber = game.playerNumber
+                val currentPlayerNumber = game.users.size
+                val players = game.users
                 userIDList = players.toMutableList()
                 userIDList.forEach {
                     val callbackUser = object : Callback<UserQP> {
@@ -189,7 +188,7 @@ class HostWaitingActivity : AppCompatActivity() {
                                 playersNames
                             )
                             playersListView.adapter = adapter
-                            setBtnVisibility(currentGame, currentPlayerNumber, playerNumber)
+                            setBtnVisibility(game, currentPlayerNumber, playerNumber)
                         }
                     }
                     getUserWithID(callbackUser, it)
@@ -214,7 +213,7 @@ class HostWaitingActivity : AppCompatActivity() {
      * --> This is one Round, so that it stays fair ;)
      * --> total rounds = 9
      * **/
-    fun createAllRounds() {
+    private fun getallRounds() : HashMap<String,Round>{
         var allRoundCount = 1
         var jump = 1
         var roundCount = 0
@@ -223,8 +222,10 @@ class HostWaitingActivity : AppCompatActivity() {
         var subroundCount = 0
 
         while (jump < game.users.size) {
+            Log.d("RUNDEN-ERSTELLUNG", "jump = $jump")
 
             while (roundCount < game.users.size - jump) {
+                Log.d("RUNDEN-ERSTELLUNG", "roundCount = $roundCount")
 
                 val voters = linkedMapOf<String,Voter>()
                 for (user in game.users) {
@@ -244,6 +245,7 @@ class HostWaitingActivity : AppCompatActivity() {
         }
 
         while (allRoundCount <= game.rounds) {
+            Log.d("RUNDEN-ERSTELLUNG", "allRoundCount = $allRoundCount")
             oneRound.forEach { value ->
                 allRounds["round$subroundCount"] = value
                 subroundCount+=1
@@ -252,16 +254,18 @@ class HostWaitingActivity : AppCompatActivity() {
             allRoundCount += 1
         }
 
+        return allRounds
 
-        //game.playrounds = oneRound
+    }
+
+    private fun savePlayrounds(){
         db.document(game.gameID)
-            .update("playrounds", allRounds)
+            .update("playrounds", getallRounds())
             .addOnSuccessListener {
                 //myWebSocketClient.send(game.gameID)
                 val intent = Intent(this, GameLaunchingActivity::class.java)
                 startActivity(intent)
             }
             .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
-
     }
 }
