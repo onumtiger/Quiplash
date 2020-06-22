@@ -9,10 +9,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
-import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.example.quiplash.DBMethods.DBCalls.Companion.getUser
 import com.google.android.gms.tasks.OnFailureListener

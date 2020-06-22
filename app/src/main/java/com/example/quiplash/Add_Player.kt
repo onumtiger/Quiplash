@@ -7,12 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.firebase.auth.FirebaseAuth
 import java.util.ArrayList
-import kotlin.math.log
 
 class Add_Player : DialogFragment() {
     lateinit var current_User: UserQP

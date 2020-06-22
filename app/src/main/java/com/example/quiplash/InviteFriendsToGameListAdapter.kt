@@ -51,6 +51,7 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
 
 
         inviteBtn.setOnClickListener {
+            Sounds.playClickSound(context)
             inviteBtn.isClickable = false
             inviteBtn.setBackgroundResource(R.color.colorGray)
         }
