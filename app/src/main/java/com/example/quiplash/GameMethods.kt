@@ -44,9 +44,8 @@ class GameMethods {
             fun playerAllocation(appcontext: Context, userid: String){
                 if(GameManager.game.playrounds.size>= GameManager.game.activeRound) {
 
-                    if (GameManager.game.playrounds[GameManager.game.activeRound - 1].opponents[0].userID.equals(userid) || GameManager.game.playrounds[GameManager.game.activeRound - 1].opponents[1].userID.equals(
-                            userid
-                        )
+
+                    if (GameManager.game.playrounds.getValue("round${GameManager.game.activeRound-1}").opponents.getValue("opponent0").userID.equals(userid) || GameManager.game.playrounds.getValue("round${GameManager.game.activeRound-1}").opponents.getValue("opponent1").userID.equals(userid)
                     ) {
                         val intent = Intent(appcontext, PrepareAnswerActivity::class.java)
                         appcontext.startActivity(intent)

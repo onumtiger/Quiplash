@@ -219,22 +219,22 @@ class HostWaitingActivity : AppCompatActivity() {
         var jump = 1
         var roundCount = 0
         val oneRound: MutableList<Round> = mutableListOf()
-        val allRounds: MutableList<Round> = mutableListOf()
+        val allRounds: HashMap<String,Round> = hashMapOf()
+        var subroundCount = 0
 
         while (jump < game.users.size) {
 
             while (roundCount < game.users.size - jump) {
 
-                val voters = mutableListOf<Voter>()
+                val voters = linkedMapOf<String,Voter>()
                 for (user in game.users) {
 
                     if (game.users.indexOf(user) != roundCount && game.users.indexOf(user) != (roundCount + jump)) {
-                        voters += Voter(user)
+                        voters["voter${voters.size}"] = Voter(user)
                     }
                 }
-                oneRound += (Round(voters,
-                    listOf(Opponent( game.users[roundCount]), Opponent( game.users[(roundCount + jump)]))
-                ))
+
+                oneRound += (Round(voters, linkedMapOf("opponent0" to Opponent( game.users[roundCount]), "opponent1" to Opponent( game.users[roundCount + jump]))))
 
                 roundCount += 1
 
@@ -243,18 +243,21 @@ class HostWaitingActivity : AppCompatActivity() {
             jump += 1
         }
 
-
         while (allRoundCount <= game.rounds) {
-            allRounds += oneRound
+            oneRound.forEach { value ->
+                allRounds["round$subroundCount"] = value
+                subroundCount+=1
+            }
+
             allRoundCount += 1
         }
 
-        game.playrounds = allRounds
+
+        //game.playrounds = oneRound
         db.document(game.gameID)
             .update("playrounds", allRounds)
             .addOnSuccessListener {
                 //myWebSocketClient.send(game.gameID)
-
                 val intent = Intent(this, GameLaunchingActivity::class.java)
                 startActivity(intent)
             }

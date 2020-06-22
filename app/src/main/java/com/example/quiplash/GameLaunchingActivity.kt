@@ -1,6 +1,7 @@
 package com.example.quiplash
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quiplash.DBMethods.DBCalls.Companion.getQuestions

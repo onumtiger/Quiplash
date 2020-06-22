@@ -2,16 +2,16 @@ package com.example.quiplash
 
 
 class Round {
-    var voters: List<Voter> = listOf()
-    var opponents: List<Opponent> = listOf()
+    var voters: HashMap<String,Voter> = linkedMapOf()
+    var opponents: HashMap<String,Opponent> = linkedMapOf()
     var question: String = ""
 
-    constructor(votersArr: List<Voter>, opponentsArr: List<Opponent>) {
+    constructor(votersArr: HashMap<String,Voter>, opponentsArr: HashMap<String,Opponent>) {
         voters = votersArr
         opponents = opponentsArr
     }
 
-    constructor(votersArr: List<Voter>, opponentsArr: List<Opponent>, roundQuestion:String) {
+    constructor(votersArr: HashMap<String,Voter>, opponentsArr: HashMap<String,Opponent>, roundQuestion:String) {
         voters = votersArr
         opponents = opponentsArr
         question = roundQuestion

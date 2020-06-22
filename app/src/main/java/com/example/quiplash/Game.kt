@@ -13,7 +13,7 @@ class Game {
     var rounds: Int = 0
     var users: List<String> = listOf()
     var gameID: String = ""
-    var playrounds: List<Round> = listOf()
+    var playrounds: HashMap<String, Round> = linkedMapOf()
     var isPublic: Boolean = false
     var hostID: String = ""
     var gameTitle: String = ""
@@ -47,7 +47,7 @@ class Game {
         gamePlayerNumber: Int,
         ispublic: Boolean,
         currentRound: Int,
-        gameplayrounds: List<Round>,
+        gameplayrounds: HashMap<String,Round>,
         gameHostid: String,
         gametitle: String,
         gameCategory: String,

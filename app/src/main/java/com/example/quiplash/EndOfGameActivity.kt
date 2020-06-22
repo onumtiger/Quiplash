@@ -68,7 +68,6 @@ class EndOfGameActivity : AppCompatActivity() {
     private fun deleteGame(){
         val callbackSuccess = object : Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
-                Log.d("GAMEDELETE", "deleted? = $result")
                 val intent = Intent(this@EndOfGameActivity, LandingActivity::class.java)
                 startActivity(intent)
             }

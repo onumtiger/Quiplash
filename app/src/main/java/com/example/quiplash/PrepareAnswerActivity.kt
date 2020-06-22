@@ -27,6 +27,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
     private var auth: FirebaseAuth? = null
 
     var userindex = 0
+    var answersArrived = false
     private lateinit var viewFlipper: ViewFlipper
 
     lateinit var awaitAllAnswers: ListenerRegistration
@@ -40,9 +41,11 @@ class PrepareAnswerActivity : AppCompatActivity() {
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
                 game = documentSnapshot.toObject(Game::class.java)!!
-
-                userindex =
-                    game.playrounds[game.activeRound - 1].opponents.indexOfFirst { it.userID == auth!!.currentUser?.uid }
+                userindex = if( game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent0").userID == auth!!.currentUser?.uid) {
+                    0
+                } else{
+                    1
+                }
 
             }
 
@@ -64,8 +67,8 @@ class PrepareAnswerActivity : AppCompatActivity() {
         viewFlipper = findViewById(R.id.viewFlipperQuestion) // get the reference of ViewFlipper
 
         textViewRound.text = "${ceil(game.activeRound.toDouble() / 3).toInt()}/${game.rounds}"
-        textViewQuestion.text = game.playrounds[game.activeRound - 1].question
-        textViewQuestion2.text = game.playrounds[game.activeRound - 1].question
+        textViewQuestion.text = game.playrounds.getValue("round${game.activeRound-1}").question
+        textViewQuestion2.text = game.playrounds.getValue("round${game.activeRound-1}").question
 
         // Declare in and out animations and load them using AnimationUtils class
         val inAni = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left)
@@ -79,7 +82,9 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
         val callbackTimer = object : Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
-                gotoAnswers()
+                if(!answersArrived){
+                    gotoAnswers()
+                }
             }
         }
         startTimer(textViewTimer, startSeconds, callbackTimer)
@@ -92,7 +97,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
             val callbackGame = object : Callback<Game> {
                 override fun onTaskComplete(result: Game) {
                     game = result
-                    game.playrounds[game.activeRound - 1].opponents[userindex].answer =
+                    game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent$userindex").answer =
                         fieldAnswer.text.toString()
                     db.document(game.gameID)
                         .set(game)
@@ -125,7 +130,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
             if (snapshot != null && snapshot.exists()) {
                 Log.d("SUCCESS", "Current data: ${snapshot.data}")
                 game = snapshot.toObject(Game::class.java)!!
-                if (game.playrounds[game.activeRound - 1].opponents[0].answer != "" && game.playrounds[game.activeRound - 1].opponents[1].answer != "") {
+                if (game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent0").answer != "" && game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent1").answer != "") {
                     gotoAnswers()
                 }
 
@@ -136,6 +141,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
     private fun gotoAnswers() {
         awaitAllAnswers.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
+        answersArrived = true
         val intent = Intent(this, AnswersActivity::class.java)
         startActivity(intent)
 

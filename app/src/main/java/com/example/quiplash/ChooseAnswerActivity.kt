@@ -14,6 +14,7 @@ import com.example.quiplash.GameManager.Companion.startSeconds
 import com.example.quiplash.GameMethods.Companion.startTimer
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlin.math.ceil
@@ -38,9 +39,14 @@ class ChooseAnswerActivity : AppCompatActivity() {
     private var auth: FirebaseAuth? = null
 
     private lateinit var awaitAnswerChoosen: ListenerRegistration
-    private var showAnswersFlag = false
-    var chooseAnswerFlag = false
+    private var answersArrived = false
+    private var answerChoosen = false
 
+    private lateinit var answerView1 : View
+    private lateinit var answerView2 : View
+    private lateinit var answerTV1 : TextView
+    private lateinit var answerTV2 : TextView
+    private lateinit var questionTV : TextView
 
     @SuppressLint("WrongViewCast", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,11 +62,11 @@ class ChooseAnswerActivity : AppCompatActivity() {
         timerView = findViewById(R.id.timer2)
         timerViewWaiting = findViewById(R.id.timerWaiting2)
         val othertimer = findViewById<TextView>(R.id.timer3)
-        val answerTV1 = findViewById<TextView>(R.id.answer1)
-        val answerTV2 = findViewById<TextView>(R.id.answer2)
-        val questionTV = findViewById<TextView>(R.id.questionCA)
-        val answerView1 = findViewById<View>(R.id.view2)
-        val answerView2 = findViewById<View>(R.id.view3)
+        answerTV1 = findViewById<TextView>(R.id.answer1)
+        answerTV2 = findViewById<TextView>(R.id.answer2)
+        questionTV = findViewById<TextView>(R.id.questionCA)
+        answerView1 = findViewById(R.id.view2)
+        answerView2 = findViewById(R.id.view3)
         val roundView = findViewById<TextView>(R.id.roundsCA2)
         simpleViewFlipper =
             findViewById(R.id.simpleViewFlipperCA) // get the reference of ViewFlipper
@@ -68,12 +74,14 @@ class ChooseAnswerActivity : AppCompatActivity() {
 
         val callbackTimerWaiting = object : Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
-                Log.d("TIMER", "finished? = $result")
-                simpleViewFlipper.showNext()
+                if(!answersArrived){
+                    setNextView()
+                }
             }
         }
         startTimer(timerViewWaiting, startSeconds, callbackTimerWaiting)
-        roundView.text = "${ceil(game.activeRound.toDouble()/3).toInt()} / ${game.rounds}"
+
+        roundView.text = "${ceil(game.activeRound.toDouble() / 3).toInt()} / ${game.rounds}"
 
 
         // Declare in and out animations and load them using AnimationUtils class
@@ -85,11 +93,15 @@ class ChooseAnswerActivity : AppCompatActivity() {
         simpleViewFlipper.outAnimation = out
 
         answerView1.setOnClickListener {
-            saveVote(0)
+            if(!answerChoosen) {
+                saveVote(0)
+            }
         }
 
         answerView2.setOnClickListener {
-            saveVote(1)
+            if(!answerChoosen) {
+                saveVote(1)
+            }
         }
 
 
@@ -101,31 +113,14 @@ class ChooseAnswerActivity : AppCompatActivity() {
             }
 
             if (snapshot != null && snapshot.exists()) {
-                Log.d("SUCCESS", "Current data: ${snapshot.data}")
                 game = snapshot.toObject(Game::class.java)!!
-                if (game.playrounds[game.activeRound - 1].opponents[0].answer != "" && game.playrounds[game.activeRound - 1].opponents[1].answer != "") {
-                    awaitAnswerChoosen.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
-                    showAnswersFlag = true
-                    simpleViewFlipper.showNext()
-
-                    val callbackGame = object : Callback<Game> {
-                        override fun onTaskComplete(result: Game) {
-                            game = result
-                            questionTV.text = game.playrounds[game.activeRound - 1].question
-                            answerTV1.text = game.playrounds[game.activeRound - 1].opponents[0].answer
-                            answerTV2.text = game.playrounds[game.activeRound - 1].opponents[1].answer
-                        }
+                if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answer != "" && game.playrounds.getValue(
+                        "round${game.activeRound - 1}"
+                    ).opponents.getValue("opponent1").answer != ""
+                ) {
+                    if(!answersArrived){
+                        setNextView()
                     }
-                    DBMethods.DBCalls.getCurrentGame(callbackGame,game.gameID)
-
-                    val callbackTimer = object : Callback<Boolean> {
-                        override fun onTaskComplete(result: Boolean) {
-                            Log.d("TIMER", "finished? = $result")
-                            val intent = Intent(this@ChooseAnswerActivity, EvaluationActivity::class.java)
-                            startActivity(intent)
-                        }
-                    }
-                    startTimer(timerView, startSeconds, callbackTimer)
                 }
 
             }
@@ -137,31 +132,68 @@ class ChooseAnswerActivity : AppCompatActivity() {
         println("do nothing")
     }
 
-
-    private fun getVotersIndex(userid: String): Int {
-        return game.playrounds[game.activeRound - 1].voters.indexOf(Voter(userid))
-    }
-
-    private fun saveVote(answerIndex: Int) {
+    private fun setNextView(){
+        awaitAnswerChoosen.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
+        answersArrived = true
+        simpleViewFlipper.showNext()
 
         val callbackGame = object : Callback<Game> {
             override fun onTaskComplete(result: Game) {
                 game = result
-                game.playrounds[game.activeRound - 1].voters[getVotersIndex(auth!!.currentUser?.uid.toString()) + 1].voteUserID =
-                    game.playrounds[game.activeRound - 1].opponents[answerIndex].userID.toString()
-
-                db.document(game.gameID)
-                    .set(game)
-                    .addOnSuccessListener {
-                        Log.d("Success", "DocumentSnapshot successfully written!")
-                        chooseAnswerFlag = true
-                        val intent = Intent(this@ChooseAnswerActivity, EvaluationActivity::class.java)
-                        startActivity(intent)
-                    }
-                    .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
+                questionTV.text =
+                    game.playrounds.getValue("round${game.activeRound - 1}").question
+                answerTV1.text =
+                    game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                        "opponent0"
+                    ).answer
+                answerTV2.text =
+                    game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                        "opponent1"
+                    ).answer
             }
         }
-        DBMethods.DBCalls.getCurrentGame(callbackGame,game.gameID)
+        DBMethods.DBCalls.getCurrentGame(callbackGame, game.gameID)
+
+        val callbackTimer = object : Callback<Boolean> {
+            override fun onTaskComplete(result: Boolean) {
+                val intent =
+                    Intent(this@ChooseAnswerActivity, EvaluationActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        startTimer(timerView, startSeconds, callbackTimer)
+    }
+
+    private fun getVotersIndex(userid: String): String {
+        var voterkey = ""
+        game.playrounds.getValue("round${game.activeRound - 1}").voters.forEach {
+            if (it.value.userID == userid) {
+                voterkey = it.key
+                return@forEach
+            }
+            return@forEach
+        }
+
+        return voterkey
+    }
+
+    private fun saveVote(answerIndex: Int) {
+        answerChoosen = true
+        game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answer
+
+        db.document(game.gameID)
+            .update(
+                mapOf(
+                    "playrounds.round${game.activeRound - 1}.voters.${getVotersIndex(auth!!.currentUser?.uid.toString())}.voteUserID" to game.playrounds.getValue(
+                        "round${game.activeRound - 1}"
+                    ).opponents.getValue("opponent$answerIndex").userID,
+                    "playrounds.round${game.activeRound - 1}.opponents.opponent$answerIndex.answerScore" to FieldValue.increment(
+                        10
+                    )
+                )
+            )
+            .addOnSuccessListener { Log.d("SUCCESS", "DocumentSnapshot successfully updated!") }
+            .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
 
 
     }
