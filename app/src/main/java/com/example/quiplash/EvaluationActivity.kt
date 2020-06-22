@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.quiplash.GameManager.Companion.game
+import com.example.quiplash.GameManager.Companion.startSecondsIdle
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -92,7 +93,7 @@ class EvaluationActivity : AppCompatActivity() {
                 setNextRound()
             }
         }
-        startTimer(textViewTimer, GameManager.startSeconds, callbackTimer)
+        startTimer(textViewTimer, startSecondsIdle, callbackTimer)
 
 
         if (game.activeRound == game.playrounds.size) {
