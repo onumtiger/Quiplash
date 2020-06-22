@@ -13,6 +13,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.math.ceil
 
+
 class AnswersActivity : AppCompatActivity() {
 
     lateinit var timerView : TextView
@@ -25,6 +26,7 @@ class AnswersActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Sounds.playVotingSound(this)
 
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
         try {
