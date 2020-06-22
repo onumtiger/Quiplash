@@ -37,7 +37,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Handler().postDelayed({ Sounds.playAnswerSound(this)}, 5000)
+        Handler().postDelayed({ Sounds.playAnswerSound(this)}, 3000)
 
 
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)

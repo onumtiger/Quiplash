@@ -38,9 +38,8 @@ class Sounds {
         }
         fun playAnswerSound(context: Context) {
             stopPlaying()
-            // hier muss ein anderer sound rein
-            //mp = MediaPlayer.create(context, raw.answer)
-            //mp!!.start()
+            mp = MediaPlayer.create(context, raw.prepareanswer)
+            mp!!.start()
         }
         fun playEndSound(context: Context) {
             stopPlaying()
