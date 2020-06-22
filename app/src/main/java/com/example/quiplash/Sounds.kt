@@ -31,5 +31,9 @@ class Sounds {
             val mp: MediaPlayer = MediaPlayer.create(context, R.raw.answer)
             mp.start()
         }
+        fun playEndSound(context: Context) {
+            val mp: MediaPlayer = MediaPlayer.create(context, R.raw.end)
+            mp.start()
+        }
     }
 }

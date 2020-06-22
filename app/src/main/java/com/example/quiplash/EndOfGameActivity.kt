@@ -18,6 +18,8 @@ class EndOfGameActivity : AppCompatActivity() {
         }
         setContentView(R.layout.activity_end_of_game)
 
+        Sounds.playEndSound(this)
+
         val btnHome = findViewById<Button>(R.id.btnHome)
 
         btnHome.setOnClickListener {
