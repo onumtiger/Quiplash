@@ -14,5 +14,9 @@ class Sounds {
             val mp: MediaPlayer = MediaPlayer.create(context, R.raw.refresh)
             mp.start()
         }
+        fun playStartSound(context: Context) {
+            val mp: MediaPlayer = MediaPlayer.create(context, R.raw.start)
+            mp.start()
+        }
     }
 }

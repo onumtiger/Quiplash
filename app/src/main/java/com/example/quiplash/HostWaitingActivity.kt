@@ -261,6 +261,7 @@ class HostWaitingActivity : AppCompatActivity() {
             .update("playrounds", allRounds)
             .addOnSuccessListener {
                 //myWebSocketClient.send(game.gameID)
+                Sounds.playStartSound(this)
 
                 val intent = Intent(this, GameLaunchingActivity::class.java)
                 startActivity(intent)
