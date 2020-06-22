@@ -50,6 +50,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
         } catch (e: NullPointerException) {
         }
         setContentView(R.layout.activity_choose_answer)
+        Sounds.playVotingSound(this)
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
 
@@ -86,12 +87,14 @@ class ChooseAnswerActivity : AppCompatActivity() {
 
         answerView1.setOnClickListener {
             Sounds.playClickSound(this)
+            Sounds.playVotingSound(this)
 
             saveVote(0)
         }
 
         answerView2.setOnClickListener {
             Sounds.playClickSound(this)
+            Sounds.playVotingSound(this)
 
             saveVote(1)
         }
