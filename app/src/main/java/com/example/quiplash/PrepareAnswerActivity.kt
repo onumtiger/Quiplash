@@ -14,6 +14,7 @@ import com.example.quiplash.GameManager.Companion.startSeconds
 import com.example.quiplash.GameMethods.Companion.startTimer
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlin.math.ceil
@@ -103,27 +104,22 @@ class PrepareAnswerActivity : AppCompatActivity() {
         btnReady.setOnClickListener {
             Sounds.playClickSound(this)
 
-            val callbackGame = object : Callback<Game> {
-                override fun onTaskComplete(result: Game) {
-                    game = result
-                    game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent$userindex").answer =
-                        fieldAnswer.text.toString()
-                    db.document(game.gameID)
-                        .set(game)
-                        .addOnSuccessListener {
-                            Log.d("Success", "DocumentSnapshot successfully written!")
-                            imageCheckmark.visibility = ImageView.VISIBLE
-                            textAnswerState.visibility = TextView.VISIBLE
-
-                        }
-                        .addOnFailureListener { e ->
-                            Log.w("Error", "Error writing document", e)
-                            imageCheckmark.visibility = ImageView.INVISIBLE
-                            textAnswerState.text = "Your Answer could not be saved"
-                        }
+            db.document(game.gameID)
+                .update(
+                    mapOf(
+                        "playrounds.round${game.activeRound - 1}.opponents.${getOpponentsIndex(auth!!.currentUser?.uid.toString())}.answer" to fieldAnswer.text.toString()
+                    )
+                )
+                .addOnSuccessListener {
+                    Log.d("SUCCESS", "DocumentSnapshot successfully updated!")
+                    imageCheckmark.visibility = ImageView.VISIBLE
+                        textAnswerState.visibility = TextView.VISIBLE
                 }
-            }
-            DBMethods.DBCalls.getCurrentGame(callbackGame,game.gameID)
+                .addOnFailureListener { e ->
+                    Log.w("FAILURE", "Error updating document", e)
+                    imageCheckmark.visibility = ImageView.INVISIBLE
+                    textAnswerState.text = "Your Answer could not be saved"
+                }
 
 
         }
@@ -156,6 +152,18 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
     }
 
+    private fun getOpponentsIndex(userid: String): String {
+        var opponentkey = ""
+        game.playrounds.getValue("round${game.activeRound - 1}").opponents.forEach {
+            if (it.value.userID == userid) {
+                opponentkey = it.key
+                return@forEach
+            }
+            return@forEach
+        }
+
+        return opponentkey
+    }
 
     override fun onBackPressed() {
         println("do nothing")
