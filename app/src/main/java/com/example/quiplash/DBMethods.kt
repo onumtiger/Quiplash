@@ -39,7 +39,7 @@ class DBMethods {
 
             val db = FirebaseFirestore.getInstance()
             lateinit var res: QuerySnapshot
-            var allUsers = ArrayList<UserQP>()
+           // var allUsers = ArrayList<UserQP>()
             var singleUser :UserQP = UserQP()
             var allQuestions = ArrayList<Question>()
             var GameQuestions = ArrayList<Question>()
@@ -133,6 +133,7 @@ class DBMethods {
             */
 
             fun getUsers(callback: Callback<ArrayList<UserQP>>) {
+                var allUsers = ArrayList<UserQP>()
                 db.collection(usersPath)
                     //.whereEqualTo("capital", true)
                     .get()
