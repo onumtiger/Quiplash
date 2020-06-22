@@ -186,7 +186,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
         android:background="@color/colorButtonGreen"
-        android:text="@string/start_game_btn"
+        android:text="Create Game"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"

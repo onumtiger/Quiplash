@@ -35,6 +35,8 @@ class PrepareAnswerActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Sounds.playAnswerSound(this)
+
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
         auth = FirebaseAuth.getInstance()
 
@@ -90,10 +92,15 @@ class PrepareAnswerActivity : AppCompatActivity() {
         startTimer(textViewTimer, startSeconds, callbackTimer)
 
         viewQuestion.setOnClickListener {
+            Sounds.playClickSound(this)
+            Sounds.playAnswerSound(this)
+
             viewFlipper.showNext()
         }
 
         btnReady.setOnClickListener {
+            Sounds.playClickSound(this)
+
             val callbackGame = object : Callback<Game> {
                 override fun onTaskComplete(result: Game) {
                     game = result

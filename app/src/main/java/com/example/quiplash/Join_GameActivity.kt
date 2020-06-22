@@ -3,8 +3,10 @@ package com.example.quiplash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -39,18 +41,26 @@ class Join_GameActivity : AppCompatActivity() {
         val btnNewGameActivity = findViewById<AppCompatImageButton>(R.id.join_new_game_btn)
         val btnBack = findViewById<AppCompatImageButton>(R.id.join_game_go_back_arrow)
         val activeGamesList = findViewById<ListView>(R.id.active_games_list)
+        val noActiveGameInfo = findViewById<TextView>(R.id.no_active_game)
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefresh)
 
+        noActiveGameInfo.visibility = View.INVISIBLE
+
         btnNewGameActivity.setOnClickListener {
+            Sounds.playClickSound(this)
+
             val intent = Intent(this, New_GameActivity::class.java)
             startActivity(intent)
         }
 
         btnBack.setOnClickListener {
+            Sounds.playClickSound(this)
+
             super.onBackPressed()
         }
 
         refreshLayout.setOnRefreshListener {
+            Sounds.playRefreshSound(this)
             getGamesList(activeGamesList)
             refreshLayout.isRefreshing = false
         }
@@ -75,10 +85,14 @@ class Join_GameActivity : AppCompatActivity() {
     }
 
     fun getGamesList(activeGamesList: ListView) {
+        val noActiveGameInfo = findViewById<TextView>(R.id.no_active_game)
         gameList = mutableListOf()
         val callback = object: Callback<MutableList<Game>> {
             override fun onTaskComplete(result: MutableList<Game>) {
                 gameList = result
+                if (gameList.isNullOrEmpty()) {
+                    noActiveGameInfo.visibility = View.VISIBLE
+                }
                 val adapter = GameListAdapter(applicationContext, R.layout.active_game_list_item, gameList)
                 activeGamesList.adapter = adapter
             }

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.quiplash.DBMethods.DBCalls.Companion.addToken
 import com.google.firebase.auth.FirebaseAuth
 
+
 class LandingActivity : AppCompatActivity() {
 
     private var auth: FirebaseAuth? = FirebaseAuth.getInstance()
@@ -39,26 +40,31 @@ class LandingActivity : AppCompatActivity() {
         DBMethods.DBCalls.getUser(callbackGetUser)
 
         btnNewGame.setOnClickListener {
+            Sounds.playClickSound(this)
             val intent = Intent(this, New_GameActivity::class.java)
             startActivity(intent)
         }
 
         btnJoinGame.setOnClickListener {
+            Sounds.playClickSound(this)
             val intent = Intent(this, Join_GameActivity::class.java)
             startActivity(intent)
         }
 
         btnProfile.setOnClickListener {
+            Sounds.playClickSound(this)
             val intent = Intent(this, Profile_RegisteredActivity::class.java)
             startActivity(intent)
         }
 
         btnFriends.setOnClickListener {
+            Sounds.playClickSound(this)
             val intent = Intent(this, FriendsActivity::class.java)
             startActivity(intent)
         }
 
         btnScoreBoard.setOnClickListener {
+            Sounds.playClickSound(this)
             val intent = Intent(this, GlobalScoreboard_Activity::class.java)
             startActivity(intent)
         }

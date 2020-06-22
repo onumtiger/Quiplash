@@ -46,6 +46,7 @@ class AddQuestion : AppCompatActivity() {
         send=findViewById(R.id.button)
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService::class.java)
         send.setOnClickListener(View.OnClickListener {
+            Sounds.playClickSound(this)
 
             FirebaseInstanceId.getInstance().instanceId
                 .addOnCompleteListener(OnCompleteListener { task ->
