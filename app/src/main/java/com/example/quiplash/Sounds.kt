@@ -23,5 +23,13 @@ class Sounds {
             val mp: MediaPlayer = MediaPlayer.create(context, R.raw.voting)
             mp.start()
         }
+        fun playScoreSound(context: Context) {
+            val mp: MediaPlayer = MediaPlayer.create(context, R.raw.score)
+            mp.start()
+        }
+        fun playAnswerSound(context: Context) {
+            val mp: MediaPlayer = MediaPlayer.create(context, R.raw.answer)
+            mp.start()
+        }
     }
 }

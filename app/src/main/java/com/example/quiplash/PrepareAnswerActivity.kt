@@ -34,6 +34,8 @@ class PrepareAnswerActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Sounds.playAnswerSound(this)
+
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
         auth = FirebaseAuth.getInstance()
 
@@ -86,6 +88,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
         viewQuestion.setOnClickListener {
             Sounds.playClickSound(this)
+            Sounds.playAnswerSound(this)
 
             viewFlipper.showNext()
         }

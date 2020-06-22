@@ -50,6 +50,7 @@ class EvaluationActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Sounds.playScoreSound(this)
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
         dbUsers = FirebaseFirestore.getInstance().collection(dbUsersPath)
         auth = FirebaseAuth.getInstance()
