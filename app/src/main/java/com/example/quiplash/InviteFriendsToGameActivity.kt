@@ -2,7 +2,9 @@ package com.example.quiplash
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -24,12 +26,16 @@ class InviteFriendsToGameActivity : AppCompatActivity() {
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.friends_go_back_arrow)
         val friendsListView = findViewById<ListView>(R.id.friends)
+        val noSuchFriends = findViewById<TextView>(R.id.no_friends_found)
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.friends_swiperefresh)
 
+        noSuchFriends.visibility = View.INVISIBLE
         val gameID = intent.getStringExtra("gameID")
         getCurrentGame(gameID, friendsListView)
 
         btnBack.setOnClickListener() {
+            Sounds.playClickSound(this)
+
             super.onBackPressed();
         }
 
@@ -53,6 +59,7 @@ class InviteFriendsToGameActivity : AppCompatActivity() {
     }
 
     fun getFriendsList (friendsListView: ListView, currentGame: Game) {
+        val noSuchFriends = findViewById<TextView>(R.id.no_friends_found)
         var friendsListCurrentUser = emptyList<String>()
         val friendsUserList = mutableListOf<UserQP>()
 
@@ -78,6 +85,9 @@ class InviteFriendsToGameActivity : AppCompatActivity() {
                             }
                         }
 
+                        if (friendsUserList.isNullOrEmpty()) {
+                            noSuchFriends.visibility = View.VISIBLE
+                        }
                         val adapter = InviteFriendsToGameListAdapter(
                             applicationContext,
                             R.layout.invite_friends_to_game_list_item,

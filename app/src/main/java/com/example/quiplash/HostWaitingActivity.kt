@@ -49,14 +49,21 @@ class HostWaitingActivity : AppCompatActivity() {
         getUsersList(playersListView, game.gameID)
 
         btnBack.setOnClickListener {
+            Sounds.playClickSound(this)
+
             super.onBackPressed()
         }
 
         btnStartGame.setOnClickListener {
-                    savePlayrounds()
+
+            Sounds.playClickSound(this)
+
+            savePlayrounds()
         }
 
         btnEndGame.setOnClickListener {
+            Sounds.playClickSound(this)
+
             val callbackSuccess = object : Callback<Boolean> {
                 override fun onTaskComplete(result: Boolean) {
                     Log.d("GAMEDELETE", "deleted? = $result")
@@ -82,6 +89,7 @@ class HostWaitingActivity : AppCompatActivity() {
         }
 
         refreshLayout.setOnRefreshListener {
+            Sounds.playRefreshSound(this)
             getUsersList(playersListView, game.gameID)
             refreshLayout.isRefreshing = false
         }
@@ -222,10 +230,8 @@ class HostWaitingActivity : AppCompatActivity() {
         var subroundCount = 0
 
         while (jump < game.users.size) {
-            Log.d("RUNDEN-ERSTELLUNG", "jump = $jump")
 
             while (roundCount < game.users.size - jump) {
-                Log.d("RUNDEN-ERSTELLUNG", "roundCount = $roundCount")
 
                 val voters = linkedMapOf<String,Voter>()
                 for (user in game.users) {
@@ -245,7 +251,6 @@ class HostWaitingActivity : AppCompatActivity() {
         }
 
         while (allRoundCount <= game.rounds) {
-            Log.d("RUNDEN-ERSTELLUNG", "allRoundCount = $allRoundCount")
             oneRound.forEach { value ->
                 allRounds["round$subroundCount"] = value
                 subroundCount+=1
@@ -263,9 +268,12 @@ class HostWaitingActivity : AppCompatActivity() {
             .update("playrounds", getallRounds())
             .addOnSuccessListener {
                 //myWebSocketClient.send(game.gameID)
+                Sounds.playStartSound(this)
+
                 val intent = Intent(this, GameLaunchingActivity::class.java)
                 startActivity(intent)
             }
             .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
+
     }
 }

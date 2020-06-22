@@ -128,7 +128,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="68dp"
         android:background="@color/colorButtonGreen"
-        android:text="@string/edit_account_btn"
+        android:text="@string/save_btn"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"

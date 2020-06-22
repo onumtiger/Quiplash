@@ -47,17 +47,23 @@ class ResetPasswordActivity : AppCompatActivity() {
         simpleViewFlipper.outAnimation = out
 
         btnBackSignIn.setOnClickListener{
+            Sounds.playClickSound(this)
+
             val intent = Intent(this@ResetPasswordActivity, SignInActivity::class.java)
             startActivity(intent)
         }
 
         btnSignIn.setOnClickListener{
+            Sounds.playClickSound(this)
+
             startActivity(Intent(this@ResetPasswordActivity, SignInActivity::class.java))
             finish()
         }
 
 
         btnResetPassword.setOnClickListener{
+            Sounds.playClickSound(this)
+
             auth.sendPasswordResetEmail(inputEmail.text.toString())
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {

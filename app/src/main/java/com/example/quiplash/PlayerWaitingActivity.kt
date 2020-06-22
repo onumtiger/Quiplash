@@ -50,6 +50,7 @@ class PlayerWaitingActivity : AppCompatActivity() {
 
     private fun gotoGameLaunch() {
         awaitGamestart.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
+        Sounds.playStartSound(this)
         val intent = Intent(this, GameLaunchingActivity::class.java)
         startActivity(intent)
     }
