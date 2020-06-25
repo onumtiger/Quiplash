@@ -23,7 +23,7 @@ class NotificationInvitation : FirebaseMessagingService()  {
 
     @SuppressLint("ResourceAsColor")
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        val intent = Intent(this, HostWaitingActivity::class.java)
+        val intent = Intent(this, PlayerWaitingActivity::class.java)
         intent.putExtra("gameID", remoteMessage.data["gameID"])
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
