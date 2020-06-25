@@ -41,7 +41,7 @@ class DBMethods {
             lateinit var res: QuerySnapshot
            // var allUsers = ArrayList<UserQP>()
             var singleUser :UserQP = UserQP()
-            var allQuestions = ArrayList<Question>()
+            //var allQuestions = ArrayList<Question>()
             var GameQuestions = ArrayList<Question>()
             var allGames = mutableListOf<Game>()
             var actual = false
@@ -147,31 +147,27 @@ class DBMethods {
                         callback.onTaskComplete(allUsers)
                     }
                     .addOnFailureListener { exception ->
-                        Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+                        Log.w(ContentValues.TAG, "Error getting users: ", exception)
                     }
             }
 
 
-            //returns arraylist with all Questions
             fun getQuestions(callback: Callback<ArrayList<Question>>) {
+                var allQuestions = ArrayList<Question>()
                 db.collection(questionsPath)
                     //.whereEqualTo("capital", true)
                     .get()
                     .addOnSuccessListener { documents ->
                         for (document in documents) {
                             Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
-                            val documents2 = documents
-                            documents2.forEach{
-                                val question = it.toObject(Question::class.java)
-
-                                    allQuestions.add(question)
-                                    //Log.w(TAG,user.userID.toString() , e)
-
-                            }
+                            val question = document.toObject(Question::class.java)
+                            allQuestions.add(question)
+                            println(allQuestions.size)
                         }
+                        callback.onTaskComplete(allQuestions)
                     }
                     .addOnFailureListener { exception ->
-                        Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+                        Log.w(ContentValues.TAG, "Error getting users: ", exception)
                     }
             }
 
@@ -229,6 +225,14 @@ class DBMethods {
                 ref.update(usersPath, game.users)
                     .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
                     .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
+            }
+
+            fun editGame(ID :String, game :Game) {
+                db.collection(gamesPath).document(ID).set(game).addOnSuccessListener {
+                    //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
+                }.addOnFailureListener{
+                    //exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
+                }
             }
 
             fun updateUserScores(userID: String, gameScore: Int) {

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.quiplash.DBMethods.DBCalls.Companion.deleteGame
+import com.example.quiplash.DBMethods.DBCalls.Companion.editGame
 import com.example.quiplash.DBMethods.DBCalls.Companion.getCurrentGame
 import com.example.quiplash.DBMethods.DBCalls.Companion.getUserWithID
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +27,7 @@ class HostWaitingActivity : AppCompatActivity() {
     //Firestore
     lateinit var db: CollectionReference
     private val dbGamesPath = "games"
+    private lateinit var selected_questions: ArrayList<Question>
 
     lateinit var awaitGamestart: ListenerRegistration
 
@@ -135,8 +137,11 @@ class HostWaitingActivity : AppCompatActivity() {
                 }
             }
             getUserWithID(callbackUser, auth.currentUser?.uid.toString())
-
         }
+
+        //add Questions to Game
+        selected_questions = arrayListOf<Question>()
+        getQuestionsForGame(game.rounds, game.playerNumber,game.category)
     }
 
     fun seeFriendsList() {
@@ -318,5 +323,28 @@ class HostWaitingActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
 
+    }
+
+    fun getQuestionsForGame(rounds: Int, player_count: Int, selected_category: String){
+        val count_questions = rounds*player_count
+        val callback = object: Callback<java.util.ArrayList<Question>> {
+            override fun onTaskComplete(result: java.util.ArrayList<Question>) {
+                var all_questions = result
+                val rounds = count_questions-1
+                var counter = 0
+                while(counter < count_questions) {
+                    var position = (0..all_questions.size-1).random()
+                    if (all_questions[position].type.toString() == selected_category){
+                        selected_questions.add(all_questions[position])
+                        all_questions.drop(position)
+                        counter = counter+1
+                    }
+                }
+                var updated_game = game
+                updated_game.questions = selected_questions
+                editGame(game.gameID.toString(), updated_game)
+            }
+        }
+        DBMethods.DBCalls.getQuestions(callback)
     }
 }

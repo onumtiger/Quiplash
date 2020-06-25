@@ -17,6 +17,7 @@ class Game {
     var isPublic: Boolean = false
     var hostID: String = ""
     var gameTitle: String = ""
+    var questions: ArrayList<Question> = arrayListOf<Question>()
 
 
     constructor(
@@ -28,7 +29,8 @@ class Game {
         gameid: String,
         hostid: String,
         ispublic: Boolean,
-        gametitle: String
+        gametitle: String,
+        questions: ArrayList<Question>
     ) {
         this.activeRound = currentRound
         this.category = gameCategory
@@ -39,6 +41,7 @@ class Game {
         this.hostID = hostid
         this.isPublic = ispublic
         this.gameTitle = gametitle
+        this.questions = questions
     }
 
 
@@ -52,7 +55,8 @@ class Game {
         gametitle: String,
         gameCategory: String,
         gameRounds: Int,
-        gameUsers: List<String>
+        gameUsers: List<String>,
+        questions: ArrayList<Question>
     ) {
         this.activeRound = currentRound
         this.category = gameCategory
@@ -64,6 +68,7 @@ class Game {
         this.isPublic = ispublic
         this.hostID = gameHostid
         this.gameTitle = gametitle
+        this.questions = questions
     }
 
     constructor()
