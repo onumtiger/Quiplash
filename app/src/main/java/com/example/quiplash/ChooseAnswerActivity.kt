@@ -50,6 +50,8 @@ class ChooseAnswerActivity : AppCompatActivity() {
     private lateinit var answerTV1 : TextView
     private lateinit var answerTV2 : TextView
     private lateinit var questionTV : TextView
+    private lateinit var imageCheckA1 : ImageView
+    private lateinit var imageCheckA2 : ImageView
 
     @SuppressLint("WrongViewCast", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,8 +74,8 @@ class ChooseAnswerActivity : AppCompatActivity() {
         answerView1 = findViewById(R.id.view2)
         answerView2 = findViewById(R.id.view3)
         val roundView = findViewById<TextView>(R.id.roundsCA2)
-        val imageCheckA1 = findViewById<ImageView>(R.id.imageCheckAnswer1)
-        val imageCheckA2 = findViewById<ImageView>(R.id.imageCheckAnswer2)
+        imageCheckA1 = findViewById(R.id.imageCheckAnswer1)
+        imageCheckA2 = findViewById(R.id.imageCheckAnswer2)
         simpleViewFlipper =
             findViewById(R.id.simpleViewFlipperCA) // get the reference of ViewFlipper
         othertimer.visibility = View.INVISIBLE
@@ -202,10 +204,10 @@ class ChooseAnswerActivity : AppCompatActivity() {
             )
             .addOnSuccessListener {
                 Log.d("SUCCESS", "DocumentSnapshot successfully updated!")
-                if(answerIndex == 1){
-                    imageCheckAnswer1.visibility = View.VISIBLE
-                } else if(answerIndex == 2){
-                    imageCheckAnswer2.visibility = View.VISIBLE
+                if(answerIndex == 0){
+                    imageCheckA1.visibility = View.VISIBLE
+                } else if(answerIndex == 1){
+                    imageCheckA1.visibility = View.VISIBLE
 
                 }
             }

@@ -28,8 +28,11 @@ class GameMethods {
             private fun updateTextUI(textView :TextView) {
                 val minute = (time_in_milli_seconds / 1000) / 60
                 val seconds = (time_in_milli_seconds / 1000) % 60
-
-                textView.text = "$minute:$seconds"
+                if(seconds <10){
+                    textView.text = "$minute:0$seconds"
+                }else {
+                    textView.text = "$minute:$seconds"
+                }
             }
 
             private fun resetTimer(textView :TextView) {
