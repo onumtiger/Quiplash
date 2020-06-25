@@ -40,12 +40,11 @@ class GameLaunchingActivity : AppCompatActivity() {
             gamelaunchTitle.text = getString(R.string.next_round_starts)
         }
 
-        val callback = object: Callback<ArrayList<Question>> {
-            override fun onTaskComplete(result: ArrayList<Question>) {
-                allQuestions = result
-            }
+        /*
+        for (x in 0..game.questions.size){
+            //add questions to playrounds
         }
-        getQuestions(callback)
+         */
 
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
@@ -54,8 +53,6 @@ class GameLaunchingActivity : AppCompatActivity() {
             }
 
     }
-
-
 
     override fun onBackPressed() {
         println("do nothing")
