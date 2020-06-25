@@ -23,7 +23,8 @@ class NotificationInvitation : FirebaseMessagingService()  {
 
     @SuppressLint("ResourceAsColor")
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        val intent = Intent(this, Join_GameActivity::class.java)
+        val intent = Intent(this, HostWaitingActivity::class.java)
+        intent.putExtra("gameID", remoteMessage.data["gameID"])
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         //Setting up Notification channels for android O and above
