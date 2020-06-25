@@ -276,6 +276,7 @@ class HostWaitingActivity : AppCompatActivity() {
             while (roundCount < game.users.size - jump) {
 
                 val voters = linkedMapOf<String, Voter>()
+                var question = game.questions[jump-1].question
                 for (user in game.users) {
 
                     if (game.users.indexOf(user) != roundCount && game.users.indexOf(user) != (roundCount + jump)) {
@@ -288,7 +289,8 @@ class HostWaitingActivity : AppCompatActivity() {
                     linkedMapOf(
                         "opponent0" to Opponent(game.users[roundCount]),
                         "opponent1" to Opponent(game.users[roundCount + jump])
-                    )
+                    ),
+                    question.toString()
                 ))
 
                 roundCount += 1
