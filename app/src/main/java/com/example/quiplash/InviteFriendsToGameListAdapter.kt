@@ -75,7 +75,7 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
 
             try {
                 notifcationBody.put("title", "Quiplash Invitation")
-                notifcationBody.put("message", "You've been invited to a new game")   //Enter your notification message
+                notifcationBody.put("message", "You've been invited to a new game")
                 notifcationBody.put("gameID", gameID)
                 //notification.put("to", "dk4a6NfETqixJ2RzWnvdCA:APA91bGidSPYN-0rDyaJLHv8i8jXdmwhYYO_YukWaLrQIz1mjUW3UFgrrl9Ju6dcbKPVN8HN0Okgy8RDltoGtScbEPJqtLTjVvU7OLnCqhxHtC_1P0akocBkZhRAvqRQr1ftjJXBNxwf")
                 notification.put("to", player.token)
@@ -85,6 +85,7 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
                 Log.e("TAG", "onCreate: " + e.message)
             }
 
+            sendNotification(notification)
             // delete after testing
             /*val handler = Handler()
             handler.postDelayed(Runnable {
