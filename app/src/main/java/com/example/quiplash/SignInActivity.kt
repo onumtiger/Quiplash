@@ -71,7 +71,6 @@ class SignInActivity : AppCompatActivity() {
         val btnLogin = findViewById<Button>(R.id.signinBtn)
         val btnLoginGuest = findViewById<Button>(R.id.signinGuestBtn)
         val btnResetPassword = findViewById<Button>(R.id.btnResetPassword)
-        val btnDB = findViewById<Button>(R.id.database)
         val textviewError = findViewById<TextView>(R.id.textErrorLogin)
 
 
@@ -99,12 +98,6 @@ class SignInActivity : AppCompatActivity() {
             }
         }
 
-        btnDB.setOnClickListener{
-            Sounds.playClickSound(this)
-
-            val intent = Intent(this@SignInActivity, Database::class.java)
-            startActivity(intent)
-        }
 
         btnResetPassword.setOnClickListener{
             Sounds.playClickSound(this)

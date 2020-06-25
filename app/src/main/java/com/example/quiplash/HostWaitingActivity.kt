@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.example.quiplash.GameManager.Companion.game
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 
 
 class HostWaitingActivity : AppCompatActivity() {
@@ -26,15 +27,38 @@ class HostWaitingActivity : AppCompatActivity() {
     lateinit var db: CollectionReference
     private val dbGamesPath = "games"
 
+    lateinit var awaitGamestart: ListenerRegistration
+
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
+        auth = FirebaseAuth.getInstance()
         try {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
         }
         setContentView(R.layout.activity_host_waiting)
+
+
+        //if(game.hostID != auth.currentUser?.uid) {
+            awaitGamestart = db.document(game.gameID).addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.w("ERROR", "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    game = snapshot.toObject(Game::class.java)!!
+                    if (game.playrounds.size > 0) {
+                        gotoGameLaunch()
+                    }
+
+                } else {
+                    gotoGameLanding()
+                }
+            }
+        //}
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.host_waiting_go_back_arrow)
         val btnInvitePlayers = findViewById<Button>(R.id.invite_players_btn)
@@ -44,20 +68,17 @@ class HostWaitingActivity : AppCompatActivity() {
         val btnJoinGame = findViewById<Button>(R.id.join_game_btn)
         val playersListView = findViewById<ListView>(R.id.players_list)
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefresh)
-        auth = FirebaseAuth.getInstance()
 
         getUsersList(playersListView, game.gameID)
 
         btnBack.setOnClickListener {
             Sounds.playClickSound(this)
-
             super.onBackPressed()
         }
 
         btnStartGame.setOnClickListener {
-
+            awaitGamestart.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
             Sounds.playClickSound(this)
-
             savePlayrounds()
         }
 
@@ -71,7 +92,7 @@ class HostWaitingActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
-            deleteGame(game.gameID,callbackSuccess)
+            deleteGame(game.gameID, callbackSuccess)
         }
 
         btnLeaveGame.setOnClickListener {
@@ -117,6 +138,7 @@ class HostWaitingActivity : AppCompatActivity() {
 
         }
     }
+
     fun seeFriendsList() {
         val intent = Intent(this, InviteFriendsToGameActivity::class.java)
         intent.putExtra("gameID", game.gameID)
@@ -131,7 +153,8 @@ class HostWaitingActivity : AppCompatActivity() {
 
     fun removeUserFromGame() {
         val selectedItem = game
-        val filteredUsers = selectedItem.users.filterIndexed { _, s -> (s != auth.currentUser?.uid.toString())  }
+        val filteredUsers =
+            selectedItem.users.filterIndexed { _, s -> (s != auth.currentUser?.uid.toString()) }
         selectedItem.users = filteredUsers
         DBMethods.DBCalls.updateGameUsers(selectedItem)
     }
@@ -207,6 +230,19 @@ class HostWaitingActivity : AppCompatActivity() {
         getCurrentGame(callback, gameID)
     }
 
+    private fun gotoGameLaunch() {
+        awaitGamestart.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
+        Sounds.playStartSound(this)
+        val intent = Intent(this, GameLaunchingActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun gotoGameLanding() {
+        awaitGamestart.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
+        val intent = Intent(this, LandingActivity::class.java)
+        startActivity(intent)
+    }
+
     /**
      * All Rounds will be created here before game actually starts.
      * At this point users-count is definitely sure and known.
@@ -222,19 +258,19 @@ class HostWaitingActivity : AppCompatActivity() {
      * --> This is one Round, so that it stays fair ;)
      * --> total rounds = 9
      * **/
-    private fun getallRounds() : HashMap<String,Round>{
+    private fun getallRounds(): HashMap<String, Round> {
         var allRoundCount = 1
         var jump = 1
         var roundCount = 0
         val oneRound: MutableList<Round> = mutableListOf()
-        val allRounds: HashMap<String,Round> = hashMapOf()
+        val allRounds: HashMap<String, Round> = hashMapOf()
         var subroundCount = 0
 
         while (jump < game.users.size) {
 
             while (roundCount < game.users.size - jump) {
 
-                val voters = linkedMapOf<String,Voter>()
+                val voters = linkedMapOf<String, Voter>()
                 for (user in game.users) {
 
                     if (game.users.indexOf(user) != roundCount && game.users.indexOf(user) != (roundCount + jump)) {
@@ -242,7 +278,13 @@ class HostWaitingActivity : AppCompatActivity() {
                     }
                 }
 
-                oneRound += (Round(voters, linkedMapOf("opponent0" to Opponent( game.users[roundCount]), "opponent1" to Opponent( game.users[roundCount + jump]))))
+                oneRound += (Round(
+                    voters,
+                    linkedMapOf(
+                        "opponent0" to Opponent(game.users[roundCount]),
+                        "opponent1" to Opponent(game.users[roundCount + jump])
+                    )
+                ))
 
                 roundCount += 1
 
@@ -254,7 +296,7 @@ class HostWaitingActivity : AppCompatActivity() {
         while (allRoundCount <= game.rounds) {
             oneRound.forEach { value ->
                 allRounds["round$subroundCount"] = value
-                subroundCount+=1
+                subroundCount += 1
             }
 
             allRoundCount += 1
@@ -264,7 +306,7 @@ class HostWaitingActivity : AppCompatActivity() {
 
     }
 
-    private fun savePlayrounds(){
+    private fun savePlayrounds() {
         db.document(game.gameID)
             .update("playrounds", getallRounds())
             .addOnSuccessListener {
