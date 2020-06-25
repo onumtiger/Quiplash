@@ -74,6 +74,10 @@ class PrepareAnswerActivity : AppCompatActivity() {
         textViewQuestion.text = game.playrounds.getValue("round${game.activeRound-1}").question
         textViewQuestion2.text = game.playrounds.getValue("round${game.activeRound-1}").question
 
+        textViewQuestion.text = game.questions.first().question
+        //textViewQuestion2.text = game.questions.first().question
+        //viewQuestion.text = game.questions.first().question
+
         // Declare in and out animations and load them using AnimationUtils class
         val inAni = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left)
         val out = AnimationUtils.loadAnimation(this, android.R.anim.fade_out)

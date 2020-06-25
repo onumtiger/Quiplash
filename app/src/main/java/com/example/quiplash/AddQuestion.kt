@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import com.example.quiplash.DBMethods.DBCalls.Companion.saveQuestion
 import com.example.quiplash.SenNotificationPack.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
@@ -35,15 +36,31 @@ class AddQuestion : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_question)
 
+        var new_question_text =findViewById<EditText>(R.id.new_question)
+        var sendBtn = findViewById<Button>(R.id.btnAddNewQuestion)
+
+        sendBtn.setOnClickListener {
+            if (new_question_text.text.toString() != ""){
+                saveQuestion(new_question_text.text.toString(), "Funny")
+                Toast.makeText(this, "New Question Added To Database!", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Please Tip In A New Question", Toast.LENGTH_LONG).show()
+            }
+        }
 
 
-//failed send pushup testd
 
 
-        UserTB=findViewById(R.id.UserID)
-        var Title = "titel"
-        var Message= "OMG"
-        send=findViewById(R.id.button)
+
+        //failed send pushup testd
+
+
+        /*
+
+    UserTB=findViewById(R.id.new_question)
+    var Title = "titel"
+    var Message= "OMG"
+    send=findViewById(R.id.btnAddNewQuestion)
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService::class.java)
         send.setOnClickListener(View.OnClickListener {
             Sounds.playClickSound(this)
@@ -87,9 +104,11 @@ class AddQuestion : AppCompatActivity() {
         })
         UpdateToken()
 
+         */
+
 
     }
-
+/*
     private fun UpdateToken(){
         var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
         var refreshToken:String= FirebaseInstanceId.getInstance().getToken().toString()
@@ -117,4 +136,6 @@ class AddQuestion : AppCompatActivity() {
             }
         })
     }
+
+ */
 }
