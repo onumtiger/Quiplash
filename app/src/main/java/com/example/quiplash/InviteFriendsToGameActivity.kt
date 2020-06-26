@@ -91,7 +91,8 @@ class InviteFriendsToGameActivity : AppCompatActivity() {
                         val adapter = InviteFriendsToGameListAdapter(
                             applicationContext,
                             R.layout.invite_friends_to_game_list_item,
-                            friendsUserList
+                            friendsUserList,
+                            currentGame.gameID
                         )
                         friendsListView.adapter = adapter
                     }

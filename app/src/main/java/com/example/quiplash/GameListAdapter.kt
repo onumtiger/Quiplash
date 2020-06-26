@@ -22,10 +22,14 @@ class GameListAdapter(val mCtx: Context, val layoutResId: Int, val gameList: Lis
 
         val game = gameList[position]
         textViewGame.text = "Active Game"
-        textViewCategory.text = context.getString(R.string.category_label) + game.category
+        textViewCategory.text = "Category: " + game.category
         textViewPlayers.text =  game.users.size.toString() + " / " + game.playerNumber.toString()
         imageViewStar.setImageResource(R.drawable.join_game_star)
         imageViewSeperator.setImageResource(R.drawable.green_seperator)
+
+        if (!game.gameTitle.isNullOrEmpty()) {
+            textViewGame.text = game.gameTitle
+        }
 
         return view
     }
