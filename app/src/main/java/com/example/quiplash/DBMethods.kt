@@ -103,7 +103,7 @@ class DBMethods {
                             callback.onTaskComplete(singleUser)
                         }
                         .addOnFailureListener { exception ->
-                            Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+                            Log.w(TAG, "Error getting documents: ", exception)
                         }
             }
 
@@ -114,10 +114,13 @@ class DBMethods {
                             return@OnCompleteListener
                         }
                         // Get new Instance ID token
-                        val token_new = task.result?.token
-                        FirebaseInstanceId.getInstance().getInstanceId()
-                        user_t.token = token_new.toString()
-                        editUser(user_t.userID, user_t)
+                        val tokenNew = task.result?.token
+                        FirebaseInstanceId.getInstance().instanceId
+                        user_t.token = tokenNew.toString()
+                        db.collection(usersPath).document(user_t.userID)
+                            .update("token", tokenNew)
+                            .addOnSuccessListener { Log.d("SUCCESS", "Token successfully updated!") }
+                            .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
                     })
             }
 
@@ -133,7 +136,7 @@ class DBMethods {
             */
 
             fun getUsers(callback: Callback<ArrayList<UserQP>>) {
-                var allUsers = ArrayList<UserQP>()
+                val allUsers = ArrayList<UserQP>()
                 db.collection(usersPath)
                     //.whereEqualTo("capital", true)
                     .get()
@@ -153,7 +156,7 @@ class DBMethods {
 
 
             fun getQuestions(callback: Callback<ArrayList<Question>>) {
-                var allQuestions = ArrayList<Question>()
+                val allQuestions = ArrayList<Question>()
                 db.collection(questionsPath)
                     //.whereEqualTo("capital", true)
                     .get()
@@ -167,7 +170,7 @@ class DBMethods {
                         callback.onTaskComplete(allQuestions)
                     }
                     .addOnFailureListener { exception ->
-                        Log.w(ContentValues.TAG, "Error getting users: ", exception)
+                        Log.w(TAG, "Error getting users: ", exception)
                     }
             }
 
