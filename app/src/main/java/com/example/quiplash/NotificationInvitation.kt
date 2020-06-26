@@ -53,12 +53,6 @@ class NotificationInvitation : FirebaseMessagingService()  {
                             PendingIntent.FLAG_UPDATE_CURRENT
                         )
 
-                        /*val pendingIntent = PendingIntent.getBroadcast(
-                            applicationContext,
-                            intent,  // as stated in the comments, this flag is important!
-                            PendingIntent.FLAG_UPDATE_CURRENT
-                        )*/
-
                         val largeIcon = BitmapFactory.decodeResource(
                             resources,
                             R.drawable.ic_launcher_round
@@ -84,49 +78,6 @@ class NotificationInvitation : FirebaseMessagingService()  {
 
                 }
         }
-/*
-        val intent = Intent(this, HostWaitingActivity::class.java)
-        intent.putExtra("gameID", remoteMessage.data["gameID"])
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        //Setting up Notification channels for android O and above
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            setupChannels(notificationManager)
-        }
-
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        val pendingIntent = PendingIntent.getActivity(
-            applicationContext, 0, intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
-        /*val pendingIntent = PendingIntent.getBroadcast(
-            applicationContext,
-            intent,  // as stated in the comments, this flag is important!
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )*/
-
-        val largeIcon = BitmapFactory.decodeResource(
-            resources,
-            R.drawable.ic_launcher_round
-        )
-        val notificationId = Random().nextInt(60000)
-        val defaultSoundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val notificationBuilder =
-            NotificationCompat.Builder(this, ADMIN_CHANNEL_ID)
-                .setSmallIcon(R.drawable.logo)
-                .setLargeIcon(largeIcon)
-                .setContentTitle(
-                    remoteMessage.data["title"]
-                )
-                .setContentText(remoteMessage.data["message"])
-                .setAutoCancel(true) //dismisses the notification on click
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent)
-        notificationManager.notify(
-            notificationId,
-            notificationBuilder.build()
-        )*/
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
