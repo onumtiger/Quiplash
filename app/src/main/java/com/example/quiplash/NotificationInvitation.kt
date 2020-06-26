@@ -1,5 +1,6 @@
 package com.example.quiplash
 
+import android.R.id
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -34,9 +35,15 @@ class NotificationInvitation : FirebaseMessagingService()  {
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
-            applicationContext, 0, intent,
-            PendingIntent.FLAG_ONE_SHOT
+            this, 0, intent,
+            PendingIntent.FLAG_CANCEL_CURRENT
         )
+
+        /*val pendingIntent = PendingIntent.getBroadcast(
+            applicationContext,
+            intent,  // as stated in the comments, this flag is important!
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )*/
 
         val largeIcon = BitmapFactory.decodeResource(
             resources,
