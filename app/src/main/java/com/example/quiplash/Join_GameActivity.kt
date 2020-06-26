@@ -37,7 +37,6 @@ class Join_GameActivity : AppCompatActivity() {
         }
         setContentView(R.layout.activity_join_game)
 
-
         val btnNewGameActivity = findViewById<AppCompatImageButton>(R.id.join_new_game_btn)
         val btnBack = findViewById<AppCompatImageButton>(R.id.join_game_go_back_arrow)
         val activeGamesList = findViewById<ListView>(R.id.active_games_list)
@@ -86,19 +85,24 @@ class Join_GameActivity : AppCompatActivity() {
 
     fun getGamesList(activeGamesList: ListView) {
         val noActiveGameInfo = findViewById<TextView>(R.id.no_active_game)
-        gameList = mutableListOf()
+        var resultGames = mutableListOf<Game>()
+        gameList = mutableListOf<Game>()
         val callback = object: Callback<MutableList<Game>> {
             override fun onTaskComplete(result: MutableList<Game>) {
                 gameList = result
                 if (gameList.isNullOrEmpty()) {
                     noActiveGameInfo.visibility = View.VISIBLE
+                } else {
+                    gameList.forEach {
+                        if (it.isPublic) {
+                            resultGames.add(it)
+                        }
+                    }
                 }
-                val adapter = GameListAdapter(applicationContext, R.layout.active_game_list_item, gameList)
+                val adapter = GameListAdapter(applicationContext, R.layout.active_game_list_item, resultGames)
                 activeGamesList.adapter = adapter
             }
         }
         getActiveGames(callback, gameList)
     }
 }
-
-
