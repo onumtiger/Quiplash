@@ -74,9 +74,6 @@ class PrepareAnswerActivity : AppCompatActivity() {
         textViewQuestion.text = game.playrounds.getValue("round${game.activeRound-1}").question
         textViewQuestion2.text = game.playrounds.getValue("round${game.activeRound-1}").question
 
-        textViewQuestion.text = game.questions.first().question
-        //textViewQuestion2.text = game.questions.first().question
-        //viewQuestion.text = game.questions.first().question
 
         // Declare in and out animations and load them using AnimationUtils class
         val inAni = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left)
@@ -86,7 +83,6 @@ class PrepareAnswerActivity : AppCompatActivity() {
         viewFlipper.inAnimation = inAni
         viewFlipper.outAnimation = out
 
-        //var question_count = game.rounds*game.users.count()/2
 
         val callbackTimer = object : Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
