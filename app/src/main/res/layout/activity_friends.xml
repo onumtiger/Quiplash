@@ -10,11 +10,10 @@
         android:id="@+id/friends_go_back_arrow"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginTop="41dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="50dp"
         android:backgroundTint="#00FFFFFF"
         android:contentDescription="go_back_arrow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_go_back_arrow" />
@@ -27,6 +26,7 @@
         android:layout_marginTop="16dp"
         android:contentDescription="logo"
         android:src="@drawable/logo"
+        app:layout_constraintBottom_toTopOf="@+id/textView6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,6 @@
         android:id="@+id/textView6"
         android:layout_width="151dp"
         android:layout_height="43dp"
-        android:layout_marginTop="132dp"
         android:gravity="center"
         android:text="@string/friends"
         android:textColor="@color/colorTitles"
@@ -44,7 +43,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
 
     <TextView
         android:id="@+id/no_friends"
@@ -60,15 +59,13 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayout4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="50dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textView6">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/friends_swiperefresh"
@@ -86,13 +83,13 @@
         android:id="@+id/add_friend_btn"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="320dp"
-        android:layout_marginTop="532dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="50dp"
         android:backgroundTint="#00FFFFFF"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add_plus" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.quiplash
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 
 class GameListAdapter(val mCtx: Context, val layoutResId: Int, val gameList: List<Game>) : ArrayAdapter<Game>(mCtx, layoutResId, gameList) {
+    @SuppressLint("SetTextI18n")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         val view: View = layoutInflater.inflate(layoutResId, null)
@@ -20,7 +22,7 @@ class GameListAdapter(val mCtx: Context, val layoutResId: Int, val gameList: Lis
 
         val game = gameList[position]
         textViewGame.text = "Active Game"
-        textViewCategory.text = "Category: " + game.category
+        textViewCategory.text = context.getString(R.string.category_label) + game.category
         textViewPlayers.text =  game.users.size.toString() + " / " + game.playerNumber.toString()
         imageViewStar.setImageResource(R.drawable.join_game_star)
         imageViewSeperator.setImageResource(R.drawable.green_seperator)

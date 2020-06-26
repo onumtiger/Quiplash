@@ -32,10 +32,13 @@ class PlayerWaitingActivity : AppCompatActivity() {
                 Log.w("ERROR", "Listen failed.", e)
                 return@addSnapshotListener
             }
+            Log.d("RUNDEN", "Current data: ${snapshot}")
 
             if (snapshot != null && snapshot.exists()) {
-                Log.d("SUCCESS", "Current data: ${snapshot.data}")
+                Log.d("RUNDEN", "Current data: ${snapshot.data}")
                 game = snapshot.toObject(Game::class.java)!!
+                Log.d("RUNDEN", "Groesse: ${game.playrounds.size}")
+                Log.d("RUNDEN", "Groesse: ${game.playrounds.size < 0}")
                 if (game.playrounds.size < 0) {
                     gotoGameLaunch()
                 }

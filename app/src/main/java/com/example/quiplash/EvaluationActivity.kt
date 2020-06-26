@@ -90,6 +90,7 @@ class EvaluationActivity : AppCompatActivity() {
 
         val callbackTimer = object : Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
+                Sounds.playClickSound(this@EvaluationActivity)
                 setNextRound()
             }
         }
@@ -102,7 +103,6 @@ class EvaluationActivity : AppCompatActivity() {
 
         nextBtn.setOnClickListener {
             Sounds.playClickSound(this)
-
             setNextRound()
         }
 

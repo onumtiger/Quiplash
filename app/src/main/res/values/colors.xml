@@ -22,4 +22,6 @@
     <color name="colorPrimaryDark">#30823B</color>
     <color name="colorAccent">#006FBF</color>
     <color name="colorGray">#808080</color>
+    <!-- Background -->
+    <color name="colorLightGray">#fafafa</color>
 </resources>

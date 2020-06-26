@@ -60,6 +60,7 @@ class Profile_RegisteredActivity : AppCompatActivity() {
 
 
         val callback = object: Callback<UserQP> {
+            @SuppressLint("SetTextI18n")
             override fun onTaskComplete(result :UserQP) {
                 current_User = result
                 if (current_User.userName.toString() == "User") {
@@ -68,7 +69,7 @@ class Profile_RegisteredActivity : AppCompatActivity() {
                     viewUsername.text = userinfodefault[0]
                     viewUsernameBig.text = userinfodefault[0]
                     viewEmail.text = userinfodefault[1]
-                    viewScore.text = userinfodefault[2]
+                    viewScore.text = "Score: " + userinfodefault[2]
 
                     // set default user image if fetchting data fails
                     val spaceRef = storageRef.child(photoPath)

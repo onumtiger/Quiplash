@@ -214,6 +214,26 @@
                 app:layout_constraintStart_toStartOf="@+id/view3"
                 app:layout_constraintTop_toTopOf="@+id/view3" />
 
+            <ImageView
+                android:id="@+id/imageCheckAnswer2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@+id/view3"
+                app:layout_constraintTop_toTopOf="@+id/view3"
+                app:srcCompat="@drawable/checkmark_green"
+                tools:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/imageCheckAnswer1"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@+id/view2"
+                app:layout_constraintTop_toTopOf="@+id/view2"
+                app:srcCompat="@drawable/checkmark_green"
+                tools:visibility="invisible" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

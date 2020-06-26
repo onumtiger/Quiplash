@@ -169,8 +169,10 @@
 
             <EditText
                 android:id="@+id/editTextUsername"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
                 android:hint="@string/set_username"
                 android:inputType="text"
                 android:textAlignment="viewStart"

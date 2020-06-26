@@ -138,7 +138,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
             if (snapshot != null && snapshot.exists()) {
                 Log.d("SUCCESS", "Current data: ${snapshot.data}")
                 game = snapshot.toObject(Game::class.java)!!
-                if (game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent0").answer != "" && game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent1").answer != "") {
+                if (game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent0").answer != "" && game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent1").answer != "" && !answersArrived) {
                     gotoAnswers()
                 }
 

@@ -61,9 +61,7 @@
         android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="50dp"
         android:layout_marginTop="200dp"
-        android:layout_marginEnd="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,13 +85,13 @@
         android:id="@+id/join_new_game_btn"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="320dp"
-        android:layout_marginTop="532dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="50dp"
         android:backgroundTint="#00FFFFFF"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add_plus" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

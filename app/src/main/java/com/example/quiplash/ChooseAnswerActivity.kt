@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ViewFlipper
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import kotlinx.android.synthetic.main.activity_choose_answer.*
 import kotlin.math.ceil
 
 class ChooseAnswerActivity : AppCompatActivity() {
@@ -48,6 +50,8 @@ class ChooseAnswerActivity : AppCompatActivity() {
     private lateinit var answerTV1 : TextView
     private lateinit var answerTV2 : TextView
     private lateinit var questionTV : TextView
+    private lateinit var imageCheckA1 : ImageView
+    private lateinit var imageCheckA2 : ImageView
 
     @SuppressLint("WrongViewCast", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,12 +68,14 @@ class ChooseAnswerActivity : AppCompatActivity() {
         timerView = findViewById(R.id.timer2)
         timerViewWaiting = findViewById(R.id.timerWaiting2)
         val othertimer = findViewById<TextView>(R.id.timer3)
-        answerTV1 = findViewById<TextView>(R.id.answer1)
-        answerTV2 = findViewById<TextView>(R.id.answer2)
-        questionTV = findViewById<TextView>(R.id.questionCA)
+        answerTV1 = findViewById(R.id.answer1)
+        answerTV2 = findViewById(R.id.answer2)
+        questionTV = findViewById(R.id.questionCA)
         answerView1 = findViewById(R.id.view2)
         answerView2 = findViewById(R.id.view3)
         val roundView = findViewById<TextView>(R.id.roundsCA2)
+        imageCheckA1 = findViewById(R.id.imageCheckAnswer1)
+        imageCheckA2 = findViewById(R.id.imageCheckAnswer2)
         simpleViewFlipper =
             findViewById(R.id.simpleViewFlipperCA) // get the reference of ViewFlipper
         othertimer.visibility = View.INVISIBLE
@@ -196,7 +202,15 @@ class ChooseAnswerActivity : AppCompatActivity() {
                     )
                 )
             )
-            .addOnSuccessListener { Log.d("SUCCESS", "DocumentSnapshot successfully updated!") }
+            .addOnSuccessListener {
+                Log.d("SUCCESS", "DocumentSnapshot successfully updated!")
+                if(answerIndex == 0){
+                    imageCheckA1.visibility = View.VISIBLE
+                } else if(answerIndex == 1){
+                    imageCheckA1.visibility = View.VISIBLE
+
+                }
+            }
             .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
 
 
