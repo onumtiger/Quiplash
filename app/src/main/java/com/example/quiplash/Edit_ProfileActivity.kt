@@ -33,6 +33,10 @@ class Edit_ProfileActivity : AppCompatActivity() {
     private val PICK_IMAGE_REQUEST = 71
     private var filePath: Uri? = null
     lateinit var current_User: UserQP
+    lateinit var friend: UserQP
+    lateinit var otherUsers: ArrayList<UserQP>
+
+
 
     //Firebase
     //private var auth: FirebaseAuth? = null
@@ -131,6 +135,14 @@ class Edit_ProfileActivity : AppCompatActivity() {
         }
         DBMethods.DBCalls.getUser(callback)
 
+        // get all other users
+        val callbackGetUsers = object: Callback<ArrayList<UserQP>> {
+            override fun onTaskComplete(result: ArrayList<UserQP>) {
+                otherUsers = result
+            }
+        }
+        DBMethods.DBCalls.getUsers(callbackGetUsers)
+
         btnBack.setOnClickListener() {
             Sounds.playClickSound(this)
 
@@ -206,8 +218,29 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
             val user = UserQP(ID, username, false, score, photoPath, friends, "")
              if (username.isEmpty() == false) {
-
                  if (ID != null) {
+                     // get friendlist of other user
+                     for (i in 0..otherUsers.size-1){
+                         friend = otherUsers[i]
+                         // check if user is exists in other friend list
+                         for(j in 0..friend.friends.size-1){
+                             if(friend.friends[j].equals(current_User.userName, true)) {
+                                 var newfriendsListFriend = emptyList<String>().toMutableList()
+                                 // copy friendlist to edit it
+                                 for(k in 0..friend.friends.size-1) {
+                                     newfriendsListFriend.add(k, friend.friends[k])
+                                 }
+                                 // update username
+                                 newfriendsListFriend[j] = username
+                                 // update friend
+                                 friend.friends = newfriendsListFriend
+                                 friend.userID?.let { it1 -> DBMethods.DBCalls.editUser(it1, friend) }
+                             }
+                         }
+                     }
+
+
+                     // hier muss die Friendslist der anderen geupdated werden
                      editUser(ID, user)
                      val intent = Intent(this, Profile_RegisteredActivity::class.java);
                      startActivity(intent);
