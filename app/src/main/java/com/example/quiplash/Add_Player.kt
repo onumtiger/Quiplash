@@ -1,5 +1,6 @@
 package com.example.quiplash
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,8 +13,6 @@ import java.util.ArrayList
 
 class Add_Player : DialogFragment() {
     lateinit var current_User: UserQP
-    lateinit var friend : UserQP
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.interaction_add_player, container, false)
@@ -70,16 +69,15 @@ class Add_Player : DialogFragment() {
                         Log.d("Can't add yourself", "Failed!")
                         dismiss()
                     } else {
+                        var friend = UserQP("", "", false, -1, "", emptyList<String>(), "")
                         // check if friend user exists and get other user and its friendlist
                         for (i in 0..otherUsers.size - 1) {
                             if (otherUsers[i].userName.toString().equals(usernameFriend, true)) {
                                 friend = otherUsers[i]
                                 friendsListFriend = friend.friends
-                                Log.d("friend fround", friend.userName.toString())
-                                Log.d("friend list", friendsListFriend.toString())
                             }
                         }
-                        if (friend == null){
+                        if (friend.userID == ""){
                             Log.d("user not found", "Failed!")
                             dismiss()
                         }
@@ -105,7 +103,8 @@ class Add_Player : DialogFragment() {
                     }
                 }
             }
-            dismiss()
+            val intent = Intent(context, FriendsActivity::class.java);
+            startActivity(intent);
         }
 
         btnCancel.setOnClickListener {
