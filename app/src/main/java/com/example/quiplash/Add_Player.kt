@@ -1,5 +1,6 @@
 package com.example.quiplash
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -105,7 +106,8 @@ class Add_Player : DialogFragment() {
                     }
                 }
             }
-            dismiss()
+            val intent = Intent(context, FriendsActivity::class.java);
+            startActivity(intent);
         }
 
         btnCancel.setOnClickListener {
