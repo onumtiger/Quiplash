@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageButton
 import kotlinx.android.synthetic.main.activity_choose_question_type.*
 
 class ChooseQuestionTypeActivity : AppCompatActivity() {
@@ -27,6 +28,9 @@ class ChooseQuestionTypeActivity : AppCompatActivity() {
         }
         setContentView(R.layout.activity_choose_question_type)
 
+
+
+        val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow3)
         val btnStandard = findViewById<Button>(R.id.btnStandard)
         val btnFunny = findViewById<Button>(R.id.btnFunny)
         val btnPoetic = findViewById<Button>(R.id.btnPoetic)
@@ -48,6 +52,13 @@ class ChooseQuestionTypeActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Please Tip In A New Question", Toast.LENGTH_LONG).show()
             }
+        }
+
+        btnBack.setOnClickListener() {
+            Sounds.playClickSound(this)
+
+            val intent = Intent(this, Profile_RegisteredActivity::class.java);
+            startActivity(intent);
         }
 
         btnStandard.setOnClickListener {

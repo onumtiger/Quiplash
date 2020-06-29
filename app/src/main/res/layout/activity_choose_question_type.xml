@@ -6,11 +6,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageButton
+        android:id="@+id/profile_game_go_back_arrow3"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="41dp"
+        android:backgroundTint="#00FFFFFF"
+        android:contentDescription="go_back_arrow"
+        android:src="@drawable/ic_go_back_arrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/btnStandard"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="200dp"
         android:background="@color/colorButtonHoneydew"
         android:text="Standard"
         android:textColor="@color/colorWhite"
@@ -72,10 +85,11 @@
 
     <TextView
         android:id="@+id/choose"
-        android:layout_width="324dp"
-        android:layout_height="35dp"
+        android:layout_width="355dp"
+        android:layout_height="43dp"
         android:layout_marginTop="84dp"
         android:text="Choose your type of question"
+        android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -84,10 +98,12 @@
 
     <EditText
         android:id="@+id/new_question_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="228dp"
+        android:layout_width="355dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="284dp"
         android:inputType="text"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -96,6 +112,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="528dp"
+        android:backgroundTint="@color/colorButtonGreen"
         android:text="Save Question"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

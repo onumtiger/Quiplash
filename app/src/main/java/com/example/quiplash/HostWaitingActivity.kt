@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -43,6 +44,7 @@ class HostWaitingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_host_waiting)
 
 
+        //if(game.hostID != auth.currentUser?.uid) {
             awaitGamestart = db.document(game.gameID).addSnapshotListener { snapshot, e ->
                 if (e != null) {
                     Log.w("ERROR", "Listen failed.", e)
@@ -59,7 +61,7 @@ class HostWaitingActivity : AppCompatActivity() {
                     gotoGameLanding()
                 }
             }
-
+        //}
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.host_waiting_go_back_arrow)
         val btnInvitePlayers = findViewById<Button>(R.id.invite_players_btn)
@@ -275,7 +277,7 @@ class HostWaitingActivity : AppCompatActivity() {
             while (roundCount < game.users.size - jump) {
 
                 val voters = linkedMapOf<String, Voter>()
-                val question = game.questions[jump-1].question
+                val question = game.questions[roundCount].question
                 for (user in game.users) {
 
                     if (game.users.indexOf(user) != roundCount && game.users.indexOf(user) != (roundCount + jump)) {
