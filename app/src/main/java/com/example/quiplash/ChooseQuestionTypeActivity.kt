@@ -31,6 +31,8 @@ class ChooseQuestionTypeActivity : AppCompatActivity() {
         val btnFunny = findViewById<Button>(R.id.btnFunny)
         val btnPoetic = findViewById<Button>(R.id.btnPoetic)
         val btnHarsh = findViewById<Button>(R.id.btnHarsh)
+        val btnBack = findViewById<Button>(R.id.profile_go_back_arrow3)
+
         textfield = findViewById(R.id.choose)
         addQuestion = findViewById(R.id.BtnAddNewQuestion)
         new_question_text = findViewById(R.id.new_question_text)
@@ -48,6 +50,13 @@ class ChooseQuestionTypeActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Please Tip In A New Question", Toast.LENGTH_LONG).show()
             }
+        }
+
+        btnBack.setOnClickListener {
+            Sounds.playClickSound(this)
+
+            val intent = Intent(this, Profile_RegisteredActivity::class.java);
+            startActivity(intent);
         }
 
         btnStandard.setOnClickListener {
