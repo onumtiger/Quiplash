@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import kotlinx.android.synthetic.main.activity_join_game.view.*
 import java.util.*
 
 class FriendsActivity : AppCompatActivity() {
@@ -92,8 +93,10 @@ class FriendsActivity : AppCompatActivity() {
                         val adapter = FriendsListAdapter(
                             applicationContext,
                             R.layout.friends_list_item,
+                            current_User,
                             friendsUserList
                         )
+
                         friendsListView.adapter = adapter
                     }
                 }

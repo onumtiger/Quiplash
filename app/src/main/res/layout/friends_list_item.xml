@@ -52,5 +52,19 @@
             android:textColor="#000000"
             android:textSize="20sp" />
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/friend_delete"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="34dp"
+            android:layout_marginBottom="24dp"
+            android:layout_toEndOf="@+id/friend_username"
+            app:srcCompat="@drawable/ic_delete_icon" />
+
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
