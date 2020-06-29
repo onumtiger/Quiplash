@@ -94,7 +94,7 @@ class Join_GameActivity : AppCompatActivity() {
                     noActiveGameInfo.visibility = View.VISIBLE
                 } else {
                     gameList.forEach {
-                        if (it.isPublic) {
+                        if (it.isPublic || (it.users.contains(auth.currentUser?.uid.toString()))) {
                             resultGames.add(it)
                         }
                     }
