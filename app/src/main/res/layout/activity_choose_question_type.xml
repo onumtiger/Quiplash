@@ -10,7 +10,7 @@
         android:id="@+id/btnStandard"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="208dp"
         android:background="@color/colorButtonHoneydew"
         android:text="Standard"
         android:textColor="@color/colorWhite"
@@ -18,7 +18,7 @@
         android:textColorHint="@color/colorWhite"
         android:textColorLink="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -74,7 +74,7 @@
         android:id="@+id/choose"
         android:layout_width="355dp"
         android:layout_height="36dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="116dp"
         android:text="Choose your type of question"
         android:textAlignment="center"
         android:textSize="24sp"

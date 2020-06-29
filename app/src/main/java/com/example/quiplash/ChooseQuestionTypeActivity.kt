@@ -4,10 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_choose_question_type.*
 
@@ -31,7 +28,7 @@ class ChooseQuestionTypeActivity : AppCompatActivity() {
         val btnFunny = findViewById<Button>(R.id.btnFunny)
         val btnPoetic = findViewById<Button>(R.id.btnPoetic)
         val btnHarsh = findViewById<Button>(R.id.btnHarsh)
-        val btnBack = findViewById<Button>(R.id.profile_go_back_arrow3)
+        val btnBck = findViewById<ImageButton>(R.id.profile_go_back_arrow3)
 
         textfield = findViewById(R.id.choose)
         addQuestion = findViewById(R.id.BtnAddNewQuestion)
@@ -52,7 +49,7 @@ class ChooseQuestionTypeActivity : AppCompatActivity() {
             }
         }
 
-        btnBack.setOnClickListener {
+        btnBck.setOnClickListener {
             Sounds.playClickSound(this)
 
             val intent = Intent(this, Profile_RegisteredActivity::class.java);
