@@ -96,6 +96,8 @@ class New_GameActivity : AppCompatActivity() {
         switchGamePrivate.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 isPublic = false
+            } else {
+                isPublic = true
             }
         }
 
