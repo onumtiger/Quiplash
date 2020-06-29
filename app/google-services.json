@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "831311327407",
+    "firebase_url": "https://quiplash-85607.firebaseio.com",
+    "project_id": "quiplash-85607",
+    "storage_bucket": "quiplash-85607.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831311327407:android:8a87395e53f7dad6baa45a",
+        "android_client_info": {
+          "package_name": "com.example.quiplash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "831311327407-da8bgmom6l7f1trhrvt2afr4gp2ik9vu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuIb3uyjRlLhgAm2AebXVJ5YP9QL2Z5Aw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "831311327407-da8bgmom6l7f1trhrvt2afr4gp2ik9vu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

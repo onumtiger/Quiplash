@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Join_GameActivity">
+
+    <ImageButton
+        android:id="@+id/join_game_go_back_arrow"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="41dp"
+        android:backgroundTint="#00FFFFFF"
+        android:contentDescription="go_back_arrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_go_back_arrow" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView"
+        android:layout_width="200dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="logo"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="151dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="132dp"
+        android:gravity="center"
+        android:text="@string/join_game"
+        android:textColor="@color/colorTitles"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/no_active_game"
+        android:layout_width="304dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="30dp"
+        android:text="There are currently no active games. You can create a new one on the button below."
+        android:textAlignment="center"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swiperefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/active_games_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/join_new_game_btn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="#00FFFFFF"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add_plus" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

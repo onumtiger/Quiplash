@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PrepareAnswerActivity">
+
+    <TextView
+        android:id="@+id/timerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="32dp"
+        android:text="0:59"
+        android:textColor="@color/colorGreen"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/roundCounterView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="50dp"
+        android:text=""
+        android:textColor="@color/colorGreen"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ViewFlipper
+        android:id="@+id/viewFlipperQuestion"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <View
+                android:id="@+id/viewQuestion"
+                android:layout_width="0dp"
+                android:layout_height="239dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewQuestion"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="54dp"
+                android:text="This is a question"
+                android:textColor="@color/colorGreen"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/viewQuestion"
+                app:layout_constraintEnd_toEndOf="@+id/viewQuestion"
+                app:layout_constraintStart_toStartOf="@+id/viewQuestion"
+                app:layout_constraintTop_toTopOf="@+id/viewQuestion"
+                app:layout_constraintVertical_bias="0.218" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewQuestion2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:text="This is a question"
+                android:textAlignment="center"
+                android:textColor="@color/colorGreen"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/btnReady"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.282" />
+
+
+            <EditText
+                android:id="@+id/answerField"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:ems="10"
+                android:hint="@string/your_answer"
+                android:inputType="text"
+                app:layout_constraintBottom_toTopOf="@+id/btnReady"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewQuestion2" />
+
+            <ImageView
+                android:id="@+id/imageCheckmark"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="24dp"
+                android:contentDescription="checkmark"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/answerField"
+                app:srcCompat="@drawable/checkmark_green" />
+
+            <TextView
+                android:id="@+id/textViewAnswerSaved"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="32dp"
+                android:text="Your Answer has been saved successfully!"
+                android:textAlignment="center"
+                android:textColor="@color/colorButtonGreen"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/btnReady"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageCheckmark" />
+
+            <Button
+                android:id="@+id/btnReady"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="64dp"
+                android:background="@color/colorButtonGreen"
+                android:text="@string/ready_btn"
+                android:textColor="@color/colorWhite"
+                android:textColorHighlight="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textColorLink="@color/colorWhite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ViewFlipper>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FriendsActivity">
+
+    <ImageButton
+        android:id="@+id/friends_go_back_arrow"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#00FFFFFF"
+        android:contentDescription="go_back_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_go_back_arrow" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView"
+        android:layout_width="200dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="logo"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="151dp"
+        android:layout_height="43dp"
+        android:gravity="center"
+        android:text="@string/friends"
+        android:textColor="@color/colorTitles"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
+
+    <TextView
+        android:id="@+id/no_friends"
+        android:layout_width="314dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:text="You haven't added any friends yet. You can add your friends on the button below."
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/friends_swiperefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/friends"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/add_friend_btn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="#00FFFFFF"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add_plus" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

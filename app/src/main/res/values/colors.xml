@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <!-- Colors -->
+    <color name="colorGreen">#30823B</color>
+    <color name="colorBlue">#006FBF</color>
+    <color name="colorRed">#D0021B</color>
+    <color name="colorWhite">#fff</color>
+    <!-- Normal text -->
+    <color name="colorText">#000</color>
+    <color name="colorTitles">#006FBF</color>
+    <!-- Buttons -->
+    <color name="colorButtonBlue">#00bfff</color>
+    <color name="colorButtonGreen">#30823B</color>
+    <color name="colorButtonRed">#D0021B</color>
+    <color name="colorButtonPurple">#8470ff</color>
+    <color name="colorButtonBordeaux">#b22222</color>
+    <color name="colorButtonLavender">#ff4081</color>
+    <color name="colorButtonHoneydew">#00bcd4</color>
+    <!-- Elements like boxes or seperators -->
+    <color name="colorLayout">#30823B</color>
+    <color name="colorPrimary">#30823B</color>
+    <color name="colorPrimaryDark">#30823B</color>
+    <color name="colorAccent">#006FBF</color>
+    <color name="colorGray">#808080</color>
+    <!-- Background -->
+    <color name="colorLightGray">#fafafa</color>
 </resources>
