@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -276,7 +277,7 @@ class HostWaitingActivity : AppCompatActivity() {
             while (roundCount < game.users.size - jump) {
 
                 val voters = linkedMapOf<String, Voter>()
-                var question = game.questions[jump-1].question
+                var question = game.questions[roundCount].question
                 for (user in game.users) {
 
                     if (game.users.indexOf(user) != roundCount && game.users.indexOf(user) != (roundCount + jump)) {
