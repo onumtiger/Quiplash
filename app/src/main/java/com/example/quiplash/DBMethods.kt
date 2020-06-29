@@ -3,6 +3,7 @@ package com.example.quiplash
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
+import android.view.View
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -50,6 +51,7 @@ class DBMethods {
             var newQuestionType : Int? = null
 
             val usersPath = "users"
+            val invitationsPath = "invitations"
             val gamesPath = "games"
             val questionsPath = "questions"
 
@@ -226,6 +228,14 @@ class DBMethods {
                 val gameID = game.gameID
                 val ref = db.collection(gamesPath).document(gameID)
                 ref.update(usersPath, game.users)
+                    .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
+                    .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
+            }
+
+            fun updateInvitations(game: Game) {
+                val gameID = game.gameID
+                val ref = db.collection(gamesPath).document(gameID)
+                ref.update(invitationsPath, game.invitations)
                     .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
                     .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
             }
