@@ -228,7 +228,7 @@ class EvaluationActivity : AppCompatActivity() {
                 ) {
                     setWinnerInfo(
                         1,
-                        frameProfileDraw,
+                        frameProfile,
                         answerViewWinner,
                         scoreView,
                         winnerName,

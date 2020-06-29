@@ -207,7 +207,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
                 if(answerIndex == 0){
                     imageCheckA1.visibility = View.VISIBLE
                 } else if(answerIndex == 1){
-                    imageCheckA1.visibility = View.VISIBLE
+                    imageCheckA2.visibility = View.VISIBLE
 
                 }
             }
