@@ -121,7 +121,7 @@ class New_GameActivity : AppCompatActivity() {
         val playerNumbers = playerNumbersSpinner.substringBefore(' ').toInt()
         val roundSpinner = roundsSpinner.selectedItem.toString()
         val rounds = roundSpinner.substringBefore(' ').toInt()
-        val activeRound = 1
+        val activeRound = 0
         val users: ArrayList<String> = arrayListOf(auth.currentUser?.uid.toString())
         val gameID = ""
         val gameTitle = gameTitleEdit.text.toString()

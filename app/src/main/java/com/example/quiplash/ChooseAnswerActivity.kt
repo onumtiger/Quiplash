@@ -19,7 +19,6 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
-import kotlinx.android.synthetic.main.activity_choose_answer.*
 import kotlin.math.ceil
 
 class ChooseAnswerActivity : AppCompatActivity() {
@@ -124,8 +123,8 @@ class ChooseAnswerActivity : AppCompatActivity() {
 
             if (snapshot != null && snapshot.exists()) {
                 game = snapshot.toObject(Game::class.java)!!
-                if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answer != "" && game.playrounds.getValue(
-                        "round${game.activeRound - 1}"
+                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answer != "" && game.playrounds.getValue(
+                        "round${game.activeRound}"
                     ).opponents.getValue("opponent1").answer != ""
                 ) {
                     if(!answersArrived){
@@ -151,13 +150,13 @@ class ChooseAnswerActivity : AppCompatActivity() {
             override fun onTaskComplete(result: Game) {
                 game = result
                 questionTV.text =
-                    game.playrounds.getValue("round${game.activeRound - 1}").question
+                    game.playrounds.getValue("round${game.activeRound}").question
                 answerTV1.text =
-                    game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                    game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         "opponent0"
                     ).answer
                 answerTV2.text =
-                    game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                    game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         "opponent1"
                     ).answer
             }
@@ -169,6 +168,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
                 val intent =
                     Intent(this@ChooseAnswerActivity, EvaluationActivity::class.java)
                 startActivity(intent)
+                finish()
             }
         }
         startTimer(timerView, startSecondsVoting, callbackTimer)
@@ -176,7 +176,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
 
     private fun getVotersIndex(userid: String): String {
         var voterkey = ""
-        game.playrounds.getValue("round${game.activeRound - 1}").voters.forEach {
+        game.playrounds.getValue("round${game.activeRound}").voters.forEach {
             if (it.value.userID == userid) {
                 voterkey = it.key
                 return@forEach
@@ -189,15 +189,15 @@ class ChooseAnswerActivity : AppCompatActivity() {
 
     private fun saveVote(answerIndex: Int) {
         answerChoosen = true
-        game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answer
+        game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answer
 
         db.document(game.gameID)
             .update(
                 mapOf(
-                    "playrounds.round${game.activeRound - 1}.voters.${getVotersIndex(auth!!.currentUser?.uid.toString())}.voteUserID" to game.playrounds.getValue(
-                        "round${game.activeRound - 1}"
+                    "playrounds.round${game.activeRound}.voters.${getVotersIndex(auth!!.currentUser?.uid.toString())}.voteUserID" to game.playrounds.getValue(
+                        "round${game.activeRound}"
                     ).opponents.getValue("opponent$answerIndex").userID,
-                    "playrounds.round${game.activeRound - 1}.opponents.opponent$answerIndex.answerScore" to FieldValue.increment(
+                    "playrounds.round${game.activeRound}.opponents.opponent$answerIndex.answerScore" to FieldValue.increment(
                         10
                     )
                 )

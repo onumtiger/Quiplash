@@ -241,12 +241,14 @@ class HostWaitingActivity : AppCompatActivity() {
         Sounds.playStartSound(this)
         val intent = Intent(this, GameLaunchingActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun gotoGameLanding() {
         awaitGamestart.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
         val intent = Intent(this, LandingActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     /**
