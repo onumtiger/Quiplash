@@ -41,11 +41,6 @@ class GameLaunchingActivity : AppCompatActivity() {
             gamelaunchTitle.text = getString(R.string.next_round_starts)
         }
 
-        /*
-        for (x in 0..game.questions.size){
-            //add questions to playrounds
-        }
-         */
 
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->

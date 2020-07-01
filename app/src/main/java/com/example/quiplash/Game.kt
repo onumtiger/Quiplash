@@ -7,7 +7,7 @@ package com.example.quiplash
  * **/
 
 class Game {
-    var activeRound: Int = 1
+    var activeRound: Int = 0
     var category: String = ""
     var playerNumber: Int = 0
     var rounds: Int = 0

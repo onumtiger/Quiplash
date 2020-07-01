@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageButton
 import kotlinx.android.synthetic.main.activity_choose_question_type.*
 
 class ChooseQuestionTypeActivity : AppCompatActivity() {

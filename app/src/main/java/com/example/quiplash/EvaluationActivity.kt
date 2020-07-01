@@ -46,6 +46,7 @@ class EvaluationActivity : AppCompatActivity() {
     private var playerPhoto = ""
     lateinit var awaitNextRound: ListenerRegistration
     private var nextroundFlag = false
+    private var setRoundFlag = false
     var oldRound = 0
 
     @SuppressLint("SetTextI18n")
@@ -84,14 +85,17 @@ class EvaluationActivity : AppCompatActivity() {
 
         oldRound = game.activeRound
 
-        questionEval.text = game.playrounds.getValue("round${game.activeRound - 1}").question
+        questionEval.text = game.playrounds.getValue("round${game.activeRound}").question
         roundViewEval.text = "${ceil(game.activeRound.toDouble() / 3).toInt()}/${game.rounds}"
 
 
         val callbackTimer = object : Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
                 Sounds.playClickSound(this@EvaluationActivity)
-                setNextRound()
+                if(!setRoundFlag) {
+                    setRoundFlag = true
+                    setNextRound()
+                }
             }
         }
         startTimer(textViewTimer, startSecondsIdle, callbackTimer)
@@ -103,7 +107,10 @@ class EvaluationActivity : AppCompatActivity() {
 
         nextBtn.setOnClickListener {
             Sounds.playClickSound(this)
-            setNextRound()
+            if(!setRoundFlag) {
+                setRoundFlag = true
+                setNextRound()
+            }
         }
 
 
@@ -148,9 +155,11 @@ class EvaluationActivity : AppCompatActivity() {
                 this.applicationContext,
                 auth!!.currentUser?.uid.toString()
             )
+            finish()
         } else {
             val intent = Intent(this, EndOfGameActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
     }
@@ -164,30 +173,30 @@ class EvaluationActivity : AppCompatActivity() {
             override fun onTaskComplete(result: Game) {
                 game = result
 
-                game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answer
+                game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answer
 
-                if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answerScore > game.playrounds.getValue(
-                        "round${game.activeRound - 1}"
+                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answerScore > game.playrounds.getValue(
+                        "round${game.activeRound}"
                     ).opponents.getValue("opponent1").answerScore
                 ) {
-                    game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answerScore += 50
-                } else if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                    game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answerScore += 50
+                } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         "opponent0"
-                    ).answerScore < game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                    ).answerScore < game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         "opponent1"
                     ).answerScore
                 ) {
-                    game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent1").answerScore += 50
+                    game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent1").answerScore += 50
                 }
 
                 db.document(game.gameID)
                     .update(
                         mapOf(
-                            "playrounds.round${game.activeRound - 1}.opponents.opponent0.answerScore" to game.playrounds.getValue(
-                                "round${game.activeRound - 1}"
+                            "playrounds.round${game.activeRound}.opponents.opponent0.answerScore" to game.playrounds.getValue(
+                                "round${game.activeRound}"
                             ).opponents.getValue("opponent0").answerScore,
-                            "playrounds.round${game.activeRound - 1}.opponents.opponent1.answerScore" to game.playrounds.getValue(
-                                "round${game.activeRound - 1}"
+                            "playrounds.round${game.activeRound}.opponents.opponent1.answerScore" to game.playrounds.getValue(
+                                "round${game.activeRound}"
                             ).opponents.getValue("opponent1").answerScore
                         )
                     )
@@ -208,8 +217,8 @@ class EvaluationActivity : AppCompatActivity() {
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
                 game = documentSnapshot.toObject(Game::class.java)!!
-                if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answerScore > game.playrounds.getValue(
-                        "round${game.activeRound - 1}"
+                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answerScore > game.playrounds.getValue(
+                        "round${game.activeRound}"
                     ).opponents.getValue("opponent1").answerScore
                 ) {
                     setWinnerInfo(
@@ -220,23 +229,23 @@ class EvaluationActivity : AppCompatActivity() {
                         winnerName,
                         imageWinnerPhoto
                     )
-                } else if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         "opponent0"
-                    ).answerScore < game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                    ).answerScore < game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         "opponent1"
                     ).answerScore
                 ) {
                     setWinnerInfo(
                         1,
-                        frameProfileDraw,
+                        frameProfile,
                         answerViewWinner,
                         scoreView,
                         winnerName,
                         imageWinnerPhoto
                     )
-                } else if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         "opponent0"
-                    ).answerScore == game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+                    ).answerScore == game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         "opponent1"
                     ).answerScore
                 ) {
@@ -276,12 +285,12 @@ class EvaluationActivity : AppCompatActivity() {
         frameView?.visibility = View.VISIBLE
 
         answerView?.text =
-            game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent$winnerIndex").answer
+            game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent$winnerIndex").answer
         scoreView?.text =
-            "+" + game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent$winnerIndex").answerScore.toString()
+            "+" + game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent$winnerIndex").answerScore.toString()
 
         dbUsers.document(
-            game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+            game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                 "opponent$winnerIndex"
             ).userID.toString()
         )

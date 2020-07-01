@@ -48,7 +48,7 @@ class GameMethods {
                 if(GameManager.game.playrounds.size>= GameManager.game.activeRound) {
 
 
-                    if (GameManager.game.playrounds.getValue("round${GameManager.game.activeRound-1}").opponents.getValue("opponent0").userID.equals(userid) || GameManager.game.playrounds.getValue("round${GameManager.game.activeRound-1}").opponents.getValue("opponent1").userID.equals(userid)
+                    if (GameManager.game.playrounds.getValue("round${GameManager.game.activeRound}").opponents.getValue("opponent0").userID.equals(userid) || GameManager.game.playrounds.getValue("round${GameManager.game.activeRound}").opponents.getValue("opponent1").userID.equals(userid)
                     ) {
                         val intent = Intent(appcontext, PrepareAnswerActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         appcontext.startActivity(intent)

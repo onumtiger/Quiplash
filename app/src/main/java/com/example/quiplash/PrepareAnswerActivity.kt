@@ -45,7 +45,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
                 game = documentSnapshot.toObject(Game::class.java)!!
-                userindex = if( game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent0").userID == auth!!.currentUser?.uid) {
+                userindex = if( game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").userID == auth!!.currentUser?.uid) {
                     0
                 } else{
                     1
@@ -70,13 +70,11 @@ class PrepareAnswerActivity : AppCompatActivity() {
         val textAnswerState = findViewById<TextView>(R.id.textViewAnswerSaved)
         viewFlipper = findViewById(R.id.viewFlipperQuestion) // get the reference of ViewFlipper
 
-        textViewRound.text = "${ceil(game.activeRound.toDouble() / 3).toInt()}/${game.rounds}"
-        textViewQuestion.text = game.playrounds.getValue("round${game.activeRound-1}").question
-        textViewQuestion2.text = game.playrounds.getValue("round${game.activeRound-1}").question
+        textViewRound.text = "${ceil((game.activeRound+1).toDouble() / 3).toInt()}/${game.rounds}"
+        textViewQuestion.text = game.playrounds.getValue("round${game.activeRound}").question
+        textViewQuestion2.text = game.playrounds.getValue("round${game.activeRound}").question
+        Log.d("ACTIVEROUND preapre", game.activeRound.toString())
 
-        textViewQuestion.text = game.questions.first().question
-        //textViewQuestion2.text = game.questions.first().question
-        //viewQuestion.text = game.questions.first().question
 
         // Declare in and out animations and load them using AnimationUtils class
         val inAni = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left)
@@ -86,7 +84,6 @@ class PrepareAnswerActivity : AppCompatActivity() {
         viewFlipper.inAnimation = inAni
         viewFlipper.outAnimation = out
 
-        //var question_count = game.rounds*game.users.count()/2
 
         val callbackTimer = object : Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
@@ -110,7 +107,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
             db.document(game.gameID)
                 .update(
                     mapOf(
-                        "playrounds.round${game.activeRound - 1}.opponents.${getOpponentsIndex(auth!!.currentUser?.uid.toString())}.answer" to fieldAnswer.text.toString()
+                        "playrounds.round${game.activeRound}.opponents.${getOpponentsIndex(auth!!.currentUser?.uid.toString())}.answer" to fieldAnswer.text.toString()
                     )
                 )
                 .addOnSuccessListener {
@@ -138,7 +135,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
             if (snapshot != null && snapshot.exists()) {
                 Log.d("SUCCESS", "Current data: ${snapshot.data}")
                 game = snapshot.toObject(Game::class.java)!!
-                if (game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent0").answer != "" && game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent1").answer != "" && !answersArrived) {
+                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answer != "" && game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent1").answer != "" && !answersArrived) {
                     gotoAnswers()
                 }
 
@@ -157,7 +154,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
     private fun getOpponentsIndex(userid: String): String {
         var opponentkey = ""
-        game.playrounds.getValue("round${game.activeRound - 1}").opponents.forEach {
+        game.playrounds.getValue("round${game.activeRound}").opponents.forEach {
             if (it.value.userID == userid) {
                 opponentkey = it.key
                 return@forEach

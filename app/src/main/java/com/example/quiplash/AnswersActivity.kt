@@ -3,6 +3,7 @@ package com.example.quiplash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -45,10 +46,10 @@ class AnswersActivity : AppCompatActivity() {
         val callbackGame = object : Callback<Game> {
             override fun onTaskComplete(result: Game) {
                 game = result
-                questionTV.text = game.playrounds.getValue("round${game.activeRound-1}").question
-                answerTV1.text = game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent0").answer
-                answerTV2.text = game.playrounds.getValue("round${game.activeRound-1}").opponents.getValue("opponent1").answer
-                roundTextView.text = "${ceil(game.activeRound.toDouble()/3).toInt()}/${game.rounds}"
+                questionTV.text = game.playrounds.getValue("round${game.activeRound}").question
+                answerTV1.text = game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answer
+                answerTV2.text = game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent1").answer
+                roundTextView.text = "${ceil((game.activeRound-1).toDouble()/3).toInt()}/${game.rounds}"
             }
         }
         DBMethods.DBCalls.getCurrentGame(callbackGame,game.gameID)
@@ -58,6 +59,7 @@ class AnswersActivity : AppCompatActivity() {
             override fun onTaskComplete(result: Boolean) {
                 val intent = Intent(this@AnswersActivity, EvaluationActivity::class.java)
                 startActivity(intent)
+                finish()
             }
         }
         startTimer(timerView, startSecondsVoting, callbackTimer)
