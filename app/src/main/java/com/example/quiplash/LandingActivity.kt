@@ -4,9 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quiplash.DBMethods.DBCalls.Companion.addToken
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.iid.FirebaseInstanceId
 
 
 class LandingActivity : AppCompatActivity() {
@@ -32,8 +35,9 @@ class LandingActivity : AppCompatActivity() {
         val callbackGetUser = object: Callback<UserQP> {
             override fun onTaskComplete(result :UserQP) {
                 current_User = result
-                if (current_User.token == ""){
-                    addToken(current_User)
+                Toast.makeText(this@LandingActivity, current_User.token, Toast.LENGTH_SHORT).show()
+                if (current_User.token.isNullOrEmpty()){
+                    addToken2(current_User)
                 }
             }
         }
@@ -72,5 +76,22 @@ class LandingActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         println("do nothing")
+    }
+
+    fun addToken2(user_t: UserQP){
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    return@OnCompleteListener
+                }
+                // Get new Instance ID token
+                val tokenNew = task.result?.token
+                FirebaseInstanceId.getInstance().instanceId
+                user_t.token = tokenNew.toString()
+                DBMethods.DBCalls.db.collection(DBMethods.DBCalls.usersPath).document(user_t.userID)
+                    .update("token", tokenNew)
+                    .addOnSuccessListener { Log.d("SUCCESS", "Token successfully updated!") }
+                    .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
+            })
     }
 }
