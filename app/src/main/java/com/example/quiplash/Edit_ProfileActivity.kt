@@ -151,7 +151,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
         btnBack.setOnClickListener() {
             Sounds.playClickSound(this)
 
-            val intent = Intent(this, Profile_RegisteredActivity::class.java);
+            val intent = Intent(this, ProfileActivity::class.java);
             startActivity(intent);
         }
 
@@ -256,7 +256,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
                      // hier muss die Friendslist der anderen geupdated werden
                      editUser(ID, user)
-                     val intent = Intent(this, Profile_RegisteredActivity::class.java);
+                     val intent = Intent(this, ProfileActivity::class.java);
                      startActivity(intent);
                  }
              } else {

@@ -64,7 +64,7 @@ class LandingActivity : AppCompatActivity() {
 
         btnProfile.setOnClickListener {
             Sounds.playClickSound(this)
-            val intent = Intent(this, Profile_RegisteredActivity::class.java)
+            val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
 

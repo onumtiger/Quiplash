@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatImageButton
 import kotlinx.android.synthetic.main.activity_choose_question_type.*
 
 class ChooseQuestionTypeActivity : AppCompatActivity() {
@@ -43,7 +42,7 @@ class ChooseQuestionTypeActivity : AppCompatActivity() {
             if (new_question_text.text.toString() != ""){
                 DBMethods.DBCalls.saveQuestion(new_question_text.text.toString(), newType)
                 Toast.makeText(this, "New Question Added To Database!", Toast.LENGTH_LONG).show()
-                val intent = Intent(this@ChooseQuestionTypeActivity, Profile_RegisteredActivity::class.java)
+                val intent = Intent(this@ChooseQuestionTypeActivity, ProfileActivity::class.java)
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Please Tip In A New Question", Toast.LENGTH_LONG).show()
@@ -53,7 +52,7 @@ class ChooseQuestionTypeActivity : AppCompatActivity() {
         btnBck.setOnClickListener {
             Sounds.playClickSound(this)
 
-            val intent = Intent(this, Profile_RegisteredActivity::class.java);
+            val intent = Intent(this, ProfileActivity::class.java);
             startActivity(intent);
         }
 

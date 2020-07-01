@@ -32,11 +32,11 @@ class RegisterGuestActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: CollectionReference
-    private val dbUsersPath = "users"
+    private val dbUsersPath = DBMethods.DBCalls.usersPath
 
     //Local-Storage
-    private val PREF_NAME = "Quiplash"
-    private var PRIVATE_MODE = 0
+    private val prefName = "Quiplash"
+    private var privateMode = 0
     var sharedPreference: SharedPreferences? = null
 
 
@@ -53,7 +53,7 @@ class RegisterGuestActivity : AppCompatActivity() {
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
-        sharedPreference =  getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+        sharedPreference =  getSharedPreferences(prefName, privateMode)
 
         db = FirebaseFirestore.getInstance().collection(dbUsersPath)
 
@@ -70,7 +70,7 @@ class RegisterGuestActivity : AppCompatActivity() {
 
 
         btnBack.setOnClickListener {
-            startActivity(Intent(this@RegisterGuestActivity, Profile_RegisteredActivity::class.java))
+            startActivity(Intent(this@RegisterGuestActivity, ProfileActivity::class.java))
             finish()
         }
 
@@ -171,7 +171,7 @@ class RegisterGuestActivity : AppCompatActivity() {
                         DBMethods.DBCalls.deleteUser(guestid)
                         removeLocalGuestInfo()
 
-                        startActivity(Intent(this@RegisterGuestActivity, Profile_RegisteredActivity::class.java))
+                        startActivity(Intent(this@RegisterGuestActivity, ProfileActivity::class.java))
                         finish()
                     }
                     .addOnFailureListener { e -> Log.w("ERROR", "Error writing document", e) }

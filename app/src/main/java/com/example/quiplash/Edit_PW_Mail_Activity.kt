@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_edit_pw_mail.*
-import org.w3c.dom.Text
 
 
 class Edit_PW_Mail_Activity : AppCompatActivity() {
@@ -80,7 +79,7 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
         btnBack.setOnClickListener() {
             Sounds.playClickSound(this)
 
-            val intent = Intent(this, Profile_RegisteredActivity::class.java);
+            val intent = Intent(this, ProfileActivity::class.java);
             startActivity(intent);
         }
 

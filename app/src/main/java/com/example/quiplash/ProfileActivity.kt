@@ -19,12 +19,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 
-class Profile_RegisteredActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity() {
     //FirebaseAuth object
     private var auth: FirebaseAuth? = null
     lateinit var currentUser: UserQP
     lateinit var db: CollectionReference
-    private val dbUsersPath = "users"
+    private val dbUsersPath = DBMethods.DBCalls.usersPath
 
 
     @SuppressLint("WrongViewCast")
@@ -34,7 +34,7 @@ class Profile_RegisteredActivity : AppCompatActivity() {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
         }
-        setContentView(R.layout.activity_profile_registered)
+        setContentView(R.layout.activity_profile)
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance().collection(dbUsersPath)
@@ -199,11 +199,5 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         return userinfo
     }
 
-
-    fun signOut() {
-        auth?.signOut()
-        startActivity(Intent(this@Profile_RegisteredActivity, SignInActivity::class.java))
-        finish()
-    }
 
 }
