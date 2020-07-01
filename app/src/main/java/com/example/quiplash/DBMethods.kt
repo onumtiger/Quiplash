@@ -90,19 +90,10 @@ class DBMethods {
             }
 
             fun getUser(callback: Callback<UserQP>) {
-                val user1 = auth?.currentUser
-                db.collection(usersPath)
-                        .whereEqualTo("userID", user1?.uid)
+                db.collection(usersPath).document(auth?.currentUser?.uid.toString())
                         .get()
-                        .addOnSuccessListener { documents ->
-                            for (document in documents) {
-                                val documents2 = documents
-                                documents2.forEach{
-                                    val user = it.toObject(UserQP::class.java)
-                                    singleUser = user
-                                }
-                            }
-                            callback.onTaskComplete(singleUser)
+                        .addOnSuccessListener { useritem ->
+                            callback.onTaskComplete(useritem.toObject(UserQP::class.java)!!)
                         }
                         .addOnFailureListener { exception ->
                             Log.w(TAG, "Error getting documents: ", exception)
@@ -140,7 +131,6 @@ class DBMethods {
             fun getUsers(callback: Callback<ArrayList<UserQP>>) {
                 val allUsers = ArrayList<UserQP>()
                 db.collection(usersPath)
-                    //.whereEqualTo("capital", true)
                     .get()
                     .addOnSuccessListener { documents ->
                         for (document in documents) {
@@ -152,7 +142,7 @@ class DBMethods {
                         callback.onTaskComplete(allUsers)
                     }
                     .addOnFailureListener { exception ->
-                        Log.w(ContentValues.TAG, "Error getting users: ", exception)
+                        Log.w(TAG, "Error getting users: ", exception)
                     }
             }
 

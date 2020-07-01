@@ -45,7 +45,7 @@ class LandingActivity : AppCompatActivity() {
         val callbackGetUser = object: Callback<UserQP> {
             override fun onTaskComplete(result :UserQP) {
                 current_User = result
-                if (current_User.token == ""){
+                if (current_User.token.isEmpty()){
                     addToken(current_User)
                 }
             }
