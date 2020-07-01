@@ -38,6 +38,7 @@
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".FriendsActivity" />
         <activity android:name=".Profile_RegisteredActivity" />
+        <activity android:name=".RegisterGuestActivity" />
         <activity android:name=".Join_GameActivity" />
         <activity android:name=".New_GameActivity" />
         <activity android:name=".LandingActivity" />

@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 class LandingActivity : AppCompatActivity() {
 
     private var auth: FirebaseAuth? = FirebaseAuth.getInstance()
-    lateinit var current_User: UserQP
+    lateinit var currentUser: UserQP
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +42,9 @@ class LandingActivity : AppCompatActivity() {
         //addToken
         val callbackGetUser = object: Callback<UserQP> {
             override fun onTaskComplete(result :UserQP) {
-                current_User = result
-                if (current_User.token.isNullOrEmpty()){
-                    addToken(current_User)
+                currentUser = result
+                if (currentUser.token.isNullOrEmpty()){
+                    addToken(currentUser)
                 }
             }
         }
@@ -85,7 +85,7 @@ class LandingActivity : AppCompatActivity() {
         println("do nothing")
     }
 
-    fun showInvitationsHint() {
+    private fun showInvitationsHint() {
         var allGames: MutableList<Game> = mutableListOf<Game>()
         var numInvitations = 0
         val invitations = findViewById<TextView>(R.id.invitations)

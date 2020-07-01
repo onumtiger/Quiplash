@@ -8,21 +8,23 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_sign_up.*
 import com.example.quiplash.GameManager.Companion.setUserinfo
-import com.example.quiplash.GameManager.Companion.getUserInfo
 
-class Profile_UnregisteredActivity : AppCompatActivity() {
+class RegisterGuestActivity : AppCompatActivity() {
 
     //view objects
     private lateinit var progressBar: ProgressBar
+    private lateinit var inputEmail : EditText
+    private lateinit var inputUsername : EditText
+    private lateinit var inputPassword : EditText
+    private lateinit var inputPassword2 : EditText
+
+    private lateinit var guestid : String
 
     //FirebaseAuth object
     private lateinit var auth: FirebaseAuth
@@ -36,8 +38,6 @@ class Profile_UnregisteredActivity : AppCompatActivity() {
     private val PREF_NAME = "Quiplash"
     private var PRIVATE_MODE = 0
     var sharedPreference: SharedPreferences? = null
-    val prefKey = "guestid"
-    val prefDefValue = "noguest"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,7 @@ class Profile_UnregisteredActivity : AppCompatActivity() {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
         }
-        setContentView(R.layout.activity_profile_unregistered)
+        setContentView(R.layout.activity_register_guest)
 
         //Get Firebase auth instance
         FirebaseApp.initializeApp(this)
@@ -58,12 +58,22 @@ class Profile_UnregisteredActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance().collection(dbUsersPath)
 
         val btnSignUp = findViewById<Button>(R.id.btnSignupGuest)
-        val inputUsername: EditText = findViewById(R.id.usernameFieldGuest)
-        val inputEmail = findViewById<EditText>(R.id.emailFieldGuest)
-        val inputPassword = findViewById<EditText>(R.id.passwordFieldGuest)
-        val inputPassword2 = findViewById<EditText>(R.id.passwordRetypeFieldGuest)
+        val btnBack = findViewById<Button>(R.id.buttonRegisterGuestBack)
+
+        inputUsername = findViewById(R.id.usernameFieldGuest)
+        inputEmail = findViewById(R.id.emailFieldGuest)
+        inputPassword = findViewById(R.id.passwordFieldGuest)
+        inputPassword2 = findViewById(R.id.passwordRetypeFieldGuest)
+
         val textviewError = findViewById<TextView>(R.id.textError)
         progressBar = findViewById(R.id.progressBarGuestSignup)
+
+
+        btnBack.setOnClickListener {
+            startActivity(Intent(this@RegisterGuestActivity, Profile_RegisteredActivity::class.java))
+            finish()
+        }
+
 
         btnSignUp.setOnClickListener {
             if (checkInput()) {
@@ -86,39 +96,30 @@ class Profile_UnregisteredActivity : AppCompatActivity() {
 
                         }
                 } else {
-                    //else if guest was already logged out (the anonymous-user doesn't exist anymore on Firebase) -> we have to create a new User in Firebase
+                    //else if guest was already logged out (the anonymous-user doesn't exist anymore on Firebase-Auth) -> we have to create a new User in Firebase
                     //Remove Guest-data from DB
-                    db.document(sharedPreference?.getString(prefKey,prefDefValue).toString()).delete()
-                        .addOnSuccessListener { Log.d("SUCCESS", "DocumentSnapshot successfully deleted!")
-                            val editor = sharedPreference?.edit()
-                            editor?.clear()
-                            editor?.apply()
-                            }
-                        .addOnFailureListener { e -> Log.w("ERROR", "Error deleting document", e) }
 
                     auth.createUserWithEmailAndPassword(
                         inputEmail.text.toString(),
                         inputPassword.text.toString()
                     )
-                        .addOnCompleteListener(this,
-                            OnCompleteListener<AuthResult?> { task ->
-                                progressBar.visibility = View.INVISIBLE
+                        .addOnCompleteListener(this) { task ->
+                            progressBar.visibility = View.INVISIBLE
 
-                                if (task.isSuccessful) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    createUser()
+                            if (task.isSuccessful) {
+                                // Sign in success, update UI with the signed-in user's information
+                                createUser()
 
-                                } else {
+                            } else {
 
-                                    Toast.makeText(
-                                        this@Profile_UnregisteredActivity,
-                                        "Authentication failed." + task.result,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
+                                Toast.makeText(
+                                    this@RegisterGuestActivity,
+                                    "Authentication failed." + task.result,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
 
-                                // ...
-                            })
+                        }
                 }
             } else {
 
@@ -146,29 +147,52 @@ class Profile_UnregisteredActivity : AppCompatActivity() {
     }
 
     private fun checkInput(): Boolean {
-        return (!TextUtils.isEmpty(emailFieldSU.text) && !TextUtils.isEmpty(passwordRetypeFieldSU.text) &&
-                !TextUtils.isEmpty(passwordFieldSU.text) && (passwordRetypeFieldSU.text.toString() == passwordFieldSU.text.toString()) && passwordFieldSU.text.length >= 6)
+        return (!TextUtils.isEmpty(inputEmail.text) && !TextUtils.isEmpty(inputPassword2.text) &&
+                !TextUtils.isEmpty(inputPassword.text) && (inputPassword2.text.toString() == inputPassword.text.toString()) && inputPassword.text.length >= 6)
     }
 
 
     private fun createUser() {
 
-        //create user-object
-        val user = UserQP(auth.currentUser?.uid.toString(), getUserInfo().userName, false, getUserInfo().score, getUserInfo().photo, getUserInfo().friends, "")
+        //get user-object
+        val callbackUser = object : Callback<UserQP> {
+            override fun onTaskComplete(result: UserQP) {
+                guestid = result.userID
+                result.userID = auth.currentUser?.uid.toString()
+                result.guest = false
+                //save user in game-manager (for easy access in further dev)
+                setUserinfo(result)
 
-        //save user in game-manager (for easy access in further dev)
-        setUserinfo(user)
+                //save user (name, score,...) in database
+                db.document(result.userID)
+                    .set(result)
+                    .addOnSuccessListener {
+                        Log.d("SUCCESS", "DocumentSnapshot successfully written!")
+                        DBMethods.DBCalls.deleteUser(guestid)
+                        removeLocalGuestInfo()
 
-        //save user (name, score,...) in database
-        db.document(auth.currentUser?.uid.toString())
-            .set(user)
-            .addOnSuccessListener {
-                Log.d("SUCCESS", "DocumentSnapshot successfully written!")
-                startActivity(Intent(this@Profile_UnregisteredActivity, LandingActivity::class.java))
-                finish()
+                        startActivity(Intent(this@RegisterGuestActivity, Profile_RegisteredActivity::class.java))
+                        finish()
+                    }
+                    .addOnFailureListener { e -> Log.w("ERROR", "Error writing document", e) }
             }
-            .addOnFailureListener { e -> Log.w("ERROR", "Error writing document", e) }
+        }
+        DBMethods.DBCalls.getUserByName(callbackUser, inputUsername.text.toString())
+
+
+
 
     }
+
+
+
+
+    private fun removeLocalGuestInfo(){
+        val editor = sharedPreference?.edit()
+        editor?.clear()
+        editor?.apply()
+    }
+
+
 
 }
