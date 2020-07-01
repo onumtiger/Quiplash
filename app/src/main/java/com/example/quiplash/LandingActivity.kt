@@ -37,7 +37,7 @@ class LandingActivity : AppCompatActivity() {
                 current_User = result
                 Toast.makeText(this@LandingActivity, current_User.token, Toast.LENGTH_SHORT).show()
                 if (current_User.token.isNullOrEmpty()){
-                    addToken2(current_User)
+                    addToken(current_User)
                 }
             }
         }
@@ -78,20 +78,4 @@ class LandingActivity : AppCompatActivity() {
         println("do nothing")
     }
 
-    fun addToken2(user_t: UserQP){
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    return@OnCompleteListener
-                }
-                // Get new Instance ID token
-                val tokenNew = task.result?.token
-                FirebaseInstanceId.getInstance().instanceId
-                user_t.token = tokenNew.toString()
-                DBMethods.DBCalls.db.collection(DBMethods.DBCalls.usersPath).document(user_t.userID)
-                    .update("token", tokenNew)
-                    .addOnSuccessListener { Log.d("SUCCESS", "Token successfully updated!") }
-                    .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
-            })
-    }
 }

@@ -211,12 +211,11 @@ class Edit_ProfileActivity : AppCompatActivity() {
             val username = viewUsername.text.toString()
             val ID = auth.currentUser?.uid.toString()
 
-            // TO DO: löschen
            /* Log.d("friends", friends.toString())
             Log.d("id", ID)
             Log.d("users", test[1].userName.toString())*/
 
-            val user = UserQP(ID, username, false, score, photoPath, friends, "")
+            val user = UserQP(ID, username, false, score, photoPath, friends, current_User.token)
              if (username.isEmpty() == false) {
                  if (ID != null) {
                      // get friendlist of other user
