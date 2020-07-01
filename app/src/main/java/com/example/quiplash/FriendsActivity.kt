@@ -1,6 +1,7 @@
 package com.example.quiplash
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ListView
@@ -38,7 +39,8 @@ class FriendsActivity : AppCompatActivity() {
         btnBack.setOnClickListener() {
             Sounds.playClickSound(this)
 
-            super.onBackPressed();
+            val intent = Intent(this, LandingActivity::class.java);
+            startActivity(intent);
         }
 
         btnFriend.setOnClickListener(){
