@@ -73,32 +73,6 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
         lateinit var test: ArrayList<UserQP>
 
-        /*
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    return@OnCompleteListener
-                }
-
-
-                // Get new Instance ID token
-                val token1 = task.result?.token
-                Log.d("myTag", token1);
-                System.out.println("tag = " + token1)
-                val user11 = UserQP(auth?.currentUser!!.uid, "plsss", false, 0, null, emptyList<String>(), token1.toString())
-                //constructor(userID: String, userName: String, guest: Boolean?, score: Int, photo: String?, friends: List<String>) {
-
-                editUser(auth?.currentUser!!.uid, user11)
-                // Log and toast
-                FirebaseInstanceId.getInstance().getInstanceId()
-                //val msg = getString(R.string.msg_token_fmt, token)
-                Toast.makeText(baseContext, token1, Toast.LENGTH_LONG).show()
-            })
-
-
-
-         */
-
         val callback = object: Callback<UserQP> {
             override fun onTaskComplete(result :UserQP) {
                 current_User = result
@@ -185,20 +159,6 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
  */
         }
-
-
-        val callback2 = object: Callback<ArrayList<UserQP>> {
-            override fun onTaskComplete(result: ArrayList<UserQP>) {
-                test = result
-
-                editUser("1ZqX1o543dZzMW4fCJL3pVvloZ83", test.first())
-                editUser("1ZqX1o543dZzMW4fCJL3pVvloZ83", test.last())
-                editUser("1ZqX1o543dZzMW4fCJL3pVvloZ83", test.get(2))
-
-            }
-        }
-        DBMethods.DBCalls.getUsers(callback2)
-
 
         btnSave.setOnClickListener() {
             Sounds.playClickSound(this)
