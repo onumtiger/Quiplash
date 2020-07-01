@@ -13,6 +13,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
+import com.example.quiplash.DBMethods.DBCalls.Companion.updateInvitations
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -50,6 +51,7 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
             playerPhoto = "images/default-guest.png"
         }
 
+        setInviteBtn(gameID, player.userID, inviteBtn)
         friendNameView.text = player.userName
         friendScoreView.text = "Score: " + player.score.toString()
 
@@ -83,11 +85,39 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
             } catch (e: JSONException) {
                 Log.e("TAG", "onCreate: " + e.message)
             }
-
             sendNotification(notification)
+            setInvitationsInDB(gameID, player.userID)
         }
 
         return view
+    }
+
+    fun setInvitationsInDB(gameID: String, userID: String) {
+        var game: Game
+        val callback = object : Callback<Game> {
+            override fun onTaskComplete(result: Game) {
+                game = result
+                val invitations = game.invitations
+                invitations.add(userID)
+                updateInvitations(game)
+            }
+        }
+        DBMethods.DBCalls.getCurrentGame(callback, gameID)
+    }
+
+    fun setInviteBtn(gameID: String, userID: String, inviteBtn: Button) {
+        var game: Game
+        val callback = object : Callback<Game> {
+            override fun onTaskComplete(result: Game) {
+                game = result
+                val invitations = game.invitations
+                if (invitations.contains(userID)) {
+                    inviteBtn.isClickable = false
+                    inviteBtn.setBackgroundResource(R.color.colorGray)
+                }
+            }
+        }
+        DBMethods.DBCalls.getCurrentGame(callback, gameID)
     }
 
     fun sendNotification(notification: JSONObject) {

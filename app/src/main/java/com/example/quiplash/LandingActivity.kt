@@ -3,14 +3,16 @@ package com.example.quiplash
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.quiplash.DBMethods.DBCalls.Companion.addToken
 import com.google.android.gms.tasks.OnCompleteListener
+import com.example.quiplash.DBMethods.DBCalls.Companion.getActiveGames
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.iid.FirebaseInstanceId
-
 
 class LandingActivity : AppCompatActivity() {
 
@@ -30,12 +32,20 @@ class LandingActivity : AppCompatActivity() {
         val btnProfile = findViewById<Button>(R.id.landing_profile)
         val btnFriends = findViewById<Button>(R.id.landing_friends)
         val btnScoreBoard = findViewById<Button>(R.id.landing_scoreboard)
+        val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefreshInvitations)
+
+        showInvitationsHint()
+
+        refreshLayout.setOnRefreshListener {
+            Sounds.playRefreshSound(this)
+            showInvitationsHint()
+            refreshLayout.isRefreshing = false
+        }
 
         //addToken
         val callbackGetUser = object: Callback<UserQP> {
             override fun onTaskComplete(result :UserQP) {
                 current_User = result
-                Toast.makeText(this@LandingActivity, current_User.token, Toast.LENGTH_SHORT).show()
                 if (current_User.token.isNullOrEmpty()){
                     addToken(current_User)
                 }
@@ -78,4 +88,27 @@ class LandingActivity : AppCompatActivity() {
         println("do nothing")
     }
 
+    fun showInvitationsHint() {
+        var allGames: MutableList<Game> = mutableListOf<Game>()
+        var numInvitations = 0
+        val invitations = findViewById<TextView>(R.id.invitations)
+        val callbackInvitations = object : Callback<MutableList<Game>> {
+            override fun onTaskComplete(result: MutableList<Game>) {
+                allGames = result
+                allGames.forEach {
+                    if (it.invitations.contains(auth?.currentUser?.uid.toString())) {
+                        numInvitations += 1
+                    }
+                }
+
+                if (numInvitations == 0){
+                    invitations.visibility = View.INVISIBLE
+                } else {
+                    invitations.visibility = View.VISIBLE
+                    invitations.text = numInvitations.toString()
+                }
+            }
+        }
+        getActiveGames(callbackInvitations, allGames)
+    }
 }

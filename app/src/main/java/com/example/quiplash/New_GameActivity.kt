@@ -126,7 +126,7 @@ class New_GameActivity : AppCompatActivity() {
         val gameID = ""
         val gameTitle = gameTitleEdit.text.toString()
 
-        val newGame = Game(activeRound, category, playerNumbers, rounds, users, gameID, auth.currentUser?.uid.toString(), isPublic, gameTitle, arrayListOf<Question>())
+        val newGame = Game(activeRound, category, playerNumbers, rounds, users, gameID, auth.currentUser?.uid.toString(), isPublic, gameTitle, arrayListOf<Question>(), arrayListOf<String>())
         game = newGame
         return setGame(newGame)
     }
