@@ -30,7 +30,7 @@ class SignUpActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: CollectionReference
-    private val dbUsersPath = "users"
+    private val dbUsersPath = DBMethods.DBCalls.usersPath
 
     //Local-Storage
     private val PREF_NAME = "Quiplash"

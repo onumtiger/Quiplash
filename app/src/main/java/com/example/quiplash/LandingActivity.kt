@@ -2,22 +2,19 @@ package com.example.quiplash
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.quiplash.DBMethods.DBCalls.Companion.addToken
-import com.google.android.gms.tasks.OnCompleteListener
 import com.example.quiplash.DBMethods.DBCalls.Companion.getActiveGames
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.iid.FirebaseInstanceId
 
 class LandingActivity : AppCompatActivity() {
 
     private var auth: FirebaseAuth? = FirebaseAuth.getInstance()
-    lateinit var current_User: UserQP
+    lateinit var currentUser: UserQP
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +42,9 @@ class LandingActivity : AppCompatActivity() {
         //addToken
         val callbackGetUser = object: Callback<UserQP> {
             override fun onTaskComplete(result :UserQP) {
-                current_User = result
-                if (current_User.token.isNullOrEmpty()){
-                    addToken(current_User)
+                currentUser = result
+                if (currentUser.token.isNullOrEmpty()){
+                    addToken(currentUser)
                 }
             }
         }
@@ -67,7 +64,7 @@ class LandingActivity : AppCompatActivity() {
 
         btnProfile.setOnClickListener {
             Sounds.playClickSound(this)
-            val intent = Intent(this, Profile_RegisteredActivity::class.java)
+            val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
 
@@ -88,7 +85,7 @@ class LandingActivity : AppCompatActivity() {
         println("do nothing")
     }
 
-    fun showInvitationsHint() {
+    private fun showInvitationsHint() {
         var allGames: MutableList<Game> = mutableListOf<Game>()
         var numInvitations = 0
         val invitations = findViewById<TextView>(R.id.invitations)

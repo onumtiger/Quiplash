@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
@@ -96,14 +97,18 @@ class Edit_ProfileActivity : AppCompatActivity() {
                     viewUsername.setText(current_User.userName.toString())
                     score = current_User.score!!
                     friends = current_User.friends
-                    var spaceRef = storageRef.child(photoPath)
-                    spaceRef.downloadUrl
-                        .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
-                            Glide
-                                .with(applicationContext)
-                                .load(uri)
-                                .into(viewProfilePic)
-                        }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
+                    // timer is needed to load new photo is user edits its profile pic
+                    val handler = Handler()
+                    handler.postDelayed(Runnable {
+                        var spaceRef = storageRef.child(photoPath)
+                        spaceRef.downloadUrl
+                            .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
+                                Glide
+                                    .with(applicationContext)
+                                    .load(uri)
+                                    .into(viewProfilePic)
+                            }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
+                    }, 200)
                 }
             }
         }
@@ -120,7 +125,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
         btnBack.setOnClickListener() {
             Sounds.playClickSound(this)
 
-            val intent = Intent(this, Profile_RegisteredActivity::class.java);
+            val intent = Intent(this, ProfileActivity::class.java);
             startActivity(intent);
         }
 
@@ -128,7 +133,17 @@ class Edit_ProfileActivity : AppCompatActivity() {
             Sounds.playClickSound(this)
 
             // pickFromCamera()
-            chooseImage()
+            //chooseImage()
+
+            val dialogFragment = ChooseImageSource()
+            val ft = supportFragmentManager.beginTransaction()
+            val prev = supportFragmentManager.findFragmentByTag("Choose")
+            if (prev != null)
+            {
+                ft.remove(prev)
+            }
+            ft.addToBackStack(null)
+            dialogFragment.show(ft, "delete")
         }
 
         btnChangeRest.setOnClickListener() {
@@ -201,7 +216,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
                      // hier muss die Friendslist der anderen geupdated werden
                      editUser(ID, user)
-                     val intent = Intent(this, Profile_RegisteredActivity::class.java);
+                     val intent = Intent(this, ProfileActivity::class.java);
                      startActivity(intent);
                  }
              } else {

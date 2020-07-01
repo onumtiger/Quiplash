@@ -25,8 +25,8 @@ class EvaluationActivity : AppCompatActivity() {
     //Firestore
     lateinit var db: CollectionReference
     lateinit var dbUsers: CollectionReference
-    private val dbGamesPath = "games"
-    private val dbUsersPath = "users"
+    private val dbGamesPath = DBMethods.DBCalls.gamesPath
+    private val dbUsersPath = DBMethods.DBCalls.usersPath
     private var auth: FirebaseAuth? = null
 
     //Views

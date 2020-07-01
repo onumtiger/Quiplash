@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -191,7 +192,11 @@ class DBMethods {
                 }
             }
 
-            fun deleteUser(){
+            fun deleteUser(userid:String){
+                db.collection(usersPath).document(userid).delete()
+                    .addOnSuccessListener { Log.d("SUCCESS", "DocumentSnapshot successfully deleted!")
+                    }
+                    .addOnFailureListener { e -> Log.w("ERROR", "Error deleting document", e) }
             }
 
             fun editQuestion(){
@@ -298,8 +303,7 @@ class DBMethods {
 
             fun getUserWithID(callback: Callback<UserQP>, userID: String) {
                println(userID)
-                val docRef = db.collection(usersPath).document(userID)
-                docRef.get()
+                    db.collection(usersPath).document(userID).get()
                     .addOnSuccessListener { document ->
                         if (document != null) {
                             Log.d("TAG", "${document.id} => ${document.data}")
@@ -309,6 +313,21 @@ class DBMethods {
                     }
                     .addOnFailureListener { exception ->
                         Log.d("TAG", "Error getting documents: ", exception)}
+            }
+
+            fun getUserByName(callback: Callback<UserQP>, username: String){
+// Create a query against the collection.
+                db.collection(usersPath).whereEqualTo("userName", username)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        for (document in documents) {
+                            val user = document.toObject(UserQP::class.java)
+                            callback.onTaskComplete(user)
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.w("ERROR", "Error getting documents: ", exception)
+                    }
             }
 
             fun deleteGame(gameID: String, callback: Callback<Boolean>) {
