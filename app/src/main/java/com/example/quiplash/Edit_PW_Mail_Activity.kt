@@ -120,112 +120,91 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
         }
 
         btnDeleteAccount.setOnClickListener(){
-            Sounds.playClickSound(this)
-
-            val del_user = FirebaseAuth.getInstance().currentUser
-
-            val oldPW = view_oldPW.text.toString()
-
-            if (oldPW.isEmpty() == false){
-                val credential = EmailAuthProvider
-                    .getCredential(del_user?.email.toString(), oldPW.toString())
-                del_user!!.reauthenticate(credential)
-                    .addOnCompleteListener {
-                        if(it.isSuccessful){
-                            db.document(FirebaseAuth.getInstance().currentUser!!.uid).delete()
-                            del_user!!.delete()
-                                .addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-
-                                        val intent = Intent(this, MainActivity::class.java);
-                                        startActivity(intent);
-                                    } else {
-                                        Toast.makeText(this, "Password is wrong", Toast.LENGTH_LONG)
-                                            .show()
-                                    }
-                                }
-                        }
-                    }
-            } else {
-                Toast.makeText(this, "Please tip in your password", Toast.LENGTH_SHORT).show()
-            }
+        Sounds.playClickSound(this)
+            deleteAccount()
         }
 
         saveBtn.setOnClickListener() {
             Sounds.playClickSound(this)
 
-            val oldPW = view_oldPW.text.toString()
             val newPW = view_newPW.text.toString()
             val newPW2 = view_newPW2.text.toString()
             val mail = view_mail.text.toString()
 
-            if (oldPW.isEmpty() == false){
-                if(newPW == newPW2){
+            //check if both passwords are correct
+            if(newPW == newPW2 && !newPW.isNullOrEmpty()){
+                if(newPW.length > 5 ){
+                    //only password change
                     if (mail.isEmpty()){
                         changePW()
-                        val intent = Intent(this, Profile_RegisteredActivity::class.java);
+                        val intent = Intent(this, LaunchingActivity::class.java);
                         startActivity(intent);
                     } else {
+                        //change mail and password
                         changeMail()
                         changePW()
-                        val intent = Intent(this, Profile_RegisteredActivity::class.java);
+                        Toast.makeText(this, "Your Password and Mail got updated!", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, LaunchingActivity::class.java);
                         startActivity(intent);
                     }
+                } else {
+                    Toast.makeText(this, "New Password is too short", Toast.LENGTH_SHORT).show()
                 }
-                if(newPW.isEmpty() == newPW2.isEmpty()) {
-                    if (mail.isEmpty() == false) {
-                        changeMail()
-                        val intent = Intent(this, Profile_RegisteredActivity::class.java);
-                        startActivity(intent);
-                    }
-                }
-
-            } else {
-                Toast.makeText(this, "Please Tip In Your Password", Toast.LENGTH_LONG).show()
             }
-
+            if(newPW.isNullOrEmpty() && newPW2.isNullOrEmpty()) {
+                if (!mail.isNullOrEmpty()) {
+                    changeMail()
+                    val intent = Intent(this, LaunchingActivity::class.java);
+                    startActivity(intent);
+                }
+            }
+            if ((!newPW.isNullOrEmpty() && newPW2.isNullOrEmpty()) || (!newPW2.isNullOrEmpty() && newPW.isNullOrEmpty())){
+                Toast.makeText(this, "Please tip in your new Password into both fields", Toast.LENGTH_SHORT).show()
+            }
+            if (newPW != newPW2 && !newPW.isNullOrEmpty() && !newPW2.isNullOrEmpty()){
+                Toast.makeText(this, "Your two Passwords are different", Toast.LENGTH_SHORT).show()
+            }
         }
-
     }
 
     fun changePW(){
 
-        val oldPW = view_oldPW.text.toString()
         val newPW = view_newPW.text.toString()
-        val old_mail = auth.currentUser?.email.toString()
 
         var user = auth.currentUser
-        val credential = EmailAuthProvider.getCredential(old_mail, oldPW)
-        user?.reauthenticate(credential)?.addOnCompleteListener{
-            if(it.isSuccessful){
-                user.updatePassword(newPW).addOnCompleteListener { task ->
-                    if (task.isSuccessful){
-                        Toast.makeText(this, "Update Password", Toast.LENGTH_LONG).show()
-                    }
-                }
+        user?.updatePassword(newPW)?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(this, "Your Password got updated!", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "old password is false", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "error in updating password", Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    fun changeMail(){
-        val oldPW = view_oldPW.text.toString()
+    fun changeMail() {
         val mail = view_mail.text.toString()
-        val old_mail = auth.currentUser?.email.toString()
-
         var user = auth.currentUser
-        val credential = EmailAuthProvider.getCredential(old_mail, oldPW)
-        user?.reauthenticate(credential)?.addOnCompleteListener{
-            if(it.isSuccessful){
-                user.updateEmail(mail).addOnCompleteListener { task ->
-                    if (task.isSuccessful){
-                        Toast.makeText(this, "Update Mail", Toast.LENGTH_LONG).show()
-                    }
-                }
+
+        user?.updateEmail(mail)?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(this, "Your Mail got updated!", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "old password is false", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "error in updating mail", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    fun deleteAccount(){
+        var current_user = FirebaseAuth.getInstance().currentUser
+        db.document(FirebaseAuth.getInstance().currentUser!!.uid).delete()
+        current_user!!.delete()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val intent = Intent(this, MainActivity::class.java);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "Error delete account", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 }

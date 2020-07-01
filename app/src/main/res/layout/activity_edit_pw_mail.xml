@@ -11,9 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="140dp"
         android:ems="10"
-        android:hint="new_mail"
+        android:hint="New Mail Address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textViewMail"
         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
 
@@ -21,11 +23,11 @@
         android:id="@+id/password_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="new PW"
+        android:hint="New Password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.133"
+        app:layout_constraintHorizontal_bias="0.205"
         app:layout_constraintStart_toEndOf="@+id/textViewPw"
         app:layout_constraintTop_toBottomOf="@+id/email_new" />
 
@@ -33,9 +35,9 @@
         android:id="@+id/password_new2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="36dp"
         android:ems="10"
-        android:hint="repeat new PW"
+        android:hint="Repeat New Password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.082"
         app:layout_constraintStart_toEndOf="@+id/textViewPw2"
@@ -137,10 +139,12 @@
 
     <TextView
         android:id="@+id/textViewPwOld"
-        android:layout_width="233dp"
-        android:layout_height="48dp"
+        android:layout_width="282dp"
+        android:layout_height="74dp"
         android:layout_marginTop="52dp"
         android:text="Please Tip in your current Password"
+        android:textAlignment="center"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
@@ -176,10 +180,10 @@
         android:id="@+id/password_old"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="112dp"
         android:layout_marginTop="112dp"
         android:ems="10"
-        android:hint="old_pw"
+        android:hint="current Password"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewPwOld" />
 
@@ -189,6 +193,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
         android:layout_marginTop="116dp"
+        android:background="@android:color/holo_blue_bright"
         android:text="next"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_old" />
