@@ -3,8 +3,11 @@ package com.example.quiplash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
@@ -12,6 +15,8 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_edit_pw_mail.*
+import org.w3c.dom.Text
 
 
 class Edit_PW_Mail_Activity : AppCompatActivity() {
@@ -28,6 +33,8 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
 
     lateinit var db: CollectionReference
     private val dbUsersPath = "users"
+
+
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,11 +57,66 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
         view_mail = findViewById(R.id.email_new)
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount)
 
+        val btnNext = findViewById<Button>(R.id.next_button)
+
+        var textViewMail = findViewById<TextView>(R.id.textViewMail)
+        var textViewPw = findViewById<TextView>(R.id.textViewPw)
+        var textViewPw2 = findViewById<TextView>(R.id.textViewPw2)
+
+        view_newPW.visibility = View.INVISIBLE
+        view_newPW2.visibility = View.INVISIBLE
+        view_mail.visibility = View.INVISIBLE
+        textViewMail.visibility = View.INVISIBLE
+        textViewPw.visibility = View.INVISIBLE
+        textViewPw2.visibility = View.INVISIBLE
+
+        saveBtn.visibility = View.INVISIBLE
+        btnDeleteAccount.visibility = View.INVISIBLE
+
+        var current_user = FirebaseAuth.getInstance().currentUser
+
+
+
         btnBack.setOnClickListener() {
             Sounds.playClickSound(this)
 
             val intent = Intent(this, Profile_RegisteredActivity::class.java);
             startActivity(intent);
+        }
+
+        btnNext.setOnClickListener() {
+            val oldPW = view_oldPW.text.toString()
+
+            if (!oldPW.isNullOrEmpty()) {
+                val credential = EmailAuthProvider
+                    .getCredential(current_user?.email.toString(), oldPW.toString())
+                current_user!!.reauthenticate(credential)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+
+                            btnNext.visibility = View.INVISIBLE
+                            textViewPwOld.visibility = View.INVISIBLE
+                            view_oldPW.visibility = View.INVISIBLE
+
+                            view_newPW.visibility = View.VISIBLE
+                            view_newPW2.visibility = View.VISIBLE
+                            view_mail.visibility = View.VISIBLE
+                            textViewMail.visibility = View.VISIBLE
+                            textViewPw.visibility = View.VISIBLE
+                            textViewPw2.visibility = View.VISIBLE
+
+                            saveBtn.visibility = View.VISIBLE
+                            btnDeleteAccount.visibility = View.VISIBLE
+
+                        }
+                        else {
+                            Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show()
+                            view_oldPW.text = Editable.Factory.getInstance().newEditable("")
+                        }
+                    }
+            } else {
+                Toast.makeText(this, "Please Tip in your current Password", Toast.LENGTH_SHORT).show()
+            }
         }
 
         btnDeleteAccount.setOnClickListener(){
