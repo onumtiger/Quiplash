@@ -24,7 +24,7 @@ import com.google.firebase.storage.FirebaseStorage
 class Profile_RegisteredActivity : AppCompatActivity() {
     //FirebaseAuth object
     private var auth: FirebaseAuth? = null
-    lateinit var current_User: UserQP
+    lateinit var currentUser: UserQP
     lateinit var db: CollectionReference
     private val dbUsersPath = "users"
 
@@ -41,8 +41,8 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance().collection(dbUsersPath)
 
-        var fotostorage = FirebaseStorage.getInstance();
-        var storageRef = fotostorage.reference
+        val fotostorage = FirebaseStorage.getInstance();
+        val storageRef = fotostorage.reference
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.profile_go_back_arrow)
         val btnEditProfile = findViewById<Button>(R.id.btnEditProfile)
@@ -62,8 +62,8 @@ class Profile_RegisteredActivity : AppCompatActivity() {
         val callback = object: Callback<UserQP> {
             @SuppressLint("SetTextI18n")
             override fun onTaskComplete(result :UserQP) {
-                current_User = result
-                if (current_User.userName.toString() == "User") {
+                currentUser = result
+                if (currentUser.userName.toString() == "User") {
                     // display default data if fetching user data fails
                     val userinfodefault = getUserInfoDefault()
                     viewUsername.text = userinfodefault[0]
@@ -83,16 +83,16 @@ class Profile_RegisteredActivity : AppCompatActivity() {
 
                 }
                 else {
-                    viewUsername.text = current_User.userName.toString()
-                    viewUsernameBig.text = current_User.userName.toString()
+                    viewUsername.text = currentUser.userName.toString()
+                    viewUsernameBig.text = currentUser.userName.toString()
                     viewEmail.text = auth?.currentUser?.email.toString()
-                    viewScore.text = current_User.score.toString()
+                    viewScore.text = "Score" + currentUser.score.toString()
 
-                    if(current_User.photo == null){
+                    if(currentUser.photo == null){
                         photoPath = "images/default-user.png"
                     }
                     else {
-                        photoPath = current_User.photo.toString()
+                        photoPath = currentUser.photo.toString()
                     }
 
                     // timer is needed to load new photo is user edits its profile pic

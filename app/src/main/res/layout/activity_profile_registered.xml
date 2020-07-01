@@ -162,9 +162,11 @@
 
     <TextView
         android:id="@+id/usernameBig"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="20dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:text="@string/username_placeholder"
         android:textAlignment="center"
         android:textSize="18sp"
