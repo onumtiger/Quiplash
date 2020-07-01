@@ -188,11 +188,13 @@
 
     <Switch
         android:id="@+id/switchPrivateGame"
-        android:layout_width="132dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
         android:text="Private Game"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/game_title"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -215,14 +217,16 @@
 
     <EditText
         android:id="@+id/game_title"
-        android:layout_width="160dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Game Title"
+        android:inputType="textPersonName"
         android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/switchPrivateGame"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 

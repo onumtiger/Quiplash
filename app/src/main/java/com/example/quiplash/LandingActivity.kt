@@ -2,17 +2,14 @@ package com.example.quiplash
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.quiplash.DBMethods.DBCalls.Companion.addToken
-import com.google.android.gms.tasks.OnCompleteListener
 import com.example.quiplash.DBMethods.DBCalls.Companion.getActiveGames
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.iid.FirebaseInstanceId
 
 class LandingActivity : AppCompatActivity() {
 
