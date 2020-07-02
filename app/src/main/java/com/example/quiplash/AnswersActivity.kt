@@ -39,7 +39,7 @@ class AnswersActivity : AppCompatActivity() {
         val othertimer = findViewById<TextView>(R.id.timer3A)
         val questionTV = findViewById<TextView>(R.id.questionAnswer)
         val answerTV1 = findViewById<TextView>(R.id.answer1)
-        val answerTV2 = findViewById<TextView>(R.id.answerRoundWinner)
+        val answerTV2 = findViewById<TextView>(R.id.answer2)
         val roundTextView = findViewById<TextView>(R.id.roundsA)
         othertimer.visibility = View.INVISIBLE
 

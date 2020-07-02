@@ -18,81 +18,88 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/timerViewEval"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="32dp"
-            android:text="0:59"
-            android:textColor="@color/colorGreen"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/roundsEval"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="50dp"
-            android:text="1/10"
-            android:textColor="@color/colorGreen"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/questionEval"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="This is a question"
-            android:textColor="@color/colorGreen"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonNext"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <RelativeLayout
-            android:id="@+id/winner"
-            android:layout_width="296dp"
-            android:layout_height="66dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewDraw">
-
-            <ImageView
-                android:id="@+id/imageRoundWinner"
-                android:layout_width="321dp"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/green_seperator" />
-
-            <ImageView
-                android:id="@+id/imageRoundWinnerPhoto"
+            <TextView
+                android:id="@+id/timerViewEval"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                app:srcCompat="@drawable/join_game_star" />
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:textColor="@color/colorGreen"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textRoundWinnerName"
-                android:layout_width="199dp"
+                android:id="@+id/roundsEval"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="75dp"
-                android:layout_marginTop="10dp"
-                android:text="player"
-                android:textColor="#000000"
-                android:textSize="20sp" />
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="50dp"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:textColor="@color/colorGreen"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/questionEval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:textColor="@color/colorGreen"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonNext"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <RelativeLayout
+                android:id="@+id/winner"
+                android:layout_width="0dp"
+                android:layout_height="66dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewDraw">
+
+                <ImageView
+                    android:id="@+id/imageRoundWinner"
+                    android:layout_width="321dp"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/green_seperator" />
+
+                <ImageView
+                    android:id="@+id/imageRoundWinnerPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginEnd="28dp"
+                    android:layout_marginBottom="26dp"
+                    android:layout_toStartOf="@+id/textRoundWinnerName"
+                    app:srcCompat="@drawable/join_game_star" />
+
+                <TextView
+                    android:id="@+id/textRoundWinnerName"
+                    android:layout_width="199dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="75dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto_slab_bold"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
 
 
             <TextView
@@ -101,6 +108,7 @@
                 android:layout_height="50dp"
                 android:layout_marginBottom="40dp"
                 android:background="@drawable/round_corner"
+                android:fontFamily="@font/roboto_slab_bold"
                 android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
@@ -143,26 +151,28 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="75dp"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto_slab_bold"
                     android:text="player"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
             </RelativeLayout>
 
-        <TextView
-            android:id="@+id/textViewScoreDraw"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="40dp"
-            android:background="@drawable/round_corner"
-            android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textStyle="bold"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/winnerDraw"
-            app:layout_constraintEnd_toEndOf="@+id/winnerDraw"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/winnerDraw" />
+            <TextView
+                android:id="@+id/textViewScoreDraw"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/round_corner"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/winnerDraw"
+                app:layout_constraintEnd_toEndOf="@+id/winnerDraw"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/winnerDraw" />
 
             <View
                 android:id="@+id/view4"
@@ -186,8 +196,10 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="48dp"
+                android:capitalize="characters"
+                android:fontFamily="@font/shadows_into_light"
                 android:textColor="#000000"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/view4"
                 app:layout_constraintEnd_toEndOf="@+id/view4"
@@ -214,8 +226,10 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="48dp"
+                android:capitalize="characters"
+                android:fontFamily="@font/shadows_into_light"
                 android:textColor="#000000"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/viewDraw"
                 app:layout_constraintEnd_toEndOf="@+id/viewDraw"
@@ -223,20 +237,23 @@
                 app:layout_constraintTop_toTopOf="@+id/viewDraw" />
 
 
-        <Button
-            android:id="@+id/buttonNext"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="24dp"
-            android:background="@color/colorButtonGreen"
-            android:text="@string/next_round"
-            android:textColor="@color/colorWhite"
-            android:textColorHighlight="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
-            android:textColorLink="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timerViewEval" />
+            <Button
+                android:id="@+id/buttonNext"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/colorButtonGreen"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:text="@string/next_round"
+                android:textColor="@color/colorWhite"
+                android:textColorHighlight="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textColorLink="@color/colorWhite"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timerViewEval" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -98,4 +98,5 @@
     <string name="show_scoreboard">Show Scoreboard</string>
     <string name="category_label">\"Category: \"</string>
     <string name="please_enter_username">please tip in a new username</string>
+    <string name="answer_saved_successfully">Your Answer has been saved successfully!</string>
 </resources>
