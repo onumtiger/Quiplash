@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import java.util.ArrayList
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -87,7 +88,18 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         btnSubmit.setOnClickListener {
-            var userExist = false
+            val callbackCheckUsername = object: Callback<Boolean> {
+                override fun onTaskComplete(result: Boolean) {
+                    if (result) {
+                        textviewErrorUserName.text = getString(R.string.username_not_available)
+                    } else {
+                        createUser()
+                    }
+                }
+            }
+            DBMethods.DBCalls.checkUsername("", inputUsername.text.toString(), callbackCheckUsername)
+
+           /* var userExist = false
             db.get()
                 .addOnSuccessListener { userCollectionDB ->
                     for (userItemDB in userCollectionDB) {
@@ -111,7 +123,7 @@ class SignUpActivity : AppCompatActivity() {
                 .addOnFailureListener { exception ->
                     Log.d("ERROR", "" + exception)
                     createUser()
-                }
+                }*/
 
         }
 
@@ -123,25 +135,24 @@ class SignUpActivity : AppCompatActivity() {
                     inputEmail.text.toString(),
                     inputPassword.text.toString()
                 )
-                    .addOnCompleteListener(this,
-                        OnCompleteListener<AuthResult?> { task ->
-                            progressBar.visibility = View.INVISIBLE
+                    .addOnCompleteListener(this
+                    ) { task ->
+                        progressBar.visibility = View.INVISIBLE
 
-                            if (task.isSuccessful) {
-                                // Sign in success, update UI with the signed-in user's information
-                                isUser = true
-                                simpleViewFlipper.showNext()
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            isUser = true
+                            simpleViewFlipper.showNext()
 
-                            } else {
+                        } else {
 
-                                Toast.makeText(
-                                    this@SignUpActivity, "Authentication failed." + task.result,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
+                            Toast.makeText(
+                                this@SignUpActivity, "Authentication failed." + task.result,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
 
-                            // ...
-                        })
+                    }
             } else {
 
                 errotext = ""

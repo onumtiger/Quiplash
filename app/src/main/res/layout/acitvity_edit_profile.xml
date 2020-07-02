@@ -28,7 +28,6 @@
         android:contentDescription="logo"
         android:src="@drawable/logo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,7 +52,6 @@
         android:layout_height="100dp"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
 
@@ -69,7 +67,6 @@
         android:textColorHint="@color/colorWhite"
         android:textColorLink="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -77,12 +74,13 @@
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="8dp"
         android:text="Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.085"
+        app:layout_constraintBottom_toBottomOf="@+id/usernameFieldEdit"
+        app:layout_constraintEnd_toStartOf="@+id/usernameFieldEdit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPrrofilePic" />
+        app:layout_constraintTop_toTopOf="@+id/usernameFieldEdit" />
 
     <Button
         android:id="@+id/btnSave"
@@ -98,13 +96,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameFieldGuest" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameFieldEdit" />
 
     <Button
         android:id="@+id/edit_rest"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:background="@color/colorButtonGreen"
         android:text="Change Mail / PW"
         android:textColor="@color/colorWhite"
@@ -116,16 +114,37 @@
         app:layout_constraintTop_toBottomOf="@+id/btnSave" />
 
     <EditText
-        android:id="@+id/usernameFieldGuest"
-        android:layout_width="245dp"
+        android:id="@+id/usernameFieldEdit"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
         android:ems="10"
         android:hint="@string/username_placeholder"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="@+id/textViewName"
+        app:layout_constraintStart_toEndOf="@+id/textViewName"
         app:layout_constraintTop_toBottomOf="@+id/btnPrrofilePic" />
+
+    <TextView
+        android:id="@+id/textErrorUsernameEdit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@color/colorRed"
+        android:textColorHighlight="@color/colorRed"
+        android:textColorHint="@color/colorRed"
+        android:textColorLink="@color/colorRed"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btnSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameFieldEdit"
+        app:layout_constraintVertical_bias="0.406" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

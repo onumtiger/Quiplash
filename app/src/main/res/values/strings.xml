@@ -97,4 +97,5 @@
     <string name="next_round_starts">Next Round starts</string>
     <string name="show_scoreboard">Show Scoreboard</string>
     <string name="category_label">\"Category: \"</string>
+    <string name="please_enter_username">please tip in a new username</string>
 </resources>
