@@ -45,7 +45,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
                 game = documentSnapshot.toObject(Game::class.java)!!
-                userindex = if( game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").userID == auth!!.currentUser?.uid) {
+                userindex = if( game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).userID == auth!!.currentUser?.uid) {
                     0
                 } else{
                     1
@@ -135,7 +135,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
             if (snapshot != null && snapshot.exists()) {
                 Log.d("SUCCESS", "Current data: ${snapshot.data}")
                 game = snapshot.toObject(Game::class.java)!!
-                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answer != "" && game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent1").answer != "" && !answersArrived) {
+                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answer != "" && game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp1).answer != "" && !answersArrived) {
                     gotoAnswers()
                 }
 

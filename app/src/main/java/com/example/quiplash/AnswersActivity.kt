@@ -47,8 +47,8 @@ class AnswersActivity : AppCompatActivity() {
             override fun onTaskComplete(result: Game) {
                 game = result
                 questionTV.text = game.playrounds.getValue("round${game.activeRound}").question
-                answerTV1.text = game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answer
-                answerTV2.text = game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent1").answer
+                answerTV1.text = game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answer
+                answerTV2.text = game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp1).answer
                 roundTextView.text = "${ceil((game.activeRound-1).toDouble()/3).toInt()}/${game.rounds}"
             }
         }

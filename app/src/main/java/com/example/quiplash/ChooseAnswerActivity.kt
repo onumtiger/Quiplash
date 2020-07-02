@@ -88,7 +88,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
         }
         startTimer(timerViewWaiting, startSecondsAnswer, callbackTimerWaiting)
 
-        roundView.text = "${ceil(game.activeRound.toDouble() / 3).toInt()} / ${game.rounds}"
+        roundView.text = "${ceil(game.activeRound.toDouble() / game.rounds).toInt()} / ${game.rounds}"
 
 
         // Declare in and out animations and load them using AnimationUtils class
@@ -123,9 +123,9 @@ class ChooseAnswerActivity : AppCompatActivity() {
 
             if (snapshot != null && snapshot.exists()) {
                 game = snapshot.toObject(Game::class.java)!!
-                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answer != "" && game.playrounds.getValue(
+                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answer != "" && game.playrounds.getValue(
                         "round${game.activeRound}"
-                    ).opponents.getValue("opponent1").answer != ""
+                    ).opponents.getValue(GameMethods.opp1).answer != ""
                 ) {
                     if(!answersArrived){
                         setNextView()
@@ -153,11 +153,11 @@ class ChooseAnswerActivity : AppCompatActivity() {
                     game.playrounds.getValue("round${game.activeRound}").question
                 answerTV1.text =
                     game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        "opponent0"
+                        GameMethods.opp0
                     ).answer
                 answerTV2.text =
                     game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        "opponent1"
+                        GameMethods.opp1
                     ).answer
             }
         }
@@ -189,7 +189,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
 
     private fun saveVote(answerIndex: Int) {
         answerChoosen = true
-        game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answer
+        game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answer
 
         db.document(game.gameID)
             .update(
@@ -198,7 +198,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
                         "round${game.activeRound}"
                     ).opponents.getValue("opponent$answerIndex").userID,
                     "playrounds.round${game.activeRound}.opponents.opponent$answerIndex.answerScore" to FieldValue.increment(
-                        10
+                        GameMethods.voteScore.toDouble()
                     )
                 )
             )

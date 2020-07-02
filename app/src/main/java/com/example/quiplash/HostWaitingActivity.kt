@@ -290,8 +290,8 @@ class HostWaitingActivity : AppCompatActivity() {
                 oneRound += (Round(
                     voters,
                     linkedMapOf(
-                        "opponent0" to Opponent(game.users[roundCount]),
-                        "opponent1" to Opponent(game.users[roundCount + jump])
+                        GameMethods.opp0 to Opponent(game.users[roundCount]),
+                        GameMethods.opp1 to Opponent(game.users[roundCount + jump])
                     ),
                     question.toString()
                 ))

@@ -1,6 +1,5 @@
 package com.example.quiplash
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -49,7 +48,6 @@ class EvaluationActivity : AppCompatActivity() {
     private var setRoundFlag = false
     var oldRound = 0
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Sounds.playScoreSound(this)
@@ -57,7 +55,17 @@ class EvaluationActivity : AppCompatActivity() {
         dbUsers = FirebaseFirestore.getInstance().collection(dbUsersPath)
         auth = FirebaseAuth.getInstance()
 
-        setPoints()
+        //setPoints()
+
+        val callbackPoints = object : Callback<Boolean> {
+            override fun onTaskComplete(result: Boolean) {
+                if(result){
+                    getWinner()
+                }
+            }
+        }
+        GameMethods.setPoints(callbackPoints)
+
         try {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
@@ -86,7 +94,7 @@ class EvaluationActivity : AppCompatActivity() {
         oldRound = game.activeRound
 
         questionEval.text = game.playrounds.getValue("round${game.activeRound}").question
-        roundViewEval.text = "${ceil(game.activeRound.toDouble() / 3).toInt()}/${game.rounds}"
+        roundViewEval.text = ("${ceil(game.activeRound.toDouble() / game.rounds).toInt()}/${game.rounds}")
 
 
         val callbackTimer = object : Callback<Boolean> {
@@ -149,6 +157,7 @@ class EvaluationActivity : AppCompatActivity() {
     private fun gotoNextRound() {
         awaitNextRound.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
         nextroundFlag = true
+        GameMethods.pauseTimer()
 
         if (oldRound < game.playrounds.size) {
             GameMethods.playerAllocation(
@@ -173,20 +182,20 @@ class EvaluationActivity : AppCompatActivity() {
             override fun onTaskComplete(result: Game) {
                 game = result
 
-                game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answer
+                game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answer
 
-                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answerScore > game.playrounds.getValue(
+                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answerScore > game.playrounds.getValue(
                         "round${game.activeRound}"
-                    ).opponents.getValue("opponent1").answerScore
+                    ).opponents.getValue(GameMethods.opp1).answerScore
                 ) {
-                    game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answerScore += 50
+                    game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answerScore += 50
                 } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        "opponent0"
+                        GameMethods.opp0
                     ).answerScore < game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        "opponent1"
+                        GameMethods.opp1
                     ).answerScore
                 ) {
-                    game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent1").answerScore += 50
+                    game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp1).answerScore += 50
                 }
 
                 db.document(game.gameID)
@@ -194,10 +203,10 @@ class EvaluationActivity : AppCompatActivity() {
                         mapOf(
                             "playrounds.round${game.activeRound}.opponents.opponent0.answerScore" to game.playrounds.getValue(
                                 "round${game.activeRound}"
-                            ).opponents.getValue("opponent0").answerScore,
+                            ).opponents.getValue(GameMethods.opp0).answerScore,
                             "playrounds.round${game.activeRound}.opponents.opponent1.answerScore" to game.playrounds.getValue(
                                 "round${game.activeRound}"
-                            ).opponents.getValue("opponent1").answerScore
+                            ).opponents.getValue(GameMethods.opp1).answerScore
                         )
                     )
                     .addOnSuccessListener {
@@ -217,9 +226,9 @@ class EvaluationActivity : AppCompatActivity() {
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
                 game = documentSnapshot.toObject(Game::class.java)!!
-                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answerScore > game.playrounds.getValue(
+                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answerScore > game.playrounds.getValue(
                         "round${game.activeRound}"
-                    ).opponents.getValue("opponent1").answerScore
+                    ).opponents.getValue(GameMethods.opp1).answerScore
                 ) {
                     setWinnerInfo(
                         0,
@@ -230,9 +239,9 @@ class EvaluationActivity : AppCompatActivity() {
                         imageWinnerPhoto
                     )
                 } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        "opponent0"
+                        GameMethods.opp0
                     ).answerScore < game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        "opponent1"
+                        GameMethods.opp1
                     ).answerScore
                 ) {
                     setWinnerInfo(
@@ -244,9 +253,9 @@ class EvaluationActivity : AppCompatActivity() {
                         imageWinnerPhoto
                     )
                 } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        "opponent0"
+                        GameMethods.opp0
                     ).answerScore == game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        "opponent1"
+                        GameMethods.opp1
                     ).answerScore
                 ) {
                     setWinnerInfo(
@@ -273,7 +282,6 @@ class EvaluationActivity : AppCompatActivity() {
     }
 
 
-    @SuppressLint("SetTextI18n")
     private fun setWinnerInfo(
         winnerIndex: Int,
         frameView: View?,
@@ -287,7 +295,7 @@ class EvaluationActivity : AppCompatActivity() {
         answerView?.text =
             game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent$winnerIndex").answer
         scoreView?.text =
-            "+" + game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent$winnerIndex").answerScore.toString()
+            ("+" + game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent$winnerIndex").answerScore.toString())
 
         dbUsers.document(
             game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
