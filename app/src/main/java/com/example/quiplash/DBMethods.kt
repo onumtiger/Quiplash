@@ -208,6 +208,8 @@ class DBMethods {
                         Log.d("SUCCESS", "DocumentSnapshot successfully deleted!")
                     }
                     .addOnFailureListener { e -> Log.w("ERROR", "Error deleting document", e) }
+            }
+
             fun updateUserImage(userid :String, imagepath :String, callback: Callback<Boolean>) {
                 db.collection(usersPath).document(userid).update("photo", imagepath)
                     .addOnSuccessListener {
