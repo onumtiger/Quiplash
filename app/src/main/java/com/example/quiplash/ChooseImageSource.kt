@@ -17,7 +17,6 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -26,17 +25,15 @@ import java.util.*
 
 class ChooseImageSource : DialogFragment() {
     lateinit var current_User: UserQP
-    private val CAMERA_REQUEST_CODE = 200
+    private val CAMERA_REQUEST_CODE = 1
     private val PICK_IMAGE_REQUEST = 71
-    private var filePath: Uri? = null
+    private lateinit var filePath: String
     var photoPath : String = "images/default-user.png"
     private var imageUri: Uri? = null
 
     //Firebase
     private lateinit var auth: FirebaseAuth
-    private var authListener: FirebaseAuth.AuthStateListener? = null
     private var storage: FirebaseStorage? = null
-    private var storageReference: StorageReference? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.interaction_edit_profile_images, container, false)
@@ -48,8 +45,7 @@ class ChooseImageSource : DialogFragment() {
         val btnGallery = view.findViewById<AppCompatImageButton>(R.id.gallery_button)
 
         auth = FirebaseAuth.getInstance()
-        storage = FirebaseStorage.getInstance();
-        var fotostorage = FirebaseStorage.getInstance();
+        storage = FirebaseStorage.getInstance()
 
         val callbackGetUser = object: Callback<UserQP> {
             override fun onTaskComplete(result :UserQP) {
@@ -58,7 +54,7 @@ class ChooseImageSource : DialogFragment() {
         }
         DBMethods.DBCalls.getUser(callbackGetUser)
 
-        btnCamera.setOnClickListener(){
+        btnCamera.setOnClickListener{
             context?.let { it1 -> Sounds.playClickSound(it1) }
             pickFromCamera()
         }
@@ -75,33 +71,39 @@ class ChooseImageSource : DialogFragment() {
             setFullScreen = requireNotNull(arguments?.getBoolean("fullScreen"))
         }
         if (setFullScreen)
-            setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+            setStyle(STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         // pick from camera
-        if (requestCode === CAMERA_REQUEST_CODE && data != null) {
-            filePath = imageUri
-            Log.d("imageUri on R", imageUri.toString())
-            Log.d("filepath on R", filePath.toString())
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            imageUri = data!!.data
+            uploadImage()
         }
 
         // choose image
-        if (requestCode === PICK_IMAGE_REQUEST && resultCode === Activity.RESULT_OK && android.R.attr.data != null && data?.data != null
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data?.data != null
         ) {
-            filePath = data?.data!!
+            imageUri = data.data!!
+            uploadImage()
         }
 
-        saveImage()
     }
 
 
     private fun pickFromCamera() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        getImageUri()
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        //getImageUri()
+        //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        /*var outputImg : File
+
+        val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).also {
+
+            outputImg = File(it, "CameraContentDemo.jpeg")
+        }
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputImg))*/
 
         startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE)
     }
@@ -138,42 +140,41 @@ class ChooseImageSource : DialogFragment() {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
     }
 
-    private fun saveImage() {
-        var uploadPath = uploadImage()
-        if (uploadPath != ""){
-            photoPath = uploadPath
-        }
+    private fun saveImage(picpath:String) {
 
-        val ID = auth.currentUser?.uid.toString()
-
-        val user = UserQP(ID, current_User.userName, current_User.guest, current_User.score, photoPath, current_User.friends, current_User.token)
-        DBMethods.DBCalls.editUser(ID, user)
-
-        val intent = Intent(context, Edit_ProfileActivity::class.java);
-        startActivity(intent);
-    }
-
-    private fun uploadImage(): String {
-        var photoPath: String = ""
-        if (filePath != null) {
-            val progressDialog = ProgressDialog(context)
-            progressDialog.setTitle("Uploading...")
-            progressDialog.show()
-            storageReference = storage!!.getReference();
-            photoPath = "images/" + UUID.randomUUID().toString()
-            val ref =
-                storageReference!!.child(photoPath)
-            ref.putFile(filePath!!)
-                .addOnSuccessListener {
-                    progressDialog.dismiss()
-                    Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener { e ->
-                    progressDialog.dismiss()
+        val callbackUpdateImage = object: Callback<Boolean> {
+            override fun onTaskComplete(result:Boolean) {
+                if(result){
+                    val intent = Intent(context, Edit_ProfileActivity::class.java)
+                    startActivity(intent)
+                } else{
                     Toast.makeText(context, "Failed ", Toast.LENGTH_SHORT)
                         .show()
                 }
+            }
         }
-        return photoPath
+        DBMethods.DBCalls.updateUserImage(auth.currentUser?.uid.toString(), picpath, callbackUpdateImage)
+    }
+
+    private fun uploadImage() {
+        val progressDialog = ProgressDialog(context)
+        progressDialog.setTitle("Uploading...")
+        progressDialog.show()
+        filePath = "images/${UUID.randomUUID()}"
+        storage!!.reference.child(filePath)
+            .putFile(imageUri!!)
+            .addOnSuccessListener {
+                progressDialog.dismiss()
+                Log.d("CAMERA /", "path: "+it.storage.path)
+                storage!!.reference.child(filePath).downloadUrl
+                    .addOnSuccessListener { uri ->
+                        saveImage(filePath)
+                    }
+            }.addOnFailureListener {
+                progressDialog.dismiss()
+                Toast.makeText(context, "Failed ", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
     }
 }

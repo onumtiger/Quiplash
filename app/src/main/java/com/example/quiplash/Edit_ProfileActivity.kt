@@ -11,12 +11,16 @@ import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
-import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import com.bumptech.glide.Glide
 import com.example.quiplash.DBMethods.DBCalls.Companion.editUser
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -237,19 +241,19 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        var viewProfilePic: ImageView = findViewById(R.id.imageView)
+        val viewProfilePic: ImageView = findViewById(R.id.imageView)
 
         // pick from camera
-        if (requestCode === CAMERA_REQUEST_CODE && resultCode === Activity.RESULT_OK) {
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val extras: Bundle? = data?.extras
             val imageBitmap = extras?.get("data") as Bitmap?
             viewProfilePic.setImageBitmap(imageBitmap)
         }
 
         // choose image
-        if (requestCode === PICK_IMAGE_REQUEST && resultCode === Activity.RESULT_OK && attr.data != null && data?.data != null
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data?.data != null
         ) {
-            filePath = data?.data!!
+            filePath = data.data!!
             try {
                 val bitmap =
                     MediaStore.Images.Media.getBitmap(contentResolver, filePath)
@@ -278,12 +282,12 @@ class Edit_ProfileActivity : AppCompatActivity() {
     }
 
     private fun uploadImage(): String {
-        var photoPath: String = ""
+        var photoPath = ""
         if (filePath != null) {
             val progressDialog = ProgressDialog(this)
             progressDialog.setTitle("Uploading...")
             progressDialog.show()
-            storageReference = storage!!.getReference()
+            storageReference = storage!!.reference
             photoPath = "images/" + UUID.randomUUID().toString()
             val ref =
                 storageReference!!.child(photoPath)
