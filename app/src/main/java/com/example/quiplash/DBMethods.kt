@@ -199,6 +199,18 @@ class DBMethods {
                 }
             }
 
+            fun updateUserImage(userid :String, imagepath :String, callback: Callback<Boolean>) {
+                db.collection(usersPath).document(userid).update("photo", imagepath)
+                    .addOnSuccessListener {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!")
+                        callback.onTaskComplete(true)
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w(TAG, "Error updating document", e)
+                        callback.onTaskComplete(false)
+                    }
+            }
+
             fun deleteUser(){
             }
 

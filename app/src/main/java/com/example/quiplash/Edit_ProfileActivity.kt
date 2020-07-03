@@ -57,7 +57,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        storage = FirebaseStorage.getInstance();
+        storage = FirebaseStorage.getInstance()
         var fotostorage = FirebaseStorage.getInstance();
         var storageRef = fotostorage.reference
         var photoPath : String = "images/default-user.png"
@@ -103,37 +103,37 @@ class Edit_ProfileActivity : AppCompatActivity() {
         val callback = object: Callback<UserQP> {
             override fun onTaskComplete(result :UserQP) {
                 current_User = result
-                if (current_User.userName.toString() == "User") {
+                if (current_User.userName == "User") {
                     // display default info if fetching data fails
                     viewUsername.hint = "Username"
                     // set default user image if fetchting data fails
                     var spaceRef = storageRef.child(photoPath)
                     spaceRef.downloadUrl
-                        .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
+                        .addOnSuccessListener { uri ->
                             Glide
                                 .with(applicationContext)
                                 .load(uri)
                                 .into(viewProfilePic)
-                        }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
+                        }.addOnFailureListener { Log.d("Test", " Failed!") }
 
                 }
                 else {
                     photoPath = current_User.photo.toString()
                     viewUsername.hint = "Username"
                     viewUsername.setText(current_User.userName.toString())
-                    score = current_User.score!!
+                    score = current_User.score
                     friends = current_User.friends
                     // timer is needed to load new photo is user edits its profile pic
                     val handler = Handler()
                     handler.postDelayed(Runnable {
                         var spaceRef = storageRef.child(photoPath)
                         spaceRef.downloadUrl
-                            .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
+                            .addOnSuccessListener { uri ->
                                 Glide
                                     .with(applicationContext)
                                     .load(uri)
                                     .into(viewProfilePic)
-                            }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
+                            }.addOnFailureListener { Log.d("Test", " Failed!") }
                     }, 200)
                 }
             }
@@ -148,14 +148,14 @@ class Edit_ProfileActivity : AppCompatActivity() {
         }
         DBMethods.DBCalls.getUsers(callbackGetUsers)
 
-        btnBack.setOnClickListener() {
+        btnBack.setOnClickListener {
             Sounds.playClickSound(this)
 
             val intent = Intent(this, Profile_RegisteredActivity::class.java);
-            startActivity(intent);
+            startActivity(intent)
         }
 
-        btnEditPicture.setOnClickListener(){
+        btnEditPicture.setOnClickListener{
             Sounds.playClickSound(this)
 
             // pickFromCamera()
@@ -172,11 +172,11 @@ class Edit_ProfileActivity : AppCompatActivity() {
             dialogFragment.show(ft, "delete")
         }
 
-        btnChangeRest.setOnClickListener() {
+        btnChangeRest.setOnClickListener {
             Sounds.playClickSound(this)
 
-            val intent = Intent(this, Edit_PW_Mail_Activity::class.java);
-            startActivity(intent);
+            val intent = Intent(this, Edit_PW_Mail_Activity::class.java)
+            startActivity(intent)
 
 
 /*
@@ -257,8 +257,8 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
                      // hier muss die Friendslist der anderen geupdated werden
                      editUser(ID, user)
-                     val intent = Intent(this, Profile_RegisteredActivity::class.java);
-                     startActivity(intent);
+                     val intent = Intent(this, Profile_RegisteredActivity::class.java)
+                     startActivity(intent)
                  }
              } else {
                  Toast.makeText(this, "please tip in a new username", Toast.LENGTH_LONG).show()
@@ -269,19 +269,19 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        var viewProfilePic: ImageView = findViewById(R.id.imageView)
+        val viewProfilePic: ImageView = findViewById(R.id.imageView)
 
         // pick from camera
-        if (requestCode === CAMERA_REQUEST_CODE && resultCode === Activity.RESULT_OK) {
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val extras: Bundle? = data?.extras
             val imageBitmap = extras?.get("data") as Bitmap?
             viewProfilePic.setImageBitmap(imageBitmap)
         }
 
         // choose image
-        if (requestCode === PICK_IMAGE_REQUEST && resultCode === Activity.RESULT_OK && attr.data != null && data?.data != null
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data?.data != null
         ) {
-            filePath = data?.data!!
+            filePath = data.data!!
             try {
                 val bitmap =
                     MediaStore.Images.Media.getBitmap(contentResolver, filePath)
@@ -310,12 +310,12 @@ class Edit_ProfileActivity : AppCompatActivity() {
     }
 
     private fun uploadImage(): String {
-        var photoPath: String = ""
+        var photoPath = ""
         if (filePath != null) {
             val progressDialog = ProgressDialog(this)
             progressDialog.setTitle("Uploading...")
             progressDialog.show()
-            storageReference = storage!!.getReference();
+            storageReference = storage!!.reference;
             photoPath = "images/" + UUID.randomUUID().toString()
             val ref =
                 storageReference!!.child(photoPath)
