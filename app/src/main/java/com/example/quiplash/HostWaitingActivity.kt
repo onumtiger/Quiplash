@@ -31,6 +31,7 @@ class HostWaitingActivity : AppCompatActivity() {
     private lateinit var selectedQuestions: ArrayList<Question>
 
     private lateinit var awaitGamestart: ListenerRegistration
+    private var game_questions = arrayListOf<Question>()
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +43,10 @@ class HostWaitingActivity : AppCompatActivity() {
         } catch (e: NullPointerException) {
         }
         setContentView(R.layout.activity_host_waiting)
+
+        //add Questions to Game
+        selectedQuestions = arrayListOf<Question>()
+        getQuestionsForGame(game.rounds, game.playerNumber,game.category)
 
 
         //if(game.hostID != auth.currentUser?.uid) {
@@ -139,10 +144,6 @@ class HostWaitingActivity : AppCompatActivity() {
             }
             getUserWithID(callbackUser, auth.currentUser?.uid.toString())
         }
-
-        //add Questions to Game
-        selectedQuestions = arrayListOf<Question>()
-        getQuestionsForGame(game.rounds, game.playerNumber,game.category)
     }
 
     fun seeFriendsList() {
@@ -279,7 +280,6 @@ class HostWaitingActivity : AppCompatActivity() {
             while (roundCount < game.users.size - jump) {
 
                 val voters = linkedMapOf<String, Voter>()
-                val question = game.questions[roundCount].question
                 for (user in game.users) {
 
                     if (game.users.indexOf(user) != roundCount && game.users.indexOf(user) != (roundCount + jump)) {
@@ -293,7 +293,7 @@ class HostWaitingActivity : AppCompatActivity() {
                         GameMethods.opp0 to Opponent(game.users[roundCount]),
                         GameMethods.opp1 to Opponent(game.users[roundCount + jump])
                     ),
-                    question.toString()
+                    ""
                 ))
 
                 roundCount += 1
@@ -311,6 +311,11 @@ class HostWaitingActivity : AppCompatActivity() {
 
             allRoundCount += 1
         }
+
+        for (x in 0.. allRounds.size-1){
+            allRounds["round$x"]?.question = game_questions[x].question.toString()
+        }
+
 
         return allRounds
 
@@ -338,13 +343,12 @@ class HostWaitingActivity : AppCompatActivity() {
                     val position = (0 until result.size).random()
                     if (result[position].type.toString() == selected_category){
                         selectedQuestions.add(result[position])
-                        result.drop(position)
+                        var current_question = result[position]
+                        result.remove(current_question)
                         counter += 1
                     }
                 }
-                val updatedGame = game
-                updatedGame.questions = selectedQuestions
-                editGame(game.gameID, updatedGame)
+                game_questions = selectedQuestions
             }
         }
         DBMethods.DBCalls.getQuestions(callback)
