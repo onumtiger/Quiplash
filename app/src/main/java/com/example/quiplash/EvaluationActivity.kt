@@ -1,6 +1,5 @@
 package com.example.quiplash
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -25,8 +24,8 @@ class EvaluationActivity : AppCompatActivity() {
     //Firestore
     lateinit var db: CollectionReference
     lateinit var dbUsers: CollectionReference
-    private val dbGamesPath = "games"
-    private val dbUsersPath = "users"
+    private val dbGamesPath = DBMethods.DBCalls.gamesPath
+    private val dbUsersPath = DBMethods.DBCalls.usersPath
     private var auth: FirebaseAuth? = null
 
     //Views
@@ -46,9 +45,9 @@ class EvaluationActivity : AppCompatActivity() {
     private var playerPhoto = ""
     lateinit var awaitNextRound: ListenerRegistration
     private var nextroundFlag = false
+    private var setRoundFlag = false
     var oldRound = 0
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Sounds.playScoreSound(this)
@@ -56,7 +55,17 @@ class EvaluationActivity : AppCompatActivity() {
         dbUsers = FirebaseFirestore.getInstance().collection(dbUsersPath)
         auth = FirebaseAuth.getInstance()
 
-        setPoints()
+        //setPoints()
+
+        val callbackPoints = object : Callback<Boolean> {
+            override fun onTaskComplete(result: Boolean) {
+                if(result){
+                    getWinner()
+                }
+            }
+        }
+        GameMethods.setPoints(callbackPoints)
+
         try {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
@@ -84,14 +93,17 @@ class EvaluationActivity : AppCompatActivity() {
 
         oldRound = game.activeRound
 
-        questionEval.text = game.playrounds.getValue("round${game.activeRound - 1}").question
-        roundViewEval.text = "${ceil(game.activeRound.toDouble() / 3).toInt()}/${game.rounds}"
+        questionEval.text = game.playrounds.getValue("round${game.activeRound}").question
+        roundViewEval.text = ("${ceil(game.activeRound.toDouble() / game.rounds).toInt()}/${game.rounds}")
 
 
         val callbackTimer = object : Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
                 Sounds.playClickSound(this@EvaluationActivity)
-                setNextRound()
+                if(!setRoundFlag) {
+                    setRoundFlag = true
+                    setNextRound()
+                }
             }
         }
         startTimer(textViewTimer, startSecondsIdle, callbackTimer)
@@ -103,7 +115,10 @@ class EvaluationActivity : AppCompatActivity() {
 
         nextBtn.setOnClickListener {
             Sounds.playClickSound(this)
-            setNextRound()
+            if(!setRoundFlag) {
+                setRoundFlag = true
+                setNextRound()
+            }
         }
 
 
@@ -142,15 +157,18 @@ class EvaluationActivity : AppCompatActivity() {
     private fun gotoNextRound() {
         awaitNextRound.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
         nextroundFlag = true
+        GameMethods.pauseTimer()
 
         if (oldRound < game.playrounds.size) {
             GameMethods.playerAllocation(
                 this.applicationContext,
                 auth!!.currentUser?.uid.toString()
             )
+            finish()
         } else {
             val intent = Intent(this, EndOfGameActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
     }
@@ -164,31 +182,31 @@ class EvaluationActivity : AppCompatActivity() {
             override fun onTaskComplete(result: Game) {
                 game = result
 
-                game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answer
+                game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answer
 
-                if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answerScore > game.playrounds.getValue(
-                        "round${game.activeRound - 1}"
-                    ).opponents.getValue("opponent1").answerScore
+                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answerScore > game.playrounds.getValue(
+                        "round${game.activeRound}"
+                    ).opponents.getValue(GameMethods.opp1).answerScore
                 ) {
-                    game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answerScore += 50
-                } else if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
-                        "opponent0"
-                    ).answerScore < game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
-                        "opponent1"
+                    game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answerScore += 50
+                } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
+                        GameMethods.opp0
+                    ).answerScore < game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
+                        GameMethods.opp1
                     ).answerScore
                 ) {
-                    game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent1").answerScore += 50
+                    game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp1).answerScore += 50
                 }
 
                 db.document(game.gameID)
                     .update(
                         mapOf(
-                            "playrounds.round${game.activeRound - 1}.opponents.opponent0.answerScore" to game.playrounds.getValue(
-                                "round${game.activeRound - 1}"
-                            ).opponents.getValue("opponent0").answerScore,
-                            "playrounds.round${game.activeRound - 1}.opponents.opponent1.answerScore" to game.playrounds.getValue(
-                                "round${game.activeRound - 1}"
-                            ).opponents.getValue("opponent1").answerScore
+                            "playrounds.round${game.activeRound}.opponents.opponent0.answerScore" to game.playrounds.getValue(
+                                "round${game.activeRound}"
+                            ).opponents.getValue(GameMethods.opp0).answerScore,
+                            "playrounds.round${game.activeRound}.opponents.opponent1.answerScore" to game.playrounds.getValue(
+                                "round${game.activeRound}"
+                            ).opponents.getValue(GameMethods.opp1).answerScore
                         )
                     )
                     .addOnSuccessListener {
@@ -208,9 +226,9 @@ class EvaluationActivity : AppCompatActivity() {
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
                 game = documentSnapshot.toObject(Game::class.java)!!
-                if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent0").answerScore > game.playrounds.getValue(
-                        "round${game.activeRound - 1}"
-                    ).opponents.getValue("opponent1").answerScore
+                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answerScore > game.playrounds.getValue(
+                        "round${game.activeRound}"
+                    ).opponents.getValue(GameMethods.opp1).answerScore
                 ) {
                     setWinnerInfo(
                         0,
@@ -220,24 +238,24 @@ class EvaluationActivity : AppCompatActivity() {
                         winnerName,
                         imageWinnerPhoto
                     )
-                } else if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
-                        "opponent0"
-                    ).answerScore < game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
-                        "opponent1"
+                } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
+                        GameMethods.opp0
+                    ).answerScore < game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
+                        GameMethods.opp1
                     ).answerScore
                 ) {
                     setWinnerInfo(
                         1,
-                        frameProfileDraw,
+                        frameProfile,
                         answerViewWinner,
                         scoreView,
                         winnerName,
                         imageWinnerPhoto
                     )
-                } else if (game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
-                        "opponent0"
-                    ).answerScore == game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
-                        "opponent1"
+                } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
+                        GameMethods.opp0
+                    ).answerScore == game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
+                        GameMethods.opp1
                     ).answerScore
                 ) {
                     setWinnerInfo(
@@ -264,7 +282,6 @@ class EvaluationActivity : AppCompatActivity() {
     }
 
 
-    @SuppressLint("SetTextI18n")
     private fun setWinnerInfo(
         winnerIndex: Int,
         frameView: View?,
@@ -276,12 +293,12 @@ class EvaluationActivity : AppCompatActivity() {
         frameView?.visibility = View.VISIBLE
 
         answerView?.text =
-            game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent$winnerIndex").answer
+            game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent$winnerIndex").answer
         scoreView?.text =
-            "+" + game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue("opponent$winnerIndex").answerScore.toString()
+            ("+" + game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent$winnerIndex").answerScore.toString())
 
         dbUsers.document(
-            game.playrounds.getValue("round${game.activeRound - 1}").opponents.getValue(
+            game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                 "opponent$winnerIndex"
             ).userID.toString()
         )

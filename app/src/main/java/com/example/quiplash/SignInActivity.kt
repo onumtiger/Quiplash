@@ -8,14 +8,16 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quiplash.GameManager.Companion.setUserinfo
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.example.quiplash.GameManager.Companion.setUserinfo
 
 
 class SignInActivity : AppCompatActivity() {
@@ -29,14 +31,14 @@ class SignInActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: CollectionReference
-    private val dbUsersPath = "users"
+    private val dbUsersPath = DBMethods.DBCalls.usersPath
 
     //Local-Storage
-    private val PREF_NAME = "Quiplash"
-    private var PRIVATE_MODE = 0
+    private val PREFNAME = "Quiplash"
+    private var PRIVATEMODE = 0
     var sharedPreference: SharedPreferences? = null
-    val prefKey = "guestid"
-    val prefDefValue = "noguest"
+    private val prefKey = "guestid"
+    private val prefDefValue = "noguest"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +49,7 @@ class SignInActivity : AppCompatActivity() {
         // Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
 
-        sharedPreference =  getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+        sharedPreference =  getSharedPreferences(PREFNAME, PRIVATEMODE)
         db = FirebaseFirestore.getInstance().collection(dbUsersPath)
 
         //First check, if user is logged in
@@ -122,14 +124,19 @@ class SignInActivity : AppCompatActivity() {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         progressBar.visibility = View.INVISIBLE
-                        if (!task.isSuccessful()) {
-                            // there was an error
-                            Toast.makeText(
-                                this@SignInActivity,
-                                getString(R.string.auth_failed),
-                                Toast.LENGTH_LONG
-                            ).show()
 
+                        if (!task.isSuccessful) {
+                            try {
+                                throw task.exception!!
+                            } // if user enters wrong email.
+                            catch (invalidEmail: FirebaseAuthInvalidUserException) {
+                                textviewError.text = getString(R.string.wrong_email)
+                            } // if user enters wrong password.
+                            catch (wrongPassword: FirebaseAuthInvalidCredentialsException) {
+                                textviewError.text = getString(R.string.wrong_password)
+                            } catch (e: Exception) {
+                                textviewError.text = e.message
+                            }
                         } else {
                             setUser(auth.currentUser?.uid.toString())
                         }

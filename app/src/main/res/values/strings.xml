@@ -97,4 +97,9 @@
     <string name="next_round_starts">Next Round starts</string>
     <string name="show_scoreboard">Show Scoreboard</string>
     <string name="category_label">\"Category: \"</string>
+    <string name="please_enter_username">please tip in a new username</string>
+    <string name="weak_password">Password too short, enter minimum 6 characters!</string>
+    <string name="wrong_password">Wrong Password!</string>
+    <string name="somethin_went_wrong">UUPS! Something went wrong. Please try again later.</string>
+    <string name="wrong_email">Wrong e-Mail!</string>
 </resources>

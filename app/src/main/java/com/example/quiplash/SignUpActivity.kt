@@ -9,11 +9,13 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import com.example.quiplash.GameManager.Companion.setUserinfo
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -30,20 +32,20 @@ class SignUpActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: CollectionReference
-    private val dbUsersPath = "users"
+    private val dbUsersPath = DBMethods.DBCalls.usersPath
 
     //Local-Storage
-    private val PREF_NAME = "Quiplash"
-    private var PRIVATE_MODE = 0
+    private val PREFNAME = "Quiplash"
+    private var PRIVATEMODE = 0
     var sharedPreference: SharedPreferences? = null
-    val prefKey = "guestid"
+    private val prefKey = "guestid"
 
     //UserInfo
     var isUser: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedPreference = getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+        sharedPreference = getSharedPreferences(PREFNAME, PRIVATEMODE)
         try {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
@@ -87,31 +89,17 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         btnSubmit.setOnClickListener {
-            var userExist = false
-            db.get()
-                .addOnSuccessListener { userCollectionDB ->
-                    for (userItemDB in userCollectionDB) {
-                        val userDB = userItemDB.toObject(UserQP::class.java)
-
-                        if (userDB.userName.toLowerCase() == inputUsername.text.toString()
-                                .toLowerCase()
-                        ) {
-                            textviewErrorUserName.text = getString(R.string.username_not_available)
-                            userExist = true
-                        }
-                        continue
-                    }
-                    if (userExist) {
+            val callbackCheckUsername = object: Callback<Boolean> {
+                override fun onTaskComplete(result: Boolean) {
+                    if (result) {
                         textviewErrorUserName.text = getString(R.string.username_not_available)
                     } else {
                         createUser()
                     }
+                }
+            }
+            DBMethods.DBCalls.checkUsername("", inputUsername.text.toString(), callbackCheckUsername)
 
-                }
-                .addOnFailureListener { exception ->
-                    Log.d("ERROR", "" + exception)
-                    createUser()
-                }
 
         }
 
@@ -123,25 +111,32 @@ class SignUpActivity : AppCompatActivity() {
                     inputEmail.text.toString(),
                     inputPassword.text.toString()
                 )
-                    .addOnCompleteListener(this,
-                        OnCompleteListener<AuthResult?> { task ->
-                            progressBar.visibility = View.INVISIBLE
+                    .addOnCompleteListener(this
+                    ) { task ->
+                        progressBar.visibility = View.INVISIBLE
 
-                            if (task.isSuccessful) {
-                                // Sign in success, update UI with the signed-in user's information
-                                isUser = true
-                                simpleViewFlipper.showNext()
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            isUser = true
+                            simpleViewFlipper.showNext()
 
-                            } else {
-
-                                Toast.makeText(
-                                    this@SignUpActivity, "Authentication failed." + task.result,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                        } else {
+                            try {
+                                throw task.exception!!
+                            } // if user enters wrong email.
+                            catch (weakPassword: FirebaseAuthWeakPasswordException) {
+                                textviewError.text = getString(R.string.wrong_email)
+                            } // if user enters wrong password.
+                            catch (malformedEmail: FirebaseAuthInvalidCredentialsException) {
+                                textviewError.text = getString(R.string.wrong_password)
+                            } catch (existEmail: FirebaseAuthUserCollisionException) {
+                                textviewError.text = getString(R.string.email_already_exists)
+                            } catch (e: Exception) {
+                                textviewError.text = getString(R.string.somethin_went_wrong)
                             }
+                        }
 
-                            // ...
-                        })
+                    }
             } else {
 
                 errotext = ""
@@ -158,7 +153,7 @@ class SignUpActivity : AppCompatActivity() {
                 }
 
                 if (inputPassword.text.length < 6) {
-                    errotext += "Password too short, enter minimum 6 characters! \n"
+                    errotext += getString(R.string.weak_password) +"\n"
                 }
 
                 textviewError.text = errotext

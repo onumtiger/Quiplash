@@ -4,10 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_choose_question_type.*
 
@@ -31,6 +28,8 @@ class ChooseQuestionTypeActivity : AppCompatActivity() {
         val btnFunny = findViewById<Button>(R.id.btnFunny)
         val btnPoetic = findViewById<Button>(R.id.btnPoetic)
         val btnHarsh = findViewById<Button>(R.id.btnHarsh)
+        val btnBck = findViewById<ImageButton>(R.id.profile_go_back_arrow3)
+
         textfield = findViewById(R.id.choose)
         addQuestion = findViewById(R.id.BtnAddNewQuestion)
         new_question_text = findViewById(R.id.new_question_text)
@@ -43,11 +42,18 @@ class ChooseQuestionTypeActivity : AppCompatActivity() {
             if (new_question_text.text.toString() != ""){
                 DBMethods.DBCalls.saveQuestion(new_question_text.text.toString(), newType)
                 Toast.makeText(this, "New Question Added To Database!", Toast.LENGTH_LONG).show()
-                val intent = Intent(this@ChooseQuestionTypeActivity, Profile_RegisteredActivity::class.java)
+                val intent = Intent(this@ChooseQuestionTypeActivity, ProfileActivity::class.java)
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Please Tip In A New Question", Toast.LENGTH_LONG).show()
             }
+        }
+
+        btnBck.setOnClickListener {
+            Sounds.playClickSound(this)
+
+            val intent = Intent(this, ProfileActivity::class.java);
+            startActivity(intent);
         }
 
         btnStandard.setOnClickListener {

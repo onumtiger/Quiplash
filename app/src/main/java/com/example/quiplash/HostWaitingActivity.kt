@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -27,9 +28,10 @@ class HostWaitingActivity : AppCompatActivity() {
     //Firestore
     lateinit var db: CollectionReference
     private val dbGamesPath = "games"
-    private lateinit var selected_questions: ArrayList<Question>
+    private lateinit var selectedQuestions: ArrayList<Question>
 
-    lateinit var awaitGamestart: ListenerRegistration
+    private lateinit var awaitGamestart: ListenerRegistration
+    private var game_questions = arrayListOf<Question>()
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +43,10 @@ class HostWaitingActivity : AppCompatActivity() {
         } catch (e: NullPointerException) {
         }
         setContentView(R.layout.activity_host_waiting)
+
+        //add Questions to Game
+        selectedQuestions = arrayListOf<Question>()
+        getQuestionsForGame(game.rounds, game.playerNumber,game.category)
 
 
         //if(game.hostID != auth.currentUser?.uid) {
@@ -138,10 +144,6 @@ class HostWaitingActivity : AppCompatActivity() {
             }
             getUserWithID(callbackUser, auth.currentUser?.uid.toString())
         }
-
-        //add Questions to Game
-        selected_questions = arrayListOf<Question>()
-        getQuestionsForGame(game.rounds, game.playerNumber,game.category)
     }
 
     fun seeFriendsList() {
@@ -201,7 +203,7 @@ class HostWaitingActivity : AppCompatActivity() {
         }
     }
 
-    fun getUsersList(
+    private fun getUsersList(
         playersListView: ListView,
         gameID: String
     ) {
@@ -240,12 +242,14 @@ class HostWaitingActivity : AppCompatActivity() {
         Sounds.playStartSound(this)
         val intent = Intent(this, GameLaunchingActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun gotoGameLanding() {
         awaitGamestart.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
         val intent = Intent(this, LandingActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     /**
@@ -276,7 +280,6 @@ class HostWaitingActivity : AppCompatActivity() {
             while (roundCount < game.users.size - jump) {
 
                 val voters = linkedMapOf<String, Voter>()
-                var question = game.questions[jump-1].question
                 for (user in game.users) {
 
                     if (game.users.indexOf(user) != roundCount && game.users.indexOf(user) != (roundCount + jump)) {
@@ -287,10 +290,10 @@ class HostWaitingActivity : AppCompatActivity() {
                 oneRound += (Round(
                     voters,
                     linkedMapOf(
-                        "opponent0" to Opponent(game.users[roundCount]),
-                        "opponent1" to Opponent(game.users[roundCount + jump])
+                        GameMethods.opp0 to Opponent(game.users[roundCount]),
+                        GameMethods.opp1 to Opponent(game.users[roundCount + jump])
                     ),
-                    question.toString()
+                    ""
                 ))
 
                 roundCount += 1
@@ -309,6 +312,11 @@ class HostWaitingActivity : AppCompatActivity() {
             allRoundCount += 1
         }
 
+        for (x in 0.. allRounds.size-1){
+            allRounds["round$x"]?.question = game_questions[x].question.toString()
+        }
+
+
         return allRounds
 
     }
@@ -317,7 +325,6 @@ class HostWaitingActivity : AppCompatActivity() {
         db.document(game.gameID)
             .update("playrounds", getallRounds())
             .addOnSuccessListener {
-                //myWebSocketClient.send(game.gameID)
                 Sounds.playStartSound(this)
 
                 val intent = Intent(this, GameLaunchingActivity::class.java)
@@ -328,23 +335,20 @@ class HostWaitingActivity : AppCompatActivity() {
     }
 
     fun getQuestionsForGame(rounds: Int, player_count: Int, selected_category: String){
-        val count_questions = rounds*player_count
+        val countQuestions = rounds*player_count
         val callback = object: Callback<java.util.ArrayList<Question>> {
             override fun onTaskComplete(result: java.util.ArrayList<Question>) {
-                var all_questions = result
-                val rounds = count_questions-1
                 var counter = 0
-                while(counter < count_questions) {
-                    var position = (0..all_questions.size-1).random()
-                    if (all_questions[position].type.toString() == selected_category){
-                        selected_questions.add(all_questions[position])
-                        all_questions.drop(position)
-                        counter = counter+1
+                while(counter < countQuestions) {
+                    val position = (0 until result.size).random()
+                    if (result[position].type.toString() == selected_category){
+                        selectedQuestions.add(result[position])
+                        var current_question = result[position]
+                        result.remove(current_question)
+                        counter += 1
                     }
                 }
-                var updated_game = game
-                updated_game.questions = selected_questions
-                editGame(game.gameID.toString(), updated_game)
+                game_questions = selectedQuestions
             }
         }
         DBMethods.DBCalls.getQuestions(callback)

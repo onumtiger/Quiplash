@@ -4,7 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile_RegisteredActivity">
+    tools:context=".ProfileActivity">
+
+    <EditText
+        android:id="@+id/email_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="140dp"
+        android:ems="10"
+        android:hint="New Mail Address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textViewMail"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
+
+    <EditText
+        android:id="@+id/password_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="New Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.205"
+        app:layout_constraintStart_toEndOf="@+id/textViewPw"
+        app:layout_constraintTop_toBottomOf="@+id/email_new" />
+
+    <EditText
+        android:id="@+id/password_new2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:ems="10"
+        android:hint="Repeat New Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintStart_toEndOf="@+id/textViewPw2"
+        app:layout_constraintTop_toBottomOf="@+id/password_new" />
 
     <Button
         android:id="@+id/btnDeleteAccount"
@@ -82,10 +119,10 @@
         android:id="@+id/textViewPw"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:text="Password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintHorizontal_bias="0.077"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewMail" />
 
@@ -93,21 +130,22 @@
         android:id="@+id/textViewPw2"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="64dp"
         android:text="Password Again"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintHorizontal_bias="0.006"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMail" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewPw" />
 
     <TextView
         android:id="@+id/textViewPwOld"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginTop="40dp"
-        android:text="Old Password"
+        android:layout_width="282dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="52dp"
+        android:text="Please Tip in your current Password"
+        android:textAlignment="center"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.086"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
 
@@ -115,12 +153,12 @@
         android:id="@+id/textViewMail"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="140dp"
         android:text="E-Mail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.128"
+        app:layout_constraintHorizontal_bias="0.099"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPwOld" />
+        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
 
     <Button
         android:id="@+id/btnEditProfileRest"
@@ -142,49 +180,23 @@
         android:id="@+id/password_old"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="112dp"
         android:ems="10"
-        android:hint="old_pw"
+        android:hint="current Password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.232"
-        app:layout_constraintStart_toEndOf="@+id/textViewPwOld"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPwOld" />
 
-    <EditText
-        android:id="@+id/email_new"
+    <Button
+        android:id="@+id/next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:ems="10"
-        android:hint="new_mail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.426"
-        app:layout_constraintStart_toEndOf="@+id/textViewMail"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="116dp"
+        android:background="@android:color/holo_blue_bright"
+        android:text="next"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_old" />
-
-    <EditText
-        android:id="@+id/password_new"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:hint="new PW"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.343"
-        app:layout_constraintStart_toEndOf="@+id/textViewPw"
-        app:layout_constraintTop_toBottomOf="@+id/email_new" />
-
-    <EditText
-        android:id="@+id/password_new2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="repeat new PW"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.247"
-        app:layout_constraintStart_toEndOf="@+id/textViewPw2"
-        app:layout_constraintTop_toBottomOf="@+id/password_new" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

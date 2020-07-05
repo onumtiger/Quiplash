@@ -7,7 +7,7 @@ package com.example.quiplash
  * **/
 
 class Game {
-    var activeRound: Int = 1
+    var activeRound: Int = 0
     var category: String = ""
     var playerNumber: Int = 0
     var rounds: Int = 0
@@ -17,7 +17,6 @@ class Game {
     var isPublic: Boolean = false
     var hostID: String = ""
     var gameTitle: String = ""
-    var questions: ArrayList<Question> = arrayListOf<Question>()
     var invitations: ArrayList<String> = arrayListOf<String>()
 
 
@@ -31,7 +30,6 @@ class Game {
         hostid: String,
         ispublic: Boolean,
         gametitle: String,
-        questions: ArrayList<Question>,
         invitations: ArrayList<String>
     ) {
         this.activeRound = currentRound
@@ -43,7 +41,6 @@ class Game {
         this.hostID = hostid
         this.isPublic = ispublic
         this.gameTitle = gametitle
-        this.questions = questions
         this.invitations = invitations
     }
 
@@ -59,7 +56,6 @@ class Game {
         gameCategory: String,
         gameRounds: Int,
         gameUsers: List<String>,
-        questions: ArrayList<Question>,
         invitations: ArrayList<String>
     ) {
         this.activeRound = currentRound
@@ -72,7 +68,6 @@ class Game {
         this.isPublic = ispublic
         this.hostID = gameHostid
         this.gameTitle = gametitle
-        this.questions = questions
         this.invitations = invitations
     }
 

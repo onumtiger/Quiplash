@@ -2,7 +2,6 @@ package com.example.quiplash
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
@@ -85,6 +84,7 @@ class EndOfGameActivity : AppCompatActivity() {
             override fun onTaskComplete(result: Boolean) {
                 val intent = Intent(this@EndOfGameActivity, LandingActivity::class.java)
                 startActivity(intent)
+                finish()
             }
         }
         DBMethods.DBCalls.deleteGame(game.gameID,callbackSuccess)
