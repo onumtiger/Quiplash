@@ -6,16 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
-    <ImageButton
+    <Button
         android:id="@+id/profile_go_back_arrow"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="41dp"
+        android:background="@drawable/ic_go_back_arrow"
         android:backgroundTint="#00FFFFFF"
-        android:contentDescription="go_back_arrow"
-        android:src="@drawable/ic_go_back_arrow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,14 +60,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" /> -->
 
-    <ImageView
-        android:id="@+id/imageView"
+    <FrameLayout
+        android:id="@+id/userPhotoLayout"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/photomask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/mask_circle" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/textViewPw"
@@ -108,7 +119,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/userPhotoLayout" />
 
     <TextView
         android:id="@+id/score"
