@@ -42,7 +42,7 @@ class ProfileActivity : AppCompatActivity() {
         val fotostorage = FirebaseStorage.getInstance()
         val storageRef = fotostorage.reference
 
-        val btnBack = findViewById<AppCompatImageButton>(R.id.profile_go_back_arrow)
+        val btnBack = findViewById<Button>(R.id.profile_go_back_arrow)
         val btnEditProfile = findViewById<Button>(R.id.btnEditProfile)
         val btnaddQuestion = findViewById<Button>(R.id.btnaddQuestion)
         val btnSignOut = findViewById<Button>(R.id.sign_out)

@@ -55,37 +55,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val btnSignIn = findViewById<Button>(R.id.sign_in)
-        val btnSignUp = findViewById<Button>(R.id.sign_up)
-        val btnStart = findViewById<Button>(R.id.start)
-        val btnDB = findViewById<Button>(R.id.database)
-
-
-
-        btnSignIn.setOnClickListener() {
-            val intent = Intent(this, SignInActivity::class.java);
-            startActivity(intent);
-        }
-
-        btnSignUp.setOnClickListener() {
-            val intent = Intent(this, SignUpActivity::class.java);
-            startActivity(intent);
-        }
-
-        btnStart.setOnClickListener() {
-            val intent = Intent(this, LandingActivity::class.java);
-            startActivity(intent);
-        }
-
-        btnDB.setOnClickListener() {
-            val intent = Intent(this, Database::class.java);
-            startActivity(intent);
-        }
-
     }
 
     /**Check if saved Information about a guest exist. **/
-    fun checkGuestLogin(){
+    private fun checkGuestLogin(){
         if(sharedPreference?.getString(prefKey,prefDefValue) != prefDefValue){
             fetchGuest()
         } else {
@@ -97,7 +70,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * Get all Information about the guest by the id, which is saved local via 'SharedPreferences'
      * **/
-    fun fetchGuest(){
+    private fun fetchGuest(){
         //Set Database-Instance
         //val userRef = db.collection(sharedPreference?.getString(prefKey,prefDefValue).toString()).document(dbUsersPath)
 
