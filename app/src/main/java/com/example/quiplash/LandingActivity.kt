@@ -31,6 +31,9 @@ class LandingActivity : AppCompatActivity() {
         val btnScoreBoard = findViewById<Button>(R.id.landing_scoreboard)
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefreshInvitations)
 
+        val invitations = findViewById<TextView>(R.id.invitations)
+        invitations.visibility = View.INVISIBLE
+
         showInvitationsHint()
 
         refreshLayout.setOnRefreshListener {
