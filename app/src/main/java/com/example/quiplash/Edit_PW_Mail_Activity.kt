@@ -31,7 +31,7 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
     lateinit var btnDeleteAccount :Button
 
     lateinit var db: CollectionReference
-    private val dbUsersPath = "users"
+    private val dbUsersPath = DBMethods.usersPath
 
 
 
@@ -76,11 +76,11 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
 
 
 
-        btnBack.setOnClickListener() {
+        btnBack.setOnClickListener {
             Sounds.playClickSound(this)
 
             val intent = Intent(this, ProfileActivity::class.java);
-            startActivity(intent);
+            startActivity(intent)
         }
 
         btnNext.setOnClickListener() {

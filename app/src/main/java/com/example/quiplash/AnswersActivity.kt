@@ -21,7 +21,7 @@ class AnswersActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: CollectionReference
-    private val dbGamesPath = "games"
+    private val dbGamesPath = DBMethods.gamesPath
 
 
     @SuppressLint("SetTextI18n")
@@ -52,7 +52,7 @@ class AnswersActivity : AppCompatActivity() {
                 roundTextView.text = "${ceil((game.activeRound-1).toDouble()/3).toInt()}/${game.rounds}"
             }
         }
-        DBMethods.DBCalls.getCurrentGame(callbackGame,game.gameID)
+        DBMethods.getCurrentGame(callbackGame,game.gameID)
 
 
         val callbackTimer = object : Callback<Boolean> {

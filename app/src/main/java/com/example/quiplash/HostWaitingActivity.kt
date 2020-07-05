@@ -11,10 +11,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.quiplash.DBMethods.DBCalls.Companion.deleteGame
-import com.example.quiplash.DBMethods.DBCalls.Companion.editGame
-import com.example.quiplash.DBMethods.DBCalls.Companion.getCurrentGame
-import com.example.quiplash.DBMethods.DBCalls.Companion.getUserWithID
+import com.example.quiplash.DBMethods.Companion.deleteGame
+import com.example.quiplash.DBMethods.Companion.editGame
+import com.example.quiplash.DBMethods.Companion.getCurrentGame
+import com.example.quiplash.DBMethods.Companion.getUserWithID
 import com.google.firebase.auth.FirebaseAuth
 import com.example.quiplash.GameManager.Companion.game
 import com.google.firebase.firestore.CollectionReference
@@ -27,7 +27,7 @@ class HostWaitingActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: CollectionReference
-    private val dbGamesPath = "games"
+    private val dbGamesPath = DBMethods.gamesPath
     private lateinit var selectedQuestions: ArrayList<Question>
 
     private lateinit var awaitGamestart: ListenerRegistration
@@ -155,7 +155,7 @@ class HostWaitingActivity : AppCompatActivity() {
     fun addUserToGame() {
         val selectedItem = game
         selectedItem.users = selectedItem.users + auth.currentUser?.uid.toString()
-        DBMethods.DBCalls.updateGameUsers(selectedItem)
+        DBMethods.updateGameUsers(selectedItem)
     }
 
     fun removeUserFromGame() {
@@ -163,7 +163,7 @@ class HostWaitingActivity : AppCompatActivity() {
         val filteredUsers =
             selectedItem.users.filterIndexed { _, s -> (s != auth.currentUser?.uid.toString()) }
         selectedItem.users = filteredUsers
-        DBMethods.DBCalls.updateGameUsers(selectedItem)
+        DBMethods.updateGameUsers(selectedItem)
     }
 
     fun setBtnVisibility(currentGame: Game, currentPlayerNumber: Int, playerNumber: Int) {
@@ -351,6 +351,6 @@ class HostWaitingActivity : AppCompatActivity() {
                 game_questions = selectedQuestions
             }
         }
-        DBMethods.DBCalls.getQuestions(callback)
+        DBMethods.getQuestions(callback)
     }
 }

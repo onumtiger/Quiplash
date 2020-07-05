@@ -33,7 +33,7 @@ class Add_Player : DialogFragment() {
                 otherUsers = result
             }
         }
-        DBMethods.DBCalls.getUsers(callbackGetUsers)
+        DBMethods.getUsers(callbackGetUsers)
 
         val callbackGetUser = object: Callback<UserQP> {
             override fun onTaskComplete(result :UserQP) {
@@ -42,7 +42,7 @@ class Add_Player : DialogFragment() {
                 Log.d("friends current user", friendsListCurrentUser.toString())
             }
         }
-        DBMethods.DBCalls.getUser(callbackGetUser)
+        DBMethods.getUser(callbackGetUser)
 
         btnAdd.setOnClickListener(){
             context?.let { it1 -> Sounds.playClickSound(it1) }
@@ -72,7 +72,7 @@ class Add_Player : DialogFragment() {
                         var friend = UserQP("", "", false, -1, "", emptyList<String>(), "")
                         // check if friend user exists and get other user and its friendlist
                         for (i in 0..otherUsers.size - 1) {
-                            if (otherUsers[i].userName.toString().equals(usernameFriend, true)) {
+                            if (otherUsers[i].userName.equals(usernameFriend, true)) {
                                 friend = otherUsers[i]
                                 friendsListFriend = friend.friends
                             }
@@ -86,19 +86,19 @@ class Add_Player : DialogFragment() {
                             for(i in 0..friendsListFriend.size-1) {
                                 newfriendsListFriend.add(i, friendsListFriend[i])
                             }
-                            newfriendsListFriend.add(0, current_User.userName.toString())
+                            newfriendsListFriend.add(0, current_User.userName)
                             friend.friends = newfriendsListFriend
 
                             var newfriendsListCurrentUser = emptyList<String>().toMutableList()
                             for(i in 0..friendsListCurrentUser.size-1) {
                                 newfriendsListCurrentUser.add(i,friendsListCurrentUser[i])
                             }
-                            newfriendsListCurrentUser.add(0, friend.userName.toString())
+                            newfriendsListCurrentUser.add(0, friend.userName)
                             current_User.friends = newfriendsListCurrentUser
 
                             // update users
-                            current_User.userID?.let { it1 -> DBMethods.DBCalls.editUser(it1, current_User) }
-                            friend.userID?.let { it1 -> DBMethods.DBCalls.editUser(it1, friend) }
+                            current_User.userID?.let { it1 -> DBMethods.editUser(it1, current_User) }
+                            friend.userID?.let { it1 -> DBMethods.editUser(it1, friend) }
                         }
                     }
                 }

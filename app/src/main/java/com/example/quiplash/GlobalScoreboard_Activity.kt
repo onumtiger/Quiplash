@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
-import com.example.quiplash.DBMethods.DBCalls.Companion.getUsers
+import com.example.quiplash.DBMethods.Companion.getUsers
 import java.util.ArrayList
 
 class GlobalScoreboard_Activity : AppCompatActivity() {

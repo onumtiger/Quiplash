@@ -32,7 +32,7 @@ class SignUpActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: CollectionReference
-    private val dbUsersPath = DBMethods.DBCalls.usersPath
+    private val dbUsersPath = DBMethods.usersPath
 
     //Local-Storage
     private val PREFNAME = "Quiplash"
@@ -98,7 +98,7 @@ class SignUpActivity : AppCompatActivity() {
                     }
                 }
             }
-            DBMethods.DBCalls.checkUsername("", inputUsername.text.toString(), callbackCheckUsername)
+            DBMethods.checkUsername("", inputUsername.text.toString(), callbackCheckUsername)
 
 
         }

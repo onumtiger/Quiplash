@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import com.example.quiplash.DBMethods.DBCalls.Companion.saveQuestion
+import com.example.quiplash.DBMethods.Companion.saveQuestion
 import com.example.quiplash.SenNotificationPack.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth

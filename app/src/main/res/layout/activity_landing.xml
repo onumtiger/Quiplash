@@ -40,39 +40,12 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                                <RelativeLayout
-                                    android:id="@+id/winner"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="95dp"
-                                    android:layout_marginTop="0dp"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/textView3" >
-
-                                        <Button
-                                            android:id="@+id/landing_join_game"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:layout_marginStart="20dp"
-                                            android:layout_marginTop="0dp"
-                                            android:layout_marginEnd="20dp"
-                                            android:background="@drawable/green_view_border"
-                                            android:fontFamily="@font/roboto_slab_bold"
-                                            android:text="@string/join_game"
-                                            android:textColor="@color/colorTitles"
-                                            android:textSize="30sp"
-                                            android:textStyle="bold" />
-
-                                </RelativeLayout>
-
                         <TextView
                             android:id="@+id/invitations"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_alignEnd="@+id/landing_join_game"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginEnd="0dp"
-                            android:layout_marginBottom="0dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="-15dp"
+                            android:layout_marginLeft="375dp"
                             android:background="@drawable/round_corner_red"
                             android:text=""
                             android:textAlignment="center"
@@ -81,18 +54,32 @@
                             android:textStyle="bold" />
 
                         <Button
-                            android:id="@+id/landing_new_game"
+                            android:id="@+id/landing_join_game"
                             android:layout_width="match_parent"
                             android:layout_height="95dp"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="0dp"
                             android:layout_marginEnd="20dp"
                             android:background="@drawable/green_view_border"
                             android:fontFamily="@font/roboto_slab_bold"
-                            android:text="@string/new_game"
+                            android:text="@string/join_game"
                             android:textColor="@color/colorTitles"
                             android:textSize="30sp"
                             android:textStyle="bold" />
+
+                        <Button
+                                    android:id="@+id/landing_new_game"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="95dp"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginEnd="20dp"
+                                    android:background="@drawable/green_view_border"
+                                    android:text="@string/new_game"
+                            android:fontFamily="@font/roboto_slab_bold"
+                            android:textColor="@color/colorTitles"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
 
                         <Button
                             android:id="@+id/landing_profile"

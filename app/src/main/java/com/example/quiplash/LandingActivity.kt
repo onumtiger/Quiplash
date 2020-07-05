@@ -7,8 +7,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.quiplash.DBMethods.DBCalls.Companion.addToken
-import com.example.quiplash.DBMethods.DBCalls.Companion.getActiveGames
+import com.example.quiplash.DBMethods.Companion.addToken
+import com.example.quiplash.DBMethods.Companion.getActiveGames
 import com.google.firebase.auth.FirebaseAuth
 
 class LandingActivity : AppCompatActivity() {
@@ -31,6 +31,9 @@ class LandingActivity : AppCompatActivity() {
         val btnScoreBoard = findViewById<Button>(R.id.landing_scoreboard)
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefreshInvitations)
 
+        val invitations = findViewById<TextView>(R.id.invitations)
+        invitations.visibility = View.INVISIBLE
+
         showInvitationsHint()
 
         refreshLayout.setOnRefreshListener {
@@ -48,7 +51,7 @@ class LandingActivity : AppCompatActivity() {
                 }
             }
         }
-        DBMethods.DBCalls.getUser(callbackGetUser)
+        DBMethods.getUser(callbackGetUser)
 
         btnNewGame.setOnClickListener {
             Sounds.playClickSound(this)

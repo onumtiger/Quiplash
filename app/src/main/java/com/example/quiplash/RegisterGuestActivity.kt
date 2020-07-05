@@ -32,7 +32,7 @@ class RegisterGuestActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: CollectionReference
-    private val dbUsersPath = DBMethods.DBCalls.usersPath
+    private val dbUsersPath = DBMethods.usersPath
 
     //Local-Storage
     private val prefName = "Quiplash"
@@ -168,7 +168,7 @@ class RegisterGuestActivity : AppCompatActivity() {
                     .set(result)
                     .addOnSuccessListener {
                         Log.d("SUCCESS", "DocumentSnapshot successfully written!")
-                        DBMethods.DBCalls.deleteUser(guestid)
+                        DBMethods.deleteUser(guestid)
                         removeLocalGuestInfo()
 
                         startActivity(Intent(this@RegisterGuestActivity, ProfileActivity::class.java))
@@ -177,7 +177,7 @@ class RegisterGuestActivity : AppCompatActivity() {
                     .addOnFailureListener { e -> Log.w("ERROR", "Error writing document", e) }
             }
         }
-        DBMethods.DBCalls.getUserByName(callbackUser, inputUsername.text.toString())
+        DBMethods.getUserByName(callbackUser, inputUsername.text.toString())
 
 
 
