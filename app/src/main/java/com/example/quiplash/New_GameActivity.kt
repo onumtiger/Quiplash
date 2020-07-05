@@ -9,7 +9,7 @@ import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
-import com.example.quiplash.DBMethods.DBCalls.Companion.setGame
+import com.example.quiplash.DBMethods.Companion.setGame
 import com.example.quiplash.GameManager.Companion.game
 import com.google.firebase.auth.FirebaseAuth
 

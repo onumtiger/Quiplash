@@ -63,7 +63,7 @@ class FriendsListAdapter (val mCtx: Context, val layoutResId: Int, val currentUs
             }
             newfriendsListFriend.remove(currentUser.userName)
             friend.friends = newfriendsListFriend
-            friend.userID?.let { it4 -> DBMethods.DBCalls.editUser(it4, friend) }
+            friend.userID?.let { it4 -> DBMethods.editUser(it4, friend) }
 
             // remove friend from current user friendlist
             var newfriendsListUser = emptyList<String>().toMutableList()
@@ -72,7 +72,7 @@ class FriendsListAdapter (val mCtx: Context, val layoutResId: Int, val currentUs
             }
             newfriendsListUser.remove(friend.userName)
             currentUser.friends = newfriendsListUser
-            currentUser.userID?.let { it5 -> DBMethods.DBCalls.editUser(it5, currentUser) }
+            currentUser.userID?.let { it5 -> DBMethods.editUser(it5, currentUser) }
 
             // restart activity
             val intent = Intent(context, FriendsActivity::class.java);

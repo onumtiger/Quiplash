@@ -22,7 +22,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: CollectionReference
-    private val dbGamesPath = "games"
+    private val dbGamesPath = DBMethods.gamesPath
 
     //FirebaseAuth object
     private var auth: FirebaseAuth? = null
@@ -73,8 +73,6 @@ class PrepareAnswerActivity : AppCompatActivity() {
         textViewRound.text = "${ceil((game.activeRound+1).toDouble() / 3).toInt()}/${game.rounds}"
         textViewQuestion.text = game.playrounds.getValue("round${game.activeRound}").question
         textViewQuestion2.text = game.playrounds.getValue("round${game.activeRound}").question
-        Log.d("ACTIVEROUND preapre", game.activeRound.toString())
-
 
         // Declare in and out animations and load them using AnimationUtils class
         val inAni = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left)

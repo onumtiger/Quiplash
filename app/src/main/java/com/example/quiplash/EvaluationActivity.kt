@@ -24,8 +24,8 @@ class EvaluationActivity : AppCompatActivity() {
     //Firestore
     lateinit var db: CollectionReference
     lateinit var dbUsers: CollectionReference
-    private val dbGamesPath = DBMethods.DBCalls.gamesPath
-    private val dbUsersPath = DBMethods.DBCalls.usersPath
+    private val dbGamesPath = DBMethods.gamesPath
+    private val dbUsersPath = DBMethods.usersPath
     private var auth: FirebaseAuth? = null
 
     //Views
@@ -216,7 +216,7 @@ class EvaluationActivity : AppCompatActivity() {
                     .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
             }
         }
-        DBMethods.DBCalls.getCurrentGame(callbackGame, game.gameID)
+        DBMethods.getCurrentGame(callbackGame, game.gameID)
 
 
     }

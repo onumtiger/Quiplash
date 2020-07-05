@@ -5,7 +5,7 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.quiplash.DBMethods.DBCalls.Companion.getQuestions
+import com.example.quiplash.DBMethods.Companion.getQuestions
 import com.example.quiplash.GameManager.Companion.game
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
@@ -21,7 +21,7 @@ class GameLaunchingActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: CollectionReference
-    private val dbGamesPath = "games"
+    private val dbGamesPath = DBMethods.gamesPath
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

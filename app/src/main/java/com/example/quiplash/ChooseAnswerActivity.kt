@@ -37,7 +37,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: CollectionReference
-    private val dbGamesPath = "games"
+    private val dbGamesPath = DBMethods.gamesPath
     private var auth: FirebaseAuth? = null
 
     private lateinit var awaitAnswerChoosen: ListenerRegistration
@@ -161,7 +161,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
                     ).answer
             }
         }
-        DBMethods.DBCalls.getCurrentGame(callbackGame, game.gameID)
+        DBMethods.getCurrentGame(callbackGame, game.gameID)
 
         val callbackTimer = object : Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {

@@ -22,7 +22,7 @@ class PlayersListAdapter(val mCtx: Context, val layoutResId: Int, val playerList
         val textViewGame = view.findViewById<TextView>(R.id.textRoundWinnerName)
         val imageViewUser: ImageView = view.findViewById<ImageView>(R.id.players_star)
         val imageViewSeperator: ImageView = view.findViewById<ImageView>(R.id.players_seperator)
-        var fotostorage = FirebaseStorage.getInstance();
+        var fotostorage = FirebaseStorage.getInstance()
         var storageRef = fotostorage.reference
         val playerPhoto: String
 

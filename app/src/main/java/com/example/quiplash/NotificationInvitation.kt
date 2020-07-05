@@ -25,7 +25,7 @@ class NotificationInvitation : FirebaseMessagingService()  {
 
     private val ADMIN_CHANNEL_ID = "admin_channel"
     lateinit var db: CollectionReference
-    private val dbGamesPath = "games"
+    private val dbGamesPath = DBMethods.gamesPath
 
 
     @SuppressLint("ResourceAsColor")

@@ -40,7 +40,7 @@ class ChooseQuestionTypeActivity : AppCompatActivity() {
 
         addQuestion.setOnClickListener {
             if (new_question_text.text.toString() != ""){
-                DBMethods.DBCalls.saveQuestion(new_question_text.text.toString(), newType)
+                DBMethods.saveQuestion(new_question_text.text.toString(), newType)
                 Toast.makeText(this, "New Question Added To Database!", Toast.LENGTH_LONG).show()
                 val intent = Intent(this@ChooseQuestionTypeActivity, ProfileActivity::class.java)
                 startActivity(intent)

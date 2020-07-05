@@ -52,7 +52,7 @@ class ChooseImageSource : DialogFragment() {
                 current_User = result
             }
         }
-        DBMethods.DBCalls.getUser(callbackGetUser)
+        DBMethods.getUser(callbackGetUser)
 
         btnCamera.setOnClickListener{
             context?.let { it1 -> Sounds.playClickSound(it1) }
@@ -153,7 +153,7 @@ class ChooseImageSource : DialogFragment() {
                 }
             }
         }
-        DBMethods.DBCalls.updateUserImage(auth.currentUser?.uid.toString(), picpath, callbackUpdateImage)
+        DBMethods.updateUserImage(auth.currentUser?.uid.toString(), picpath, callbackUpdateImage)
     }
 
     private fun uploadImage() {

@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.quiplash.DBMethods.DBCalls.Companion.updateUserScores
+import com.example.quiplash.DBMethods.Companion.updateUserScores
 import com.example.quiplash.GameManager.Companion.game
 
 class EndOfGameActivity : AppCompatActivity() {
@@ -65,11 +65,11 @@ class EndOfGameActivity : AppCompatActivity() {
                             updateUserScores(user.userID, score)
                         }
                     }
-                    DBMethods.DBCalls.getUserWithID(callbackUser, it)
+                    DBMethods.getUserWithID(callbackUser, it)
                 }
             }
         }
-        DBMethods.DBCalls.getCurrentGame(callback, gameID)
+        DBMethods.getCurrentGame(callback, gameID)
 
         val adapter = ScoreboardListAdapter(
             applicationContext,
@@ -87,7 +87,7 @@ class EndOfGameActivity : AppCompatActivity() {
                 finish()
             }
         }
-        DBMethods.DBCalls.deleteGame(game.gameID,callbackSuccess)
+        DBMethods.deleteGame(game.gameID,callbackSuccess)
     }
 
     override fun onBackPressed() {

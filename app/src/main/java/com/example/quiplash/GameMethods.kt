@@ -21,7 +21,7 @@ class GameMethods {
             const val opp0 = "opponent0"
             const val opp1 = "opponent1"
 
-            val db = FirebaseFirestore.getInstance().collection(DBMethods.DBCalls.gamesPath)
+            val db = FirebaseFirestore.getInstance().collection(DBMethods.gamesPath)
 
             fun startTimer(textView :TextView, time_in_seconds :Long, callback: Callback<Boolean>) {
                     countdown_timer = object : CountDownTimer(time_in_seconds * 1000, 1000) {
@@ -110,7 +110,7 @@ class GameMethods {
                             .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
                     }
                 }
-                DBMethods.DBCalls.getCurrentGame(callbackGame, GameManager.game.gameID)
+                DBMethods.getCurrentGame(callbackGame, GameManager.game.gameID)
 
             }
 

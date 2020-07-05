@@ -55,7 +55,7 @@ class InviteFriendsToGameActivity : AppCompatActivity() {
                 getFriendsList(friendsListView, currentGame)
             }
         }
-        DBMethods.DBCalls.getCurrentGame(callback, gameID)
+        DBMethods.getCurrentGame(callback, gameID)
     }
 
     fun getFriendsList (friendsListView: ListView, currentGame: Game) {
@@ -97,9 +97,9 @@ class InviteFriendsToGameActivity : AppCompatActivity() {
                         friendsListView.adapter = adapter
                     }
                 }
-                DBMethods.DBCalls.getUser(callbackGetUser)
+                DBMethods.getUser(callbackGetUser)
             }
         }
-        DBMethods.DBCalls.getUsers(callbackGetUsers)
+        DBMethods.getUsers(callbackGetUsers)
     }
 }
