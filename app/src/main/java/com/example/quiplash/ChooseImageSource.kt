@@ -78,16 +78,16 @@ class ChooseImageSource : DialogFragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         // pick from camera
-        if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            imageUri = data!!.data
-            uploadImage()
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK && (data?.data != null)) {
+            //imageUri = data.data
+            uploadImage(data.data!!)
         }
 
         // choose image
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data?.data != null
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && (data?.data != null)
         ) {
-            imageUri = data.data!!
-            uploadImage()
+            //imageUri = data.data!!
+            uploadImage(data.data!!)
         }
 
     }
@@ -156,13 +156,13 @@ class ChooseImageSource : DialogFragment() {
         DBMethods.updateUserImage(auth.currentUser?.uid.toString(), picpath, callbackUpdateImage)
     }
 
-    private fun uploadImage() {
+    private fun uploadImage(userImage:Uri) {
         val progressDialog = ProgressDialog(context)
         progressDialog.setTitle("Uploading...")
         progressDialog.show()
         filePath = "images/${UUID.randomUUID()}"
         storage!!.reference.child(filePath)
-            .putFile(imageUri!!)
+            .putFile(userImage)
             .addOnSuccessListener {
                 progressDialog.dismiss()
                 Log.d("CAMERA /", "path: "+it.storage.path)
