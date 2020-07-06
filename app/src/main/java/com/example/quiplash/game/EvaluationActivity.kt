@@ -100,7 +100,7 @@ class EvaluationActivity : AppCompatActivity() {
         oldRound = game.activeRound
 
         questionEval.text = game.playrounds.getValue("round${game.activeRound}").question
-        roundViewEval.text = ("${ceil(game.activeRound.toDouble() / game.rounds).toInt()}/${game.rounds}")
+        roundViewEval.text = ("${ceil((game.activeRound+1).toDouble()/3).toInt()}/${game.rounds}")
 
 
         val callbackTimer = object :
@@ -115,8 +115,7 @@ class EvaluationActivity : AppCompatActivity() {
         }
         startTimer(textViewTimer, startSecondsIdle, callbackTimer)
 
-
-        if (game.activeRound == game.playrounds.size) {
+        if (game.activeRound+1 == game.playrounds.size) {
             nextBtn.text = getString(R.string.show_scoreboard)
         }
 
@@ -139,7 +138,7 @@ class EvaluationActivity : AppCompatActivity() {
 
             if (snapshot != null && snapshot.exists()) {
                 game = snapshot.toObject(Game::class.java)!!
-                if (game.activeRound > oldRound) { //is activeRound new?
+                if (game.activeRound+1 > oldRound+1) { //is activeRound new?
                     if (!nextroundFlag) {
                         gotoNextRound()
                     }
@@ -166,7 +165,7 @@ class EvaluationActivity : AppCompatActivity() {
         nextroundFlag = true
         GameMethods.pauseTimer()
 
-        if (oldRound < game.playrounds.size) {
+        if ((oldRound+1) < game.playrounds.size) {
             GameMethods.playerAllocation(
                 this.applicationContext,
                 auth!!.currentUser?.uid.toString()
@@ -317,8 +316,8 @@ class EvaluationActivity : AppCompatActivity() {
         )
             .get()
             .addOnSuccessListener {
-                val winner = it.toObject(UserQP::class.java)
-                nameView?.text = winner!!.userName
+                val winner = it.toObject(UserQP::class.java)!!
+                nameView?.text = winner.userName
                 setProfilePicture(winner, profileView)
 
             }
