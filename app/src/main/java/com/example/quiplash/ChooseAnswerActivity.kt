@@ -42,7 +42,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
 
     private lateinit var awaitAnswerChoosen: ListenerRegistration
     private var answersArrived = false
-    private var answerChoosen = false
+    private var answerChoosen = 2
 
     private lateinit var answerView1 : View
     private lateinit var answerView2 : View
@@ -88,7 +88,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
         }
         startTimer(timerViewWaiting, startSecondsAnswer, callbackTimerWaiting)
 
-        roundView.text = "${ceil(game.activeRound.toDouble() / game.rounds).toInt()} / ${game.rounds}"
+        roundView.text = "${ceil((game.activeRound+1).toDouble()/3).toInt()}/${game.rounds}"
 
 
         // Declare in and out animations and load them using AnimationUtils class
@@ -100,16 +100,14 @@ class ChooseAnswerActivity : AppCompatActivity() {
         simpleViewFlipper.outAnimation = out
 
         answerView1.setOnClickListener {
-            if(!answerChoosen) {
                 saveVote(0)
-            }
+
             Sounds.playClickSound(this)
         }
 
         answerView2.setOnClickListener {
-            if(!answerChoosen) {
                 saveVote(1)
-            }
+
             Sounds.playClickSound(this)
         }
 
@@ -188,30 +186,60 @@ class ChooseAnswerActivity : AppCompatActivity() {
     }
 
     private fun saveVote(answerIndex: Int) {
-        answerChoosen = true
-        game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answer
+        //if already votet
+        if (answerChoosen<=1){
 
-        db.document(game.gameID)
-            .update(
-                mapOf(
-                    "playrounds.round${game.activeRound}.voters.${getVotersIndex(auth!!.currentUser?.uid.toString())}.voteUserID" to game.playrounds.getValue(
-                        "round${game.activeRound}"
-                    ).opponents.getValue("opponent$answerIndex").userID,
-                    "playrounds.round${game.activeRound}.opponents.opponent$answerIndex.answerScore" to FieldValue.increment(
-                        GameMethods.voteScore.toDouble()
+            db.document(game.gameID)
+                .update(
+                    mapOf(
+                        "playrounds.round${game.activeRound}.opponents.opponent$answerChoosen.answerScore" to FieldValue.increment(
+                            - GameMethods.voteScore.toDouble()
+                        ),
+                        "playrounds.round${game.activeRound}.opponents.opponent$answerIndex.answerScore" to FieldValue.increment(
+                            GameMethods.voteScore.toDouble()
+                        )
                     )
                 )
-            )
-            .addOnSuccessListener {
-                Log.d("SUCCESS", "DocumentSnapshot successfully updated!")
-                if(answerIndex == 0){
-                    imageCheckA1.visibility = View.VISIBLE
-                } else if(answerIndex == 1){
-                    imageCheckA2.visibility = View.VISIBLE
-
+                .addOnSuccessListener {
+                    Log.d("SUCCESS", "DocumentSnapshot successfully updated!")
+                    answerChoosen = answerIndex
+                    if(answerIndex == 0){
+                        imageCheckA1.visibility = View.VISIBLE
+                        imageCheckA2.visibility = View.INVISIBLE
+                    } else if(answerIndex == 1){
+                        imageCheckA2.visibility = View.VISIBLE
+                        imageCheckA1.visibility = View.INVISIBLE
+                    }
                 }
-            }
-            .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
+                .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
+        } else {
+            answerChoosen = answerIndex
+            game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answer
+
+            db.document(game.gameID)
+                .update(
+                    mapOf(
+                        /*"playrounds.round${game.activeRound}.voters.${getVotersIndex(auth!!.currentUser?.uid.toString())}.voteUserID" to game.playrounds.getValue(
+                            "round${game.activeRound}"
+                        ).opponents.getValue("opponent$answerIndex").userID,*/
+                        "playrounds.round${game.activeRound}.opponents.opponent$answerIndex.answerScore" to FieldValue.increment(
+                            GameMethods.voteScore.toDouble()
+                        )
+                    )
+                )
+                .addOnSuccessListener {
+                    Log.d("SUCCESS", "DocumentSnapshot successfully updated!")
+                    if(answerIndex == 0){
+                        imageCheckA1.visibility = View.VISIBLE
+                    } else if(answerIndex == 1){
+                        imageCheckA2.visibility = View.VISIBLE
+
+                    }
+                }
+                .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
+        }
+
+
 
 
     }
