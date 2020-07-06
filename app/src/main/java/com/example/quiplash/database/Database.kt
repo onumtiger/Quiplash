@@ -14,7 +14,6 @@ import com.example.quiplash.user.UserQP
 
 class Database : AppCompatActivity() {
 
-
     //Add Question
     lateinit var saveButton: Button
     lateinit var show_users: Button
@@ -54,11 +53,6 @@ class Database : AppCompatActivity() {
 
         }
 
-
-
-
-
-
         val callback = object:
             Callback<ArrayList<UserQP>> {
             override fun onTaskComplete(result: ArrayList<UserQP>) {
@@ -72,8 +66,6 @@ class Database : AppCompatActivity() {
         }
         getUsers(callback)
     }
-
-
 
     private fun insert_question_into_db(){
         val question = question_text.text.toString().trim()

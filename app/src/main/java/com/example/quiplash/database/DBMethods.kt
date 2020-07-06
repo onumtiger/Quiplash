@@ -32,8 +32,6 @@ ALL METHODS:
 
  */
 
-
-
 class DBMethods {
 
         companion object {
@@ -265,9 +263,6 @@ class DBMethods {
                     }
             }
 
-            fun deleteUser(){
-            }
-
             fun editQuestion(){
             }
 
@@ -290,7 +285,6 @@ class DBMethods {
 
                 return game.gameID
             }
-
 
             fun updateGameUsers(game: Game) {
                 val gameID = game.gameID

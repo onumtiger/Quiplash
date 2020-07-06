@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".game.WaitingActivity">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
     <ImageButton
         android:id="@+id/host_waiting_go_back_arrow"
         android:layout_width="32dp"
@@ -56,16 +64,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swiperefresh"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
             <ListView
                 android:id="@+id/players_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </RelativeLayout>
 
     <Button
@@ -154,5 +157,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/start_game_btn"
         app:layout_constraintTop_toBottomOf="@+id/invite_players_btn" />
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.quiplash.database.DBMethods.Companion.getUsers
 import com.example.quiplash.database.Callback
 import com.example.quiplash.LandingActivity
 import com.example.quiplash.R
 import com.example.quiplash.Sounds
+import com.example.quiplash.game.GameManager
 import com.example.quiplash.user.UserQP
 import java.util.ArrayList
 
@@ -27,6 +29,7 @@ class GlobalScoreboard_Activity : AppCompatActivity() {
         setContentView(R.layout.activity_global_scoreboard)
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.scoreboard_go_back_arrow)
+        val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefreshScoreboard)
 
         btnBack.setOnClickListener{
             Sounds.playClickSound(this)
@@ -35,6 +38,17 @@ class GlobalScoreboard_Activity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        refreshLayout.setOnRefreshListener {
+            Sounds.playRefreshSound(this)
+            getScores()
+            refreshLayout.isRefreshing = false
+        }
+
+        getScores()
+
+    }
+
+    fun getScores() {
         val scoreboardList = findViewById<ListView>(R.id.scoreboard_list)
 
         val callback = object:
