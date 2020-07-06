@@ -67,6 +67,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="16dp"
+        android:scaleType="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
@@ -96,8 +97,8 @@
     <TextView
         android:id="@+id/usernameBig"
         android:layout_width="0dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:textAlignment="center"

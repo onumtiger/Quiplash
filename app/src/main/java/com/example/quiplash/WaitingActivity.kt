@@ -7,12 +7,10 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.quiplash.DBMethods.Companion.deleteGame
-import com.example.quiplash.DBMethods.Companion.editGame
 import com.example.quiplash.DBMethods.Companion.getCurrentGame
 import com.example.quiplash.DBMethods.Companion.getUserWithID
 import com.google.firebase.auth.FirebaseAuth
@@ -22,7 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 
 
-class HostWaitingActivity : AppCompatActivity() {
+class WaitingActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     //Firestore
@@ -42,7 +40,7 @@ class HostWaitingActivity : AppCompatActivity() {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
         }
-        setContentView(R.layout.activity_host_waiting)
+        setContentView(R.layout.activity_waiting)
 
         //add Questions to Game
         selectedQuestions = arrayListOf<Question>()
@@ -96,7 +94,7 @@ class HostWaitingActivity : AppCompatActivity() {
             val callbackSuccess = object : Callback<Boolean> {
                 override fun onTaskComplete(result: Boolean) {
                     Log.d("GAMEDELETE", "deleted? = $result")
-                    val intent = Intent(this@HostWaitingActivity, LandingActivity::class.java)
+                    val intent = Intent(this@WaitingActivity, LandingActivity::class.java)
                     startActivity(intent)
                 }
             }

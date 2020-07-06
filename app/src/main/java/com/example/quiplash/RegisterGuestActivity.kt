@@ -37,7 +37,7 @@ class RegisterGuestActivity : AppCompatActivity() {
     //Local-Storage
     private val prefName = "Quiplash"
     private var privateMode = 0
-    var sharedPreference: SharedPreferences? = null
+    private var sharedPreference: SharedPreferences? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

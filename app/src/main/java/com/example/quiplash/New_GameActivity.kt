@@ -104,7 +104,7 @@ class New_GameActivity : AppCompatActivity() {
         btnStart.setOnClickListener {
             Sounds.playClickSound(this)
 
-            val intent = Intent(this, HostWaitingActivity::class.java)
+            val intent = Intent(this, WaitingActivity::class.java)
             intent.putExtra("gameID", createNewGame(isPublic))
             startActivity(intent)
         }

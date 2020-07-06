@@ -9,7 +9,6 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import com.example.quiplash.GameManager.Companion.setUserinfo
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth

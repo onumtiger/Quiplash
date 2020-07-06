@@ -176,7 +176,7 @@ class EvaluationActivity : AppCompatActivity() {
         println("do nothing")
     }
 
-    private fun setPoints() {
+    /*private fun setPoints() {
         val callbackGame = object : Callback<Game> {
             override fun onTaskComplete(result: Game) {
                 game = result
@@ -218,7 +218,7 @@ class EvaluationActivity : AppCompatActivity() {
         DBMethods.getCurrentGame(callbackGame, game.gameID)
 
 
-    }
+    }*/
 
 
     private fun getWinner() {

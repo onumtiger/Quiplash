@@ -45,7 +45,7 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SignInActivity" />
         <activity android:name=".Database" />
-        <activity android:name=".HostWaitingActivity" />
+        <activity android:name=".WaitingActivity" />
         <activity android:name=".InviteFriendsToGameActivity" />
         <activity android:name=".GameLaunchingActivity" />
         <activity android:name=".GlobalScoreboard_Activity" />

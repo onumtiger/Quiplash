@@ -74,7 +74,7 @@ class Join_GameActivity : AppCompatActivity() {
                     try {
                         game = documentSnapshot.toObject(Game::class.java)!!
                     } finally {
-                        val intent = Intent(this, HostWaitingActivity::class.java)
+                        val intent = Intent(this, WaitingActivity::class.java)
                         intent.putExtra("gameID", selectedItem.gameID)
                         startActivity(intent)
                     }

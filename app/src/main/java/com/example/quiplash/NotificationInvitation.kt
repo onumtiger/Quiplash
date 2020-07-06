@@ -1,6 +1,5 @@
 package com.example.quiplash
 
-import android.R.id
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -11,7 +10,6 @@ import android.graphics.BitmapFactory
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.google.firebase.firestore.CollectionReference
@@ -37,7 +35,7 @@ class NotificationInvitation : FirebaseMessagingService()  {
                     try {
                         GameManager.game = documentSnapshot.toObject(Game::class.java)!!
                     } finally {
-                        val intent = Intent(this, HostWaitingActivity::class.java)
+                        val intent = Intent(this, WaitingActivity::class.java)
                         intent.putExtra("gameID", remoteMessage.data["gameID"])
 
                         val notificationManager =
