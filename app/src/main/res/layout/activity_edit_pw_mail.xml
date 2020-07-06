@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".user.profile.ProfileActivity">
 
     <EditText
         android:id="@+id/email_new"
@@ -142,7 +142,7 @@
         android:layout_width="282dp"
         android:layout_height="74dp"
         android:layout_marginTop="52dp"
-        android:text="Please tip in your current password"
+        android:text="Please type in your current password"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"

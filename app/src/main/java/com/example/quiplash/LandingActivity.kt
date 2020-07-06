@@ -7,8 +7,17 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.quiplash.DBMethods.Companion.addToken
-import com.example.quiplash.DBMethods.Companion.getActiveGames
+import com.example.quiplash.database.DBMethods.Companion.addToken
+import com.example.quiplash.database.DBMethods.Companion.getActiveGames
+import com.example.quiplash.database.Callback
+import com.example.quiplash.database.DBMethods
+import com.example.quiplash.game.Game
+import com.example.quiplash.game.Join_GameActivity
+import com.example.quiplash.game.New_GameActivity
+import com.example.quiplash.scoreboard.GlobalScoreboard_Activity
+import com.example.quiplash.user.friends.FriendsActivity
+import com.example.quiplash.user.profile.ProfileActivity
+import com.example.quiplash.user.UserQP
 import com.google.firebase.auth.FirebaseAuth
 
 class LandingActivity : AppCompatActivity() {
@@ -43,8 +52,9 @@ class LandingActivity : AppCompatActivity() {
         }
 
         //addToken
-        val callbackGetUser = object: Callback<UserQP> {
-            override fun onTaskComplete(result :UserQP) {
+        val callbackGetUser = object:
+            Callback<UserQP> {
+            override fun onTaskComplete(result : UserQP) {
                 currentUser = result
                 if (currentUser.token.isNullOrEmpty()){
                     addToken(currentUser)
@@ -92,7 +102,8 @@ class LandingActivity : AppCompatActivity() {
         var allGames: MutableList<Game> = mutableListOf<Game>()
         var numInvitations = 0
         val invitations = findViewById<TextView>(R.id.invitations)
-        val callbackInvitations = object : Callback<MutableList<Game>> {
+        val callbackInvitations = object :
+            Callback<MutableList<Game>> {
             override fun onTaskComplete(result: MutableList<Game>) {
                 allGames = result
                 allGames.forEach {
