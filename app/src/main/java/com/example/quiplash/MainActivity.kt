@@ -6,7 +6,12 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.quiplash.GameManager.Companion.setUserinfo
+import com.example.quiplash.user.authentication.SignInActivity
+import com.example.quiplash.user.authentication.SignUpActivity
+import com.example.quiplash.database.DBMethods
+import com.example.quiplash.database.Database
+import com.example.quiplash.game.GameManager.Companion.setUserinfo
+import com.example.quiplash.user.UserQP
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
