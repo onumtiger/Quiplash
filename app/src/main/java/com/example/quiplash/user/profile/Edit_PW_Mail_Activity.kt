@@ -1,10 +1,9 @@
-package com.example.quiplash
+package com.example.quiplash.user.profile
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -12,11 +11,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
-import com.example.quiplash.database.DBMethods
 import com.example.quiplash.LaunchingActivity
 import com.example.quiplash.MainActivity
 import com.example.quiplash.R
 import com.example.quiplash.Sounds
+import com.example.quiplash.database.DBMethods
+import com.example.quiplash.user.UserQP
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -125,7 +125,7 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
                         }
                     }
             } else {
-                Toast.makeText(this, "Please Tip in your current Password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please Type in your current Password", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -169,7 +169,7 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
                 }
             }
             if ((!newPW.isNullOrEmpty() && newPW2.isNullOrEmpty()) || (!newPW2.isNullOrEmpty() && newPW.isNullOrEmpty())){
-                Toast.makeText(this, "Please tip in your new Password into both fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please type in your new Password into both fields", Toast.LENGTH_SHORT).show()
             }
             if (newPW != newPW2 && !newPW.isNullOrEmpty() && !newPW2.isNullOrEmpty()){
                 Toast.makeText(this, "Your two Passwords are different", Toast.LENGTH_SHORT).show()
