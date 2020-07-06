@@ -5,10 +5,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.quiplash.DBMethods.DBCalls.Companion.editUser
-import com.example.quiplash.DBMethods.DBCalls.Companion.getUsers
-import com.example.quiplash.DBMethods.DBCalls.Companion.saveQuestion
-import com.example.quiplash.DBMethods.DBCalls.Companion.saveUser
+import com.example.quiplash.DBMethods.Companion.editUser
+import com.example.quiplash.DBMethods.Companion.getUsers
+import com.example.quiplash.DBMethods.Companion.saveQuestion
+import com.example.quiplash.DBMethods.Companion.saveUser
 
 class Database : AppCompatActivity() {
 

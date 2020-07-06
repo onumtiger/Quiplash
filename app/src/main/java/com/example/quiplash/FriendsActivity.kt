@@ -102,9 +102,9 @@ class FriendsActivity : AppCompatActivity() {
                         friendsListView.adapter = adapter
                     }
                 }
-                DBMethods.DBCalls.getUser(callbackGetUser)
+                DBMethods.getUser(callbackGetUser)
             }
         }
-        DBMethods.DBCalls.getUsers(callbackGetUsers)
+        DBMethods.getUsers(callbackGetUsers)
     }
 }

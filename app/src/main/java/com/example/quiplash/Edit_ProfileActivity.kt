@@ -10,7 +10,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import com.bumptech.glide.Glide
-import com.example.quiplash.DBMethods.DBCalls.Companion.editUser
+import com.example.quiplash.DBMethods.Companion.editUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -99,7 +99,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
                 }
             }
         }
-        DBMethods.DBCalls.getUser(callback)
+        DBMethods.getUser(callback)
 
         // get all other users
         val callbackGetUsers = object: Callback<ArrayList<UserQP>> {
@@ -107,7 +107,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
                 otherUsers = result
             }
         }
-        DBMethods.DBCalls.getUsers(callbackGetUsers)
+        DBMethods.getUsers(callbackGetUsers)
 
         btnBack.setOnClickListener {
             Sounds.playClickSound(this)
@@ -191,7 +191,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
                                          newfriendsListFriend[j] = username
                                          // update friend
                                          friend.friends = newfriendsListFriend
-                                         friend.userID.let { it1 -> DBMethods.DBCalls.editUserFriends(it1, friend.friends) }
+                                         friend.userID.let { it1 -> DBMethods.editUserFriends(it1, friend.friends) }
                                      }
                                  }
                              }
@@ -204,7 +204,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
                          }
                      }
                  }
-                 DBMethods.DBCalls.checkUsername(user.userName, viewUsername.text.toString(), callbackCheckUsername)
+                 DBMethods.checkUsername(user.userName, viewUsername.text.toString(), callbackCheckUsername)
 
              } else {
                  textErrorUserName.visibility = View.VISIBLE

@@ -33,7 +33,6 @@ ALL METHODS:
 
 class DBMethods {
 
-    class DBCalls {
         companion object {
 
             val db = FirebaseFirestore.getInstance()
@@ -402,7 +401,6 @@ class DBMethods {
                 return UUID.randomUUID().toString()
             }
         }
-    }
 
 
 }

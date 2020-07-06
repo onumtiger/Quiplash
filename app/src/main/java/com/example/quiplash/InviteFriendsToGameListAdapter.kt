@@ -13,7 +13,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
-import com.example.quiplash.DBMethods.DBCalls.Companion.updateInvitations
+import com.example.quiplash.DBMethods.Companion.updateInvitations
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -102,7 +102,7 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
                 updateInvitations(game)
             }
         }
-        DBMethods.DBCalls.getCurrentGame(callback, gameID)
+        DBMethods.getCurrentGame(callback, gameID)
     }
 
     fun setInviteBtn(gameID: String, userID: String, inviteBtn: Button) {
@@ -117,7 +117,7 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
                 }
             }
         }
-        DBMethods.DBCalls.getCurrentGame(callback, gameID)
+        DBMethods.getCurrentGame(callback, gameID)
     }
 
     fun sendNotification(notification: JSONObject) {

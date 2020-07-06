@@ -13,7 +13,7 @@ class PlayerWaitingActivity : AppCompatActivity() {
 
     //Firestore
     lateinit var db: CollectionReference
-    private val dbGamessPath = "games"
+    private val dbGamessPath = DBMethods.gamesPath
 
     lateinit var awaitGamestart: ListenerRegistration
 
@@ -32,13 +32,9 @@ class PlayerWaitingActivity : AppCompatActivity() {
                 Log.w("ERROR", "Listen failed.", e)
                 return@addSnapshotListener
             }
-            Log.d("RUNDEN", "Current data: ${snapshot}")
 
             if (snapshot != null && snapshot.exists()) {
-                Log.d("RUNDEN", "Current data: ${snapshot.data}")
                 game = snapshot.toObject(Game::class.java)!!
-                Log.d("RUNDEN", "Groesse: ${game.playrounds.size}")
-                Log.d("RUNDEN", "Groesse: ${game.playrounds.size < 0}")
                 if (game.playrounds.size < 0) {
                     gotoGameLaunch()
                 }

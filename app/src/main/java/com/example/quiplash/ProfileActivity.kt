@@ -12,7 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import com.bumptech.glide.Glide
-import com.example.quiplash.DBMethods.DBCalls.Companion.getUser
+import com.example.quiplash.DBMethods.Companion.getUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -24,7 +24,7 @@ class ProfileActivity : AppCompatActivity() {
     private var auth: FirebaseAuth? = null
     lateinit var currentUser: UserQP
     lateinit var db: CollectionReference
-    private val dbUsersPath = DBMethods.DBCalls.usersPath
+    private val dbUsersPath = DBMethods.usersPath
 
 
     @SuppressLint("WrongViewCast")
