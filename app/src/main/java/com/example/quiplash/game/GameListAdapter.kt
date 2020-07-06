@@ -32,10 +32,12 @@ class GameListAdapter(val mCtx: Context, val layoutResId: Int, val gameList: Lis
         imageViewStar.setImageResource(R.drawable.join_game_star)
         imageViewSeperator.setImageResource(R.drawable.green_seperator)
 
+        // If exists, set game title
         if (!game.gameTitle.isNullOrEmpty()) {
             textViewGame.text = game.gameTitle
         }
 
+        // Show notification hint, if user is invited to game
         if (game.invitations.contains(auth.currentUser?.uid.toString())) {
             imageViewInvited.visibility = View.VISIBLE
         } else {

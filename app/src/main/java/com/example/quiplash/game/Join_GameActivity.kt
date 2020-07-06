@@ -49,16 +49,15 @@ class Join_GameActivity : AppCompatActivity() {
 
         noActiveGameInfo.visibility = View.INVISIBLE
 
+        //set clickListeners for all buttons & refreshListener for view
         btnNewGameActivity.setOnClickListener {
             Sounds.playClickSound(this)
-
             val intent = Intent(this, New_GameActivity::class.java)
             startActivity(intent)
         }
 
         btnBack.setOnClickListener {
             Sounds.playClickSound(this)
-
             super.onBackPressed()
         }
 
@@ -87,6 +86,10 @@ class Join_GameActivity : AppCompatActivity() {
         }
     }
 
+
+    /**
+     * Show all active and public games
+     */
     fun getGamesList(activeGamesList: ListView) {
         val noActiveGameInfo = findViewById<TextView>(R.id.no_active_game)
         var resultGames = mutableListOf<Game>()

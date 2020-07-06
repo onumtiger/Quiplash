@@ -31,9 +31,9 @@ class GlobalScoreboard_Activity : AppCompatActivity() {
         val btnBack = findViewById<AppCompatImageButton>(R.id.scoreboard_go_back_arrow)
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefreshScoreboard)
 
+        //set clickListener for back button & refreshListener for view
         btnBack.setOnClickListener{
             Sounds.playClickSound(this)
-
             val intent = Intent(this, LandingActivity::class.java)
             startActivity(intent)
         }
@@ -45,9 +45,12 @@ class GlobalScoreboard_Activity : AppCompatActivity() {
         }
 
         getScores()
-
     }
 
+    /**
+     * get all users and scores, sort scores descendingly,
+     * show users list with scores
+     */
     fun getScores() {
         val scoreboardList = findViewById<ListView>(R.id.scoreboard_list)
 
@@ -63,7 +66,6 @@ class GlobalScoreboard_Activity : AppCompatActivity() {
                         users
                     )
                 scoreboardList.adapter = adapter
-
             }
         }
         getUsers(callback)

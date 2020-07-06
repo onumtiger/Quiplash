@@ -127,9 +127,6 @@ class EvaluationActivity : AppCompatActivity() {
             }
         }
 
-
-
-
         awaitNextRound = db.document(game.gameID).addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.w("ERROR", "Listen failed.", e)

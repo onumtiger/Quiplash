@@ -40,7 +40,6 @@ class InviteFriendsToGameActivity : AppCompatActivity() {
 
         btnBack.setOnClickListener() {
             Sounds.playClickSound(this)
-
             super.onBackPressed();
         }
 

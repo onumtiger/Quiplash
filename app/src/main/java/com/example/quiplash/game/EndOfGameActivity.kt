@@ -25,18 +25,36 @@ class EndOfGameActivity : AppCompatActivity() {
         }
         setContentView(R.layout.activity_end_of_game)
 
-        Sounds.playEndSound(this)
-
         val btnHome = findViewById<Button>(R.id.btnHome)
+
+        Sounds.playEndSound(this)
 
         btnHome.setOnClickListener {
             Sounds.playClickSound(this)
             deleteGame()
         }
 
+        showPlayerScores()
+    }
+
+    /**
+     * delete game that ended from db
+     */
+    private fun deleteGame(){
+        val callbackSuccess = object :
+            Callback<Boolean> {
+            override fun onTaskComplete(result: Boolean) {
+                val intent = Intent(this@EndOfGameActivity, LandingActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+        DBMethods.deleteGame(game.gameID,callbackSuccess)
+    }
+
+    private fun showPlayerScores() {
         val scoreboardList = findViewById<ListView>(R.id.scoreboard_list)
         val scoreboardArray = mutableListOf<UserQP>()
-
         val gameID = game.gameID
         var userIDList = mutableListOf<String>()
         var currentGame: Game
@@ -50,8 +68,8 @@ class EndOfGameActivity : AppCompatActivity() {
                         Callback<UserQP> {
                         override fun onTaskComplete(result: UserQP) {
                             val user = result
-                            println(user.userID)
                             var score = 0
+                            // sum each player's points of all rounds of current game
                             currentGame.playrounds.forEach {
                                 it.value.opponents.forEach {
                                     if (it.value.userID == user.userID) {
@@ -61,8 +79,11 @@ class EndOfGameActivity : AppCompatActivity() {
                                 }
                             }
 
+                            // put player with score into scoreboardArray
                             user.score = score
                             scoreboardArray.add(user)
+
+                            // sort scoreboardArray descendingly and show list with players and scores
                             scoreboardArray.sortWith(Comparator { s1: UserQP, s2: UserQP -> s2.score - s1.score })
                             val adapter =
                                 ScoreboardListAdapter(
@@ -88,18 +109,9 @@ class EndOfGameActivity : AppCompatActivity() {
         scoreboardList.adapter = adapter
     }
 
-    private fun deleteGame(){
-        val callbackSuccess = object :
-            Callback<Boolean> {
-            override fun onTaskComplete(result: Boolean) {
-                val intent = Intent(this@EndOfGameActivity, LandingActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        }
-        DBMethods.deleteGame(game.gameID,callbackSuccess)
-    }
-
+    /**
+     * disable backButton on device
+     */
     override fun onBackPressed() {
         println("do nothing")
     }

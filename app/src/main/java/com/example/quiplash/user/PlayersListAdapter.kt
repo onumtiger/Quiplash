@@ -28,6 +28,8 @@ class PlayersListAdapter(val mCtx: Context, val layoutResId: Int, val playerList
         val playerPhoto: String
 
         val player = playerList[position]
+
+        // Get string to profile photo of player
         if (player.photo !== null) {
             playerPhoto = player.photo!!
         } else {
@@ -37,6 +39,7 @@ class PlayersListAdapter(val mCtx: Context, val layoutResId: Int, val playerList
         textViewGame.text = player.userName
         imageViewSeperator.setImageResource(R.drawable.green_seperator)
 
+        // Get profile photo of player from db to show it in listView
         var spaceRef = storageRef.child(playerPhoto)
         spaceRef.downloadUrl
             .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
