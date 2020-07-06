@@ -23,6 +23,8 @@ import com.example.quiplash.Sounds
 import com.example.quiplash.user.UserQP
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageException
+import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -34,7 +36,8 @@ class ChooseImageSource : DialogFragment() {
     private val CAMERA_REQUEST_CODE = 1
     private val PICK_IMAGE_REQUEST = 71
     private lateinit var filePath: String
-    var photoPath : String = "images/default-user.png"
+    private val photoPath : String = "images/default-user.png"
+    private val photoPathGuest : String = "images/default-gust.png"
     private var imageUri: Uri? = null
 
     //Firebase
@@ -176,6 +179,15 @@ class ChooseImageSource : DialogFragment() {
         val progressDialog = ProgressDialog(context)
         progressDialog.setTitle("Uploading...")
         progressDialog.show()
+
+        if(!current_User.photo.equals(photoPath) && !current_User.photo.equals(photoPathGuest)){
+            val fotostorage = FirebaseStorage.getInstance()
+            val storageRef = fotostorage.reference
+            val spaceRef = storageRef.child(current_User.photo.toString())
+            // Delete the file
+            spaceRef.delete()
+        }
+
         filePath = "images/${UUID.randomUUID()}"
         storage!!.reference.child(filePath)
             .putFile(userImage)

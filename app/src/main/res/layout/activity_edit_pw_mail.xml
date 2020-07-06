@@ -142,7 +142,7 @@
         android:layout_width="282dp"
         android:layout_height="74dp"
         android:layout_marginTop="52dp"
-        android:text="Please Tip in your current Password"
+        android:text="Please type in your current password"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -193,7 +193,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
         android:layout_marginTop="116dp"
-        android:background="@android:color/holo_blue_bright"
+        android:background="@color/colorButtonGreen"
+        android:textColor="@color/colorWhite"
         android:text="next"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_old" />

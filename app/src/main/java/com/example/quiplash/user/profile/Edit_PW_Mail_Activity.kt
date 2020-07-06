@@ -1,9 +1,10 @@
-package com.example.quiplash.user.profile
+package com.example.quiplash
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -27,6 +28,11 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
 
     private var authListener: FirebaseAuth.AuthStateListener? = null
     private lateinit var auth: FirebaseAuth
+
+    lateinit var friend: UserQP
+    lateinit var currentUserName: String
+    lateinit var otherUsers: ArrayList<UserQP>
+
 
     lateinit var view_oldPW :EditText
     lateinit var view_newPW :EditText
@@ -199,6 +205,27 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
     }
 
     fun deleteAccount(){
+        // get friendlist of other user
+        for (i in 0..otherUsers.size-1){
+            friend = otherUsers[i]
+            // check if user is exists in other friend list
+            for(j in 0..friend.friends.size-1){
+                if(friend.friends[j].equals(currentUserName, true)) {
+                    val newfriendsListFriend = emptyList<String>().toMutableList()
+                    // copy friendlist to edit it
+                    for(k in 0..friend.friends.size-1) {
+                        newfriendsListFriend.add(k, friend.friends[k])
+                    }
+                    // update username
+                    newfriendsListFriend.removeAt(j)
+                    // update friend
+                    friend.friends = newfriendsListFriend
+                    friend.userID.let { it1 -> DBMethods.editUserFriends(it1, friend.friends) }
+                    break
+                }
+            }
+        }
+
         var current_user = FirebaseAuth.getInstance().currentUser
         db.document(FirebaseAuth.getInstance().currentUser!!.uid).delete()
         current_user!!.delete()
