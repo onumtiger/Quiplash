@@ -9,6 +9,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quiplash.AnswersActivity
 import com.example.quiplash.database.Callback
 import com.example.quiplash.database.DBMethods
 import com.example.quiplash.game.GameManager.Companion.game
