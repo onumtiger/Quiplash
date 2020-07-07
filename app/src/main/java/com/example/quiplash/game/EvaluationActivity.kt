@@ -60,8 +60,10 @@ class EvaluationActivity : AppCompatActivity() {
         dbUsers = FirebaseFirestore.getInstance().collection(dbUsersPath)
         auth = FirebaseAuth.getInstance()
 
-        //setPoints()
-
+        /**
+         * Set Points for Round-Winner.
+         * As soon as points are set, display Winner.
+         * */
         val callbackPoints = object :
             Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
@@ -72,6 +74,7 @@ class EvaluationActivity : AppCompatActivity() {
         }
         GameMethods.setPoints(callbackPoints)
 
+        //Remove Top-Bar
         try {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
@@ -97,12 +100,14 @@ class EvaluationActivity : AppCompatActivity() {
 
         val nextBtn = findViewById<TextView>(R.id.buttonNext)
 
+        //save current active-round
         oldRound = game.activeRound
 
         questionEval.text = game.playrounds.getValue("round${game.activeRound}").question
         roundViewEval.text = ("${ceil((game.activeRound+1).toDouble()/3).toInt()}/${game.rounds}")
 
 
+        //Create Timer
         val callbackTimer = object :
             Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
@@ -115,6 +120,7 @@ class EvaluationActivity : AppCompatActivity() {
         }
         startTimer(textViewTimer, startSecondsIdle, callbackTimer)
 
+        //If last round change Text of button ('next round' -> 'show scoreboard')
         if (game.activeRound+1 == game.playrounds.size) {
             nextBtn.text = getString(R.string.show_scoreboard)
         }
@@ -127,6 +133,11 @@ class EvaluationActivity : AppCompatActivity() {
             }
         }
 
+        /**
+         * If someone press the 'next round'-Button, go to next round.
+         * Following Listener wait if the data of the game in the database changes.
+         * If the value of 'activeRound' changed, go to next round.
+         * **/
         awaitNextRound = db.document(game.gameID).addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.w("ERROR", "Listen failed.", e)
@@ -149,6 +160,9 @@ class EvaluationActivity : AppCompatActivity() {
     }
 
 
+    /**
+     * Imcrement 'active round' in database
+     * **/
     private fun setNextRound() {
         db.document(game.gameID)
             .update("activeRound", oldRound + 1)
@@ -157,12 +171,17 @@ class EvaluationActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * If active-round is the last round, go to 'scoreboard'.
+     * Else go to next round
+     * **/
     private fun gotoNextRound() {
         awaitNextRound.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
         nextroundFlag = true
         GameMethods.pauseTimer()
 
         if ((oldRound+1) < game.playrounds.size) {
+            //Check which View comes next (Answer Question, Choose Answer)
             GameMethods.playerAllocation(
                 this.applicationContext,
                 auth!!.currentUser?.uid.toString()
@@ -180,51 +199,10 @@ class EvaluationActivity : AppCompatActivity() {
         println("do nothing")
     }
 
-    /*private fun setPoints() {
-        val callbackGame = object : Callback<Game> {
-            override fun onTaskComplete(result: Game) {
-                game = result
 
-                game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answer
-
-                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answerScore > game.playrounds.getValue(
-                        "round${game.activeRound}"
-                    ).opponents.getValue(GameMethods.opp1).answerScore
-                ) {
-                    game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answerScore += 50
-                } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        GameMethods.opp0
-                    ).answerScore < game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        GameMethods.opp1
-                    ).answerScore
-                ) {
-                    game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp1).answerScore += 50
-                }
-
-                db.document(game.gameID)
-                    .update(
-                        mapOf(
-                            "playrounds.round${game.activeRound}.opponents.opponent0.answerScore" to game.playrounds.getValue(
-                                "round${game.activeRound}"
-                            ).opponents.getValue(GameMethods.opp0).answerScore,
-                            "playrounds.round${game.activeRound}.opponents.opponent1.answerScore" to game.playrounds.getValue(
-                                "round${game.activeRound}"
-                            ).opponents.getValue(GameMethods.opp1).answerScore
-                        )
-                    )
-                    .addOnSuccessListener {
-                        Log.d("SUCCESS", "DocumentSnapshot successfully updated!")
-                        getWinner()
-                    }
-                    .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
-            }
-        }
-        DBMethods.getCurrentGame(callbackGame, game.gameID)
-
-
-    }*/
-
-
+    /**
+     * Get Scoring and select winner.
+     * **/
     private fun getWinner() {
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
@@ -286,6 +264,9 @@ class EvaluationActivity : AppCompatActivity() {
     }
 
 
+    /**
+     * Get Winner-infos by 'setWinner' and Display Winner-Informations (name, scorinf, photo)
+     * **/
     private fun setWinnerInfo(
         winnerIndex: Int,
         frameView: View?,
