@@ -44,7 +44,6 @@
         <activity android:name=".LandingActivity" />
         <activity android:name="com.example.quiplash.user.authentication.SignUpActivity" />
         <activity android:name="com.example.quiplash.user.authentication.SignInActivity" />
-        <activity android:name=".database.Database" />
         <activity android:name=".game.WaitingActivity" />
         <activity android:name=".game.InviteFriendsToGameActivity" />
         <activity android:name=".game.GameLaunchingActivity" />

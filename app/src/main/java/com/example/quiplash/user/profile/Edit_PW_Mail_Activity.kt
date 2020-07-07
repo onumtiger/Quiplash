@@ -97,13 +97,17 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
         btnNext.setOnClickListener() {
             val oldPW = view_oldPW.text.toString()
 
+            //check if current password is tiped in
             if (!oldPW.isNullOrEmpty()) {
+                //Do reauthentication with mail and password of current user
                 val credential = EmailAuthProvider
                     .getCredential(current_user?.email.toString(), oldPW.toString())
                 current_user!!.reauthenticate(credential)
                     .addOnCompleteListener {
+                        //check if reauthentication of user is working
                         if (it.isSuccessful) {
 
+                            //make Buttons visible with methods that need a reauthentication and useless Button invisible
                             btnNext.visibility = View.INVISIBLE
                             textViewPwOld.visibility = View.INVISIBLE
                             view_oldPW.visibility = View.INVISIBLE
@@ -161,7 +165,9 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
                     Toast.makeText(this, "New Password is too short", Toast.LENGTH_SHORT).show()
                 }
             }
+            //check if new password fields are empty
             if(newPW.isNullOrEmpty() && newPW2.isNullOrEmpty()) {
+                //change mail
                 if (!mail.isNullOrEmpty()) {
                     changeMail()
                     val intent = Intent(this, LaunchingActivity::class.java);
@@ -182,6 +188,8 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
         val newPW = view_newPW.text.toString()
 
         var user = auth.currentUser
+
+        //update Password of current user
         user?.updatePassword(newPW)?.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Toast.makeText(this, "Your Password got updated!", Toast.LENGTH_SHORT).show()
@@ -195,6 +203,7 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
         val mail = view_mail.text.toString()
         var user = auth.currentUser
 
+        //update Mail of current User
         user?.updateEmail(mail)?.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Toast.makeText(this, "Your Mail got updated!", Toast.LENGTH_SHORT).show()
@@ -227,10 +236,12 @@ class Edit_PW_Mail_Activity : AppCompatActivity() {
         }
 
         var current_user = FirebaseAuth.getInstance().currentUser
+        //get current user from Database and detelete him/her
         db.document(FirebaseAuth.getInstance().currentUser!!.uid).delete()
         current_user!!.delete()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    //go back to MainActivity to get to Sign Up screen
                     val intent = Intent(this, MainActivity::class.java);
                     startActivity(intent);
                 } else {

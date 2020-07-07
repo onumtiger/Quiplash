@@ -24,8 +24,6 @@ class Delete_Account : DialogFragment() {
                     it1
                 )
             }
-
-            // TO DO: Delete Account
         }
 
         btnCancel.setOnClickListener {
