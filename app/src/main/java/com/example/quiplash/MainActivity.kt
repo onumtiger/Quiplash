@@ -3,10 +3,12 @@ package com.example.quiplash
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.quiplash.GameManager.Companion.setUserinfo
+import com.example.quiplash.user.authentication.SignInActivity
+import com.example.quiplash.database.DBMethods
+import com.example.quiplash.game.GameManager.Companion.setUserinfo
+import com.example.quiplash.user.UserQP
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
@@ -17,26 +19,26 @@ import com.google.firebase.firestore.FirebaseFirestore
 class MainActivity : AppCompatActivity() {
     //FirebaseAuth object
     private var auth: FirebaseAuth? = null
-    private var authListener: FirebaseAuth.AuthStateListener? = null
+    private var authListener: AuthStateListener? = null
 
     //Firestore
     lateinit var db: CollectionReference
     private val dbUsersPath = DBMethods.usersPath
 
     //Local-Storage
-    private val PREF_NAME = "Quiplash"
-    private val PRIVATE_MODE = 0
+    private val PREFNAME = "Quiplash"
+    private val PRIVATEMODE = 0
     var sharedPreference: SharedPreferences? = null
-    val prefKey = "guestid"
-    val prefDefValue = "noguest"
+    private val prefKey = "guestid"
+    private val prefDefValue = "noguest"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        sharedPreference =  getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+        sharedPreference =  getSharedPreferences(PREFNAME, PRIVATEMODE)
         db = FirebaseFirestore.getInstance().collection(dbUsersPath)
 
-        FirebaseApp.initializeApp(this);
+        FirebaseApp.initializeApp(this)
         // Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
 

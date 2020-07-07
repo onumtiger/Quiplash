@@ -192,8 +192,8 @@
 
     <Switch
         android:id="@+id/switchPrivateGame"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_width="147dp"
+        android:layout_height="28dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
@@ -237,5 +237,15 @@
         app:layout_constraintEnd_toStartOf="@+id/switchPrivateGame"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Switch
+        android:id="@+id/party_switch"
+        android:layout_width="147dp"
+        android:layout_height="28dp"
+        android:text="Party Mode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.23"
+        app:layout_constraintStart_toEndOf="@+id/game_title"
+        app:layout_constraintTop_toBottomOf="@+id/switchPrivateGame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

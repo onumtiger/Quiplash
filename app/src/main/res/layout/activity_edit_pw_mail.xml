@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".user.profile.ProfileActivity">
 
     <EditText
         android:id="@+id/email_new"
@@ -159,7 +159,7 @@
         android:layout_marginTop="52dp"
         android:layout_marginEnd="50dp"
         android:fontFamily="@font/roboto_slab_bold"
-        android:text="Please Tip in your current Password"
+        android:text="Please type in your current password"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -173,7 +173,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/roboto_slab_bold"
-        android:text="E-Mail"
+        android:text="@string/e_mail"
         app:layout_constraintBottom_toBottomOf="@+id/email_new"
         app:layout_constraintEnd_toStartOf="@+id/email_new"
         app:layout_constraintStart_toStartOf="parent"
@@ -215,8 +215,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
         android:layout_marginTop="116dp"
-        android:background="@android:color/holo_blue_bright"
         android:fontFamily="@font/roboto_slab_bold"
+        android:background="@color/colorButtonGreen"
+        android:textColor="@color/colorWhite"
         android:text="next"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_old" />

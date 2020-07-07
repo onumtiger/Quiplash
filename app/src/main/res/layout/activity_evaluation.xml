@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EvaluationActivity">
+    tools:context=".game.EvaluationActivity">
 
     <ScrollView
         android:layout_width="0dp"
@@ -91,11 +91,13 @@
 
                 <TextView
                     android:id="@+id/textRoundWinnerName"
-                    android:layout_width="199dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="75dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto_slab_bold"
+                    android:layout_marginEnd="50dp"
+                    android:layout_toEndOf="@+id/imageRoundWinnerPhoto"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
@@ -106,6 +108,7 @@
                 android:id="@+id/textViewScore"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_marginEnd="24dp"
                 android:layout_marginBottom="40dp"
                 android:background="@drawable/round_corner"
                 android:fontFamily="@font/roboto_slab_bold"
@@ -121,7 +124,7 @@
 
             <RelativeLayout
                 android:id="@+id/winnerDraw"
-                android:layout_width="296dp"
+                android:layout_width="0dp"
                 android:layout_height="66dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="64dp"
@@ -133,26 +136,29 @@
 
                 <ImageView
                     android:id="@+id/imageRoundWinnerDraw"
-                    android:layout_width="321dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:srcCompat="@drawable/green_seperator" />
 
                 <ImageView
                     android:id="@+id/imageRoundWinnerPhotoDraw"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="8dp"
+                    android:scaleType="center"
                     app:srcCompat="@drawable/join_game_star" />
 
                 <TextView
                     android:id="@+id/textRoundWinnerNameDraw"
-                    android:layout_width="199dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="75dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/roboto_slab_bold"
-                    android:text="player"
+                    android:layout_marginEnd="50dp"
+                    android:layout_toEndOf="@+id/imageRoundWinnerPhotoDraw"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
@@ -196,7 +202,6 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="48dp"
-                android:capitalize="characters"
                 android:fontFamily="@font/shadows_into_light"
                 android:textColor="#000000"
                 android:textSize="24sp"
@@ -226,7 +231,6 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="48dp"
-                android:capitalize="characters"
                 android:fontFamily="@font/shadows_into_light"
                 android:textColor="#000000"
                 android:textSize="24sp"
@@ -239,21 +243,33 @@
 
             <Button
                 android:id="@+id/buttonNext"
-                android:layout_width="300dp"
+                android:layout_width="0dp"
                 android:layout_height="50dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="50dp"
                 android:background="@color/colorButtonGreen"
-                android:fontFamily="@font/roboto_slab_bold"
                 android:text="@string/next_round"
                 android:textColor="@color/colorWhite"
                 android:textColorHighlight="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:textColorLink="@color/colorWhite"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/timerViewEval" />
+
+            <TextView
+                android:id="@+id/party_shot_text_view"
+                android:layout_width="230dp"
+                android:layout_height="20dp"
+                android:text="The Looser Drinks 1 Shot!"
+                android:textAlignment="center"
+                android:textColor="@color/colorPink"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/questionEval"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonNext" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

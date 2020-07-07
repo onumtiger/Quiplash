@@ -7,8 +7,17 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.quiplash.DBMethods.Companion.addToken
-import com.example.quiplash.DBMethods.Companion.getActiveGames
+import com.example.quiplash.database.DBMethods.Companion.addToken
+import com.example.quiplash.database.DBMethods.Companion.getActiveGames
+import com.example.quiplash.database.Callback
+import com.example.quiplash.database.DBMethods
+import com.example.quiplash.game.Game
+import com.example.quiplash.game.Join_GameActivity
+import com.example.quiplash.game.New_GameActivity
+import com.example.quiplash.scoreboard.GlobalScoreboard_Activity
+import com.example.quiplash.user.friends.FriendsActivity
+import com.example.quiplash.user.profile.ProfileActivity
+import com.example.quiplash.user.UserQP
 import com.google.firebase.auth.FirebaseAuth
 
 class LandingActivity : AppCompatActivity() {
@@ -30,21 +39,17 @@ class LandingActivity : AppCompatActivity() {
         val btnFriends = findViewById<Button>(R.id.landing_friends)
         val btnScoreBoard = findViewById<Button>(R.id.landing_scoreboard)
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefreshInvitations)
-
         val invitations = findViewById<TextView>(R.id.invitations)
-        invitations.visibility = View.INVISIBLE
 
+        /*set Invitations Notification Hint invisible first,
+        then check if user has invitations */
+        invitations.visibility = View.INVISIBLE
         showInvitationsHint()
 
-        refreshLayout.setOnRefreshListener {
-            Sounds.playRefreshSound(this)
-            showInvitationsHint()
-            refreshLayout.isRefreshing = false
-        }
-
         //addToken
-        val callbackGetUser = object: Callback<UserQP> {
-            override fun onTaskComplete(result :UserQP) {
+        val callbackGetUser = object:
+            Callback<UserQP> {
+            override fun onTaskComplete(result : UserQP) {
                 currentUser = result
                 if (currentUser.token.isNullOrEmpty()){
                     addToken(currentUser)
@@ -53,6 +58,7 @@ class LandingActivity : AppCompatActivity() {
         }
         DBMethods.getUser(callbackGetUser)
 
+        //set clickListeners for all buttons & refreshListener for view
         btnNewGame.setOnClickListener {
             Sounds.playClickSound(this)
             val intent = Intent(this, New_GameActivity::class.java)
@@ -82,17 +88,31 @@ class LandingActivity : AppCompatActivity() {
             val intent = Intent(this, GlobalScoreboard_Activity::class.java)
             startActivity(intent)
         }
+
+        refreshLayout.setOnRefreshListener {
+            Sounds.playRefreshSound(this)
+            showInvitationsHint()
+            refreshLayout.isRefreshing = false
+        }
     }
 
+    /**
+     * disable backButton on device
+     */
     override fun onBackPressed() {
         println("do nothing")
     }
 
+    /**
+     * Check if user has invitations to games,
+     * if true show them on Join Button
+     */
     private fun showInvitationsHint() {
         var allGames: MutableList<Game> = mutableListOf<Game>()
         var numInvitations = 0
         val invitations = findViewById<TextView>(R.id.invitations)
-        val callbackInvitations = object : Callback<MutableList<Game>> {
+        val callbackInvitations = object :
+            Callback<MutableList<Game>> {
             override fun onTaskComplete(result: MutableList<Game>) {
                 allGames = result
                 allGames.forEach {
@@ -100,7 +120,6 @@ class LandingActivity : AppCompatActivity() {
                         numInvitations += 1
                     }
                 }
-
                 if (numInvitations == 0){
                     invitations.visibility = View.INVISIBLE
                 } else {

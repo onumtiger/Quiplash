@@ -5,7 +5,7 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".user.profile.ProfileActivity">
 
     <ImageButton
         android:id="@+id/profile_game_go_back_arrow"
@@ -108,7 +108,7 @@
         android:layout_marginTop="24dp"
         android:background="@color/colorButtonGreen"
         android:fontFamily="@font/roboto_slab_bold"
-        android:text="Change Mail / PW"
+        android:text="More"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
@@ -139,7 +139,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/roboto_slab_bold"
-        android:text="TextView"
         android:textAlignment="center"
         android:textColor="@color/colorRed"
         android:textColorHighlight="@color/colorRed"

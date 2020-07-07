@@ -51,22 +51,26 @@
 
         <TextView
             android:id="@+id/friend_username"
-            android:layout_width="199dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/roboto_slab_bold"
+            android:layout_toEndOf="@+id/userPhotoLayout"
             android:text="@string/username_placeholder"
             android:textColor="#000000"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/friend_score"
-            android:layout_width="199dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="50dp"
             android:fontFamily="@font/roboto_slab"
+            android:layout_below="@+id/friend_username"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/userPhotoLayout"
             android:text="@string/score_placeholder"
             android:textColor="#000000"
             android:textSize="20sp" />
@@ -78,11 +82,9 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="33dp"
             android:layout_marginTop="25dp"
-            android:layout_marginEnd="34dp"
+            android:layout_marginEnd="30dp"
             android:layout_marginBottom="24dp"
-            android:layout_toEndOf="@+id/friend_username"
             app:srcCompat="@drawable/ic_delete_icon" />
 
     </RelativeLayout>
