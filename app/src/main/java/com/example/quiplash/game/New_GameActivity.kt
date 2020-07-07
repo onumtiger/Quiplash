@@ -38,6 +38,7 @@ class New_GameActivity : AppCompatActivity() {
         var check = 0
         var isPublic = true
 
+        // set onItemSelectedListener for all spinners
         categorySpinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
@@ -89,9 +90,9 @@ class New_GameActivity : AppCompatActivity() {
             }
         }
 
+        // Set clickListener for all buttons & onChangeListener for switch
         btnBack.setOnClickListener {
             Sounds.playClickSound(this)
-
             super.onBackPressed()
         }
 
@@ -105,13 +106,15 @@ class New_GameActivity : AppCompatActivity() {
 
         btnStart.setOnClickListener {
             Sounds.playClickSound(this)
-
             val intent = Intent(this, WaitingActivity::class.java)
             intent.putExtra("gameID", createNewGame(isPublic))
             startActivity(intent)
         }
     }
 
+    /**
+     * Create new game with all properties set by the user
+     */
     fun createNewGame(isPublic: Boolean): String {
         val categorySpinner: Spinner = findViewById(R.id.category_dropdown)
         val playerSpinner: Spinner = findViewById(R.id.player_dropdown)

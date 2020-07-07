@@ -18,15 +18,12 @@ class Invite_Player : DialogFragment() {
 
         val btnCancel = view.findViewById<TextView>(R.id.interaction_cancel_btn)
 
-
-
         btnCancel.setOnClickListener {
             context?.let { it1 ->
                 Sounds.playClickSound(
                     it1
                 )
             }
-
             dismiss()
         }
     }

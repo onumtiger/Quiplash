@@ -51,6 +51,9 @@ class GameLaunchingActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * disable backButton on device
+     */
     override fun onBackPressed() {
         println("do nothing")
     }

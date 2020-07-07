@@ -30,16 +30,20 @@ class ScoreboardListAdapter(val mCtx: Context, val layoutResId: Int, val playerL
         val playerPhoto: String
 
         val player = playerList[position]
+
+        // Get string to profile photo of player
         if (player.photo !== null) {
             playerPhoto = player.photo!!
         } else {
             playerPhoto = "images/default-guest.png"
         }
 
+        // set text & image views in listItem
         textViewScore.text = "Score: ${player.score}"
         textViewGame.text = player.userName
         imageViewSeperator.setImageResource(R.drawable.green_seperator)
 
+        // Get profile photo of player from db to show it in listView
         var spaceRef = storageRef.child(playerPhoto)
         spaceRef.downloadUrl
             .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->

@@ -39,17 +39,12 @@ class LandingActivity : AppCompatActivity() {
         val btnFriends = findViewById<Button>(R.id.landing_friends)
         val btnScoreBoard = findViewById<Button>(R.id.landing_scoreboard)
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefreshInvitations)
-
         val invitations = findViewById<TextView>(R.id.invitations)
+
+        /*set Invitations Notification Hint invisible first,
+        then check if user has invitations */
         invitations.visibility = View.INVISIBLE
-
         showInvitationsHint()
-
-        refreshLayout.setOnRefreshListener {
-            Sounds.playRefreshSound(this)
-            showInvitationsHint()
-            refreshLayout.isRefreshing = false
-        }
 
         //addToken
         val callbackGetUser = object:
@@ -63,6 +58,7 @@ class LandingActivity : AppCompatActivity() {
         }
         DBMethods.getUser(callbackGetUser)
 
+        //set clickListeners for all buttons & refreshListener for view
         btnNewGame.setOnClickListener {
             Sounds.playClickSound(this)
             val intent = Intent(this, New_GameActivity::class.java)
@@ -92,12 +88,25 @@ class LandingActivity : AppCompatActivity() {
             val intent = Intent(this, GlobalScoreboard_Activity::class.java)
             startActivity(intent)
         }
+
+        refreshLayout.setOnRefreshListener {
+            Sounds.playRefreshSound(this)
+            showInvitationsHint()
+            refreshLayout.isRefreshing = false
+        }
     }
 
+    /**
+     * disable backButton on device
+     */
     override fun onBackPressed() {
         println("do nothing")
     }
 
+    /**
+     * Check if user has invitations to games,
+     * if true show them on Join Button
+     */
     private fun showInvitationsHint() {
         var allGames: MutableList<Game> = mutableListOf<Game>()
         var numInvitations = 0
@@ -111,7 +120,6 @@ class LandingActivity : AppCompatActivity() {
                         numInvitations += 1
                     }
                 }
-
                 if (numInvitations == 0){
                     invitations.visibility = View.INVISIBLE
                 } else {
