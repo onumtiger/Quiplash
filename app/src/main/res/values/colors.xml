@@ -24,4 +24,6 @@
     <color name="colorGray">#808080</color>
     <!-- Background -->
     <color name="colorLightGray">#fafafa</color>
+    <!-- Party -->
+    <color name="colorPink">#FF00FF</color>
 </resources>

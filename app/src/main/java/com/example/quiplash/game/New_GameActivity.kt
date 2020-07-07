@@ -31,12 +31,14 @@ class New_GameActivity : AppCompatActivity() {
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.new_game_go_back_arrow)
         val switchGamePrivate = findViewById<Switch>(R.id.switchPrivateGame)
+        val switchParty = findViewById<Switch>(R.id.party_switch)
         val btnStart = findViewById<Button>(R.id.start_game)
         val categorySpinner: Spinner = findViewById(R.id.category_dropdown)
         val playerSpinner: Spinner = findViewById(R.id.player_dropdown)
         val roundsSpinner: Spinner = findViewById(R.id.rounds_dropdown)
         var check = 0
         var isPublic = true
+        var partyMode = false
 
         // set onItemSelectedListener for all spinners
         categorySpinner.onItemSelectedListener = object : OnItemSelectedListener {
@@ -104,10 +106,18 @@ class New_GameActivity : AppCompatActivity() {
             }
         }
 
+        switchParty.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                partyMode = true
+            } else {
+                partyMode = false
+            }
+        }
+
         btnStart.setOnClickListener {
             Sounds.playClickSound(this)
             val intent = Intent(this, WaitingActivity::class.java)
-            intent.putExtra("gameID", createNewGame(isPublic))
+            intent.putExtra("gameID", createNewGame(isPublic, partyMode))
             startActivity(intent)
         }
     }
@@ -115,7 +125,7 @@ class New_GameActivity : AppCompatActivity() {
     /**
      * Create new game with all properties set by the user
      */
-    fun createNewGame(isPublic: Boolean): String {
+    fun createNewGame(isPublic: Boolean, partyMode: Boolean): String {
         val categorySpinner: Spinner = findViewById(R.id.category_dropdown)
         val playerSpinner: Spinner = findViewById(R.id.player_dropdown)
         val roundsSpinner: Spinner = findViewById(R.id.rounds_dropdown)
@@ -140,6 +150,7 @@ class New_GameActivity : AppCompatActivity() {
             gameID,
             auth.currentUser?.uid.toString(),
             isPublic,
+            partyMode,
             gameTitle,
             arrayListOf<String>()
         )
