@@ -1,6 +1,5 @@
 package com.example.quiplash.game
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +7,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatImageButton
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.quiplash.database.DBMethods.Companion.deleteGame
 import com.example.quiplash.database.DBMethods.Companion.getCurrentGame
@@ -39,7 +37,6 @@ class WaitingActivity : AppCompatActivity() {
     private lateinit var awaitGamestart: ListenerRegistration
     private var gameQuestions = arrayListOf<Question>()
 
-    @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
@@ -74,7 +71,7 @@ class WaitingActivity : AppCompatActivity() {
             }
         //}
 
-        val btnBack = findViewById<AppCompatImageButton>(R.id.host_waiting_go_back_arrow)
+        val btnBack = findViewById<Button>(R.id.host_waiting_go_back_arrow)
         val btnInvitePlayers = findViewById<Button>(R.id.invite_players_btn)
         val btnStartGame = findViewById<Button>(R.id.start_game_btn)
         val btnEndGame = findViewById<Button>(R.id.end_game)
