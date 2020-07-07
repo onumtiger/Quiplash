@@ -4,11 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.quiplash.BounceInterpolator
 import com.example.quiplash.database.Callback
 import com.example.quiplash.database.DBMethods
 import com.example.quiplash.game.GameManager.Companion.game
@@ -311,7 +313,10 @@ class EvaluationActivity : AppCompatActivity() {
                 val winner = it.toObject(UserQP::class.java)!!
                 nameView?.text = winner.userName
                 setProfilePicture(winner, profileView)
-
+                val shakehanim = AnimationUtils.loadAnimation(this, R.anim.shake)
+                val interpolator = BounceInterpolator(0.5, 10.0)
+                shakehanim.interpolator = interpolator
+                scoreView!!.startAnimation(shakehanim)
             }
     }
 
@@ -320,10 +325,10 @@ class EvaluationActivity : AppCompatActivity() {
 
         val storageRef = FirebaseStorage.getInstance().reference
 
-        if (player.photo !== null) {
-            playerPhoto = player.photo!!
+        playerPhoto = if (player.photo !== null) {
+            player.photo!!
         } else {
-            playerPhoto = "images/default-guest.png"
+            "images/default-guest.png"
         }
 
         val spaceRef = storageRef.child(playerPhoto)

@@ -1,6 +1,5 @@
 package com.example.quiplash.game
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ViewFlipper
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quiplash.BounceInterpolator
 import com.example.quiplash.database.Callback
 import com.example.quiplash.database.DBMethods
 import com.example.quiplash.game.GameManager.Companion.game
@@ -50,7 +50,6 @@ class ChooseAnswerActivity : AppCompatActivity() {
     private lateinit var imageCheckA1 : ImageView
     private lateinit var imageCheckA2 : ImageView
 
-    @SuppressLint("WrongViewCast", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
@@ -64,7 +63,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
 
         timerView = findViewById(R.id.timer2)
         timerViewWaiting = findViewById(R.id.timerWaiting2)
-        val othertimer = findViewById<TextView>(R.id.timer3)
+        //val othertimer = findViewById<TextView>(R.id.timer3)
         answerTV1 = findViewById(R.id.answer1)
         answerTV2 = findViewById(R.id.answer2)
         questionTV = findViewById(R.id.questionCA)
@@ -75,7 +74,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
         imageCheckA2 = findViewById(R.id.imageCheckAnswer2)
         simpleViewFlipper =
             findViewById(R.id.simpleViewFlipperCA) // get the reference of ViewFlipper
-        othertimer.visibility = View.INVISIBLE
+        //othertimer.visibility = View.INVISIBLE
 
         val callbackTimerWaiting = object :
             Callback<Boolean> {
@@ -87,7 +86,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
         }
         startTimer(timerViewWaiting, startSecondsAnswer, callbackTimerWaiting)
 
-        roundView.text = "${ceil((game.activeRound+1).toDouble()/3).toInt()}/${game.rounds}"
+        roundView.text = ("${ceil((game.activeRound+1).toDouble()/3).toInt()}/${game.rounds}")
 
 
         // Declare in and out animations and load them using AnimationUtils class
@@ -102,12 +101,20 @@ class ChooseAnswerActivity : AppCompatActivity() {
                 saveVote(0)
 
             Sounds.playClickSound(this)
+            val splashanim = AnimationUtils.loadAnimation(this, R.anim.little_shake)
+            val interpolator = BounceInterpolator(0.5, 5.0)
+            splashanim.interpolator = interpolator
+            answerView1.startAnimation(splashanim)
         }
 
         answerView2.setOnClickListener {
                 saveVote(1)
 
             Sounds.playClickSound(this)
+            val splashanim = AnimationUtils.loadAnimation(this, R.anim.little_shake)
+            val interpolator = BounceInterpolator(0.5, 5.0)
+            splashanim.interpolator = interpolator
+            answerView2.startAnimation(splashanim)
         }
 
 
@@ -208,9 +215,17 @@ class ChooseAnswerActivity : AppCompatActivity() {
                     if(answerIndex == 0){
                         imageCheckA1.visibility = View.VISIBLE
                         imageCheckA2.visibility = View.INVISIBLE
+                        val splashanim = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
+                        val interpolator = BounceInterpolator(0.2, 10.0)
+                        splashanim.interpolator = interpolator
+                        imageCheckA1.startAnimation(splashanim)
                     } else if(answerIndex == 1){
                         imageCheckA2.visibility = View.VISIBLE
                         imageCheckA1.visibility = View.INVISIBLE
+                        val splashanim = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
+                        val interpolator = BounceInterpolator(0.2, 10.0)
+                        splashanim.interpolator = interpolator
+                        imageCheckA2.startAnimation(splashanim)
                     }
                 }
                 .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
