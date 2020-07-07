@@ -102,4 +102,6 @@
     <string name="wrong_password">Wrong Password!</string>
     <string name="somethin_went_wrong">UUPS! Something went wrong. Please try again later.</string>
     <string name="wrong_email">Wrong e-Mail!</string>
+    <string name="answer_not_saved">Your Answer could not be saved</string>
+    <string name="answer_saved_successfully">Your Answer has been saved successfully!</string>
 </resources>

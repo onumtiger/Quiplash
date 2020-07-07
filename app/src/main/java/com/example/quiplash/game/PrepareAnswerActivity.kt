@@ -1,6 +1,5 @@
 package com.example.quiplash.game
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +8,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quiplash.BounceInterpolator
 import com.example.quiplash.database.Callback
 import com.example.quiplash.database.DBMethods
 import com.example.quiplash.game.GameManager.Companion.game
@@ -37,7 +37,6 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
     private lateinit var awaitAllAnswers: ListenerRegistration
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Handler().postDelayed({
@@ -70,16 +69,25 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
         val textViewTimer = findViewById<TextView>(R.id.timerView)
         val textViewRound = findViewById<TextView>(R.id.roundCounterView)
-        val viewQuestion = findViewById<View>(R.id.viewQuestion)
         val textViewQuestion = findViewById<TextView>(R.id.textViewQuestion)
         val textViewQuestion2 = findViewById<TextView>(R.id.textViewQuestion2)
+        val textAnswerState = findViewById<TextView>(R.id.textViewAnswerSaved)
+
         val btnReady = findViewById<Button>(R.id.btnReady)
         val fieldAnswer = findViewById<EditText>(R.id.answerField)
         val imageCheckmark = findViewById<ImageView>(R.id.imageCheckmark)
-        val textAnswerState = findViewById<TextView>(R.id.textViewAnswerSaved)
+        val viewQuestion = findViewById<View>(R.id.viewQuestion)
+        val layoutQuestion = findViewById<FrameLayout>(R.id.layoutQuestion)
+        val layoutAnswerSaved = findViewById<FrameLayout>(R.id.layoutAnswerSaved)
+
         viewFlipper = findViewById(R.id.viewFlipperQuestion) // get the reference of ViewFlipper
 
-        textViewRound.text = "${ceil((game.activeRound+1).toDouble() / 3).toInt()}/${game.rounds}"
+        val splashanim = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
+        val interpolator = BounceInterpolator(0.5, 10.0)
+        splashanim.interpolator = interpolator
+        layoutQuestion.startAnimation(splashanim)
+
+        textViewRound.text = ("${ceil((game.activeRound+1).toDouble() / 3).toInt()}/${game.rounds}")
         textViewQuestion.text = game.playrounds.getValue("round${game.activeRound}").question
         textViewQuestion2.text = game.playrounds.getValue("round${game.activeRound}").question
 
@@ -105,7 +113,6 @@ class PrepareAnswerActivity : AppCompatActivity() {
         viewQuestion.setOnClickListener {
             Sounds.playClickSound(this)
             Sounds.playAnswerSound(this)
-
             viewFlipper.showNext()
         }
 
@@ -122,11 +129,14 @@ class PrepareAnswerActivity : AppCompatActivity() {
                     Log.d("SUCCESS", "DocumentSnapshot successfully updated!")
                     imageCheckmark.visibility = ImageView.VISIBLE
                         textAnswerState.visibility = TextView.VISIBLE
+                    val answerInterpolator = BounceInterpolator(0.5, 10.0)
+                    splashanim.interpolator = answerInterpolator
+                    layoutAnswerSaved.startAnimation(splashanim)
                 }
                 .addOnFailureListener { e ->
                     Log.w("FAILURE", "Error updating document", e)
                     imageCheckmark.visibility = ImageView.INVISIBLE
-                    textAnswerState.text = "Your Answer could not be saved"
+                    textAnswerState.text = getString(R.string.answer_not_saved)
                 }
 
 
