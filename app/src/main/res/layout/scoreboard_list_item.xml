@@ -10,14 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="85dp"
         android:layout_marginTop="50dp"
+        android:background="@drawable/char_button_frame"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
-
-        <ImageView
-            android:id="@+id/imageViewSeperator"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/green_seperator" />
 
         <ImageView
             android:id="@+id/player_image"

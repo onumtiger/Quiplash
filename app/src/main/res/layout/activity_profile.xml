@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/splash_background"
     tools:context=".user.profile.ProfileActivity">
 
     <ImageButton
@@ -73,23 +74,13 @@
         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
 
     <TextView
-        android:id="@+id/textViewPw"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginStart="50dp"
-        android:text="@string/password"
-        android:textAlignment="textStart"
-        app:layout_constraintBottom_toBottomOf="@+id/password"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/password" />
-
-    <TextView
         android:id="@+id/textViewMail"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginStart="50dp"
         android:text="@string/e_mail"
         android:textAlignment="textStart"
+        android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="@+id/email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/email" />
@@ -102,6 +93,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="50dp"
         android:textAlignment="center"
+        android:textColor="@color/colorWhite"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -114,6 +106,7 @@
         android:layout_height="20dp"
         android:layout_marginTop="16dp"
         android:textAlignment="center"
+        android:textColor="@color/colorWhite"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -127,32 +120,18 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="50dp"
         android:text="@string/e_mail_placeholder"
+        android:textColor="@color/colorWhite"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.439"
         app:layout_constraintStart_toEndOf="@+id/textViewMail"
         app:layout_constraintTop_toBottomOf="@+id/score" />
 
-    <TextView
-        android:id="@+id/password"
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="50dp"
-        android:text="@string/password_placeholder"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textViewPw"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
-
     <Button
         android:id="@+id/buttonRegisterGuest"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="8dp"
         android:background="@color/colorButtonGreen"
@@ -164,15 +143,14 @@
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btnEditProfile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPw" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnEditProfile"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="8dp"
         android:background="@color/colorButtonGreen"
@@ -184,7 +162,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnaddQuestion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRegisterGuest" />
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <Button
         android:id="@+id/btnaddQuestion"

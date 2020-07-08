@@ -63,7 +63,6 @@ class ChooseAnswerActivity : AppCompatActivity() {
 
         timerView = findViewById(R.id.timer2)
         timerViewWaiting = findViewById(R.id.timerWaiting2)
-        //val othertimer = findViewById<TextView>(R.id.timer3)
         answerTV1 = findViewById(R.id.answer1)
         answerTV2 = findViewById(R.id.answer2)
         questionTV = findViewById(R.id.questionCA)
@@ -74,7 +73,6 @@ class ChooseAnswerActivity : AppCompatActivity() {
         imageCheckA2 = findViewById(R.id.imageCheckAnswer2)
         simpleViewFlipper =
             findViewById(R.id.simpleViewFlipperCA) // get the reference of ViewFlipper
-        //othertimer.visibility = View.INVISIBLE
 
         val callbackTimerWaiting = object :
             Callback<Boolean> {
