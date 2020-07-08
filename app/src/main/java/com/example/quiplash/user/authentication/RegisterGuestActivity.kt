@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.quiplash.game.GameManager.Companion.setUserinfo
 import com.example.quiplash.R
+import com.example.quiplash.Sounds
 import com.example.quiplash.user.profile.ProfileActivity
 import com.example.quiplash.user.UserQP
 
@@ -28,6 +30,7 @@ class RegisterGuestActivity : AppCompatActivity() {
     private lateinit var inputUsername : EditText
     private lateinit var inputPassword : EditText
     private lateinit var inputPassword2 : EditText
+    private lateinit var textviewError : TextView
 
     private lateinit var guestid : String
 
@@ -70,9 +73,16 @@ class RegisterGuestActivity : AppCompatActivity() {
         inputPassword = findViewById(R.id.passwordFieldGuest)
         inputPassword2 = findViewById(R.id.passwordRetypeFieldGuest)
 
-        val textviewError = findViewById<TextView>(R.id.textError)
+        textviewError = findViewById<TextView>(R.id.textError)
         progressBar = findViewById(R.id.progressBarGuestSignup)
 
+        inputPassword2.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                signup()
+                return@OnKeyListener true
+            }
+            false
+        })
 
         btnBack.setOnClickListener {
             startActivity(Intent(this@RegisterGuestActivity, ProfileActivity::class.java))
@@ -81,73 +91,8 @@ class RegisterGuestActivity : AppCompatActivity() {
 
 
         btnSignUp.setOnClickListener {
-            if (checkInput()) {
-                progressBar.visibility = View.VISIBLE
-
-                //If guest is a logged in Annonymous User...
-                if(auth.currentUser!!.isAnonymous){
-                    val credential = EmailAuthProvider.getCredential(inputEmail.text.toString(), inputPassword.text.toString())
-
-                    auth.currentUser!!.linkWithCredential(credential)
-                        .addOnCompleteListener(this) { task ->
-                            if (task.isSuccessful) {
-                                Log.d("SUCCESS", "linkWithCredential:success")
-                                createUser()
-                            } else {
-                                Log.w("ERROR", "linkWithCredential:failure", task.exception)
-                                Toast.makeText(baseContext, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show()
-                            }
-
-                        }
-                } else {
-                    //else if guest was already logged out (the anonymous-user doesn't exist anymore on Firebase-Auth) -> we have to create a new User in Firebase
-                    //Remove Guest-data from DB
-
-                    auth.createUserWithEmailAndPassword(
-                        inputEmail.text.toString(),
-                        inputPassword.text.toString()
-                    )
-                        .addOnCompleteListener(this) { task ->
-                            progressBar.visibility = View.INVISIBLE
-
-                            if (task.isSuccessful) {
-                                // Sign in success, update UI with the signed-in user's information
-                                createUser()
-
-                            } else {
-
-                                Toast.makeText(
-                                    this@RegisterGuestActivity,
-                                    "Authentication failed." + task.result,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-
-                        }
-                }
-            } else {
-
-                errotext = ""
-                if (TextUtils.isEmpty(inputEmail.text)) {
-                    errotext += "Enter email address! \n"
-                }
-
-                if (TextUtils.isEmpty(inputPassword.text)) {
-                    errotext += "Enter password! \n"
-                }
-
-                if (inputPassword.text.toString() != inputPassword2.text.toString()) {
-                    errotext += "Passwords need to be identical! \n"
-                }
-
-                if (inputPassword.text.length < 6) {
-                    errotext += "Password too short, enter minimum 6 characters! \n"
-                }
-
-                textviewError.text = errotext
-
-            }
+            Sounds.playClickSound(this)
+            signup()
         }
     }
 
@@ -156,6 +101,76 @@ class RegisterGuestActivity : AppCompatActivity() {
                 !TextUtils.isEmpty(inputPassword.text) && (inputPassword2.text.toString() == inputPassword.text.toString()) && inputPassword.text.length >= 6)
     }
 
+
+    private fun signup(){
+        if (checkInput()) {
+            progressBar.visibility = View.VISIBLE
+
+            //If guest is a logged in Annonymous User...
+            if(auth.currentUser!!.isAnonymous){
+                val credential = EmailAuthProvider.getCredential(inputEmail.text.toString(), inputPassword.text.toString())
+
+                auth.currentUser!!.linkWithCredential(credential)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            Log.d("SUCCESS", "linkWithCredential:success")
+                            createUser()
+                        } else {
+                            Log.w("ERROR", "linkWithCredential:failure", task.exception)
+                            Toast.makeText(baseContext, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show()
+                        }
+
+                    }
+            } else {
+                //else if guest was already logged out (the anonymous-user doesn't exist anymore on Firebase-Auth) -> we have to create a new User in Firebase
+                //Remove Guest-data from DB
+
+                auth.createUserWithEmailAndPassword(
+                    inputEmail.text.toString(),
+                    inputPassword.text.toString()
+                )
+                    .addOnCompleteListener(this) { task ->
+                        progressBar.visibility = View.INVISIBLE
+
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            createUser()
+
+                        } else {
+
+                            Toast.makeText(
+                                this@RegisterGuestActivity,
+                                "Authentication failed." + task.result,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    }
+            }
+        } else {
+
+            errotext = ""
+            if (TextUtils.isEmpty(inputEmail.text)) {
+                errotext += "Enter email address! \n"
+            }
+
+            if (TextUtils.isEmpty(inputPassword.text)) {
+                errotext += "Enter password! \n"
+            }
+
+            if (inputPassword.text.toString() != inputPassword2.text.toString()) {
+                errotext += "Passwords need to be identical! \n"
+            }
+
+            if (inputPassword.text.length < 6) {
+                errotext += "Password too short, enter minimum 6 characters! \n"
+            }
+
+            textviewError.text = errotext
+
+        }
+    }
 
     private fun createUser() {
 

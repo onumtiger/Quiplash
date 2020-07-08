@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -33,7 +35,13 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
     private var userindex = 0
     var answersArrived = false
+    private val splashanim: Animation = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
+
     private lateinit var viewFlipper: ViewFlipper
+    private lateinit var imageCheckmark: ImageView
+    private lateinit var fieldAnswer: EditText
+    private lateinit var textAnswerState: TextView
+    private lateinit var layoutAnswerSaved: FrameLayout
 
     private lateinit var awaitAllAnswers: ListenerRegistration
 
@@ -74,18 +82,17 @@ class PrepareAnswerActivity : AppCompatActivity() {
         val textViewRound = findViewById<TextView>(R.id.roundCounterView)
         val textViewQuestion = findViewById<TextView>(R.id.textViewQuestion)
         val textViewQuestion2 = findViewById<TextView>(R.id.textViewQuestion2)
-        val textAnswerState = findViewById<TextView>(R.id.textViewAnswerSaved)
+        textAnswerState = findViewById(R.id.textViewAnswerSaved)
 
         val btnReady = findViewById<Button>(R.id.btnReady)
-        val fieldAnswer = findViewById<EditText>(R.id.answerField)
-        val imageCheckmark = findViewById<ImageView>(R.id.imageCheckmark)
+        fieldAnswer = findViewById(R.id.answerField)
+        imageCheckmark = findViewById(R.id.imageCheckmark)
         val viewQuestion = findViewById<View>(R.id.viewQuestion)
         val layoutQuestion = findViewById<FrameLayout>(R.id.layoutQuestion)
-        val layoutAnswerSaved = findViewById<FrameLayout>(R.id.layoutAnswerSaved)
+        layoutAnswerSaved = findViewById(R.id.layoutAnswerSaved)
 
         viewFlipper = findViewById(R.id.viewFlipperQuestion) // get the reference of ViewFlipper
 
-        val splashanim = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
         val interpolator = BounceInterpolator(0.5, 10.0)
         splashanim.interpolator = interpolator
         layoutQuestion.startAnimation(splashanim)
@@ -120,30 +127,17 @@ class PrepareAnswerActivity : AppCompatActivity() {
             viewFlipper.showNext()
         }
 
+        fieldAnswer.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                saveAnswer()
+                return@OnKeyListener true
+            }
+            false
+        })
+
         btnReady.setOnClickListener {
             Sounds.playClickSound(this)
-
-            db.document(game.gameID)
-                .update(
-                    mapOf(
-                        "playrounds.round${game.activeRound}.opponents.${getOpponentsIndex(auth!!.currentUser?.uid.toString())}.answer" to fieldAnswer.text.toString()
-                    )
-                )
-                .addOnSuccessListener {
-                    Log.d("SUCCESS", "DocumentSnapshot successfully updated!")
-                    imageCheckmark.visibility = ImageView.VISIBLE
-                    textAnswerState.visibility = TextView.VISIBLE
-                    val answerInterpolator = BounceInterpolator(0.5, 10.0)
-                    splashanim.interpolator = answerInterpolator
-                    layoutAnswerSaved.startAnimation(splashanim)
-                }
-                .addOnFailureListener { e ->
-                    Log.w("FAILURE", "Error updating document", e)
-                    imageCheckmark.visibility = ImageView.INVISIBLE
-                    textAnswerState.text = getString(R.string.answer_not_saved)
-                }
-
-
+            saveAnswer()
         }
 
 
@@ -177,6 +171,29 @@ class PrepareAnswerActivity : AppCompatActivity() {
         val intent = Intent(this, AnswersActivity::class.java)
         startActivity(intent)
 
+    }
+
+
+    private fun saveAnswer(){
+        db.document(game.gameID)
+            .update(
+                mapOf(
+                    "playrounds.round${game.activeRound}.opponents.${getOpponentsIndex(auth!!.currentUser?.uid.toString())}.answer" to fieldAnswer.text.toString()
+                )
+            )
+            .addOnSuccessListener {
+                Log.d("SUCCESS", "DocumentSnapshot successfully updated!")
+                imageCheckmark.visibility = ImageView.VISIBLE
+                textAnswerState.visibility = TextView.VISIBLE
+                val answerInterpolator = BounceInterpolator(0.5, 10.0)
+                splashanim.interpolator = answerInterpolator
+                layoutAnswerSaved.startAnimation(splashanim)
+            }
+            .addOnFailureListener { e ->
+                Log.w("FAILURE", "Error updating document", e)
+                imageCheckmark.visibility = ImageView.INVISIBLE
+                textAnswerState.text = getString(R.string.answer_not_saved)
+            }
     }
 
     private fun getOpponentsIndex(userid: String): String {
