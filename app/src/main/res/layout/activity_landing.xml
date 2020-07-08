@@ -24,7 +24,7 @@
                     android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/appCompatImageView3"
+                            android:id="@+id/imageLogo"
                             android:layout_width="wrap_content"
                             android:layout_height="150dp"
                             android:layout_marginStart="32dp"
