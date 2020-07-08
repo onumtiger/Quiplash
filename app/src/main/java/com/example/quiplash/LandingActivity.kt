@@ -3,7 +3,9 @@ package com.example.quiplash
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -40,7 +42,10 @@ class LandingActivity : AppCompatActivity() {
         val btnScoreBoard = findViewById<Button>(R.id.landing_scoreboard)
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefreshInvitations)
         val invitations = findViewById<TextView>(R.id.invitations)
+        val logoLanding = findViewById<ImageView>(R.id.imageLogo)
 
+        val splashanim = AnimationUtils.loadAnimation(this, R.anim.little_shake)
+        logoLanding.startAnimation(splashanim)
         /*set Invitations Notification Hint invisible first,
         then check if user has invitations */
         invitations.visibility = View.INVISIBLE
