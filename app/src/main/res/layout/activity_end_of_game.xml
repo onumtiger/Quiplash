@@ -9,9 +9,10 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="206dp"
-        android:layout_height="43dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:fontFamily="@font/roboto_slab_bold"
         android:gravity="center"
         android:text="@string/scoreboard"
         android:textColor="@android:color/black"
@@ -34,6 +35,7 @@
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
         android:textColorLink="@color/colorWhite"
+        android:fontFamily="@font/roboto_slab_bold"
         app:layout_constraintEnd_toEndOf="@+id/relativeLayout"
         app:layout_constraintStart_toStartOf="@+id/relativeLayout"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />

@@ -19,9 +19,9 @@
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/chkDone"
         android:layout_toRightOf="@+id/chkDone"
-        android:text="Item Text"
+        android:fontFamily="@font/roboto_slab_bold"
 
-        />
+        android:text="Item Text" />
 
 
     <ImageButton

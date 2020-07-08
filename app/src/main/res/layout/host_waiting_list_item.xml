@@ -19,16 +19,26 @@
             android:layout_height="match_parent"
             app:srcCompat="@drawable/green_seperator" />
 
-        <ImageView
-            android:id="@+id/players_star"
+        <FrameLayout
+            android:id="@+id/userPhotoLayout"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="295dp"
-            android:layout_marginBottom="12dp"
-            android:scaleType="center"
-            app:srcCompat="@drawable/join_game_star" />
+            android:layout_marginStart="12dp">
+
+            <ImageView
+                android:id="@+id/players_star"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="center" />
+
+            <ImageView
+                android:id="@+id/photomask"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/mask_circle"
+                android:scaleType="center"/>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/textRoundWinnerName"
@@ -36,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_slab_bold"
             android:textColor="#000000"
             android:textSize="20sp" />
 

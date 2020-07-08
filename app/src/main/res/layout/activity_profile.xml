@@ -7,14 +7,12 @@
     android:background="@drawable/splash_background"
     tools:context=".user.profile.ProfileActivity">
 
-    <ImageButton
+    <Button
         android:id="@+id/profile_go_back_arrow"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginTop="41dp"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="go_back_arrow"
-        android:src="@drawable/ic_go_back_arrow"
+        android:background="@drawable/ic_go_back_arrow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,15 +61,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" /> -->
 
-    <ImageView
-        android:id="@+id/imageView"
+    <FrameLayout
+        android:id="@+id/userPhotoLayout"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="16dp"
-        android:scaleType="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/photomask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/mask_circle" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/textViewMail"
@@ -79,6 +89,7 @@
         android:layout_height="20dp"
         android:layout_marginStart="50dp"
         android:text="@string/e_mail"
+        android:fontFamily="@font/roboto_slab_bold"
         android:textAlignment="textStart"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="@+id/email"
@@ -91,6 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_slab_bold"
         android:layout_marginEnd="50dp"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
@@ -98,13 +110,14 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/userPhotoLayout" />
 
     <TextView
         android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_slab_bold"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
@@ -119,6 +132,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="50dp"
+        android:fontFamily="@font/roboto_slab"
         android:text="@string/e_mail_placeholder"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
@@ -154,6 +168,7 @@
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="8dp"
         android:background="@color/colorButtonGreen"
+        android:fontFamily="@font/roboto_slab_bold"
         android:text="@string/edit_account_btn"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
@@ -173,6 +188,7 @@
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="8dp"
         android:background="@color/colorButtonBlue"
+        android:fontFamily="@font/roboto_slab_bold"
         android:text="Add Question"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
@@ -192,6 +208,7 @@
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="8dp"
         android:background="@color/colorGray"
+        android:fontFamily="@font/roboto_slab_bold"
         android:text="Sign out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

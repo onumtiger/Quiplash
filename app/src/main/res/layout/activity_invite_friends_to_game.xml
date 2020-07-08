@@ -35,9 +35,10 @@
 
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="320dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="132dp"
+        android:fontFamily="@font/roboto_slab_bold"
         android:gravity="center"
         android:text="Friends who aren't in the game yet"
         android:textColor="@color/colorTitles"
@@ -49,9 +50,12 @@
 
     <TextView
         android:id="@+id/no_friends_found"
-        android:layout_width="313dp"
-        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="30dp"
+        android:layout_marginEnd="50dp"
+        android:fontFamily="@font/roboto_slab"
         android:text="No such friends found. They are all in or you haven't added any friends yet..."
         android:textAlignment="center"
         android:textSize="16sp"
