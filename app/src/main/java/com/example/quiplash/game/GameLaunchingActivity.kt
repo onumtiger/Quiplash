@@ -41,7 +41,7 @@ class GameLaunchingActivity : AppCompatActivity() {
         val gamelaunchTitle = findViewById<TextView>(R.id.textViewTitleGL)
         val layoutGamelaunch = findViewById<ConstraintLayout>(R.id.layoutGameLaunch)
 
-        if(game.activeRound >1){
+        if (game.activeRound > 1) {
             gamelaunchTitle.text = getString(R.string.next_round_starts)
         }
 
@@ -53,8 +53,8 @@ class GameLaunchingActivity : AppCompatActivity() {
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
                 game = documentSnapshot.toObject(Game::class.java)!!
-                if (game.activeRound < game.playrounds.size){
-                    GameMethods.playerAllocation(
+                if (game.activeRound < game.playrounds.size) {
+                    GameManager.playerAllocation(
                         this.applicationContext,
                         auth!!.currentUser?.uid.toString()
                     )

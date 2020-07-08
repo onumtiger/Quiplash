@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        sharedPreference =  getSharedPreferences(PREFNAME, PRIVATEMODE)
+        sharedPreference = getSharedPreferences(PREFNAME, PRIVATEMODE)
         db = FirebaseFirestore.getInstance().collection(dbUsersPath)
 
         FirebaseApp.initializeApp(this)
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                 // launch login activity
                 startActivity(Intent(this@MainActivity, LandingActivity::class.java))
                 finish()
-            } else{
+            } else {
                 checkGuestLogin()
             }
         }
@@ -60,8 +60,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**Check if saved Information about a guest exist. **/
-    private fun checkGuestLogin(){
-        if(sharedPreference?.getString(prefKey,prefDefValue) != prefDefValue){
+    private fun checkGuestLogin() {
+        if (sharedPreference?.getString(prefKey, prefDefValue) != prefDefValue) {
             fetchGuest()
         } else {
             startActivity(Intent(this@MainActivity, SignInActivity::class.java))
@@ -72,26 +72,28 @@ class MainActivity : AppCompatActivity() {
     /**
      * Get all Information about the guest by the id, which is saved local via 'SharedPreferences'
      * **/
-    private fun fetchGuest(){
+    private fun fetchGuest() {
         //Set Database-Instance
         //val userRef = db.collection(sharedPreference?.getString(prefKey,prefDefValue).toString()).document(dbUsersPath)
 
         //fetch Data
-        db.document(sharedPreference?.getString(prefKey,prefDefValue).toString()).get().addOnSuccessListener { documentSnapshot ->
+        db.document(sharedPreference?.getString(prefKey, prefDefValue).toString()).get()
+            .addOnSuccessListener { documentSnapshot ->
                 //save fetched data in GameManager
                 val guest = documentSnapshot.toObject(UserQP::class.java)
                 if (guest?.userID != null) {
                     setUserinfo(guest)
                     startActivity(Intent(this@MainActivity, LandingActivity::class.java))
                     finish()
-            } else {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Der Gast existiert nicht unter: " + sharedPreference?.getString(prefKey,prefDefValue).toString(),
-                    Toast.LENGTH_LONG
-                ).show()
+                } else {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "No existing guest: " + sharedPreference?.getString(prefKey, prefDefValue)
+                            .toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
-        }
 
     }
 

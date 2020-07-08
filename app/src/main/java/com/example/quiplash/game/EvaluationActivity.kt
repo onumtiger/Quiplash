@@ -21,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.storage.FirebaseStorage
 import kotlin.math.ceil
-import com.example.quiplash.game.GameMethods.Companion.startTimer
+import com.example.quiplash.game.GameManager.Companion.startTimer
 import com.example.quiplash.R
 import com.example.quiplash.Sounds
 import com.example.quiplash.user.UserQP
@@ -74,7 +74,7 @@ class EvaluationActivity : AppCompatActivity() {
                 }
             }
         }
-        GameMethods.setPoints(callbackPoints)
+        GameManager.setPoints(callbackPoints)
 
         //Remove Top-Bar
         try {
@@ -180,11 +180,11 @@ class EvaluationActivity : AppCompatActivity() {
     private fun gotoNextRound() {
         awaitNextRound.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
         nextroundFlag = true
-        GameMethods.pauseTimer()
+        GameManager.pauseTimer()
 
         if ((oldRound+1) < game.playrounds.size) {
             //Check which View comes next (Answer Question, Choose Answer)
-            GameMethods.playerAllocation(
+            GameManager.playerAllocation(
                 this.applicationContext,
                 auth!!.currentUser?.uid.toString()
             )
@@ -210,9 +210,9 @@ class EvaluationActivity : AppCompatActivity() {
             .addOnSuccessListener { documentSnapshot ->
                 game = documentSnapshot.toObject(Game::class.java)!!
                 if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        GameMethods.opp0).answerScore > game.playrounds.getValue(
+                        GameManager.opp0).answerScore > game.playrounds.getValue(
                         "round${game.activeRound}"
-                    ).opponents.getValue(GameMethods.opp1).answerScore
+                    ).opponents.getValue(GameManager.opp1).answerScore
                 ) {
                     setWinnerInfo(
                         0,
@@ -223,9 +223,9 @@ class EvaluationActivity : AppCompatActivity() {
                         imageWinnerPhoto
                     )
                 } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        GameMethods.opp0
+                        GameManager.opp0
                     ).answerScore < game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        GameMethods.opp1
+                        GameManager.opp1
                     ).answerScore
                 ) {
                     setWinnerInfo(
@@ -237,9 +237,9 @@ class EvaluationActivity : AppCompatActivity() {
                         imageWinnerPhoto
                     )
                 } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        GameMethods.opp0
+                        GameManager.opp0
                     ).answerScore == game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        GameMethods.opp1
+                        GameManager.opp1
                     ).answerScore
                 ) {
                     setWinnerInfo(

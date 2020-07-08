@@ -13,7 +13,7 @@ import com.example.quiplash.database.Callback
 import com.example.quiplash.database.DBMethods
 import com.example.quiplash.game.GameManager.Companion.game
 import com.example.quiplash.game.GameManager.Companion.startSecondsAnswer
-import com.example.quiplash.game.GameMethods.Companion.startTimer
+import com.example.quiplash.game.GameManager.Companion.startTimer
 import com.example.quiplash.R
 import com.example.quiplash.Sounds
 import com.google.firebase.auth.FirebaseAuth
@@ -52,12 +52,15 @@ class PrepareAnswerActivity : AppCompatActivity() {
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
                 game = documentSnapshot.toObject(Game::class.java)!!
-                userindex = if( game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        GameMethods.opp0).userID == auth!!.currentUser?.uid) {
-                    0
-                } else{
-                    1
-                }
+                userindex =
+                    if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
+                            GameManager.opp0
+                        ).userID == auth!!.currentUser?.uid
+                    ) {
+                        0
+                    } else {
+                        1
+                    }
 
             }
 
@@ -87,7 +90,8 @@ class PrepareAnswerActivity : AppCompatActivity() {
         splashanim.interpolator = interpolator
         layoutQuestion.startAnimation(splashanim)
 
-        textViewRound.text = ("${ceil((game.activeRound+1).toDouble() / 3).toInt()}/${game.rounds}")
+        textViewRound.text =
+            ("${ceil((game.activeRound + 1).toDouble() / 3).toInt()}/${game.rounds}")
         textViewQuestion.text = game.playrounds.getValue("round${game.activeRound}").question
         textViewQuestion2.text = game.playrounds.getValue("round${game.activeRound}").question
 
@@ -103,7 +107,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
         val callbackTimer = object :
             Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
-                if(!answersArrived){
+                if (!answersArrived) {
                     gotoAnswers()
                 }
             }
@@ -128,7 +132,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     Log.d("SUCCESS", "DocumentSnapshot successfully updated!")
                     imageCheckmark.visibility = ImageView.VISIBLE
-                        textAnswerState.visibility = TextView.VISIBLE
+                    textAnswerState.visibility = TextView.VISIBLE
                     val answerInterpolator = BounceInterpolator(0.5, 10.0)
                     splashanim.interpolator = answerInterpolator
                     layoutAnswerSaved.startAnimation(splashanim)
@@ -154,8 +158,11 @@ class PrepareAnswerActivity : AppCompatActivity() {
                 Log.d("SUCCESS", "Current data: ${snapshot.data}")
                 game = snapshot.toObject(Game::class.java)!!
                 if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        GameMethods.opp0).answer != "" && game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        GameMethods.opp1).answer != "" && !answersArrived) {
+                        GameManager.opp0
+                    ).answer != "" && game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
+                        GameManager.opp1
+                    ).answer != "" && !answersArrived
+                ) {
                     gotoAnswers()
                 }
 

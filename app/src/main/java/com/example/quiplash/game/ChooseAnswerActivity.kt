@@ -15,7 +15,7 @@ import com.example.quiplash.database.DBMethods
 import com.example.quiplash.game.GameManager.Companion.game
 import com.example.quiplash.game.GameManager.Companion.startSecondsVoting
 import com.example.quiplash.game.GameManager.Companion.startSecondsAnswer
-import com.example.quiplash.game.GameMethods.Companion.startTimer
+import com.example.quiplash.game.GameManager.Companion.startTimer
 import com.example.quiplash.R
 import com.example.quiplash.Sounds
 import com.google.firebase.auth.FirebaseAuth
@@ -42,13 +42,13 @@ class ChooseAnswerActivity : AppCompatActivity() {
     private var answersArrived = false
     private var answerChoosen = 2
 
-    private lateinit var answerView1 : View
-    private lateinit var answerView2 : View
-    private lateinit var answerTV1 : TextView
-    private lateinit var answerTV2 : TextView
-    private lateinit var questionTV : TextView
-    private lateinit var imageCheckA1 : ImageView
-    private lateinit var imageCheckA2 : ImageView
+    private lateinit var answerView1: View
+    private lateinit var answerView2: View
+    private lateinit var answerTV1: TextView
+    private lateinit var answerTV2: TextView
+    private lateinit var questionTV: TextView
+    private lateinit var imageCheckA1: ImageView
+    private lateinit var imageCheckA2: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,14 +79,14 @@ class ChooseAnswerActivity : AppCompatActivity() {
         val callbackTimerWaiting = object :
             Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
-                if(!answersArrived){
+                if (!answersArrived) {
                     setNextView()
                 }
             }
         }
         startTimer(timerViewWaiting, startSecondsAnswer, callbackTimerWaiting)
 
-        roundView.text = ("${ceil((game.activeRound+1).toDouble()/3).toInt()}/${game.rounds}")
+        roundView.text = ("${ceil((game.activeRound + 1).toDouble() / 3).toInt()}/${game.rounds}")
 
 
         // Declare in and out animations and load them using AnimationUtils class
@@ -98,7 +98,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
         simpleViewFlipper.outAnimation = out
 
         answerView1.setOnClickListener {
-                saveVote(0)
+            saveVote(0)
 
             Sounds.playClickSound(this)
             val splashanim = AnimationUtils.loadAnimation(this, R.anim.little_shake)
@@ -108,7 +108,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
         }
 
         answerView2.setOnClickListener {
-                saveVote(1)
+            saveVote(1)
 
             Sounds.playClickSound(this)
             val splashanim = AnimationUtils.loadAnimation(this, R.anim.little_shake)
@@ -128,11 +128,12 @@ class ChooseAnswerActivity : AppCompatActivity() {
             if (snapshot != null && snapshot.exists()) {
                 game = snapshot.toObject(Game::class.java)!!
                 if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        GameMethods.opp0).answer != "" && game.playrounds.getValue(
+                        GameManager.opp0
+                    ).answer != "" && game.playrounds.getValue(
                         "round${game.activeRound}"
-                    ).opponents.getValue(GameMethods.opp1).answer != ""
+                    ).opponents.getValue(GameManager.opp1).answer != ""
                 ) {
-                    if(!answersArrived){
+                    if (!answersArrived) {
                         setNextView()
                     }
                 }
@@ -146,7 +147,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
         println("do nothing")
     }
 
-    private fun setNextView(){
+    private fun setNextView() {
         awaitAnswerChoosen.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
         answersArrived = true
         simpleViewFlipper.showNext()
@@ -159,11 +160,11 @@ class ChooseAnswerActivity : AppCompatActivity() {
                     game.playrounds.getValue("round${game.activeRound}").question
                 answerTV1.text =
                     game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        GameMethods.opp0
+                        GameManager.opp0
                     ).answer
                 answerTV2.text =
                     game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        GameMethods.opp1
+                        GameManager.opp1
                     ).answer
             }
         }
@@ -196,30 +197,30 @@ class ChooseAnswerActivity : AppCompatActivity() {
 
     private fun saveVote(answerIndex: Int) {
         //if already votet
-        if (answerChoosen<=1){
+        if (answerChoosen <= 1) {
 
             db.document(game.gameID)
                 .update(
                     mapOf(
                         "playrounds.round${game.activeRound}.opponents.opponent$answerChoosen.answerScore" to FieldValue.increment(
-                            - GameMethods.voteScore.toDouble()
+                            -GameManager.voteScore.toDouble()
                         ),
                         "playrounds.round${game.activeRound}.opponents.opponent$answerIndex.answerScore" to FieldValue.increment(
-                            GameMethods.voteScore.toDouble()
+                            GameManager.voteScore.toDouble()
                         )
                     )
                 )
                 .addOnSuccessListener {
                     Log.d("SUCCESS", "DocumentSnapshot successfully updated!")
                     answerChoosen = answerIndex
-                    if(answerIndex == 0){
+                    if (answerIndex == 0) {
                         imageCheckA1.visibility = View.VISIBLE
                         imageCheckA2.visibility = View.INVISIBLE
                         val splashanim = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
                         val interpolator = BounceInterpolator(0.2, 10.0)
                         splashanim.interpolator = interpolator
                         imageCheckA1.startAnimation(splashanim)
-                    } else if(answerIndex == 1){
+                    } else if (answerIndex == 1) {
                         imageCheckA2.visibility = View.VISIBLE
                         imageCheckA1.visibility = View.INVISIBLE
                         val splashanim = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
@@ -231,7 +232,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
                 .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
         } else {
             answerChoosen = answerIndex
-            game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameMethods.opp0).answer
+            game.playrounds.getValue("round${game.activeRound}").opponents.getValue(GameManager.opp0).answer
 
             db.document(game.gameID)
                 .update(
@@ -240,23 +241,21 @@ class ChooseAnswerActivity : AppCompatActivity() {
                             "round${game.activeRound}"
                         ).opponents.getValue("opponent$answerIndex").userID,*/
                         "playrounds.round${game.activeRound}.opponents.opponent$answerIndex.answerScore" to FieldValue.increment(
-                            GameMethods.voteScore.toDouble()
+                            GameManager.voteScore.toDouble()
                         )
                     )
                 )
                 .addOnSuccessListener {
                     Log.d("SUCCESS", "DocumentSnapshot successfully updated!")
-                    if(answerIndex == 0){
+                    if (answerIndex == 0) {
                         imageCheckA1.visibility = View.VISIBLE
-                    } else if(answerIndex == 1){
+                    } else if (answerIndex == 1) {
                         imageCheckA2.visibility = View.VISIBLE
 
                     }
                 }
                 .addOnFailureListener { e -> Log.w("FAILURE", "Error updating document", e) }
         }
-
-
 
 
     }

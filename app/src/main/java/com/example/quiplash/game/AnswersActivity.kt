@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quiplash.database.Callback
 import com.example.quiplash.database.DBMethods
-import com.example.quiplash.game.GameMethods.Companion.startTimer
+import com.example.quiplash.game.GameManager.Companion.startTimer
 import com.example.quiplash.game.GameManager.Companion.game
 import com.example.quiplash.game.GameManager.Companion.startSecondsVoting
 import com.example.quiplash.R
@@ -52,9 +52,9 @@ class AnswersActivity : AppCompatActivity() {
                 game = result
                 questionTV.text = game.playrounds.getValue("round${game.activeRound}").question
                 answerTV1.text = game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                    GameMethods.opp0).answer
+                    GameManager.opp0).answer
                 answerTV2.text = game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                    GameMethods.opp1).answer
+                    GameManager.opp1).answer
                 roundTextView.text = "${ceil((game.activeRound+1).toDouble()/3).toInt()}/${game.rounds}"
             }
         }

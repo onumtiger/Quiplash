@@ -25,7 +25,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 
 
-
 class WaitingActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
@@ -49,26 +48,26 @@ class WaitingActivity : AppCompatActivity() {
 
         //add Questions to Game
         selectedQuestions = arrayListOf()
-        getQuestionsForGame(game.rounds, game.playerNumber,game.category)
+        getQuestionsForGame(game.rounds, game.playerNumber, game.category)
 
 
         //if(game.hostID != auth.currentUser?.uid) {
-            awaitGamestart = db.document(game.gameID).addSnapshotListener { snapshot, e ->
-                if (e != null) {
-                    Log.w("ERROR", "Listen failed.", e)
-                    return@addSnapshotListener
-                }
-
-                if (snapshot != null && snapshot.exists()) {
-                    game = snapshot.toObject(Game::class.java)!!
-                    if (game.playrounds.size > 0) {
-                        gotoGameLaunch()
-                    }
-
-                } else {
-                    gotoGameLanding()
-                }
+        awaitGamestart = db.document(game.gameID).addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.w("ERROR", "Listen failed.", e)
+                return@addSnapshotListener
             }
+
+            if (snapshot != null && snapshot.exists()) {
+                game = snapshot.toObject(Game::class.java)!!
+                if (game.playrounds.size > 0) {
+                    gotoGameLaunch()
+                }
+
+            } else {
+                gotoGameLanding()
+            }
+        }
         //}
 
         val btnBack = findViewById<Button>(R.id.host_waiting_go_back_arrow)
@@ -293,8 +292,8 @@ class WaitingActivity : AppCompatActivity() {
                 oneRound += (Round(
                     voters,
                     linkedMapOf(
-                        GameMethods.opp0 to Opponent(game.users[roundCount]),
-                        GameMethods.opp1 to Opponent(game.users[roundCount + jump])
+                        GameManager.opp0 to Opponent(game.users[roundCount]),
+                        GameManager.opp1 to Opponent(game.users[roundCount + jump])
                     ),
                     ""
                 ))
@@ -315,7 +314,7 @@ class WaitingActivity : AppCompatActivity() {
             allRoundCount += 1
         }
 
-        for (x in 0 until allRounds.size){
+        for (x in 0 until allRounds.size) {
             allRounds["round$x"]?.question = gameQuestions[x].question.toString()
         }
 
@@ -337,14 +336,14 @@ class WaitingActivity : AppCompatActivity() {
 
     }
 
-    private fun getQuestionsForGame(rounds: Int, player_count: Int, selected_category: String){
-        val countQuestions = rounds*player_count
-        val callback = object: Callback<java.util.ArrayList<Question>> {
+    private fun getQuestionsForGame(rounds: Int, player_count: Int, selected_category: String) {
+        val countQuestions = rounds * player_count
+        val callback = object : Callback<java.util.ArrayList<Question>> {
             override fun onTaskComplete(result: java.util.ArrayList<Question>) {
                 var counter = 0
-                while(counter < countQuestions) {
+                while (counter < countQuestions) {
                     val position = (0 until result.size).random()
-                    if (result[position].type.toString() == selected_category){
+                    if (result[position].type.toString() == selected_category) {
                         selectedQuestions.add(result[position])
                         val currentQuestion = result[position]
                         result.remove(currentQuestion)
