@@ -313,9 +313,9 @@ class EvaluationActivity : AppCompatActivity() {
                 val winner = it.toObject(UserQP::class.java)!!
                 nameView?.text = winner.userName
                 setProfilePicture(winner, profileView)
-                val shakehanim = AnimationUtils.loadAnimation(this, R.anim.shake)
-                val interpolator = BounceInterpolator(0.5, 10.0)
-                shakehanim.interpolator = interpolator
+                val shakehanim = AnimationUtils.loadAnimation(this, R.anim.zoom_in_and_shake)
+                //val interpolator = BounceInterpolator(0.5, 10.0)
+                //shakehanim.interpolator = interpolator
                 scoreView!!.startAnimation(shakehanim)
             }
     }
