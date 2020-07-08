@@ -46,19 +46,34 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/party_shot_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="50dp"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:text="The Looser Drinks 1 Shot!"
+                android:textAlignment="center"
+                android:textColor="@color/colorPink"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonNext" />
+
+            <TextView
                 android:id="@+id/questionEval"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/roboto_slab_bold"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonNext"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/party_shot_text_view" />
 
             <RelativeLayout
                 android:id="@+id/winner"
@@ -105,10 +120,10 @@
                 android:layout_height="50dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="40dp"
-                android:background="@drawable/round_corner"
+                android:background="@drawable/char_circle_turquoise"
                 android:elevation="5dp"
                 android:fontFamily="@font/roboto_slab_bold"
-                android:text=""
+                android:paddingTop="12dp"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
                 android:textSize="14sp"
@@ -122,7 +137,9 @@
                 android:id="@+id/winnerDraw"
                 android:layout_width="0dp"
                 android:layout_height="66dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="32dp"
+                android:layout_marginEnd="50dp"
                 android:layout_marginBottom="64dp"
                 android:background="@drawable/char_button_frame"
                 android:visibility="gone"
@@ -130,12 +147,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/winner">
-
-                <ImageView
-                    android:id="@+id/imageRoundWinnerDraw"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/green_seperator" />
 
                 <ImageView
                     android:id="@+id/imageRoundWinnerPhotoDraw"
@@ -153,9 +164,9 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto_slab_bold"
                     android:layout_marginEnd="50dp"
                     android:layout_toEndOf="@+id/imageRoundWinnerPhotoDraw"
+                    android:fontFamily="@font/roboto_slab_bold"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
@@ -166,8 +177,10 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginBottom="40dp"
-                android:background="@drawable/round_corner"
+                android:background="@drawable/char_circle_turquoise"
+                android:elevation="5dp"
                 android:fontFamily="@font/roboto_slab_bold"
+                android:paddingTop="12dp"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold"
@@ -195,13 +208,14 @@
             <TextView
                 android:id="@+id/answerRoundWinner"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="60dp"
                 android:elevation="6dp"
-                android:fontFamily="@font/shadows_into_light"
+                android:fontFamily="@font/patrick_hand"
+                android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -213,8 +227,9 @@
             <View
                 android:id="@+id/viewDraw"
                 android:layout_width="0dp"
-                android:layout_height="150dp"
+                android:layout_height="200dp"
                 android:layout_marginStart="50dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="50dp"
                 android:background="@drawable/char_speechbubble_mirrored"
                 android:elevation="5dp"
@@ -226,13 +241,14 @@
             <TextView
                 android:id="@+id/answerRoundWinnerDraw"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="60dp"
                 android:elevation="6dp"
-                android:fontFamily="@font/shadows_into_light"
+                android:fontFamily="@font/patrick_hand"
+                android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -251,27 +267,17 @@
                 android:layout_marginEnd="50dp"
                 android:background="@android:color/black"
                 android:elevation="5dp"
+                android:fontFamily="@font/roboto_slab_bold"
                 android:text="@string/next_round"
                 android:textColor="@color/colorWhite"
                 android:textColorHighlight="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:textColorLink="@color/colorWhite"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/timerViewEval" />
 
-            <TextView
-                android:id="@+id/party_shot_text_view"
-                android:layout_width="230dp"
-                android:layout_height="20dp"
-                android:text="The Looser Drinks 1 Shot!"
-                android:textAlignment="center"
-                android:textColor="@color/colorPink"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toTopOf="@+id/questionEval"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonNext" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,33 +20,20 @@
         app:srcCompat="@drawable/ic_go_back_arrow" />
 
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/appCompatImageView"
-        android:layout_width="200dp"
-        android:layout_height="88dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="logo"
-        android:src="@drawable/logo"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="80dp"
         android:fontFamily="@font/roboto_slab_bold"
         android:gravity="center"
         android:text="@string/friends"
-        android:textColor="@color/colorTitles"
+        android:textColor="@color/colorWhite"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/no_friends"
@@ -58,6 +45,7 @@
         android:fontFamily="@font/roboto_slab"
         android:text="You haven't added any friends yet. You can add your friends on the button below."
         android:textAlignment="center"
+        android:textColor="@color/colorWhite"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -35,50 +35,13 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/titleWaitingCA"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_slab_bold"
-                android:text="@string/waiting_answers"
-                android:textAlignment="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/timerWaiting2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="50dp"
-                android:fontFamily="@font/roboto_slab_bold"
-                android:minWidth="125dp"
-                android:minHeight="125dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
                 android:id="@+id/titleCA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_slab_bold"
                 android:text="@string/choose_answer"
                 android:textColor="@color/colorWhite"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -92,8 +55,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
-                android:textColor="@android:color/black"
                 android:fontFamily="@font/roboto_slab_bold"
+                android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/view2"
@@ -104,10 +67,11 @@
 
             <TextView
                 android:id="@+id/timer2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="50dp"
+                android:background="@android:color/black"
                 android:fontFamily="@font/roboto_slab_bold"
                 android:minWidth="125dp"
                 android:minHeight="125dp"
@@ -117,6 +81,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
+            <TextView
+                android:id="@+id/textViewOR"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/char_circle_turquoise"
+                android:elevation="15dp"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:paddingTop="16dp"
+                android:text="or"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/view3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view2" />
 
             <View
                 android:id="@+id/view2"
@@ -155,9 +136,9 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="48dp"
-                android:fontFamily="@font/shadows_into_light"
-                android:textAlignment="center"
                 android:elevation="6dp"
+                android:fontFamily="@font/patrick_hand"
+                android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -175,10 +156,10 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="48dp"
-                android:fontFamily="@font/shadows_into_light"
+                android:elevation="6dp"
+                android:fontFamily="@font/patrick_hand"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:elevation="6dp"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -208,6 +189,43 @@
                 app:layout_constraintTop_toTopOf="@+id/view2"
                 app:srcCompat="@drawable/checkmark_green"
                 tools:visibility="invisible" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/titleWaitingCA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:text="@string/waiting_answers"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/timerWaiting2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:minWidth="125dp"
+                android:minHeight="125dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

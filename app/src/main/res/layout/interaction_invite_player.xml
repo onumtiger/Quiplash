@@ -12,6 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="237dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/char_border_frame"
         android:orientation="vertical">
 
 

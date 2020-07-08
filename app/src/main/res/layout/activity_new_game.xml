@@ -20,65 +20,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/appCompatImageView"
-        android:layout_width="200dp"
-        android:layout_height="88dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="logo"
-        android:src="@drawable/logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="80dp"
         android:fontFamily="@font/roboto_slab_bold"
         android:gravity="center"
         android:text="@string/new_game"
-        android:textColor="@color/colorTitles"
+        android:textColor="@color/colorWhite"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/new_game_category_card"
         android:layout_width="0dp"
-        android:layout_height="72dp"
+        android:layout_height="85dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="52dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="5dp"
+        android:background="@drawable/char_button_frame"
+        android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/new_game_players_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <ImageView
-            android:id="@+id/category_border"
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            app:srcCompat="@drawable/green_seperator" />
-
-        <ImageView
             android:id="@+id/category_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="12dp"
             app:srcCompat="@drawable/category_icon" />
 
         <TextView
             android:id="@+id/new_game_category"
-            android:layout_width="199dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="75dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="30dp"
+            android:layout_toEndOf="@+id/category_image"
             android:fontFamily="@font/roboto_slab_bold"
             android:text="Category"
             android:textColor="#BBBBBB"
@@ -86,10 +76,13 @@
 
         <Spinner
             android:id="@+id/category_dropdown"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="75dp"
-            android:layout_marginTop="40dp"
+            android:layout_below="@+id/new_game_category"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="29dp"
+            android:layout_toEndOf="@+id/category_image"
             android:entries="@array/array_categories"
             android:spinnerMode="dropdown" />
 
@@ -98,35 +91,36 @@
     <RelativeLayout
         android:id="@+id/new_game_players_card"
         android:layout_width="0dp"
-        android:layout_height="72dp"
+        android:layout_height="85dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="5dp"
+        android:background="@drawable/char_button_frame"
+        android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/new_game_rounds_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/new_game_category_card">
 
         <ImageView
-            android:id="@+id/imageRoundWinner"
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            app:srcCompat="@drawable/green_seperator" />
-
-        <ImageView
             android:id="@+id/imageRoundWinnerPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="12dp"
             app:srcCompat="@drawable/heart_icon" />
 
         <TextView
             android:id="@+id/new_game_players"
             android:layout_width="199dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="75dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@+id/imageRoundWinnerPhoto"
             android:fontFamily="@font/roboto_slab_bold"
             android:text="Amount of Players"
             android:textColor="#BBBBBB"
@@ -136,8 +130,9 @@
             android:id="@+id/player_dropdown"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="75dp"
-            android:layout_marginTop="40dp"
+            android:layout_below="@+id/new_game_players"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@+id/imageRoundWinnerPhoto"
             android:entries="@array/amount_players"
             android:spinnerMode="dropdown" />
 
@@ -146,35 +141,36 @@
     <RelativeLayout
         android:id="@+id/new_game_rounds_card"
         android:layout_width="0dp"
-        android:layout_height="72dp"
+        android:layout_height="85dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="5dp"
+        android:background="@drawable/char_button_frame"
+        android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/start_game"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/new_game_players_card">
 
         <ImageView
-            android:id="@+id/rounds_border"
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            app:srcCompat="@drawable/green_seperator" />
-
-        <ImageView
             android:id="@+id/rounds_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="12dp"
             app:srcCompat="@drawable/timer_icon" />
 
         <TextView
             android:id="@+id/new_game_rounds"
             android:layout_width="199dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="75dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@+id/rounds_image"
             android:fontFamily="@font/roboto_slab_bold"
             android:text="Amount of Rounds"
             android:textColor="#BBBBBB"
@@ -184,8 +180,9 @@
             android:id="@+id/rounds_dropdown"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="75dp"
-            android:layout_marginTop="40dp"
+            android:layout_below="@+id/new_game_rounds"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@+id/rounds_image"
             android:entries="@array/amount_rounds"
             android:spinnerMode="dropdown" />
 
@@ -200,6 +197,7 @@
         android:layout_marginEnd="50dp"
         android:fontFamily="@font/roboto_slab_bold"
         android:text="Private Game"
+        android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/game_title"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -210,13 +208,14 @@
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="32dp"
-        android:background="@color/colorButtonGreen"
+        android:background="@android:color/black"
         android:fontFamily="@font/roboto_slab_bold"
         android:text="Create Game"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
         android:textColorLink="@color/colorWhite"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -243,7 +242,9 @@
         android:id="@+id/party_switch"
         android:layout_width="147dp"
         android:layout_height="28dp"
+        android:fontFamily="@font/roboto_slab_bold"
         android:text="Party Mode"
+        android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.23"
         app:layout_constraintStart_toEndOf="@+id/game_title"

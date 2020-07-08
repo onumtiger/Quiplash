@@ -21,8 +21,7 @@ class PlayersListAdapter(val mCtx: Context, val layoutResId: Int, val playerList
         val layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         val view: View = layoutInflater.inflate(layoutResId, null)
         val textViewGame = view.findViewById<TextView>(R.id.textRoundWinnerName)
-        val imageViewUser: ImageView = view.findViewById<ImageView>(R.id.players_star)
-        val imageViewSeperator: ImageView = view.findViewById<ImageView>(R.id.players_seperator)
+        val imageViewUser: ImageView = view.findViewById(R.id.players_star)
         var fotostorage = FirebaseStorage.getInstance()
         var storageRef = fotostorage.reference
         val playerPhoto: String
@@ -37,17 +36,16 @@ class PlayersListAdapter(val mCtx: Context, val layoutResId: Int, val playerList
         }
 
         textViewGame.text = player.userName
-        imageViewSeperator.setImageResource(R.drawable.green_seperator)
 
         // Get profile photo of player from db to show it in listView
-        var spaceRef = storageRef.child(playerPhoto)
+        val spaceRef = storageRef.child(playerPhoto)
         spaceRef.downloadUrl
-            .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
+            .addOnSuccessListener { uri ->
                 Glide
                     .with(context)
                     .load(uri)
                     .into(imageViewUser)
-            }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
+            }.addOnFailureListener { Log.d("Test", " Failed!") }
 
         return view
     }

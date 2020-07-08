@@ -30,7 +30,7 @@
     <string name="save_btn">Save</string>
     <string name="edit_account_btn">Edit Profile</string>
     <string name="delete_account_btn">Delete Account</string>
-    <string name="ready_btn">Ready</string>
+    <string name="ready_btn">Submit</string>
     <string name="go_home_btn">Go Home</string>
     <string name="change_profile_photo_btn">Change profile photo</string>
     <string name="sign_in_btn">Sign In</string>
@@ -78,12 +78,12 @@
     <string name="friends">Friends</string>
     <string name="invite_player">Invite Player</string>
     <string name="delete_account">Delete Account</string>
-    <string name="username">Username</string>
+    <string name="username">Username:</string>
     <string name="game_starts">Game starts</string>
-    <string name="e_mail">E-Mail</string>
-    <string name="score">Score</string>
+    <string name="e_mail">E-Mail: </string>
+    <string name="score">Score: </string>
     <string name="add_player">Add Player</string>
-    <string name="password">Password</string>
+    <string name="password">Password: </string>
     <string name="password_retype">Retype Password</string>
     <string name="username_not_available">Username already exists, please choose another username</string>
     <string name="already_have_an_account">You already have an account?</string>
@@ -104,5 +104,4 @@
     <string name="somethin_went_wrong">UUPS! Something went wrong. Please try again later.</string>
     <string name="wrong_email">Wrong e-Mail!</string>
     <string name="answer_not_saved">Your Answer could not be saved</string>
-    <string name="answer_saved_successfully">Your Answer has been saved successfully!</string>
 </resources>

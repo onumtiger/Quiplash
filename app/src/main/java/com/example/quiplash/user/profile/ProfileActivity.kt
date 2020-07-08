@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatImageButton
 import com.bumptech.glide.Glide
 import com.example.quiplash.*
 import com.example.quiplash.database.DBMethods.Companion.getUser
@@ -58,8 +57,6 @@ class ProfileActivity : AppCompatActivity() {
         val viewProfilePic: ImageView = findViewById(R.id.imageView)
         val viewEmail: TextView = findViewById(R.id.email)
         val viewLabelEmail: TextView = findViewById(R.id.textViewMail)
-        val viewPassword: TextView = findViewById(R.id.password)
-        val viewLabelPassword: TextView = findViewById(R.id.textViewPw)
         val viewScore: TextView = findViewById(R.id.score)
         val viewUsernameBig: TextView = findViewById(R.id.usernameBig)
         var photoPath = "images/default-user.png"
@@ -75,9 +72,7 @@ class ProfileActivity : AppCompatActivity() {
                 if (result.guest!!) {
                     btnRegisterGuest.visibility = View.VISIBLE
                     viewEmail.visibility = View.GONE
-                    viewPassword.visibility = View.GONE
                     viewLabelEmail.visibility = View.GONE
-                    viewLabelPassword.visibility = View.GONE
                 }
 
                 if (currentUser.userName == "User") {
