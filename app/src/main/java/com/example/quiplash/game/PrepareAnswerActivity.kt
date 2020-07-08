@@ -35,7 +35,6 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
     private var userindex = 0
     var answersArrived = false
-    private val splashanim: Animation = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
 
     private lateinit var viewFlipper: ViewFlipper
     private lateinit var imageCheckmark: ImageView
@@ -92,6 +91,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
         layoutAnswerSaved = findViewById(R.id.layoutAnswerSaved)
 
         viewFlipper = findViewById(R.id.viewFlipperQuestion) // get the reference of ViewFlipper
+        val splashanim: Animation = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
 
         val interpolator = BounceInterpolator(0.5, 10.0)
         splashanim.interpolator = interpolator
@@ -185,6 +185,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
                 Log.d("SUCCESS", "DocumentSnapshot successfully updated!")
                 imageCheckmark.visibility = ImageView.VISIBLE
                 textAnswerState.visibility = TextView.VISIBLE
+                val splashanim: Animation = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
                 val answerInterpolator = BounceInterpolator(0.5, 10.0)
                 splashanim.interpolator = answerInterpolator
                 layoutAnswerSaved.startAnimation(splashanim)
