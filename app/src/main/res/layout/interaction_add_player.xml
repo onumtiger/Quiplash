@@ -48,6 +48,7 @@
         android:ems="10"
         android:hint="@string/username_placeholder"
         android:inputType="textEmailAddress"
+        android:singleLine="true"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.187"
