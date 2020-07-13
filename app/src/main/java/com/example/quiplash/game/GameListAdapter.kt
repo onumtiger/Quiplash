@@ -19,8 +19,8 @@ class GameListAdapter(val mCtx: Context, val layoutResId: Int, val gameList: Lis
         val view: View = layoutInflater.inflate(layoutResId, null)
         val textViewGame = view.findViewById<TextView>(R.id.active_game)
         val textViewCategory = view.findViewById<TextView>(R.id.join_active_game_category)
-        val textViewPlayers: TextView = view.findViewById<TextView>(R.id.join_active_game_players)
-        val imageViewStar: ImageView = view.findViewById<ImageView>(R.id.imageViewStar)
+        val textViewPlayers: TextView = view.findViewById(R.id.join_active_game_players)
+        val imageViewStar: ImageView = view.findViewById(R.id.imageViewStar)
         val imageViewInvited = view.findViewById<ImageView>(R.id.imageViewInvited)
 
         auth = FirebaseAuth.getInstance()
@@ -28,7 +28,15 @@ class GameListAdapter(val mCtx: Context, val layoutResId: Int, val gameList: Lis
         textViewGame.text = "Active Game"
         textViewCategory.text = "Category: " + game.category
         textViewPlayers.text =  game.users.size.toString() + " / " + game.playerNumber.toString()
-        imageViewStar.setImageResource(R.drawable.join_game_star)
+        if(game.category === "Harsh"){
+            imageViewStar.setImageResource(R.drawable.harsh_symbol)
+        }else if(game.category === "Funny"){
+            imageViewStar.setImageResource(R.drawable.funny_symbol)
+        }else if(game.category === "Poetic"){
+            imageViewStar.setImageResource(R.drawable.poetic_symbol)
+        } else {
+            imageViewStar.setImageResource(R.drawable.all_symbol)
+        }
 
         // If exists, set game title
         if (!game.gameTitle.isNullOrEmpty()) {

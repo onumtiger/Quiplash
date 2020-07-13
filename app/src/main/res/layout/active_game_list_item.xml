@@ -5,20 +5,18 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="50dp"
     android:background="@drawable/char_button_frame"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
     app:layout_constraintStart_toStartOf="parent">
 
 
     <ImageView
         android:id="@+id/imageViewStar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/join_game_star" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/active_game"
@@ -54,9 +52,9 @@
 
     <TextView
         android:id="@+id/join_active_game_players"
-        android:layout_width="62dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="24dp"
         android:fontFamily="@font/roboto_slab_bold"
         android:textAlignment="textEnd"
         android:textColor="#BBBBBB"

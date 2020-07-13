@@ -75,50 +75,56 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/party_shot_text_view" />
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/winner"
-                android:layout_width="0dp"
-                android:layout_height="66dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="50dp"
-                android:background="@drawable/char_button_frame"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="64dp"
+                android:gravity="center_vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/viewDraw"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/viewDraw">
 
                 <ImageView
                     android:id="@+id/imageRoundWinnerPhoto"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:scaleType="center" />
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:scaleType="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textRoundWinnerName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/imageRoundWinnerPhoto"
+                    android:layout_alignStart="@+id/imageRoundWinnerPhoto"
+                    android:layout_alignEnd="@+id/imageRoundWinnerPhoto"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="50dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_toEndOf="@+id/imageRoundWinnerPhoto"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/roboto_slab_bold"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/imageRoundWinnerPhoto"
+                    app:layout_constraintStart_toStartOf="@+id/imageRoundWinnerPhoto"
+                    app:layout_constraintTop_toBottomOf="@+id/imageRoundWinnerPhoto" />
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <TextView
                 android:id="@+id/textViewScore"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginBottom="100dp"
                 android:background="@drawable/char_circle_turquoise"
                 android:elevation="5dp"
                 android:fontFamily="@font/roboto_slab_bold"
@@ -129,15 +135,14 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/winner"
                 app:layout_constraintEnd_toEndOf="@+id/winner"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/winner" />
 
             <TextView
                 android:id="@+id/textViewShot"
                 android:layout_width="50dp"
                 android:layout_height="55dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginBottom="100dp"
                 android:background="@drawable/shot_pink"
                 android:elevation="6dp"
                 android:fontFamily="@font/roboto_slab_bold"
@@ -148,54 +153,62 @@
                 android:textSize="36sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/winnerDraw"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/winnerDraw"
                 app:layout_constraintStart_toEndOf="@+id/winnerDraw" />
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/winnerDraw"
-                android:layout_width="0dp"
-                android:layout_height="66dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="62dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="50dp"
-                android:layout_marginBottom="100dp"
-                android:background="@drawable/char_button_frame"
+                android:layout_marginBottom="64dp"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/winner">
+                app:layout_constraintStart_toEndOf="@+id/winner"
+                app:layout_constraintTop_toBottomOf="@+id/viewDraw">
 
                 <ImageView
                     android:id="@+id/imageRoundWinnerPhotoDraw"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:scaleType="center" />
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:scaleType="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textRoundWinnerNameDraw"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageRoundWinnerPhotoDraw"
+                    android:layout_alignStart="@+id/imageRoundWinnerPhotoDraw"
+                    android:layout_alignEnd="@+id/imageRoundWinnerPhotoDraw"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="50dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="8dp"
                     android:layout_toEndOf="@+id/imageRoundWinnerPhotoDraw"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:fontFamily="@font/roboto_slab_bold"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/imageRoundWinnerPhotoDraw"
+                    app:layout_constraintStart_toStartOf="@+id/imageRoundWinnerPhotoDraw"
+                    app:layout_constraintTop_toBottomOf="@+id/imageRoundWinnerPhotoDraw" />
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textViewScoreDraw"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginBottom="100dp"
                 android:background="@drawable/char_circle_turquoise"
                 android:elevation="5dp"
                 android:fontFamily="@font/roboto_slab_bold"
@@ -213,30 +226,30 @@
                 android:id="@+id/imageLoserSign"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="180dp"
-                android:layout_marginBottom="100dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="80dp"
                 android:elevation="6dp"
                 android:rotation="-7"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/winnerDraw"
                 app:layout_constraintEnd_toEndOf="@+id/winnerDraw"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/winnerDraw"
+                app:layout_constraintStart_toEndOf="@+id/winner"
                 app:srcCompat="@drawable/loser" />
 
             <ImageView
                 android:id="@+id/imageWinnerSign"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="160dp"
-                android:layout_marginBottom="100dp"
+                android:layout_marginStart="56dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="80dp"
                 android:elevation="6dp"
                 android:rotation="-7"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/winner"
                 app:layout_constraintEnd_toEndOf="@+id/winner"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/winner"
                 app:srcCompat="@drawable/winner" />
 
             <View
@@ -261,9 +274,8 @@
                 android:background="@drawable/char_circle_turquoise"
                 android:elevation="15dp"
                 android:fontFamily="@font/roboto_slab_bold"
-                android:paddingTop="14dp"
+                android:gravity="fill_vertical"
                 android:text="@string/and_sign"
-                android:textAlignment="center"
                 android:textColor="@color/colorText"
                 android:textSize="28sp"
                 android:visibility="gone"

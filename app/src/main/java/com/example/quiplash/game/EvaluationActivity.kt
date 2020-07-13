@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.example.quiplash.database.Callback
 import com.example.quiplash.database.DBMethods
@@ -39,7 +40,7 @@ class EvaluationActivity : AppCompatActivity() {
     private var winnerName: TextView? = null
     private var imageWinnerPhoto: ImageView? = null
     private var scoreView: TextView? = null
-    private var frameProfile: RelativeLayout? = null
+    private var frameProfile: ConstraintLayout? = null
     private var imageWinnerSign: ImageView? = null
 
     private var imageAndIcon: TextView? = null
@@ -50,7 +51,7 @@ class EvaluationActivity : AppCompatActivity() {
     private var imageShot: TextView? = null
     private var scoreViewDraw: TextView? = null
     private var answerViewWinnerFrameDraw: View? = null
-    private var frameProfileDraw: RelativeLayout? = null
+    private var frameProfileDraw: ConstraintLayout? = null
 
     private var playerPhoto = ""
     private lateinit var awaitNextRound: ListenerRegistration
@@ -143,9 +144,6 @@ class EvaluationActivity : AppCompatActivity() {
             }
         }
 
-        val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom)
-        imageWinnerSign!!.startAnimation(zoomanim)
-        imageLoserSign!!.startAnimation(zoomanim)
 
         /**
          * If someone press the 'next round'-Button, go to next round.
@@ -234,6 +232,12 @@ class EvaluationActivity : AppCompatActivity() {
                         winnerName,
                         imageWinnerPhoto
                     )
+                    val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom)
+                    imageWinnerSign!!.visibility = ImageView.VISIBLE
+                    imageWinnerSign!!.startAnimation(zoomanim)
+                    imageLoserSign!!.visibility = ImageView.VISIBLE
+                    imageLoserSign!!.startAnimation(zoomanim)
+
                 } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         GameManager.opp0
                     ).answerScore < game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
@@ -248,6 +252,13 @@ class EvaluationActivity : AppCompatActivity() {
                         winnerName,
                         imageWinnerPhoto
                     )
+
+                    val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom)
+                    imageWinnerSign!!.visibility = ImageView.VISIBLE
+                    imageWinnerSign!!.startAnimation(zoomanim)
+                    imageLoserSign!!.visibility = ImageView.VISIBLE
+                    imageLoserSign!!.startAnimation(zoomanim)
+
                 } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         GameManager.opp0
                     ).answerScore == game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
