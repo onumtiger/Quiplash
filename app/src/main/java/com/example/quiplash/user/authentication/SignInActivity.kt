@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.KeyEvent
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +32,9 @@ class SignInActivity : AppCompatActivity() {
 
     //view objects
     private lateinit var progressBar: ProgressBar
+    private lateinit var inputEmail: EditText
+    private lateinit var inputPassword: EditText
+    private lateinit var textviewError: TextView
     private var errotext: String = ""
 
     //Firestore
@@ -70,19 +74,27 @@ class SignInActivity : AppCompatActivity() {
         }
         setContentView(R.layout.activity_sign_in)
 
-        val inputEmail = findViewById<EditText>(R.id.emailFieldSU)
-        val inputPassword = findViewById<EditText>(R.id.passwordFieldSU)
+        inputEmail = findViewById(R.id.emailFieldSU)
+        inputPassword = findViewById(R.id.passwordFieldSU)
         progressBar = findViewById(R.id.progressBarLogin)
         val btnSignup = findViewById<Button>(R.id.signupBtn)
         val btnLogin = findViewById<Button>(R.id.signinBtn)
         val btnLoginGuest = findViewById<Button>(R.id.signinGuestBtn)
         val btnResetPassword = findViewById<Button>(R.id.btnResetPassword)
-        val textviewError = findViewById<TextView>(R.id.textErrorLogin)
+        textviewError = findViewById(R.id.textErrorLogin)
+
+
+        inputPassword.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                login()
+                return@OnKeyListener true
+            }
+            false
+        })
 
 
         btnSignup.setOnClickListener{
             Sounds.playClickSound(this)
-
             startActivity(Intent(this@SignInActivity, SignUpActivity::class.java))
             finish()
         }
@@ -114,51 +126,53 @@ class SignInActivity : AppCompatActivity() {
 
         btnLogin.setOnClickListener{
             Sounds.playClickSound(this)
-
-            val email = inputEmail.text.toString()
-            val password = inputPassword.text.toString()
-
-            if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
-                progressBar.visibility = View.VISIBLE
-
-                //authenticate user
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this@SignInActivity) { task ->
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        progressBar.visibility = View.INVISIBLE
-
-                        if (!task.isSuccessful) {
-                            try {
-                                throw task.exception!!
-                            } // if user enters wrong email.
-                            catch (invalidEmail: FirebaseAuthInvalidUserException) {
-                                textviewError.text = getString(R.string.wrong_email)
-                            } // if user enters wrong password.
-                            catch (wrongPassword: FirebaseAuthInvalidCredentialsException) {
-                                textviewError.text = getString(R.string.wrong_password)
-                            } catch (e: Exception) {
-                                textviewError.text = e.message
-                            }
-                        } else {
-                            setUser(auth.currentUser?.uid.toString())
-                        }
-                    }
-            } else {
-                errotext = ""
-                if (TextUtils.isEmpty(email)) {
-                    errotext += "Enter email address! \n"
-                }
-                if (TextUtils.isEmpty(password)) {
-                    errotext += "Enter password! \n"
-                }
-                textviewError.text = errotext
-            }
-
+            login()
         }
     }
 
+
+    private fun login(){
+        val email = inputEmail.text.toString()
+        val password = inputPassword.text.toString()
+
+        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+            progressBar.visibility = View.VISIBLE
+
+            //authenticate user
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this@SignInActivity) { task ->
+                    // If sign in fails, display a message to the user. If sign in succeeds
+                    // the auth state listener will be notified and logic to handle the
+                    // signed in user can be handled in the listener.
+                    progressBar.visibility = View.INVISIBLE
+
+                    if (!task.isSuccessful) {
+                        try {
+                            throw task.exception!!
+                        } // if user enters wrong email.
+                        catch (invalidEmail: FirebaseAuthInvalidUserException) {
+                            textviewError.text = getString(R.string.wrong_email)
+                        } // if user enters wrong password.
+                        catch (wrongPassword: FirebaseAuthInvalidCredentialsException) {
+                            textviewError.text = getString(R.string.wrong_password)
+                        } catch (e: Exception) {
+                            textviewError.text = e.message
+                        }
+                    } else {
+                        setUser(auth.currentUser?.uid.toString())
+                    }
+                }
+        } else {
+            errotext = ""
+            if (TextUtils.isEmpty(email)) {
+                errotext += "Enter email address! \n"
+            }
+            if (TextUtils.isEmpty(password)) {
+                errotext += "Enter password! \n"
+            }
+            textviewError.text = errotext
+        }
+    }
 
     /**User-information will be fetched by id (which we got after login) and saved in GameManager.
      * Then the User is logged in an the view changes to Home-Screen**/

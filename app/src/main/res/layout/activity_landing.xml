@@ -25,7 +25,7 @@
                     android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/appCompatImageView3"
+                            android:id="@+id/imageLogo"
                             android:layout_width="wrap_content"
                             android:layout_height="150dp"
                             android:layout_marginStart="32dp"
@@ -45,7 +45,7 @@
                             android:id="@+id/invitations"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:layout_marginLeft="375dp"
+                            android:layout_marginStart="375dp"
                             android:layout_marginBottom="-15dp"
                             android:background="@drawable/round_corner_red"
                             android:elevation="6dp"

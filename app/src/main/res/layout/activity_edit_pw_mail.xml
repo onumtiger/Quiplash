@@ -15,6 +15,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="50dp"
         android:ems="10"
+        android:singleLine="true"
         android:fontFamily="@font/roboto_slab"
         android:hint="New Mail Address"
         android:textColor="@color/colorWhite"
@@ -34,6 +35,7 @@
         android:fontFamily="@font/roboto_slab"
         android:hint="New Password"
         android:textColor="@color/colorWhite"
+        android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.205"
         app:layout_constraintStart_toEndOf="@+id/textViewPw"
@@ -49,6 +51,7 @@
         android:ems="10"
         android:fontFamily="@font/roboto_slab"
         android:hint="Repeat New Password"
+        android:singleLine="true"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textViewPw2"
@@ -86,37 +89,6 @@
         app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- <TextView
-        android:id="@+id/textView9"
-        android:layout_width="151dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:text="@string/profile"
-        android:textColor="@color/colorTitles"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" /> -->
-
-
-    <!-- <Button
-        android:id="@+id/btnPrrofilePic"
-        android:layout_width="192dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/colorButtonGreen"
-        android:text="@string/change_profile_photo_btn"
-        android:textColor="@color/colorWhite"
-        android:textColorHighlight="@color/colorWhite"
-        android:textColorHint="@color/colorWhite"
-        android:textColorLink="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" /> -->
 
     <TextView
         android:id="@+id/textViewPw"
@@ -202,6 +174,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="112dp"
         android:ems="10"
+        android:singleLine="true"
         android:hint="current Password"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"

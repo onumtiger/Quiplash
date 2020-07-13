@@ -121,6 +121,7 @@
         android:fontFamily="@font/roboto_slab"
         android:hint="@string/username_placeholder"
         android:inputType="textPersonName"
+        android:singleLine="true"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textViewName"

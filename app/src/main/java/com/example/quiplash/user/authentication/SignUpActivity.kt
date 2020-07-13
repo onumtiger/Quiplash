@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
@@ -31,7 +32,15 @@ class SignUpActivity : AppCompatActivity() {
     //FirebaseAuth object
     private lateinit var auth: FirebaseAuth
     private var errotext: String = ""
+
+    //View-Objects
     private lateinit var simpleViewFlipper: ViewFlipper
+    private lateinit var inputEmail: EditText
+    private lateinit var inputPassword: EditText
+    private lateinit var inputPassword2: EditText
+    private lateinit var inputUsername: EditText
+    private lateinit var textviewError: TextView
+    private lateinit var textviewErrorUserName: TextView
 
     //Firestore
     lateinit var db: CollectionReference
@@ -66,12 +75,12 @@ class SignUpActivity : AppCompatActivity() {
         val btnSignUp = findViewById<Button>(R.id.signupBtn)
         val btnSubmit = findViewById<Button>(R.id.submitBtn)
         val btnAnonymous = findViewById<Button>(R.id.anonymousBtn)
-        val inputEmail = findViewById<EditText>(R.id.emailFieldSU)
-        val inputPassword = findViewById<EditText>(R.id.passwordFieldSU)
-        val inputPassword2 = findViewById<EditText>(R.id.passwordRetypeFieldSU)
-        val inputUsername = findViewById<EditText>(R.id.editTextUsername)
-        val textviewError = findViewById<TextView>(R.id.textError)
-        val textviewErrorUserName = findViewById<TextView>(R.id.textErrorUsername)
+        inputEmail = findViewById(R.id.emailFieldSU)
+        inputPassword = findViewById(R.id.passwordFieldSU)
+        inputPassword2 = findViewById(R.id.passwordRetypeFieldSU)
+        inputUsername = findViewById(R.id.editTextUsername)
+        textviewError = findViewById(R.id.textError)
+        textviewErrorUserName = findViewById(R.id.textErrorUsername)
         progressBar = findViewById(R.id.progressBarSignup)
         simpleViewFlipper = findViewById(R.id.simpleViewFlipper) // get the reference of ViewFlipper
 
@@ -84,96 +93,123 @@ class SignUpActivity : AppCompatActivity() {
         simpleViewFlipper.inAnimation = inAni
         simpleViewFlipper.outAnimation = out
 
+        inputPassword2.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                signup()
+                return@OnKeyListener true
+            }
+            false
+        })
+
+
+        inputUsername.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                submitUsername()
+                return@OnKeyListener true
+            }
+            false
+        })
+
 
         //set onClickListener for buttons
         btnSignIn.setOnClickListener {
+            Sounds.playClickSound(this)
             startActivity(Intent(this@SignUpActivity, SignInActivity::class.java))
             finish()
         }
 
         btnSubmit.setOnClickListener {
-            val callbackCheckUsername = object:
-                Callback<Boolean> {
-                override fun onTaskComplete(result: Boolean) {
-                    if (result) {
-                        textviewErrorUserName.text = getString(R.string.username_not_available)
-                    } else {
-                        createUser()
-                    }
-                }
-            }
-            DBMethods.checkUsername(
-                "",
-                inputUsername.text.toString(),
-                callbackCheckUsername
-            )
-
-
+            Sounds.playClickSound(this)
+            submitUsername()
         }
 
         btnSignUp.setOnClickListener {
-            if (checkInput()) {
-                progressBar.visibility = View.VISIBLE
-
-                auth.createUserWithEmailAndPassword(
-                    inputEmail.text.toString(),
-                    inputPassword.text.toString()
-                )
-                    .addOnCompleteListener(this
-                    ) { task ->
-                        progressBar.visibility = View.INVISIBLE
-
-                        if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            isUser = true
-                            simpleViewFlipper.showNext()
-
-                        } else {
-                            try {
-                                throw task.exception!!
-                            } // if user enters wrong email.
-                            catch (weakPassword: FirebaseAuthWeakPasswordException) {
-                                textviewError.text = getString(R.string.wrong_email)
-                            } // if user enters wrong password.
-                            catch (malformedEmail: FirebaseAuthInvalidCredentialsException) {
-                                textviewError.text = getString(R.string.wrong_password)
-                            } catch (existEmail: FirebaseAuthUserCollisionException) {
-                                textviewError.text = getString(R.string.email_already_exists)
-                            } catch (e: Exception) {
-                                textviewError.text = getString(R.string.somethin_went_wrong)
-                            }
-                        }
-
-                    }
-            } else {
-
-                errotext = ""
-                if (TextUtils.isEmpty(inputEmail.text)) {
-                    errotext += "Enter email address! \n"
-                }
-
-                if (TextUtils.isEmpty(inputPassword.text)) {
-                    errotext += "Enter password! \n"
-                }
-
-                if (inputPassword.text.toString() != inputPassword2.text.toString()) {
-                    errotext += "Passwords need to be identical! \n"
-                }
-
-                if (inputPassword.text.length < 6) {
-                    errotext += getString(R.string.weak_password) +"\n"
-                }
-
-                textviewError.text = errotext
-
-            }
+            Sounds.playClickSound(this)
+            signup()
         }
 
         btnAnonymous.setOnClickListener {
+            Sounds.playClickSound(this)
             anonymousLogin()
         }
 
 
+    }
+
+    private fun submitUsername(){
+        val callbackCheckUsername = object:
+            Callback<Boolean> {
+            override fun onTaskComplete(result: Boolean) {
+                if (result) {
+                    textviewErrorUserName.text = getString(R.string.username_not_available)
+                } else {
+                    createUser()
+                }
+            }
+        }
+        DBMethods.checkUsername(
+            "",
+            inputUsername.text.toString(),
+            callbackCheckUsername
+        )
+    }
+
+    private fun signup(){
+        if (checkInput()) {
+            progressBar.visibility = View.VISIBLE
+
+            auth.createUserWithEmailAndPassword(
+                inputEmail.text.toString(),
+                inputPassword.text.toString()
+            )
+                .addOnCompleteListener(this
+                ) { task ->
+                    progressBar.visibility = View.INVISIBLE
+
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        isUser = true
+                        simpleViewFlipper.showNext()
+
+                    } else {
+                        try {
+                            throw task.exception!!
+                        } // if user enters wrong email.
+                        catch (weakPassword: FirebaseAuthWeakPasswordException) {
+                            textviewError.text = getString(R.string.wrong_email)
+                        } // if user enters wrong password.
+                        catch (malformedEmail: FirebaseAuthInvalidCredentialsException) {
+                            textviewError.text = getString(R.string.wrong_password)
+                        } catch (existEmail: FirebaseAuthUserCollisionException) {
+                            textviewError.text = getString(R.string.email_already_exists)
+                        } catch (e: Exception) {
+                            textviewError.text = getString(R.string.somethin_went_wrong)
+                        }
+                    }
+
+                }
+        } else {
+
+            errotext = ""
+            if (TextUtils.isEmpty(inputEmail.text)) {
+                errotext += "Enter email address! \n"
+            }
+
+            if (TextUtils.isEmpty(inputPassword.text)) {
+                errotext += "Enter password! \n"
+            }
+
+            if (inputPassword.text.toString() != inputPassword2.text.toString()) {
+                errotext += "Passwords need to be identical! \n"
+            }
+
+            if (inputPassword.text.length < 6) {
+                errotext += getString(R.string.weak_password) +"\n"
+            }
+
+            textviewError.text = errotext
+
+        }
     }
 
     private fun anonymousLogin() {
