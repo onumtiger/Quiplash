@@ -59,7 +59,7 @@ class ProfileActivity : AppCompatActivity() {
         val viewLabelEmail: TextView = findViewById(R.id.textViewMail)
         val viewScore: TextView = findViewById(R.id.score)
         val viewUsernameBig: TextView = findViewById(R.id.usernameBig)
-        var photoPath = "images/default-user.png"
+        var photoPath = "images/default_user_QP.png"
         val dialogFragmentGuest =
             ModalGuestInfo()
         val fm = supportFragmentManager
@@ -98,7 +98,7 @@ class ProfileActivity : AppCompatActivity() {
                     viewScore.text = "Score: " + currentUser.score.toString()
 
                     if (currentUser.photo == null) {
-                        photoPath = "images/default-user.png"
+                        photoPath = "images/default_user_QP.png"
                     } else {
                         photoPath = currentUser.photo.toString()
                     }

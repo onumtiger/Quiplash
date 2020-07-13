@@ -104,6 +104,23 @@
         app:layout_constraintTop_toTopOf="@+id/viewAnswer1A" />
 
     <TextView
+        android:id="@+id/textViewOR"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/char_circle_turquoise"
+        android:elevation="15dp"
+        android:fontFamily="@font/roboto_slab_bold"
+        android:paddingTop="16dp"
+        android:text="or"
+        android:textAlignment="center"
+        android:textColor="@color/colorText"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/answer2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/answer1" />
+
+    <TextView
         android:id="@+id/answer2"
         android:layout_width="0dp"
         android:layout_height="0dp"

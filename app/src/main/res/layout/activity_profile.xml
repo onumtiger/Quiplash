@@ -11,10 +11,9 @@
         android:id="@+id/profile_go_back_arrow"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="41dp"
         android:background="@drawable/ic_go_back_arrow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,10 +52,10 @@
         android:id="@+id/userPhotoLayout"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/profile_go_back_arrow">
 
         <ImageView
             android:id="@+id/imageView"
@@ -153,9 +152,8 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="50dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="32dp"
         android:background="@android:color/black"
         android:fontFamily="@font/roboto_slab_bold"
         android:text="@string/edit_account_btn"
@@ -166,17 +164,15 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/btnaddQuestion"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnaddQuestion"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="50dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="50dp"
         android:background="@color/colorButtonBlue"
         android:fontFamily="@font/roboto_slab_bold"
         android:text="Add Question"
@@ -185,27 +181,21 @@
         android:textColorHint="@color/colorWhite"
         android:textColorLink="@color/colorWhite"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/sign_out"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEditProfile" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/sign_out"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/colorGray"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/logout_icon"
         android:fontFamily="@font/roboto_slab_bold"
-        android:text="Sign out"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnaddQuestion" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

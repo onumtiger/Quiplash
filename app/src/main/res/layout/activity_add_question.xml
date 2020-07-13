@@ -9,12 +9,16 @@
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="60dp"
+        android:layout_marginEnd="50dp"
         android:fontFamily="@font/roboto_slab_bold"
         android:text="Please Tip In Your Question"
-        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -133,16 +133,35 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/winner" />
 
+            <TextView
+                android:id="@+id/textViewShot"
+                android:layout_width="50dp"
+                android:layout_height="55dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/shot_pink"
+                android:elevation="6dp"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:rotation="15"
+                android:text="1"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/winnerDraw"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/winnerDraw" />
+
             <RelativeLayout
                 android:id="@+id/winnerDraw"
                 android:layout_width="0dp"
                 android:layout_height="66dp"
                 android:layout_marginStart="50dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="62dp"
                 android:layout_marginEnd="50dp"
-                android:layout_marginBottom="64dp"
+                android:layout_marginBottom="100dp"
                 android:background="@drawable/char_button_frame"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -152,7 +171,7 @@
                     android:id="@+id/imageRoundWinnerPhotoDraw"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:scaleType="center"
                     app:srcCompat="@drawable/join_game_star" />
@@ -161,12 +180,14 @@
                     android:id="@+id/textRoundWinnerNameDraw"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="50dp"
+                    android:layout_marginBottom="12dp"
                     android:layout_toEndOf="@+id/imageRoundWinnerPhotoDraw"
-                    android:fontFamily="@font/roboto_slab_bold"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
@@ -189,6 +210,36 @@
                 app:layout_constraintEnd_toEndOf="@+id/winnerDraw"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/winnerDraw" />
+
+            <ImageView
+                android:id="@+id/imageLoserSign"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="180dp"
+                android:layout_marginBottom="100dp"
+                android:elevation="6dp"
+                android:rotation="-7"
+                app:layout_constraintBottom_toBottomOf="@+id/winnerDraw"
+                app:layout_constraintEnd_toEndOf="@+id/winnerDraw"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/winnerDraw"
+                app:srcCompat="@drawable/loser" />
+
+            <ImageView
+                android:id="@+id/imageWinnerSign"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="160dp"
+                android:layout_marginBottom="100dp"
+                android:elevation="6dp"
+                android:rotation="-7"
+                app:layout_constraintBottom_toBottomOf="@+id/winner"
+                app:layout_constraintEnd_toEndOf="@+id/winner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/winner"
+                app:srcCompat="@drawable/winner" />
 
             <View
                 android:id="@+id/view4"

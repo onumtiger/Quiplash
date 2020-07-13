@@ -34,7 +34,7 @@ class ScoreboardListAdapter(val mCtx: Context, val layoutResId: Int, val playerL
         if (player.photo !== null) {
             playerPhoto = player.photo!!
         } else {
-            playerPhoto = "images/default-guest.png"
+            playerPhoto = "images/default_guest_QP.png"
         }
 
         // set text & image views in listItem

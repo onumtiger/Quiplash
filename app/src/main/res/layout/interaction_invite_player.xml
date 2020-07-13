@@ -37,11 +37,13 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="40dp"
             android:fontFamily="@font/roboto_slab_bold"
             android:text="You must be registered to invite players to a game. Please sign in or sign up after this game."
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.518"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,21 +51,15 @@
 
         <TextView
             android:id="@+id/interaction_cancel_btn"
-            android:layout_width="55dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_close"
             android:fontFamily="@font/roboto_slab_bold"
             android:gravity="center"
-            android:text="Close"
-            android:textColor="@color/colorGreen"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/interaction_headline" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

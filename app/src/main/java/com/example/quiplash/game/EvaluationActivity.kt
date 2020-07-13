@@ -309,7 +309,7 @@ class EvaluationActivity : AppCompatActivity() {
         playerPhoto = if (player.photo !== null) {
             player.photo!!
         } else {
-            "images/default-guest.png"
+            "images/default_guest_QP.png"
         }
 
         val spaceRef = storageRef.child(playerPhoto)

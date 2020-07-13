@@ -32,7 +32,7 @@ class PlayersListAdapter(val mCtx: Context, val layoutResId: Int, val playerList
         if (player.photo !== null) {
             playerPhoto = player.photo!!
         } else {
-            playerPhoto = "images/default-guest.png"
+            playerPhoto = "images/default_guest_QP.png"
         }
 
         textViewGame.text = player.userName

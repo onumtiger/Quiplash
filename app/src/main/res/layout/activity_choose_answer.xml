@@ -93,6 +93,7 @@
                 android:paddingTop="16dp"
                 android:text="or"
                 android:textAlignment="center"
+                android:textColor="@color/colorText"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toTopOf="@+id/view3"
                 app:layout_constraintEnd_toEndOf="parent"
