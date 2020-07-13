@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.quiplash.database.DBMethods.Companion.deleteGame
 import com.example.quiplash.database.DBMethods.Companion.getCurrentGame
@@ -51,7 +52,6 @@ class WaitingActivity : AppCompatActivity() {
         getQuestionsForGame(game.rounds, game.playerNumber, game.category)
 
 
-        //if(game.hostID != auth.currentUser?.uid) {
         awaitGamestart = db.document(game.gameID).addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.w("ERROR", "Listen failed.", e)
@@ -68,7 +68,7 @@ class WaitingActivity : AppCompatActivity() {
                 gotoGameLanding()
             }
         }
-        //}
+
 
         val btnBack = findViewById<Button>(R.id.host_waiting_go_back_arrow)
         val btnInvitePlayers = findViewById<Button>(R.id.invite_players_btn)
@@ -114,7 +114,7 @@ class WaitingActivity : AppCompatActivity() {
         btnJoinGame.setOnClickListener {
             addUserToGame()
             btnLeaveGame.visibility = View.VISIBLE
-            btnJoinGame.visibility = View.INVISIBLE
+            btnJoinGame.visibility = View.GONE
             getUsersList(playersListView, game.gameID)
             refreshLayout.isRefreshing = false
         }
@@ -178,30 +178,33 @@ class WaitingActivity : AppCompatActivity() {
         if (currentGame.users[0] == auth.currentUser?.uid.toString()) {
             btnStartGame.visibility = View.VISIBLE
             btnEndGame.visibility = View.VISIBLE
-            btnLeaveGame.visibility = View.INVISIBLE
-            btnJoinGame.visibility = View.INVISIBLE
+            btnLeaveGame.visibility = View.GONE
+            btnJoinGame.visibility = View.GONE
             btnInvitePlayers.visibility = View.VISIBLE
         } else if (currentGame.users.contains(auth.currentUser?.uid.toString())) {
-            btnStartGame.visibility = View.INVISIBLE
-            btnEndGame.visibility = View.INVISIBLE
+            btnStartGame.visibility = View.GONE
+            btnEndGame.visibility = View.GONE
             btnLeaveGame.visibility = View.VISIBLE
-            btnJoinGame.visibility = View.INVISIBLE
+            btnJoinGame.visibility = View.GONE
             btnInvitePlayers.visibility = View.VISIBLE
         } else {
-            btnStartGame.visibility = View.INVISIBLE
-            btnEndGame.visibility = View.INVISIBLE
-            btnLeaveGame.visibility = View.INVISIBLE
+            btnStartGame.visibility = View.GONE
+            btnEndGame.visibility = View.GONE
+            btnLeaveGame.visibility = View.GONE
             btnJoinGame.visibility = View.VISIBLE
-            btnInvitePlayers.visibility = View.INVISIBLE
+            btnInvitePlayers.visibility = View.GONE
         }
 
         if (currentPlayerNumber == playerNumber) {
             btnStartGame.isClickable = true
-            btnStartGame.setBackgroundResource(R.color.colorButtonGreen)
-            btnInvitePlayers.visibility = View.INVISIBLE
+            btnStartGame.setBackgroundResource(R.color.colorText)
+            btnInvitePlayers.visibility = View.GONE
         } else {
             btnStartGame.isClickable = false
-            btnStartGame.setBackgroundResource(R.color.colorGray)
+            btnStartGame.setBackgroundResource(R.drawable.char_button_frame_disabled)
+            btnStartGame.setTextColor(ContextCompat.getColor(this, R.color.colorText))
+            btnStartGame.setHintTextColor(ContextCompat.getColor(this, R.color.colorText))
+            btnStartGame.setLinkTextColor(ContextCompat.getColor(this, R.color.colorText))
         }
     }
 

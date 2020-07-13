@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.quiplash.R
+import com.example.quiplash.database.DBMethods
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.FirebaseStorage
@@ -32,7 +33,7 @@ class PlayersListAdapter(val mCtx: Context, val layoutResId: Int, val playerList
         if (player.photo !== null) {
             playerPhoto = player.photo!!
         } else {
-            playerPhoto = "images/default_guest_QP.png"
+            playerPhoto = DBMethods.defaultGuestImg
         }
 
         textViewGame.text = player.userName

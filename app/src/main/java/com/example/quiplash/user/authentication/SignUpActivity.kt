@@ -251,7 +251,7 @@ class SignUpActivity : AppCompatActivity() {
             editTextUsername.text.toString(),
             !isUser,
             0,
-            "images/default_user_QP.png",
+            DBMethods.defaultUserImg,
             emptyList<String>(),
             ""
         )

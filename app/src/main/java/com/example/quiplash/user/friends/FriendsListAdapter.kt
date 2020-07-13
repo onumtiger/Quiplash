@@ -37,7 +37,7 @@ class FriendsListAdapter (val mCtx: Context, val layoutResId: Int, val currentUs
         if (friend.photo !== null) {
             playerPhoto = friend.photo!!
         } else {
-            playerPhoto = "images/default_guest_QP.png"
+            playerPhoto = DBMethods.defaultGuestImg
         }
 
         friendNameView.text = friend.userName

@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.quiplash.R
+import com.example.quiplash.database.DBMethods
 import com.example.quiplash.user.UserQP
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -34,7 +35,7 @@ class ScoreboardListAdapter(val mCtx: Context, val layoutResId: Int, val playerL
         if (player.photo !== null) {
             playerPhoto = player.photo!!
         } else {
-            playerPhoto = "images/default_guest_QP.png"
+            playerPhoto = DBMethods.defaultGuestImg
         }
 
         // set text & image views in listItem

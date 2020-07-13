@@ -132,8 +132,8 @@ class EndOfGameActivity : AppCompatActivity() {
 
                 // add extra scores to best three players
                 users_here.forEach {
-                    var current_id = it?.key.userID
-                    var old_score = it?.value
+                    var current_id = it.key.userID
+                    var old_score = it.value
                     val callbackUser = object :
                         Callback<UserQP> {
                         override fun onTaskComplete(result: UserQP) {

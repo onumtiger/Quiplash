@@ -49,12 +49,14 @@ class DBMethods {
 
             var newQuestionType : Int? = null
 
-            val usersPath = "users"
-            val invitationsPath = "invitations"
-            val friendsPath = "friends"
-            val gamesPath = "games"
-            val questionsPath = "questions"
-            val usernamePath = "userName"
+            const val usersPath = "users"
+            const val invitationsPath = "invitations"
+            const val friendsPath = "friends"
+            const val gamesPath = "games"
+            const val questionsPath = "questions"
+            const val usernamePath = "userName"
+            const val defaultUserImg = "images/default_user_QP.png"
+            const val defaultGuestImg = "images/default_guest_QP.png"
 
             fun saveQuestion(question_text: String, question_type: String){
                 val ID = createID()
@@ -140,16 +142,6 @@ class DBMethods {
                     })
             }
 
-            //returns arraylist with all users
-
-            /*
-            val callback = object: Callback<ArrayList<User>> {
-                override fun onTaskComplete(result: ArrayList<User>) {
-                youVar = result
-                }
-            }
-            getUsers(callback)
-            */
 
             fun getUsers(callback: Callback<ArrayList<UserQP>>) {
                 val allUsers = ArrayList<UserQP>()
@@ -409,7 +401,7 @@ class DBMethods {
             fun getUserByName(callback: Callback<UserQP>, username: String) {
                 db.collection(
                     usersPath
-                ).whereEqualTo("userName", username)
+                ).whereEqualTo(DBMethods.usernamePath, username)
                     .get()
                     .addOnSuccessListener { documents ->
                         for (document in documents) {

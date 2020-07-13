@@ -42,6 +42,7 @@ class EvaluationActivity : AppCompatActivity() {
     private var frameProfile: RelativeLayout? = null
     private var imageWinnerSign: ImageView? = null
 
+    private var imageAndIcon: TextView? = null
     private var answerViewWinnerDraw: TextView? = null
     private var winnerNameDraw: TextView? = null
     private var imageWinnerPhotoDraw: ImageView? = null
@@ -95,6 +96,8 @@ class EvaluationActivity : AppCompatActivity() {
         frameProfile = findViewById(R.id.winner)
         imageWinnerSign = findViewById(R.id.imageWinnerSign)
 
+        imageAndIcon = findViewById(R.id.textViewAnd)
+
         answerViewWinnerDraw = findViewById(R.id.answerRoundWinnerDraw)
         winnerNameDraw = findViewById(R.id.textRoundWinnerNameDraw)
         answerViewWinnerFrameDraw = findViewById(R.id.viewDraw)
@@ -139,6 +142,10 @@ class EvaluationActivity : AppCompatActivity() {
                 setNextRound()
             }
         }
+
+        val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom)
+        imageWinnerSign!!.startAnimation(zoomanim)
+        imageLoserSign!!.startAnimation(zoomanim)
 
         /**
          * If someone press the 'next round'-Button, go to next round.
@@ -268,6 +275,9 @@ class EvaluationActivity : AppCompatActivity() {
                     imageWinnerSign?.visibility = ImageView.INVISIBLE
                     imageLoserSign?.visibility = ImageView.INVISIBLE
                     imageShot?.visibility = ImageView.INVISIBLE
+                    imageAndIcon?.visibility = TextView.VISIBLE
+                    val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom)
+                    imageAndIcon!!.startAnimation(zoomanim)
                 }
 
             }
@@ -317,7 +327,7 @@ class EvaluationActivity : AppCompatActivity() {
         playerPhoto = if (player.photo !== null) {
             player.photo!!
         } else {
-            "images/default_guest_QP.png"
+            DBMethods.defaultGuestImg
         }
 
         val spaceRef = storageRef.child(playerPhoto)

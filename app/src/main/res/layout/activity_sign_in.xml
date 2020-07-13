@@ -126,7 +126,7 @@
         android:id="@+id/signupBtn"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:background="#100FFFFFF"
+        android:background="#00FFFFFF"
         android:fontFamily="@font/roboto_slab_bold"
         android:text="You don't have an account?"
         android:textColor="@android:color/black"

@@ -59,14 +59,13 @@ class ProfileActivity : AppCompatActivity() {
         val viewLabelEmail: TextView = findViewById(R.id.textViewMail)
         val viewScore: TextView = findViewById(R.id.score)
         val viewUsernameBig: TextView = findViewById(R.id.usernameBig)
-        var photoPath = "images/default_user_QP.png"
+        var photoPath = DBMethods.defaultUserImg
         val dialogFragmentGuest =
             ModalGuestInfo()
         val fm = supportFragmentManager
 
 
         val callback = object : Callback<UserQP> {
-            @SuppressLint("SetTextI18n")
             override fun onTaskComplete(result: UserQP) {
                 currentUser = result
                 if (result.guest!!) {
@@ -80,7 +79,7 @@ class ProfileActivity : AppCompatActivity() {
                     val userinfodefault = getUserInfoDefault()
                     viewUsernameBig.text = userinfodefault[0]
                     viewEmail.text = userinfodefault[1]
-                    viewScore.text = "Score: " + userinfodefault[2]
+                    viewScore.text = ("Score: " + userinfodefault[2])
 
                     // set default user image if fetchting data fails
                     val spaceRef = storageRef.child(photoPath)
@@ -95,10 +94,10 @@ class ProfileActivity : AppCompatActivity() {
                 } else {
                     viewUsernameBig.text = currentUser.userName
                     viewEmail.text = auth?.currentUser?.email.toString()
-                    viewScore.text = "Score: " + currentUser.score.toString()
+                    viewScore.text = ("Score: " + currentUser.score.toString())
 
                     if (currentUser.photo == null) {
-                        photoPath = "images/default_user_QP.png"
+                        photoPath = DBMethods.defaultUserImg
                     } else {
                         photoPath = currentUser.photo.toString()
                     }
@@ -191,7 +190,7 @@ class ProfileActivity : AppCompatActivity() {
     fun getUserInfoDefault(): Array<String> {
         val username = "No Username found"
         val email = "No Email found"
-        val score = "Score: 123456789"
+        val score = "0"
 
         val userinfo = arrayOf(
             username,

@@ -34,8 +34,8 @@ class ChooseImageSource : DialogFragment() {
     private val CAMERA_REQUEST_CODE = 1
     private val PICK_IMAGE_REQUEST = 71
     private lateinit var filePath: String
-    private val photoPath : String = "images/default_user_QP.png"
-    private val photoPathGuest : String = "images/default_guest_QP.png"
+    private val photoPath : String = DBMethods.defaultUserImg
+    private val photoPathGuest : String = DBMethods.defaultGuestImg
     private var imageUri: Uri? = null
 
     //Firebase

@@ -50,7 +50,7 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
         if (player.photo !== null) {
             playerPhoto = player.photo!!
         } else {
-            playerPhoto = "images/default_guest_QP.png"
+            playerPhoto = DBMethods.defaultGuestImg
         }
 
         setInviteBtn(gameID, player.userID, inviteBtn)
