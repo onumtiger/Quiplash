@@ -49,7 +49,7 @@ class Join_GameActivity : AppCompatActivity() {
 
         noActiveGameInfo.visibility = View.INVISIBLE
 
-        //set clickListeners for all buttons & refreshListener for view
+        // set clickListeners for all buttons & refreshListener for view
         btnNewGameActivity.setOnClickListener {
             Sounds.playClickSound(this)
             val intent = Intent(this, New_GameActivity::class.java)
