@@ -24,7 +24,6 @@ class ScoreboardListAdapter(val mCtx: Context, val layoutResId: Int, val playerL
         val textViewGame = view.findViewById<TextView>(R.id.player_name)
         val textViewScore = view.findViewById<TextView>(R.id.player_score)
         val imageViewUser: ImageView = view.findViewById<ImageView>(R.id.player_image)
-        val imageViewSeperator: ImageView = view.findViewById<ImageView>(R.id.imageViewSeperator)
         var fotostorage = FirebaseStorage.getInstance();
         var storageRef = fotostorage.reference
         val playerPhoto: String
@@ -35,13 +34,12 @@ class ScoreboardListAdapter(val mCtx: Context, val layoutResId: Int, val playerL
         if (player.photo !== null) {
             playerPhoto = player.photo!!
         } else {
-            playerPhoto = "images/default-guest.png"
+            playerPhoto = "images/default_guest_QP.png"
         }
 
         // set text & image views in listItem
-        textViewScore.text = "Score: ${player.score}"
+        textViewScore.text = ("Score: ${player.score}")
         textViewGame.text = player.userName
-        imageViewSeperator.setImageResource(R.drawable.green_seperator)
 
         // Get profile photo of player from db to show it in listView
         var spaceRef = storageRef.child(playerPhoto)

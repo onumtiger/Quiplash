@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/splash_background"
     tools:context=".game.PrepareAnswerActivity">
 
     <TextView
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="32dp"
-        android:textColor="@color/colorGreen"
+        android:fontFamily="@font/roboto_slab_bold"
+        android:textColor="@color/colorWhite"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,8 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="50dp"
-        android:text=""
-        android:textColor="@color/colorGreen"
+        android:textColor="@color/colorWhite"
+        android:fontFamily="@font/roboto_slab_bold"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,76 +47,44 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <FrameLayout
-                android:id="@+id/layoutQuestion"
-                android:layout_width="0dp"
-                android:layout_height="239dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <View
-                    android:id="@+id/viewQuestion"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"
-                    android:background="@android:drawable/dialog_holo_light_frame"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textViewQuestion"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="80dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginEnd="80dp"
-                    android:layout_marginBottom="54dp"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorGreen"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/viewQuestion"
-                    app:layout_constraintEnd_toEndOf="@+id/viewQuestion"
-                    app:layout_constraintStart_toStartOf="@+id/viewQuestion"
-                    app:layout_constraintTop_toTopOf="@+id/viewQuestion" />
-            </FrameLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <TextView
                 android:id="@+id/textViewQuestion2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginEnd="50dp"
+                android:fontFamily="@font/roboto_slab_bold"
                 android:textAlignment="center"
-                android:textColor="@color/colorGreen"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/btnReady"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.282" />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <EditText
                 android:id="@+id/answerField"
                 android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="32dp"
+                android:autofillHints="Your Answer..."
+                android:background="@drawable/char_speechbubble_mirrored"
                 android:ems="10"
+                android:fontFamily="@font/patrick_hand"
                 android:hint="@string/your_answer"
-                android:inputType="text"
-                app:layout_constraintBottom_toTopOf="@+id/btnReady"
+                android:inputType="textCapCharacters"
+                android:maxLength="200"
+                android:paddingStart="16dp"
+                android:paddingLeft="16dp"
+                android:paddingEnd="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="56dp"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/layoutAnswerSaved"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewQuestion2" />
@@ -126,6 +96,7 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="50dp"
+                app:layout_constraintBottom_toTopOf="@+id/btnReady"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/answerField">
@@ -149,9 +120,10 @@
                     android:layout_marginTop="70dp"
                     android:layout_marginEnd="50dp"
                     android:layout_marginBottom="32dp"
+                    android:fontFamily="@font/roboto_slab"
                     android:text="@string/answer_saved_successfully"
                     android:textAlignment="center"
-                    android:textColor="@color/colorButtonGreen"
+                    android:textColor="@color/colorWhite"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:visibility="invisible"
@@ -165,17 +137,66 @@
                 android:id="@+id/btnReady"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
-                android:layout_marginBottom="64dp"
-                android:background="@color/colorButtonGreen"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="40dp"
+                android:background="@android:color/black"
+                android:fontFamily="@font/roboto_slab_bold"
                 android:text="@string/ready_btn"
                 android:textColor="@color/colorWhite"
                 android:textColorHighlight="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:textColorLink="@color/colorWhite"
+                android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutAnswerSaved" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/layoutQuestion"
+                android:layout_width="0dp"
+                android:layout_height="239dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <View
+                    android:id="@+id/viewQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/char_border_frame"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="80dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="80dp"
+                    android:layout_marginBottom="54dp"
+                    android:fontFamily="@font/roboto_slab_bold"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/viewQuestion"
+                    app:layout_constraintEnd_toEndOf="@+id/viewQuestion"
+                    app:layout_constraintStart_toStartOf="@+id/viewQuestion"
+                    app:layout_constraintTop_toTopOf="@+id/viewQuestion" />
+            </FrameLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ViewFlipper>

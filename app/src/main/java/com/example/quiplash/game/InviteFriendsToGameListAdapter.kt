@@ -41,7 +41,6 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
         val friendNameView = view.findViewById<TextView>(R.id.friend_username)
         val friendScoreView = view.findViewById<TextView>(R.id.friend_score)
         val imageViewUser: ImageView = view.findViewById<ImageView>(R.id.profile_image)
-        val imageViewSeperator: ImageView = view.findViewById<ImageView>(R.id.friends_seperator)
         var fotostorage = FirebaseStorage.getInstance();
         var storageRef = fotostorage.reference
         val playerPhoto: String
@@ -51,14 +50,12 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
         if (player.photo !== null) {
             playerPhoto = player.photo!!
         } else {
-            playerPhoto = "images/default-guest.png"
+            playerPhoto = "images/default_guest_QP.png"
         }
 
         setInviteBtn(gameID, player.userID, inviteBtn)
         friendNameView.text = player.userName
         friendScoreView.text = "Score: " + player.score.toString()
-
-        imageViewSeperator.setImageResource(R.drawable.green_seperator)
 
         var spaceRef = storageRef.child(playerPhoto)
         spaceRef.downloadUrl

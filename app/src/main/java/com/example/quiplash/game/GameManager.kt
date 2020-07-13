@@ -177,7 +177,7 @@ class GameManager {
             if (player.photo !== null) {
                 playerPhoto = player.photo!!
             } else {
-                playerPhoto = "images/default-guest.png"
+                playerPhoto = "images/default_guest_QP.png"
             }
 
             val spaceRef = storageRef.child(playerPhoto)

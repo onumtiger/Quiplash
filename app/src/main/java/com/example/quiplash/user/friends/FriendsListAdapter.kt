@@ -27,9 +27,8 @@ class FriendsListAdapter (val mCtx: Context, val layoutResId: Int, val currentUs
         val view: View = layoutInflater.inflate(layoutResId, null)
         val friendNameView = view.findViewById<TextView>(R.id.friend_username)
         val friendScoreView = view.findViewById<TextView>(R.id.friend_score)
-        val imageViewUser: ImageView = view.findViewById<ImageView>(R.id.profile_image)
-        val imageViewSeperator: ImageView = view.findViewById<ImageView>(R.id.friends_seperator)
-        var fotostorage = FirebaseStorage.getInstance();
+        val imageViewUser: ImageView = view.findViewById(R.id.profile_image)
+        var fotostorage = FirebaseStorage.getInstance()
         var storageRef = fotostorage.reference
         var deleteButton = view.findViewById<ImageButton>(R.id.friend_delete)
         val playerPhoto: String
@@ -38,13 +37,11 @@ class FriendsListAdapter (val mCtx: Context, val layoutResId: Int, val currentUs
         if (friend.photo !== null) {
             playerPhoto = friend.photo!!
         } else {
-            playerPhoto = "images/default-guest.png"
+            playerPhoto = "images/default_guest_QP.png"
         }
 
         friendNameView.text = friend.userName
         friendScoreView.text = "Score: " + friend.score.toString()
-
-        imageViewSeperator.setImageResource(R.drawable.green_seperator)
 
         var spaceRef = storageRef.child(playerPhoto)
         spaceRef.downloadUrl

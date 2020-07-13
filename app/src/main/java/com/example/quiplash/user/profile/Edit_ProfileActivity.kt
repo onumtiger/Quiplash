@@ -48,7 +48,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
         val fotostorage = FirebaseStorage.getInstance()
         val storageRef = fotostorage.reference
-        var photoPath = "images/default-user.png"
+        var photoPath = "images/default_user_QP.png"
         var score = 0
         var friends = emptyList<String>()
 

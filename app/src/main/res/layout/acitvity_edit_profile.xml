@@ -5,6 +5,7 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/splash_background"
     tools:context=".user.profile.ProfileActivity">
 
     <ImageButton
@@ -20,40 +21,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/appCompatImageView"
-        android:layout_width="200dp"
-        android:layout_height="88dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="logo"
-        android:src="@drawable/logo"
+    <!-- <TextView
+        android:id="@+id/textView9"
+        android:layout_width="151dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="@string/profile"
+        android:textColor="@color/colorTitles"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" /> -->
+
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_game_go_back_arrow" />
 
     <Button
         android:id="@+id/btnPrrofilePic"
-        android:layout_width="192dp"
+        android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/colorButtonGreen"
-        android:text="@string/change_profile_photo_btn"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="125dp"
+        android:background="@drawable/edit_sign_black"
+        android:fontFamily="@font/roboto_slab_bold"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
         android:textColorLink="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/textViewName"
@@ -61,42 +67,48 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="8dp"
-        android:text="Name"
+        android:fontFamily="@font/roboto_slab_bold"
+        android:text="@string/username"
+        android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="@+id/usernameFieldEdit"
         app:layout_constraintEnd_toStartOf="@+id/usernameFieldEdit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/usernameFieldEdit" />
 
     <Button
-        android:id="@+id/btnSave"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="50dp"
-        android:background="@color/colorButtonGreen"
-        android:text="@string/save_btn"
-        android:textColor="@color/colorWhite"
-        android:textColorHighlight="@color/colorWhite"
-        android:textColorHint="@color/colorWhite"
-        android:textColorLink="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameFieldEdit" />
-
-    <Button
         android:id="@+id/edit_rest"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="24dp"
-        android:background="@color/colorButtonGreen"
+        android:layout_marginBottom="50dp"
+        android:background="@android:color/black"
+        android:fontFamily="@font/roboto_slab_bold"
         android:text="More"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
         android:textColorLink="@color/colorWhite"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="32dp"
+        android:background="@android:color/black"
+        android:fontFamily="@font/roboto_slab_bold"
+        android:text="@string/save_btn"
+        android:textColor="@color/colorWhite"
+        android:textColorHighlight="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textColorLink="@color/colorWhite"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_rest"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSave" />
+        tools:visibility="visible" />
 
     <EditText
         android:id="@+id/usernameFieldEdit"
@@ -106,12 +118,14 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="50dp"
         android:ems="10"
+        android:fontFamily="@font/roboto_slab"
         android:hint="@string/username_placeholder"
         android:inputType="textPersonName"
         android:singleLine="true"
+        android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textViewName"
-        app:layout_constraintTop_toBottomOf="@+id/btnPrrofilePic" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/textErrorUsernameEdit"
@@ -119,7 +133,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:text="TextView"
+        android:fontFamily="@font/roboto_slab_bold"
         android:textAlignment="center"
         android:textColor="@color/colorRed"
         android:textColorHighlight="@color/colorRed"

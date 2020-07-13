@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatImageButton
 import com.bumptech.glide.Glide
 import com.example.quiplash.*
 import com.example.quiplash.database.DBMethods.Companion.getUser
@@ -49,7 +48,7 @@ class ProfileActivity : AppCompatActivity() {
         val fotostorage = FirebaseStorage.getInstance()
         val storageRef = fotostorage.reference
 
-        val btnBack = findViewById<AppCompatImageButton>(R.id.profile_go_back_arrow)
+        val btnBack = findViewById<Button>(R.id.profile_go_back_arrow)
         val btnEditProfile = findViewById<Button>(R.id.btnEditProfile)
         val btnaddQuestion = findViewById<Button>(R.id.btnaddQuestion)
         val btnSignOut = findViewById<Button>(R.id.sign_out)
@@ -58,11 +57,9 @@ class ProfileActivity : AppCompatActivity() {
         val viewProfilePic: ImageView = findViewById(R.id.imageView)
         val viewEmail: TextView = findViewById(R.id.email)
         val viewLabelEmail: TextView = findViewById(R.id.textViewMail)
-        val viewPassword: TextView = findViewById(R.id.password)
-        val viewLabelPassword: TextView = findViewById(R.id.textViewPw)
         val viewScore: TextView = findViewById(R.id.score)
         val viewUsernameBig: TextView = findViewById(R.id.usernameBig)
-        var photoPath = "images/default-user.png"
+        var photoPath = "images/default_user_QP.png"
         val dialogFragmentGuest =
             ModalGuestInfo()
         val fm = supportFragmentManager
@@ -75,9 +72,7 @@ class ProfileActivity : AppCompatActivity() {
                 if (result.guest!!) {
                     btnRegisterGuest.visibility = View.VISIBLE
                     viewEmail.visibility = View.GONE
-                    viewPassword.visibility = View.GONE
                     viewLabelEmail.visibility = View.GONE
-                    viewLabelPassword.visibility = View.GONE
                 }
 
                 if (currentUser.userName == "User") {
@@ -103,7 +98,7 @@ class ProfileActivity : AppCompatActivity() {
                     viewScore.text = "Score: " + currentUser.score.toString()
 
                     if (currentUser.photo == null) {
-                        photoPath = "images/default-user.png"
+                        photoPath = "images/default_user_QP.png"
                     } else {
                         photoPath = currentUser.photo.toString()
                     }

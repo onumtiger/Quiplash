@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_yellow"
     tools:context=".game.EndOfGameActivity">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -27,27 +28,16 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_go_back_arrow" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/appCompatImageView"
-                android:layout_width="200dp"
-                android:layout_height="88dp"
-                android:layout_marginTop="16dp"
-                android:contentDescription="logo"
-                android:src="@drawable/logo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="206dp"
-                android:layout_height="43dp"
-                android:layout_marginTop="132dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:fontFamily="@font/roboto_slab_bold"
                 android:gravity="center"
                 android:text="@string/scoreboard"
-                android:textColor="@color/colorTitles"
+                android:textColor="@android:color/black"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"

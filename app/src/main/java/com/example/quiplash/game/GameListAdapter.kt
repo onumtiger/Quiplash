@@ -21,7 +21,6 @@ class GameListAdapter(val mCtx: Context, val layoutResId: Int, val gameList: Lis
         val textViewCategory = view.findViewById<TextView>(R.id.join_active_game_category)
         val textViewPlayers: TextView = view.findViewById<TextView>(R.id.join_active_game_players)
         val imageViewStar: ImageView = view.findViewById<ImageView>(R.id.imageViewStar)
-        val imageViewSeperator: ImageView = view.findViewById<ImageView>(R.id.imageViewSeperator)
         val imageViewInvited = view.findViewById<ImageView>(R.id.imageViewInvited)
 
         auth = FirebaseAuth.getInstance()
@@ -30,7 +29,6 @@ class GameListAdapter(val mCtx: Context, val layoutResId: Int, val gameList: Lis
         textViewCategory.text = "Category: " + game.category
         textViewPlayers.text =  game.users.size.toString() + " / " + game.playerNumber.toString()
         imageViewStar.setImageResource(R.drawable.join_game_star)
-        imageViewSeperator.setImageResource(R.drawable.green_seperator)
 
         // If exists, set game title
         if (!game.gameTitle.isNullOrEmpty()) {

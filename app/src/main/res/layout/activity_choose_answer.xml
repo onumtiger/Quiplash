@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_green"
     tools:context=".game.ChooseAnswerActivity">
 
     <TextView
@@ -12,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="50dp"
-        android:text="1/10"
-        android:textColor="@color/colorGreen"
+        android:fontFamily="@font/roboto_slab_bold"
+        android:textColor="@color/colorWhite"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,59 +35,13 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/titleWaitingCA"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/waiting_answers"
-                android:textColor="@color/colorBlue"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/timerWaiting3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="100dp"
-                android:textColor="@color/colorGreen"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/timerWaiting2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="50dp"
-                android:minWidth="125dp"
-                android:minHeight="125dp"
-                android:text="0:59"
-                android:textColor="@color/colorGreen"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
                 android:id="@+id/titleCA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab_bold"
                 android:text="@string/choose_answer"
-                android:textColor="@color/colorBlue"
-                android:textSize="20sp"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -95,25 +50,13 @@
                 app:layout_constraintVertical_bias="0.18" />
 
             <TextView
-                android:id="@+id/timer3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="100dp"
-                android:textColor="@color/colorGreen"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/questionCA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
-                android:text="This is a question"
-                android:textColor="@color/colorGreen"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/view2"
@@ -124,35 +67,38 @@
 
             <TextView
                 android:id="@+id/timer2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="50dp"
+                android:background="@android:color/black"
+                android:fontFamily="@font/roboto_slab_bold"
                 android:minWidth="125dp"
                 android:minHeight="125dp"
-                android:text="0:59"
-                android:textColor="@color/colorGreen"
+                android:textColor="@color/colorWhite"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!--
-                        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-                            android:id="@+id/progress_timer"
-                            style="@style/Widget.MaterialProgressBar.ProgressBar"
-                            android:layout_width="125dp"
-                            android:layout_height="125dp"
-                            android:layout_marginTop="60dp"
-                            app:layout_constraintBottom_toTopOf="@+id/textView7"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.101"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0"
-                            tools:ignore="MissingConstraints" />
-                -->
 
+            <TextView
+                android:id="@+id/textViewOR"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/char_circle_turquoise"
+                android:elevation="15dp"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:paddingTop="16dp"
+                android:text="or"
+                android:textAlignment="center"
+                android:textColor="@color/colorText"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/view3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view2" />
 
             <View
                 android:id="@+id/view2"
@@ -162,7 +108,8 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="16dp"
-                android:background="@android:drawable/dialog_holo_light_frame"
+                android:background="@drawable/char_speechbubble"
+                android:elevation="5dp"
                 app:layout_constraintBottom_toTopOf="@+id/view3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -175,7 +122,8 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="64dp"
-                android:background="@android:drawable/dialog_holo_light_frame"
+                android:background="@drawable/char_speechbubble_mirrored"
+                android:elevation="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -189,6 +137,9 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="48dp"
+                android:elevation="6dp"
+                android:fontFamily="@font/patrick_hand"
+                android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -206,6 +157,10 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="48dp"
+                android:elevation="6dp"
+                android:fontFamily="@font/patrick_hand"
+                android:textAlignment="center"
+                android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -218,6 +173,7 @@
                 android:id="@+id/imageCheckAnswer2"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                android:elevation="6dp"
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="@+id/view3"
                 app:layout_constraintTop_toTopOf="@+id/view3"
@@ -228,11 +184,49 @@
                 android:id="@+id/imageCheckAnswer1"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                android:elevation="6dp"
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="@+id/view2"
                 app:layout_constraintTop_toTopOf="@+id/view2"
                 app:srcCompat="@drawable/checkmark_green"
                 tools:visibility="invisible" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/titleWaitingCA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:text="@string/waiting_answers"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/timerWaiting2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:minWidth="125dp"
+                android:minHeight="125dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

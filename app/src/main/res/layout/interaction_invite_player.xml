@@ -11,7 +11,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="237dp"
-        android:layout_height="181dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/char_border_frame"
         android:orientation="vertical">
 
 
@@ -19,20 +20,25 @@
             android:id="@+id/interaction_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/roboto_slab_bold"
             android:text="Sorry!"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorBlue"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.153" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/interaction_headline"
-            android:layout_width="215dp"
-            android:layout_height="68dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="@font/roboto_slab_bold"
             android:text="You must be registered to invite players to a game. Please sign in or sign up after this game."
             android:textAlignment="center"
             android:textColor="@android:color/black"
@@ -41,23 +47,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.518"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/interaction_text" />
 
         <TextView
             android:id="@+id/interaction_cancel_btn"
-            android:layout_width="55dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_close"
+            android:fontFamily="@font/roboto_slab_bold"
             android:gravity="center"
-            android:text="Close"
-            android:textColor="@color/colorGreen"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.818" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
