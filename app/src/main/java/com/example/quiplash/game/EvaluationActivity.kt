@@ -10,7 +10,6 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.quiplash.BounceInterpolator
 import com.example.quiplash.database.Callback
 import com.example.quiplash.database.DBMethods
 import com.example.quiplash.game.GameManager.Companion.game
@@ -41,10 +40,13 @@ class EvaluationActivity : AppCompatActivity() {
     private var imageWinnerPhoto: ImageView? = null
     private var scoreView: TextView? = null
     private var frameProfile: RelativeLayout? = null
+    private var imageWinnerSign: ImageView? = null
 
     private var answerViewWinnerDraw: TextView? = null
     private var winnerNameDraw: TextView? = null
     private var imageWinnerPhotoDraw: ImageView? = null
+    private var imageLoserSign: ImageView? = null
+    private var imageShot: TextView? = null
     private var scoreViewDraw: TextView? = null
     private var answerViewWinnerFrameDraw: View? = null
     private var frameProfileDraw: RelativeLayout? = null
@@ -91,6 +93,7 @@ class EvaluationActivity : AppCompatActivity() {
         imageWinnerPhoto = findViewById(R.id.imageRoundWinnerPhoto)
         scoreView = findViewById(R.id.textViewScore)
         frameProfile = findViewById(R.id.winner)
+        imageWinnerSign = findViewById(R.id.imageWinnerSign)
 
         answerViewWinnerDraw = findViewById(R.id.answerRoundWinnerDraw)
         winnerNameDraw = findViewById(R.id.textRoundWinnerNameDraw)
@@ -99,6 +102,8 @@ class EvaluationActivity : AppCompatActivity() {
         val roundViewEval = findViewById<TextView>(R.id.roundsEval)
         scoreViewDraw = findViewById(R.id.textViewScoreDraw)
         frameProfileDraw = findViewById(R.id.winnerDraw)
+        imageLoserSign = findViewById(R.id.imageLoserSign)
+        imageShot = findViewById(R.id.textViewShot)
 
         val nextBtn = findViewById<TextView>(R.id.buttonNext)
 
@@ -260,6 +265,9 @@ class EvaluationActivity : AppCompatActivity() {
                     )
                     answerViewWinnerFrameDraw?.visibility = RelativeLayout.VISIBLE
                     scoreViewDraw?.visibility = RelativeLayout.VISIBLE
+                    imageWinnerSign?.visibility = ImageView.INVISIBLE
+                    imageLoserSign?.visibility = ImageView.INVISIBLE
+                    imageShot?.visibility = ImageView.INVISIBLE
                 }
 
             }
