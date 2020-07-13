@@ -131,7 +131,7 @@ class WaitingActivity : AppCompatActivity() {
                 override fun onTaskComplete(result: UserQP) {
                     val user = result
                     if (user.guest!!) {
-                        val dialogFragment = Invite_Player()
+                        val dialogFragment = InvitePlayer()
                         val ft = supportFragmentManager.beginTransaction()
                         val prev = supportFragmentManager.findFragmentByTag("invite")
                         if (prev != null) {

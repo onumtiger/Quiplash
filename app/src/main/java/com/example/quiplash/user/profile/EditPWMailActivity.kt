@@ -24,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_edit_pw_mail.*
 
 
-class Edit_PW_Mail_Activity : AppCompatActivity() {
+class EditPWMailActivity : AppCompatActivity() {
 
     private var authListener: FirebaseAuth.AuthStateListener? = null
     private lateinit var auth: FirebaseAuth

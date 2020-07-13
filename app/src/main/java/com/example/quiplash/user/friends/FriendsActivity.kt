@@ -49,7 +49,7 @@ class FriendsActivity : AppCompatActivity() {
         btnFriend.setOnClickListener(){
             Sounds.playClickSound(this)
 
-            val dialogFragment = Add_Player()
+            val dialogFragment = AddPlayer()
             val ft = supportFragmentManager.beginTransaction()
             val prev = supportFragmentManager.findFragmentByTag("add")
             if (prev != null)

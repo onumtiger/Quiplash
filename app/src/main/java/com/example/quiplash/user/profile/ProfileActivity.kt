@@ -157,7 +157,7 @@ class ProfileActivity : AppCompatActivity() {
             } else {
                 Sounds.playClickSound(this)
 
-                val intent = Intent(this, Edit_ProfileActivity::class.java)
+                val intent = Intent(this, EditProfileActivity::class.java)
                 startActivity(intent)
             }
 
@@ -174,7 +174,7 @@ class ProfileActivity : AppCompatActivity() {
         btnDeleteAccount.setOnClickListener{
                     Sounds.playClickSound(this)
 
-            val dialogFragment = Delete_Account()
+            val dialogFragment = DeleteAccount()
             val ft = supportFragmentManager.beginTransaction()
             val prev = supportFragmentManager.findFragmentByTag("delete")
             if (prev != null)

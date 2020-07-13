@@ -16,7 +16,7 @@ import com.example.quiplash.game.GameManager
 import com.example.quiplash.user.UserQP
 import java.util.ArrayList
 
-class GlobalScoreboard_Activity : AppCompatActivity() {
+class GlobalScoreboardActivity : AppCompatActivity() {
     lateinit var users: ArrayList<UserQP>
 
     @SuppressLint("WrongViewCast")

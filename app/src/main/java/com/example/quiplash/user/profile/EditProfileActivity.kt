@@ -21,7 +21,7 @@ import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
 
-class Edit_ProfileActivity : AppCompatActivity() {
+class EditProfileActivity : AppCompatActivity() {
 
     lateinit var currentUser: UserQP
     lateinit var friend: UserQP
@@ -139,7 +139,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
         btnChangeRest.setOnClickListener {
             Sounds.playClickSound(this)
 
-            val intent = Intent(this, Edit_PW_Mail_Activity::class.java)
+            val intent = Intent(this, EditPWMailActivity::class.java)
             startActivity(intent)
 
 
@@ -214,7 +214,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
                              // hier muss die Friendslist der anderen geupdated werden
                              editUser(uID, user)
-                             val intent = Intent(this@Edit_ProfileActivity, ProfileActivity::class.java)
+                             val intent = Intent(this@EditProfileActivity, ProfileActivity::class.java)
                              startActivity(intent)
                          }
                      }

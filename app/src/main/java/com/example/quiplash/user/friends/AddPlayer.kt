@@ -16,7 +16,7 @@ import com.example.quiplash.Sounds
 import com.example.quiplash.user.UserQP
 import java.util.ArrayList
 
-class Add_Player : DialogFragment() {
+class AddPlayer : DialogFragment() {
     lateinit var current_User: UserQP
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

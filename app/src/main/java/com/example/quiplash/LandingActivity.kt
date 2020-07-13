@@ -14,9 +14,9 @@ import com.example.quiplash.database.DBMethods.Companion.getActiveGames
 import com.example.quiplash.database.Callback
 import com.example.quiplash.database.DBMethods
 import com.example.quiplash.game.Game
-import com.example.quiplash.game.Join_GameActivity
-import com.example.quiplash.game.New_GameActivity
-import com.example.quiplash.scoreboard.GlobalScoreboard_Activity
+import com.example.quiplash.game.JoinGameActivity
+import com.example.quiplash.game.NewGameActivity
+import com.example.quiplash.scoreboard.GlobalScoreboardActivity
 import com.example.quiplash.user.friends.FriendsActivity
 import com.example.quiplash.user.profile.ProfileActivity
 import com.example.quiplash.user.UserQP
@@ -66,13 +66,13 @@ class LandingActivity : AppCompatActivity() {
         //set clickListeners for all buttons & refreshListener for view
         btnNewGame.setOnClickListener {
             Sounds.playClickSound(this)
-            val intent = Intent(this, New_GameActivity::class.java)
+            val intent = Intent(this, NewGameActivity::class.java)
             startActivity(intent)
         }
 
         btnJoinGame.setOnClickListener {
             Sounds.playClickSound(this)
-            val intent = Intent(this, Join_GameActivity::class.java)
+            val intent = Intent(this, JoinGameActivity::class.java)
             startActivity(intent)
         }
 
@@ -90,7 +90,7 @@ class LandingActivity : AppCompatActivity() {
 
         btnScoreBoard.setOnClickListener {
             Sounds.playClickSound(this)
-            val intent = Intent(this, GlobalScoreboard_Activity::class.java)
+            val intent = Intent(this, GlobalScoreboardActivity::class.java)
             startActivity(intent)
         }
 

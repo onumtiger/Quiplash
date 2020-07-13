@@ -39,15 +39,15 @@
         <activity android:name=".user.friends.FriendsActivity" />
         <activity android:name=".user.profile.ProfileActivity" />
         <activity android:name=".user.authentication.RegisterGuestActivity" />
-        <activity android:name=".game.Join_GameActivity" />
-        <activity android:name=".game.New_GameActivity" />
+        <activity android:name=".game.JoinGameActivity" />
+        <activity android:name=".game.NewGameActivity" />
         <activity android:name=".LandingActivity" />
         <activity android:name="com.example.quiplash.user.authentication.SignUpActivity" />
         <activity android:name="com.example.quiplash.user.authentication.SignInActivity" />
         <activity android:name=".game.WaitingActivity" />
         <activity android:name=".game.InviteFriendsToGameActivity" />
         <activity android:name=".game.GameLaunchingActivity" />
-        <activity android:name=".scoreboard.GlobalScoreboard_Activity" />
+        <activity android:name=".scoreboard.GlobalScoreboardActivity" />
         <activity android:name=".user.addQuestions.AddQuestion" />
         <activity android:name=".user.addQuestions.ChooseQuestionTypeActivity" />
         <activity android:name=".game.AnswersActivity" />
@@ -55,8 +55,8 @@
         <activity android:name=".game.ChooseAnswerActivity" />
         <activity android:name=".game.EvaluationActivity" />
         <activity android:name=".game.EndOfGameActivity" />
-        <activity android:name=".user.profile.Edit_ProfileActivity" />
-        <activity android:name=".user.profile.Edit_PW_Mail_Activity" />
+        <activity android:name=".user.profile.EditProfileActivity" />
+        <activity android:name=".user.profile.EditPWMailActivity" />
         <activity android:name=".MainActivity">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />

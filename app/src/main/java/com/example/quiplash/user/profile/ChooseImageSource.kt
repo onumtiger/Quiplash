@@ -23,8 +23,6 @@ import com.example.quiplash.Sounds
 import com.example.quiplash.user.UserQP
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageException
-import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -164,7 +162,7 @@ class ChooseImageSource : DialogFragment() {
             Callback<Boolean> {
             override fun onTaskComplete(result:Boolean) {
                 if(result){
-                    val intent = Intent(context, Edit_ProfileActivity::class.java)
+                    val intent = Intent(context, EditProfileActivity::class.java)
                     startActivity(intent)
                 } else{
                     Toast.makeText(context, "Failed ", Toast.LENGTH_SHORT)

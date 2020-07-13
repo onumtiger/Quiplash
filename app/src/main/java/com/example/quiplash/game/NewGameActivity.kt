@@ -16,7 +16,7 @@ import com.example.quiplash.Sounds
 import com.google.firebase.auth.FirebaseAuth
 
 
-class New_GameActivity : AppCompatActivity() {
+class NewGameActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     @SuppressLint("WrongViewCast")
@@ -53,7 +53,7 @@ class New_GameActivity : AppCompatActivity() {
             ) {
                 if(++check > 3) {
                     Log.d("check cat", check.toString())
-                    Sounds.playClickSound(this@New_GameActivity)
+                    Sounds.playClickSound(this@NewGameActivity)
                 }
             }
         }
@@ -70,7 +70,7 @@ class New_GameActivity : AppCompatActivity() {
             ) {
                 if(++check > 3) {
                     Log.d("check play", check.toString())
-                    Sounds.playClickSound(this@New_GameActivity)
+                    Sounds.playClickSound(this@NewGameActivity)
                 }
             }
         }
@@ -87,7 +87,7 @@ class New_GameActivity : AppCompatActivity() {
             ) {
                 if(++check > 3) {
                     Log.d("check round", check.toString())
-                    Sounds.playClickSound(this@New_GameActivity)
+                    Sounds.playClickSound(this@NewGameActivity)
                 }
             }
         }

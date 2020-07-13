@@ -21,7 +21,7 @@ import com.example.quiplash.R
 import com.example.quiplash.Sounds
 
 
-class Join_GameActivity : AppCompatActivity() {
+class JoinGameActivity : AppCompatActivity() {
     lateinit var gameList: MutableList<Game>
     private lateinit var auth: FirebaseAuth
 
@@ -52,7 +52,7 @@ class Join_GameActivity : AppCompatActivity() {
         // set clickListeners for all buttons & refreshListener for view
         btnNewGameActivity.setOnClickListener {
             Sounds.playClickSound(this)
-            val intent = Intent(this, New_GameActivity::class.java)
+            val intent = Intent(this, NewGameActivity::class.java)
             startActivity(intent)
         }
 

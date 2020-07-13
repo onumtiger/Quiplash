@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.quiplash.R
 import com.example.quiplash.Sounds
 
-class Invite_Player : DialogFragment() {
+class InvitePlayer : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.interaction_invite_player, container, false)
     }
