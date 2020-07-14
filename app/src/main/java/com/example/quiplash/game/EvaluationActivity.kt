@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.ListView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,7 @@ import com.example.quiplash.game.GameManager.Companion.startTimer
 import com.example.quiplash.R
 import com.example.quiplash.Sounds
 import com.example.quiplash.user.UserQP
+import org.w3c.dom.Text
 
 class EvaluationActivity : AppCompatActivity() {
 
@@ -65,6 +67,18 @@ class EvaluationActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
         dbUsers = FirebaseFirestore.getInstance().collection(dbUsersPath)
         auth = FirebaseAuth.getInstance()
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        val drink_view = findViewById<TextView>(R.id.party_shot_text_view)
+
+        if (!game.partyMode){
+            drink_view.visibility = View.INVISIBLE
+        } else {
+            val drnk = (0..game.drinks.size-1).random()
+            drink_view.text = game.drinks[drnk]
+        }
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
         /**
          * Set Points for Round-Winner.

@@ -15,7 +15,8 @@ class Game {
     var gameID: String = ""
     var playrounds: HashMap<String, Round> = linkedMapOf()
     var isPublic: Boolean = false
-    var partyMoode: Boolean = false
+    var partyMode: Boolean = false
+    var drinks: ArrayList<String> = arrayListOf<String>()
     var hostID: String = ""
     var gameTitle: String = ""
     var invitations: ArrayList<String> = arrayListOf<String>()
@@ -30,7 +31,8 @@ class Game {
         gameid: String,
         hostid: String,
         ispublic: Boolean,
-        partyMoode: Boolean,
+        partyMode: Boolean,
+        drinks: ArrayList<String>,
         gametitle: String,
         invitations: ArrayList<String>
     ) {
@@ -42,7 +44,8 @@ class Game {
         this.gameID = gameid
         this.hostID = hostid
         this.isPublic = ispublic
-        this.partyMoode  = partyMoode
+        this.partyMode  = partyMode
+        this.drinks = drinks
         this.gameTitle = gametitle
         this.invitations = invitations
     }
@@ -52,7 +55,8 @@ class Game {
         gameid: String,
         gamePlayerNumber: Int,
         ispublic: Boolean,
-        partyMoode: Boolean,
+        partyMode: Boolean,
+        drinks: ArrayList<String>,
         currentRound: Int,
         gameplayrounds: HashMap<String, Round>,
         gameHostid: String,
@@ -70,7 +74,8 @@ class Game {
         this.gameID = gameid
         this.playrounds = gameplayrounds
         this.isPublic = ispublic
-        this.partyMoode = partyMoode
+        this.partyMode = partyMode
+        this.drinks = drinks
         this.hostID = gameHostid
         this.gameTitle = gametitle
         this.invitations = invitations

@@ -4,23 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ListView
+import android.view.ViewGroup
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.quiplash.database.DBMethods.Companion.deleteGame
-import com.example.quiplash.database.DBMethods.Companion.getCurrentGame
-import com.example.quiplash.database.DBMethods.Companion.getUserWithID
-import com.example.quiplash.database.Callback
-import com.example.quiplash.database.DBMethods
-import com.google.firebase.auth.FirebaseAuth
-import com.example.quiplash.game.GameManager.Companion.game
 import com.example.quiplash.LandingActivity
 import com.example.quiplash.R
 import com.example.quiplash.Sounds
+import com.example.quiplash.database.Callback
+import com.example.quiplash.database.DBMethods
+import com.example.quiplash.database.DBMethods.Companion.deleteGame
+import com.example.quiplash.database.DBMethods.Companion.getCurrentGame
+import com.example.quiplash.database.DBMethods.Companion.getUserWithID
+import com.example.quiplash.game.GameManager.Companion.game
 import com.example.quiplash.user.PlayersListAdapter
 import com.example.quiplash.user.UserQP
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -36,6 +36,13 @@ class WaitingActivity : AppCompatActivity() {
 
     private lateinit var awaitGamestart: ListenerRegistration
     private var gameQuestions = arrayListOf<Question>()
+
+    //Party Mode
+    private var drink_challenges = arrayListOf<String>()
+    private var beerBool: Boolean = false
+    private var wineBool: Boolean = false
+    private var cocktailBool: Boolean = false
+    private var shotBool: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +86,49 @@ class WaitingActivity : AppCompatActivity() {
         val playersListView = findViewById<ListView>(R.id.players_list)
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swiperefresh)
 
+        val checkBeer = findViewById<CheckBox>(R.id.CheckBoxBeer)
+        val checkWine = findViewById<CheckBox>(R.id.CheckBoxWine)
+        val checkCocktails = findViewById<CheckBox>(R.id.CheckBoxCocktails)
+        val checkShot = findViewById<CheckBox>(R.id.CheckBoxShots)
+
         getUsersList(playersListView, game.gameID)
+
+        if (!game.partyMode){
+            checkBeer.visibility = View.INVISIBLE
+            checkWine.visibility = View.INVISIBLE
+            checkCocktails.visibility = View.INVISIBLE
+            checkShot.visibility = View.INVISIBLE
+
+        } else {
+            checkBeer.setOnClickListener(View.OnClickListener {
+                if (checkBeer.isChecked) {
+                    beerBool = true
+                } else {
+                    beerBool = false
+                }
+            })
+            checkWine.setOnClickListener(View.OnClickListener {
+                if (checkWine.isChecked) {
+                    wineBool = true
+                } else {
+                    wineBool = false
+                }
+            })
+            checkCocktails.setOnClickListener(View.OnClickListener {
+                if (checkCocktails.isChecked) {
+                    cocktailBool = true
+                } else {
+                    cocktailBool = false
+                }
+            })
+            checkShot.setOnClickListener(View.OnClickListener {
+                if (checkShot.isChecked) {
+                    shotBool = true
+                } else {
+                    shotBool = false
+                }
+            })
+        }
 
         btnBack.setOnClickListener {
             Sounds.playClickSound(this)
@@ -87,9 +136,16 @@ class WaitingActivity : AppCompatActivity() {
         }
 
         btnStartGame.setOnClickListener {
-            awaitGamestart.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
-            Sounds.playClickSound(this)
-            savePlayrounds()
+            if (game.partyMode && !beerBool && !wineBool && !cocktailBool && !shotBool){
+                Toast.makeText(this, "Please show us your drinks for the game", Toast.LENGTH_LONG).show()
+            } else {
+                if (game.partyMode){
+                    addDrinks()
+                }
+                awaitGamestart.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
+                Sounds.playClickSound(this)
+                savePlayrounds()
+            }
         }
 
         btnEndGame.setOnClickListener {
@@ -326,6 +382,38 @@ class WaitingActivity : AppCompatActivity() {
 
     }
 
+    private fun addDrinks(){
+        if (beerBool){
+            drink_challenges.add("Have a sip of Beer")
+            drink_challenges.add("Have 3 sips of Beer")
+            drink_challenges.add("Ex your Beer and open a new one")
+        }
+        if (wineBool){
+            drink_challenges.add("Have a sip of wine")
+            drink_challenges.add("Have 3 sips of wine")
+            drink_challenges.add("Ex your glas of wine and refill it")
+        }
+        if (cocktailBool){
+            drink_challenges.add("Have a sip of your cocktail")
+            drink_challenges.add("Have 3 sips of your cocktail")
+            drink_challenges.add("Ex half of your glas and if it's empty refill it!")
+            drink_challenges.add("Let your cocktail be a bit stronger :)")
+        }
+        if (shotBool){
+            drink_challenges.add("Have a Shot")
+            drink_challenges.add("Have 2 Shots")
+            drink_challenges.add("Have a shot of the ugliest Water you have")
+            drink_challenges.add("Choose a partner and have a shot with him together")
+        }
+
+        db.document(game.gameID)
+            .update("drinks", drink_challenges)
+            .addOnSuccessListener {
+                Sounds.playStartSound(this)
+            }
+            .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
+    }
+
     private fun savePlayrounds() {
         db.document(game.gameID)
             .update("playrounds", getallRounds())
@@ -336,7 +424,6 @@ class WaitingActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
-
     }
 
     private fun getQuestionsForGame(rounds: Int, player_count: Int, selected_category: String) {

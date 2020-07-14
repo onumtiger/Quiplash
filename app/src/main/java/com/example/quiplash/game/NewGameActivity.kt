@@ -151,6 +151,7 @@ class NewGameActivity : AppCompatActivity() {
             auth.currentUser?.uid.toString(),
             isPublic,
             partyMode,
+            arrayListOf<String>(),
             gameTitle,
             arrayListOf<String>()
         )
