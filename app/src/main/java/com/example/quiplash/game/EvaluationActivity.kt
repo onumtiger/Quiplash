@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
@@ -54,30 +51,35 @@ class EvaluationActivity : AppCompatActivity() {
     private var scoreViewDraw: TextView? = null
     private var answerViewWinnerFrameDraw: View? = null
     private var frameProfileDraw: ConstraintLayout? = null
+    private var drink_view: TextView? = null
 
     private var playerPhoto = ""
     private lateinit var awaitNextRound: ListenerRegistration
     private var nextroundFlag = false
     private var setRoundFlag = false
     private var oldRound = 0
+    private var complete_layout: ConstraintLayout? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Sounds.playScoreSound(this)
+        setContentView(R.layout.activity_evaluation)
+
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
         dbUsers = FirebaseFirestore.getInstance().collection(dbUsersPath)
         auth = FirebaseAuth.getInstance()
 
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        val drink_view = findViewById<TextView>(R.id.party_shot_text_view)
+        drink_view = findViewById(R.id.party_shot_text_view)
+        complete_layout = findViewById(R.id.complete_layout)
 
-        if (!game.partyMode){
-            drink_view.visibility = View.INVISIBLE
+        if (game.partyMode == false){
+            drink_view?.visibility = View.INVISIBLE
         } else {
+            complete_layout?.setBackgroundResource(R.drawable.drink_background)
             val drnk = (0..game.drinks.size-1).random()
-            drink_view.text = game.drinks[drnk]
+            drink_view?.text = game.drinks[drnk]
         }
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
         /**
@@ -99,7 +101,6 @@ class EvaluationActivity : AppCompatActivity() {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
         }
-        setContentView(R.layout.activity_evaluation)
 
 
         val questionEval = findViewById<TextView>(R.id.questionEval)
