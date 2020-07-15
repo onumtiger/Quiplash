@@ -28,6 +28,7 @@ class AddQuestionActivity : AppCompatActivity() {
         }
         setContentView(R.layout.activity_add_question)
 
+        //Buttons
         val btnStandard = findViewById<Button>(R.id.btnStandard)
         val btnFunny = findViewById<Button>(R.id.btnFunny)
         val btnPoetic = findViewById<Button>(R.id.btnPoetic)
@@ -41,7 +42,7 @@ class AddQuestionActivity : AppCompatActivity() {
         addQuestion.visibility = View.INVISIBLE
         new_question_text.visibility = View.INVISIBLE
 
-
+        //save question in DB and Check if text is tiped in
         addQuestion.setOnClickListener {
             if (new_question_text.text.toString() != ""){
                 DBMethods.saveQuestion(new_question_text.text.toString(), newType)
@@ -60,6 +61,7 @@ class AddQuestionActivity : AppCompatActivity() {
             startActivity(intent);
         }
 
+        //choose question category
         btnStandard.setOnClickListener {
             Sounds.playClickSound(this)
             newType = "Standard"
@@ -91,6 +93,7 @@ class AddQuestionActivity : AppCompatActivity() {
 
     }
 
+    //make useless Buttons invisible after choosing category
     fun ButtonsInvisible(){
         btnStandard.visibility= View.INVISIBLE
         btnFunny.visibility= View.INVISIBLE
