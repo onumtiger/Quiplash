@@ -361,7 +361,7 @@ class EvaluationActivity : AppCompatActivity() {
             .addOnSuccessListener { uri ->
                 if (profileView != null) {
                     Glide
-                        .with(this)
+                        .with(applicationContext)
                         .load(uri)
                         .into(profileView)
                 }
