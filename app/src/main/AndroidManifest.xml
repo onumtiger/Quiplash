@@ -48,8 +48,7 @@
         <activity android:name=".game.InviteFriendsToGameActivity" />
         <activity android:name=".game.GameLaunchingActivity" />
         <activity android:name=".scoreboard.GlobalScoreboardActivity" />
-        <activity android:name=".user.addQuestions.AddQuestion" />
-        <activity android:name=".user.addQuestions.ChooseQuestionTypeActivity" />
+        <activity android:name=".user.addQuestions.AddQuestionActivity" />
         <activity android:name=".game.AnswersActivity" />
         <activity android:name=".game.PrepareAnswerActivity" />
         <activity android:name=".game.ChooseAnswerActivity" />

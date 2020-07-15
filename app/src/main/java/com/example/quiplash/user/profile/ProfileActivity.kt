@@ -16,7 +16,7 @@ import com.example.quiplash.database.DBMethods.Companion.getUser
 import com.example.quiplash.database.Callback
 import com.example.quiplash.database.DBMethods
 import com.example.quiplash.user.authentication.RegisterGuestActivity
-import com.example.quiplash.user.addQuestions.ChooseQuestionTypeActivity
+import com.example.quiplash.user.addQuestions.AddQuestionActivity
 import com.example.quiplash.user.authentication.ModalGuestInfo
 import com.example.quiplash.user.UserQP
 import com.google.firebase.auth.FirebaseAuth
@@ -125,7 +125,7 @@ class ProfileActivity : AppCompatActivity() {
             } else {
                 Sounds.playClickSound(this)
 
-                val intent = Intent(this, ChooseQuestionTypeActivity::class.java)
+                val intent = Intent(this, AddQuestionActivity::class.java)
                 startActivity(intent)
             }
         }
