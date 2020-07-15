@@ -1,6 +1,7 @@
 package com.example.quiplash.game
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -240,9 +241,9 @@ class WaitingActivity : AppCompatActivity() {
         } else {
             btnStartGame.isClickable = false
             btnStartGame.setBackgroundResource(R.drawable.char_button_frame_disabled)
-            btnStartGame.setTextColor(ContextCompat.getColor(this, R.color.colorText))
-            btnStartGame.setHintTextColor(ContextCompat.getColor(this, R.color.colorText))
-            btnStartGame.setLinkTextColor(ContextCompat.getColor(this, R.color.colorText))
+            btnStartGame.setTextColor(Color.WHITE)
+            btnStartGame.setHintTextColor(Color.WHITE)
+            btnStartGame.setLinkTextColor(Color.WHITE)
         }
     }
 
