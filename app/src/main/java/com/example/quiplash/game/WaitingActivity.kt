@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -94,40 +93,24 @@ class WaitingActivity : AppCompatActivity() {
         getUsersList(playersListView, game.gameID)
 
         if (!game.partyMode){
-            checkBeer.visibility = View.INVISIBLE
-            checkWine.visibility = View.INVISIBLE
-            checkCocktails.visibility = View.INVISIBLE
-            checkShot.visibility = View.INVISIBLE
+            checkBeer.visibility = View.GONE
+            checkWine.visibility = View.GONE
+            checkCocktails.visibility = View.GONE
+            checkShot.visibility = View.GONE
 
         } else {
-            checkBeer.setOnClickListener(View.OnClickListener {
-                if (checkBeer.isChecked) {
-                    beerBool = true
-                } else {
-                    beerBool = false
-                }
-            })
-            checkWine.setOnClickListener(View.OnClickListener {
-                if (checkWine.isChecked) {
-                    wineBool = true
-                } else {
-                    wineBool = false
-                }
-            })
-            checkCocktails.setOnClickListener(View.OnClickListener {
-                if (checkCocktails.isChecked) {
-                    cocktailBool = true
-                } else {
-                    cocktailBool = false
-                }
-            })
-            checkShot.setOnClickListener(View.OnClickListener {
-                if (checkShot.isChecked) {
-                    shotBool = true
-                } else {
-                    shotBool = false
-                }
-            })
+            checkBeer.setOnClickListener {
+                beerBool = checkBeer.isChecked
+            }
+            checkWine.setOnClickListener {
+                wineBool = checkWine.isChecked
+            }
+            checkCocktails.setOnClickListener {
+                cocktailBool = checkCocktails.isChecked
+            }
+            checkShot.setOnClickListener {
+                shotBool = checkShot.isChecked
+            }
         }
 
         btnBack.setOnClickListener {

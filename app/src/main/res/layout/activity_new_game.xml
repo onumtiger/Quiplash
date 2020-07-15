@@ -24,7 +24,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="36dp"
         android:fontFamily="@font/roboto_slab_bold"
         android:gravity="center"
         android:text="@string/new_game"
@@ -40,7 +40,7 @@
         android:layout_width="0dp"
         android:layout_height="85dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/char_button_frame"
@@ -48,7 +48,7 @@
         app:layout_constraintBottom_toTopOf="@+id/new_game_players_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/party_switch">
 
         <ImageView
             android:id="@+id/category_image"
@@ -70,7 +70,7 @@
             android:layout_marginEnd="30dp"
             android:layout_toEndOf="@+id/category_image"
             android:fontFamily="@font/roboto_slab_bold"
-            android:text="Category"
+            android:text="@string/category"
             android:textColor="#BBBBBB"
             android:textSize="20sp" />
 
@@ -122,7 +122,7 @@
             android:layout_marginTop="4dp"
             android:layout_toEndOf="@+id/imageRoundWinnerPhoto"
             android:fontFamily="@font/roboto_slab_bold"
-            android:text="Amount of Players"
+            android:text="@string/amount_of_players"
             android:textColor="#BBBBBB"
             android:textSize="20sp" />
 
@@ -172,7 +172,7 @@
             android:layout_marginTop="4dp"
             android:layout_toEndOf="@+id/rounds_image"
             android:fontFamily="@font/roboto_slab_bold"
-            android:text="Amount of Rounds"
+            android:text="@string/amount_of_rounds"
             android:textColor="#BBBBBB"
             android:textSize="20sp" />
 
@@ -190,14 +190,15 @@
 
     <Switch
         android:id="@+id/switchPrivateGame"
-        android:layout_width="147dp"
-        android:layout_height="28dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="50dp"
         android:fontFamily="@font/roboto_slab_bold"
-        android:text="Private Game"
+        android:text="@string/private_game"
         android:textColor="@color/colorWhite"
+        android:theme="@style/QPSwitch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/game_title"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -210,7 +211,7 @@
         android:layout_marginBottom="32dp"
         android:background="@android:color/black"
         android:fontFamily="@font/roboto_slab_bold"
-        android:text="Create Game"
+        android:text="@string/create_game"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
@@ -226,25 +227,36 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
+        android:autofillHints="Game Title"
+        android:backgroundTint="@color/colorWhite"
         android:ems="10"
         android:fontFamily="@font/roboto_slab"
-        android:hint="Game Title"
+        android:hint="Your Game Title"
         android:inputType="textPersonName"
         android:textAlignment="textStart"
+        android:textColor="@color/colorWhite"
+        android:textColorHighlight="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textColorLink="@color/colorWhite"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/party_switch"
         app:layout_constraintEnd_toStartOf="@+id/switchPrivateGame"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="@+id/switchPrivateGame"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Switch
         android:id="@+id/party_switch"
-        android:layout_width="147dp"
-        android:layout_height="28dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="50dp"
         android:fontFamily="@font/roboto_slab_bold"
-        android:text="Party Mode"
+        android:text="@string/party_mode"
         android:textColor="@color/colorWhite"
+        android:theme="@style/QPSwitch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.23"
         app:layout_constraintStart_toEndOf="@+id/game_title"

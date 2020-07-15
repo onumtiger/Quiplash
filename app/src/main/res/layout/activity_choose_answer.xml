@@ -71,7 +71,6 @@
                 android:layout_height="60dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="50dp"
-                android:background="@android:color/black"
                 android:fontFamily="@font/roboto_slab_bold"
                 android:minWidth="125dp"
                 android:minHeight="125dp"

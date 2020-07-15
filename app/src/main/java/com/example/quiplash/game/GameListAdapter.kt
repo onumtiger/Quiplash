@@ -28,14 +28,19 @@ class GameListAdapter(val mCtx: Context, val layoutResId: Int, val gameList: Lis
         textViewGame.text = "Active Game"
         textViewCategory.text = "Category: " + game.category
         textViewPlayers.text =  game.users.size.toString() + " / " + game.playerNumber.toString()
-        if(game.category === "Harsh"){
-            imageViewStar.setImageResource(R.drawable.harsh_symbol)
-        }else if(game.category === "Funny"){
-            imageViewStar.setImageResource(R.drawable.funny_symbol)
-        }else if(game.category === "Poetic"){
-            imageViewStar.setImageResource(R.drawable.poetic_symbol)
-        } else {
-            imageViewStar.setImageResource(R.drawable.all_symbol)
+        when (game.category) {
+            "Harsh" -> {
+                imageViewStar.setImageResource(R.drawable.harsh_symbol)
+            }
+            "Funny" -> {
+                imageViewStar.setImageResource(R.drawable.funny_symbol)
+            }
+            "Poetic" -> {
+                imageViewStar.setImageResource(R.drawable.poetic_symbol)
+            }
+            else -> {
+                imageViewStar.setImageResource(R.drawable.all_symbol)
+            }
         }
 
         // If exists, set game title
