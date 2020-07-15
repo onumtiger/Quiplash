@@ -76,9 +76,9 @@ class EvaluationActivity : AppCompatActivity() {
         if (!game.partyMode){
             drink_view?.visibility = View.INVISIBLE
         } else {
-            complete_layout?.setBackgroundResource(R.drawable.drink_background)
+            complete_layout?.setBackgroundResource(R.drawable.background_party)
             val drnk = (0..game.drinks.size-1).random()
-            drink_view?.text = game.drinks[drnk]
+            drink_view?.text = "The Loosers challenge: \n" + game.drinks[drnk]
         }
 
 
@@ -342,7 +342,16 @@ class EvaluationActivity : AppCompatActivity() {
                 //val interpolator = BounceInterpolator(0.5, 10.0)
                 //shakehanim.interpolator = interpolator
                 scoreView!!.startAnimation(shakehanim)
+                if (game.partyMode){
+                    val drnk = (0..game.drinks.size-1).random()
+                    drink_view?.text = winner.userName + " has this challenge: \n" + game.drinks[drnk]
+                }
             }
+
+
+
+
+        //hieeeeer
     }
 
 
