@@ -88,9 +88,6 @@ class AddQuestionActivity : AppCompatActivity() {
             newType = "Harsh"
             ButtonsInvisible()
         }
-
-
-
     }
 
     //make useless Buttons invisible after choosing category

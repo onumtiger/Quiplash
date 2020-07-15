@@ -38,16 +38,11 @@ class DBMethods {
 
             val db = FirebaseFirestore.getInstance()
             lateinit var res: QuerySnapshot
-           // var allUsers = ArrayList<UserQP>()
             var singleUser : UserQP =
                UserQP()
-            //var allQuestions = ArrayList<Question>()
             var GameQuestions = ArrayList<Question>()
-            var allGames = mutableListOf<Game>()
             var actual = false
             private var auth: FirebaseAuth? = FirebaseAuth.getInstance()
-
-            var newQuestionType : Int? = null
 
             const val usersPath = "users"
             const val invitationsPath = "invitations"
@@ -421,12 +416,10 @@ class DBMethods {
                     docRef.delete()
                         .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!")
                             callback.onTaskComplete(true)}
-                        .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e)
+                        .addOnFailureListener { e -> Log.w(TAG, "Error deleting game", e)
                             callback.onTaskComplete(false)}
             }
 
-            fun removeUserFromGame(gameID: String, userID: String) {
-            }
 
             fun checkUsername(curName: String, username: String, callback: Callback<Boolean>) {
                 var usernameExists = false
