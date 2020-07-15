@@ -23,7 +23,6 @@ import com.example.quiplash.game.GameManager.Companion.startTimer
 import com.example.quiplash.R
 import com.example.quiplash.Sounds
 import com.example.quiplash.user.UserQP
-import org.w3c.dom.Text
 
 class EvaluationActivity : AppCompatActivity() {
 
@@ -78,7 +77,7 @@ class EvaluationActivity : AppCompatActivity() {
         } else {
             complete_layout?.setBackgroundResource(R.drawable.background_party)
             val drnk = (0..game.drinks.size-1).random()
-            drink_view?.text = "The Loosers challenge: \n" + game.drinks[drnk]
+            drink_view?.text = ("The Loosers challenge: \n" + game.drinks[drnk])
         }
 
 
@@ -339,12 +338,11 @@ class EvaluationActivity : AppCompatActivity() {
                 nameView?.text = winner.userName
                 setProfilePicture(winner, profileView)
                 val shakehanim = AnimationUtils.loadAnimation(this, R.anim.zoom_in_and_shake)
-                //val interpolator = BounceInterpolator(0.5, 10.0)
-                //shakehanim.interpolator = interpolator
+
                 scoreView!!.startAnimation(shakehanim)
                 if (game.partyMode){
                     val drnk = (0..game.drinks.size-1).random()
-                    drink_view?.text = winner.userName + " has this challenge: \n" + game.drinks[drnk]
+                    drink_view?.text = (winner.userName + " has this challenge: \n" + game.drinks[drnk])
                 }
             }
     }
@@ -354,13 +352,11 @@ class EvaluationActivity : AppCompatActivity() {
 
         val storageRef = FirebaseStorage.getInstance().reference
 
-        playerPhoto = if (player.photo !== null) {
-            player.photo!!
-        } else {
-            DBMethods.defaultGuestImg
+        if (player.photo == null) {
+            player.photo = DBMethods.defaultGuestImg
         }
 
-        val spaceRef = storageRef.child(playerPhoto)
+        val spaceRef = storageRef.child(player.photo!!)
         spaceRef.downloadUrl
             .addOnSuccessListener { uri ->
                 if (profileView != null) {

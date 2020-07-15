@@ -1,6 +1,7 @@
 package com.example.quiplash.game
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -14,6 +15,7 @@ import com.example.quiplash.Sounds
 import com.example.quiplash.database.Callback
 import com.example.quiplash.database.DBMethods
 import com.example.quiplash.database.DBMethods.Companion.deleteGame
+import com.example.quiplash.database.DBMethods.Companion.editGame
 import com.example.quiplash.database.DBMethods.Companion.getCurrentGame
 import com.example.quiplash.database.DBMethods.Companion.getUserWithID
 import com.example.quiplash.game.GameManager.Companion.game
@@ -89,10 +91,15 @@ class WaitingActivity : AppCompatActivity() {
         val checkWine = findViewById<CheckBox>(R.id.CheckBoxWine)
         val checkCocktails = findViewById<CheckBox>(R.id.CheckBoxCocktails)
         val checkShot = findViewById<CheckBox>(R.id.CheckBoxShots)
+        val layoutDrinksCheck = findViewById<LinearLayout>(R.id.linearLayoutDrinks)
+        val labelDrinks = findViewById<TextView>(R.id.textViewDrinksLabel)
 
         getUsersList(playersListView, game.gameID)
 
-        if(game.partyMode == true && auth.currentUser?.uid.toString() == game.hostID) {
+        if(game.partyMode && auth.currentUser?.uid.toString() == game.hostID) {
+            layoutDrinksCheck.visibility = View.VISIBLE
+            labelDrinks.visibility = View.VISIBLE
+
             checkBeer.setOnClickListener {
                 beerBool = checkBeer.isChecked
             }
@@ -106,10 +113,8 @@ class WaitingActivity : AppCompatActivity() {
                 shotBool = checkShot.isChecked
             }
         }else{
-            checkBeer.visibility = View.GONE
-            checkWine.visibility = View.GONE
-            checkCocktails.visibility = View.GONE
-            checkShot.visibility = View.GONE
+            layoutDrinksCheck.visibility = View.GONE
+            labelDrinks.visibility = View.GONE
         }
 
         btnBack.setOnClickListener {
@@ -236,13 +241,12 @@ class WaitingActivity : AppCompatActivity() {
         if (currentPlayerNumber == playerNumber) {
             btnStartGame.isClickable = true
             btnStartGame.setBackgroundResource(R.color.colorText)
+            btnStartGame.setTextColor(Color.BLACK)
             btnInvitePlayers.visibility = View.GONE
         } else {
             btnStartGame.isClickable = false
             btnStartGame.setBackgroundResource(R.drawable.char_button_frame_disabled)
-            btnStartGame.setTextColor(ContextCompat.getColor(this, R.color.colorText))
-            btnStartGame.setHintTextColor(ContextCompat.getColor(this, R.color.colorText))
-            btnStartGame.setLinkTextColor(ContextCompat.getColor(this, R.color.colorText))
+            btnStartGame.setTextColor(Color.BLACK)
         }
     }
 

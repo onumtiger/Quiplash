@@ -2,7 +2,6 @@ package com.example.quiplash.user.friends
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +15,6 @@ import com.example.quiplash.database.DBMethods
 import com.example.quiplash.R
 import com.example.quiplash.Sounds
 import com.example.quiplash.user.UserQP
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.FirebaseStorage
 
 
@@ -28,51 +25,49 @@ class FriendsListAdapter (val mCtx: Context, val layoutResId: Int, val currentUs
         val friendNameView = view.findViewById<TextView>(R.id.friend_username)
         val friendScoreView = view.findViewById<TextView>(R.id.friend_score)
         val imageViewUser: ImageView = view.findViewById(R.id.profile_image)
-        var fotostorage = FirebaseStorage.getInstance()
-        var storageRef = fotostorage.reference
-        var deleteButton = view.findViewById<ImageButton>(R.id.friend_delete)
+        val fotostorage = FirebaseStorage.getInstance()
+        val storageRef = fotostorage.reference
+        val deleteButton = view.findViewById<ImageButton>(R.id.friend_delete)
         val playerPhoto: String
 
         val friend = playerList[position]
-        if (friend.photo !== null) {
-            playerPhoto = friend.photo!!
-        } else {
-            playerPhoto = DBMethods.defaultGuestImg
+        if (friend.photo == null) {
+            friend.photo = DBMethods.defaultGuestImg
         }
 
         friendNameView.text = friend.userName
-        friendScoreView.text = "Score: " + friend.score.toString()
+        friendScoreView.text = ("Score: " + friend.score.toString())
 
-        var spaceRef = storageRef.child(playerPhoto)
+        val spaceRef = storageRef.child(friend.photo!!)
         spaceRef.downloadUrl
-            .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
+            .addOnSuccessListener { uri ->
                 Glide
                     .with(context)
                     .load(uri)
                     .into(imageViewUser)
-            }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
+            }.addOnFailureListener { Log.d("Test", " Failed!") }
 
 
-        deleteButton.setOnClickListener(){
+        deleteButton.setOnClickListener{
             Sounds.playClickSound(context)
 
             // remove current user from friend friendlist
-            var newfriendsListFriend = emptyList<String>().toMutableList()
+            val newfriendsListFriend = emptyList<String>().toMutableList()
             for(k in 0..friend.friends.size-1) {
                 newfriendsListFriend.add(k, friend.friends[k])
             }
             newfriendsListFriend.remove(currentUser.userName)
             friend.friends = newfriendsListFriend
-            friend.userID?.let { it4 -> DBMethods.editUser(it4, friend) }
+            friend.userID.let { it4 -> DBMethods.editUser(it4, friend) }
 
             // remove friend from current user friendlist
-            var newfriendsListUser = emptyList<String>().toMutableList()
+            val newfriendsListUser = emptyList<String>().toMutableList()
             for(k in 0..currentUser.friends.size-1) {
                 newfriendsListUser.add(k, currentUser.friends[k])
             }
             newfriendsListUser.remove(friend.userName)
             currentUser.friends = newfriendsListUser
-            currentUser.userID?.let { it5 -> DBMethods.editUser(it5, currentUser) }
+            currentUser.userID.let { it5 -> DBMethods.editUser(it5, currentUser) }
 
             // restart activity
             val intent = Intent(context, FriendsActivity::class.java);

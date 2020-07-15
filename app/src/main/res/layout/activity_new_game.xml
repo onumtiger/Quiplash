@@ -237,7 +237,7 @@
         android:textAlignment="textStart"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
-        android:textColorHint="@color/colorWhite"
+        android:textColorHint="#80FFFFFF"
         android:textColorLink="@color/colorWhite"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/party_switch"
