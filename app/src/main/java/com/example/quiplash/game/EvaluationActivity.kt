@@ -73,7 +73,7 @@ class EvaluationActivity : AppCompatActivity() {
         drink_view = findViewById(R.id.party_shot_text_view)
         complete_layout = findViewById(R.id.complete_layout)
 
-        if (game.partyMode == false){
+        if (!game.partyMode){
             drink_view?.visibility = View.INVISIBLE
         } else {
             complete_layout?.setBackgroundResource(R.drawable.drink_background)

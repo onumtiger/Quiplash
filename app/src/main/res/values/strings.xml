@@ -105,4 +105,15 @@
     <string name="wrong_email">Wrong e-Mail!</string>
     <string name="answer_not_saved">Your Answer could not be saved</string>
     <string name="and_sign"><![CDATA[&]]></string>
+    <string name="create_game">Create Game</string>
+    <string name="game_title">Game Title</string>
+    <string name="private_game">Private Game</string>
+    <string name="amount_of_rounds">Amount of Rounds</string>
+    <string name="amount_of_players">Amount of Players</string>
+    <string name="category">Category</string>
+    <string name="party_mode">Party Mode</string>
+    <string name="shots">Shots</string>
+    <string name="cocktails">Cocktails</string>
+    <string name="wine">Wine</string>
+    <string name="beer">Beer</string>
 </resources>

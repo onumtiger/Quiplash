@@ -10,7 +10,11 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -32,7 +36,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="38dp"
                 android:fontFamily="@font/roboto_slab_bold"
                 android:gravity="center"
                 android:text="@string/waiting_for_players"
@@ -45,18 +49,19 @@
 
             <RelativeLayout
                 android:id="@+id/relativeLayout2"
-                android:layout_width="410dp"
-                android:layout_height="293dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="32dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutDrinks">
 
 
                 <ListView
                     android:id="@+id/players_list"
                     android:layout_width="match_parent"
-                    android:layout_height="267dp" />
+                    android:layout_height="match_parent" />
             </RelativeLayout>
 
             <Button
@@ -74,7 +79,7 @@
                 android:textColorHint="@color/colorWhite"
                 android:textColorLink="@color/colorWhite"
                 android:textSize="20sp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -96,7 +101,7 @@
                 android:textColorHint="@color/colorWhite"
                 android:textColorLink="@color/colorWhite"
                 android:textSize="20sp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toStartOf="@+id/end_game"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/invite_players_btn" />
@@ -115,7 +120,7 @@
                 android:textColorHint="@color/colorWhite"
                 android:textColorLink="@color/colorWhite"
                 android:textSize="20sp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
@@ -126,17 +131,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/colorGreen"
+                android:background="@color/colorText"
                 android:fontFamily="@font/roboto_slab_bold"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
                 android:text="@string/join_game"
                 android:textColor="@color/colorWhite"
                 android:textColorHighlight="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:textColorLink="@color/colorWhite"
                 android:textSize="20sp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/invite_players_btn" />
 
@@ -154,7 +160,7 @@
                 android:textColorHint="@color/colorWhite"
                 android:textColorLink="@color/colorWhite"
                 android:textSize="20sp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/start_game_btn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/start_game_btn"
@@ -162,27 +168,29 @@
 
             <LinearLayout
                 android:id="@+id/linearLayoutDrinks"
-                android:layout_width="231dp"
-                android:layout_height="154dp"
-                android:background="@drawable/char_border_frame"
-                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:orientation="horizontal"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:textAlignment="center"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/start_game_btn"
-                app:layout_constraintVertical_bias="0.034">
+
+                app:layout_constraintTop_toBottomOf="@+id/start_game_btn">
 
                 <CheckBox
                     android:id="@+id/CheckBoxBeer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Beer"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"
+                    android:buttonTint="@color/colorWhite"
+                    android:fontFamily="@font/roboto_slab_bold"
+                    android:paddingEnd="10dp"
+                    android:text="@string/beer"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp"
                     tools:layout_editor_absoluteX="107dp"
                     tools:layout_editor_absoluteY="16dp" />
 
@@ -190,10 +198,13 @@
                     android:id="@+id/CheckBoxWine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Wine"
+                    android:buttonTint="@color/colorWhite"
+                    android:fontFamily="@font/roboto_slab_bold"
+                    android:paddingEnd="10dp"
+                    android:text="@string/wine"
                     android:textAlignment="center"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp"
                     tools:layout_editor_absoluteX="107dp"
                     tools:layout_editor_absoluteY="16dp" />
 
@@ -201,9 +212,12 @@
                     android:id="@+id/CheckBoxCocktails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cocktails"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
+                    android:buttonTint="@color/colorWhite"
+                    android:fontFamily="@font/roboto_slab_bold"
+                    android:paddingEnd="10dp"
+                    android:text="@string/cocktails"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp"
                     tools:layout_editor_absoluteX="107dp"
                     tools:layout_editor_absoluteY="16dp" />
 
@@ -211,10 +225,12 @@
                     android:id="@+id/CheckBoxShots"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Shots"
-                    android:textAlignment="viewEnd"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
+                    android:buttonTint="@color/colorWhite"
+                    android:fontFamily="@font/roboto_slab_bold"
+                    android:paddingEnd="10dp"
+                    android:text="@string/shots"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp"
                     tools:layout_editor_absoluteX="107dp"
                     tools:layout_editor_absoluteY="16dp" />
 
