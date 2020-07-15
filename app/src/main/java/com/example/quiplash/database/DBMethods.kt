@@ -50,8 +50,8 @@ class DBMethods {
             const val gamesPath = "games"
             const val questionsPath = "questions"
             const val usernamePath = "userName"
-            const val defaultUserImg = "images/default_user_QP.png"
-            const val defaultGuestImg = "images/default_guest_QP.png"
+            const val defaultUserImg = "images/default_user_QP.jpg"
+            const val defaultGuestImg = "images/default_guest_QP.jpg"
 
             fun saveQuestion(question_text: String, question_type: String){
                 val ID = createID()

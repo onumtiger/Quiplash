@@ -90,10 +90,15 @@ class WaitingActivity : AppCompatActivity() {
         val checkWine = findViewById<CheckBox>(R.id.CheckBoxWine)
         val checkCocktails = findViewById<CheckBox>(R.id.CheckBoxCocktails)
         val checkShot = findViewById<CheckBox>(R.id.CheckBoxShots)
+        val layoutDrinksCheck = findViewById<LinearLayout>(R.id.linearLayoutDrinks)
+        val labelDrinks = findViewById<TextView>(R.id.textViewDrinksLabel)
 
         getUsersList(playersListView, game.gameID)
 
-        if(game.partyMode == true && auth.currentUser?.uid.toString() == game.hostID) {
+        if(game.partyMode && auth.currentUser?.uid.toString() == game.hostID) {
+            layoutDrinksCheck.visibility = View.VISIBLE
+            labelDrinks.visibility = View.VISIBLE
+
             checkBeer.setOnClickListener {
                 beerBool = checkBeer.isChecked
             }
@@ -107,10 +112,8 @@ class WaitingActivity : AppCompatActivity() {
                 shotBool = checkShot.isChecked
             }
         }else{
-            checkBeer.visibility = View.GONE
-            checkWine.visibility = View.GONE
-            checkCocktails.visibility = View.GONE
-            checkShot.visibility = View.GONE
+            layoutDrinksCheck.visibility = View.GONE
+            labelDrinks.visibility = View.GONE
         }
 
         btnBack.setOnClickListener {
@@ -237,13 +240,12 @@ class WaitingActivity : AppCompatActivity() {
         if (currentPlayerNumber == playerNumber) {
             btnStartGame.isClickable = true
             btnStartGame.setBackgroundResource(R.color.colorText)
+            btnStartGame.setTextColor(Color.BLACK)
             btnInvitePlayers.visibility = View.GONE
         } else {
             btnStartGame.isClickable = false
             btnStartGame.setBackgroundResource(R.drawable.char_button_frame_disabled)
-            btnStartGame.setTextColor(Color.WHITE)
-            btnStartGame.setHintTextColor(Color.WHITE)
-            btnStartGame.setLinkTextColor(Color.WHITE)
+            btnStartGame.setTextColor(Color.BLACK)
         }
     }
 

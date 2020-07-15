@@ -24,7 +24,7 @@ class ScoreboardListAdapter(val mCtx: Context, val layoutResId: Int, val playerL
         val view: View = layoutInflater.inflate(layoutResId, null)
         val textViewGame = view.findViewById<TextView>(R.id.player_name)
         val textViewScore = view.findViewById<TextView>(R.id.player_score)
-        val imageViewUser: ImageView = view.findViewById<ImageView>(R.id.player_image)
+        val imageViewUser: ImageView = view.findViewById(R.id.player_image)
         var fotostorage = FirebaseStorage.getInstance();
         var storageRef = fotostorage.reference
         val playerPhoto: String

@@ -47,6 +47,51 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <FrameLayout
+                android:id="@+id/layoutQuestion"
+                android:layout_width="0dp"
+                android:layout_height="239dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <View
+                    android:id="@+id/viewQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/char_border_frame"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="80dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="80dp"
+                    android:layout_marginBottom="54dp"
+                    android:fontFamily="@font/roboto_slab_bold"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/viewQuestion"
+                    app:layout_constraintEnd_toEndOf="@+id/viewQuestion"
+                    app:layout_constraintStart_toStartOf="@+id/viewQuestion"
+                    app:layout_constraintTop_toTopOf="@+id/viewQuestion" />
+            </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <TextView
                 android:id="@+id/textViewQuestion2"
                 android:layout_width="0dp"
@@ -70,7 +115,7 @@
                 android:id="@+id/answerField"
                 android:layout_width="300dp"
                 android:layout_height="250dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:autofillHints="Your Answer..."
                 android:background="@drawable/char_speechbubble_mirrored"
                 android:ems="10"
@@ -79,12 +124,12 @@
                 android:inputType="textMultiLine"
                 android:maxLength="100"
                 android:maxLines="3"
-                android:singleLine="false"
                 android:paddingStart="16dp"
                 android:paddingLeft="16dp"
                 android:paddingEnd="16dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="56dp"
+                android:singleLine="false"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -127,7 +172,7 @@
                     android:fontFamily="@font/roboto_slab"
                     android:text="@string/answer_saved_successfully"
                     android:textAlignment="center"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorTurquoise"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:visibility="invisible"
@@ -156,51 +201,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layoutAnswerSaved" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <FrameLayout
-                android:id="@+id/layoutQuestion"
-                android:layout_width="0dp"
-                android:layout_height="239dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <View
-                    android:id="@+id/viewQuestion"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"
-                    android:background="@drawable/char_border_frame"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textViewQuestion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="80dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginEnd="80dp"
-                    android:layout_marginBottom="54dp"
-                    android:fontFamily="@font/roboto_slab_bold"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/viewQuestion"
-                    app:layout_constraintEnd_toEndOf="@+id/viewQuestion"
-                    app:layout_constraintStart_toStartOf="@+id/viewQuestion"
-                    app:layout_constraintTop_toTopOf="@+id/viewQuestion" />
-            </FrameLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ViewFlipper>
