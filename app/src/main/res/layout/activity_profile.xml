@@ -63,12 +63,6 @@
             android:layout_height="match_parent"
             android:scaleType="center" />
 
-        <ImageView
-            android:id="@+id/photomask"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/mask_circle"
-            tools:visibility="gone" />
     </FrameLayout>
 
     <TextView
