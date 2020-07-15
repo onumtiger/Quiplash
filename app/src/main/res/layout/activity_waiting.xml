@@ -56,7 +56,7 @@
                 <ListView
                     android:id="@+id/players_list"
                     android:layout_width="match_parent"
-                    android:layout_height="324dp" />
+                    android:layout_height="267dp" />
             </RelativeLayout>
 
             <Button
@@ -162,8 +162,9 @@
 
             <LinearLayout
                 android:id="@+id/linearLayoutDrinks"
-                android:layout_width="175dp"
-                android:layout_height="156dp"
+                android:layout_width="231dp"
+                android:layout_height="154dp"
+                android:background="@drawable/char_border_frame"
                 android:orientation="vertical"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
@@ -172,13 +173,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/start_game_btn"
-                app:layout_constraintVertical_bias="0.063">
+                app:layout_constraintVertical_bias="0.034">
 
                 <CheckBox
                     android:id="@+id/CheckBoxBeer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Beer"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
                     tools:layout_editor_absoluteX="107dp"
                     tools:layout_editor_absoluteY="16dp" />
 
@@ -188,6 +192,8 @@
                     android:layout_height="wrap_content"
                     android:text="Wine"
                     android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
                     tools:layout_editor_absoluteX="107dp"
                     tools:layout_editor_absoluteY="16dp" />
 
@@ -196,6 +202,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cocktails"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
                     tools:layout_editor_absoluteX="107dp"
                     tools:layout_editor_absoluteY="16dp" />
 
@@ -204,6 +212,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Shots"
+                    android:textAlignment="viewEnd"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
                     tools:layout_editor_absoluteX="107dp"
                     tools:layout_editor_absoluteY="16dp" />
 

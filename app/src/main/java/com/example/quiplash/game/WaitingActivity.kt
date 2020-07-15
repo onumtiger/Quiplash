@@ -93,41 +93,60 @@ class WaitingActivity : AppCompatActivity() {
 
         getUsersList(playersListView, game.gameID)
 
-        if (!game.partyMode){
-            checkBeer.visibility = View.INVISIBLE
-            checkWine.visibility = View.INVISIBLE
-            checkCocktails.visibility = View.INVISIBLE
-            checkShot.visibility = View.INVISIBLE
+        val layout: LinearLayout = findViewById(R.id.linearLayoutDrinks)
 
-        } else {
-            checkBeer.setOnClickListener(View.OnClickListener {
-                if (checkBeer.isChecked) {
-                    beerBool = true
-                } else {
-                    beerBool = false
-                }
-            })
-            checkWine.setOnClickListener(View.OnClickListener {
-                if (checkWine.isChecked) {
-                    wineBool = true
-                } else {
-                    wineBool = false
-                }
-            })
-            checkCocktails.setOnClickListener(View.OnClickListener {
-                if (checkCocktails.isChecked) {
-                    cocktailBool = true
-                } else {
-                    cocktailBool = false
-                }
-            })
-            checkShot.setOnClickListener(View.OnClickListener {
-                if (checkShot.isChecked) {
-                    shotBool = true
-                } else {
-                    shotBool = false
-                }
-            })
+        checkBeer.visibility = View.INVISIBLE
+        checkWine.visibility = View.INVISIBLE
+        checkCocktails.visibility = View.INVISIBLE
+        checkShot.visibility = View.INVISIBLE
+        layout.visibility = View.INVISIBLE
+
+        //val params: ViewGroup.LayoutParams = layout.layoutParams
+
+        //val layout2 = findViewById(R.id.linearLayoutDrinks) as LinearLayout
+
+        //val lp: LinearLayout.LayoutParams = layout2.layoutParams as LinearLayout.LayoutParams
+
+
+        if(game.partyMode == true) {
+            if (auth.currentUser?.uid.toString() == game.hostID){
+                layout.visibility = View.VISIBLE
+                checkBeer.visibility = View.VISIBLE
+                checkWine.visibility = View.VISIBLE
+                checkCocktails.visibility = View.VISIBLE
+                checkShot.visibility = View.VISIBLE
+
+                checkBeer.setOnClickListener(View.OnClickListener {
+                    if (checkBeer.isChecked) {
+                        beerBool = true
+                    } else {
+                        beerBool = false
+                    }
+                })
+                checkWine.setOnClickListener(View.OnClickListener {
+                    if (checkWine.isChecked) {
+                        wineBool = true
+                    } else {
+                        wineBool = false
+                    }
+                })
+                checkCocktails.setOnClickListener(View.OnClickListener {
+                    if (checkCocktails.isChecked) {
+                        cocktailBool = true
+                    } else {
+                        cocktailBool = false
+                    }
+                })
+                checkShot.setOnClickListener(View.OnClickListener {
+                    if (checkShot.isChecked) {
+                        shotBool = true
+                    } else {
+                        shotBool = false
+                    }
+                })
+            }else{
+                layout.layoutParams.height = 1
+            }
         }
 
         btnBack.setOnClickListener {
