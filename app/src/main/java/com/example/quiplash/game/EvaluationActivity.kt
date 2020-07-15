@@ -347,11 +347,6 @@ class EvaluationActivity : AppCompatActivity() {
                     drink_view?.text = winner.userName + " has this challenge: \n" + game.drinks[drnk]
                 }
             }
-
-
-
-
-        //hieeeeer
     }
 
 
