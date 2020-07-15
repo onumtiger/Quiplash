@@ -342,7 +342,16 @@ class EvaluationActivity : AppCompatActivity() {
                 //val interpolator = BounceInterpolator(0.5, 10.0)
                 //shakehanim.interpolator = interpolator
                 scoreView!!.startAnimation(shakehanim)
+                if (game.partyMode){
+                    val drnk = (0..game.drinks.size-1).random()
+                    drink_view?.text = winner.userName + " has this challenge: \n" + game.drinks[drnk]
+                }
             }
+
+
+
+
+        //hieeeeer
     }
 
 
