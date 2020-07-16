@@ -1,4 +1,4 @@
-package com.example.quiplash.SenNotificationPack
+package com.example.quiplash.SendNotificationPack
 
 
 import android.R
@@ -9,15 +9,17 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
-
+/**
+ * display notification in notification bar
+ */
 class MyFireBaseMessagingService:FirebaseMessagingService(){
     private lateinit var title:String;
     private lateinit var message:String;
     override fun onMessageReceived(@NonNull remoteMessage:RemoteMessage){
         super.onMessageReceived(remoteMessage)
-        title = remoteMessage.getData().get("Title").toString()
-        message = remoteMessage.getData().get("Message").toString()
-        val builder =NotificationCompat.Builder(applicationContext)
+        title = remoteMessage.data["Title"].toString()
+        message = remoteMessage.data["Message"].toString()
+        val builder = NotificationCompat.Builder(applicationContext)
                 .setSmallIcon(android.R.drawable.stat_sys_download)
                 .setContentTitle(title)
                 .setContentText(message)

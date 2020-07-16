@@ -22,14 +22,10 @@ import java.util.*
 
 
 class EditProfileActivity : AppCompatActivity() {
-
     lateinit var currentUser: UserQP
     lateinit var friend: UserQP
     lateinit var otherUsers: ArrayList<UserQP>
-
-
     //Firebase
-    //private var auth: FirebaseAuth? = null
     private lateinit var auth: FirebaseAuth
     private var authListener: FirebaseAuth.AuthStateListener? = null
     private var storage: FirebaseStorage? = null
@@ -44,27 +40,24 @@ class EditProfileActivity : AppCompatActivity() {
         setContentView(R.layout.acitvity_edit_profile)
 
         auth = FirebaseAuth.getInstance()
-
         storage = FirebaseStorage.getInstance()
         val fotostorage = FirebaseStorage.getInstance()
         val storageRef = fotostorage.reference
         var photoPath = DBMethods.defaultUserImg
         var score = 0
         var friends = emptyList<String>()
-
-
         val viewProfilePic: ImageView = findViewById(R.id.imageView)
-
         val textErrorUserName = findViewById<TextView>(R.id.textErrorUsernameEdit)
-
         val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow)
         val btnSave = findViewById<Button>(R.id.btnSave)
         val btnEditPicture = findViewById<Button>(R.id.btnPrrofilePic)
         val btnChangeRest = findViewById<Button>(R.id.edit_rest)
         val viewUsername : EditText = findViewById(R.id.usernameFieldEdit)
 
-        lateinit var test: ArrayList<UserQP>
-
+        /**
+         * load user information and display them
+         * if loading data fails display default profile picture and username
+         */
         val callback = object: Callback<UserQP> {
             override fun onTaskComplete(result : UserQP) {
                 currentUser = result
@@ -88,7 +81,7 @@ class EditProfileActivity : AppCompatActivity() {
                     viewUsername.setText(currentUser.userName)
                     score = currentUser.score
                     friends = currentUser.friends
-                    // timer is needed to load new photo is user edits its profile pic
+                    // timer is needed to load new photo if user edits its profile pic
                     val handler = Handler()
                     handler.postDelayed({
                         val spaceRef = storageRef.child(photoPath)
@@ -114,6 +107,9 @@ class EditProfileActivity : AppCompatActivity() {
         }
         DBMethods.getUsers(callbackGetUsers)
 
+        /**
+         * go back to profile activity
+         */
         btnBack.setOnClickListener {
             Sounds.playClickSound(this)
 
@@ -121,6 +117,9 @@ class EditProfileActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        /**
+         * display overlay to choose image source
+         */
         btnEditPicture.setOnClickListener{
             Sounds.playClickSound(this)
 
@@ -136,42 +135,23 @@ class EditProfileActivity : AppCompatActivity() {
             dialogFragment.show(ft, "delete")
         }
 
+        /**
+         * start activity to edit sensitive information
+         */
         btnChangeRest.setOnClickListener {
             Sounds.playClickSound(this)
 
             val intent = Intent(this, EditPWMailActivity::class.java)
             startActivity(intent)
-
-
-/*
-            val fm = FirebaseMessaging.getInstance()
-            fm.send(
-                RemoteMessage.Builder(current_User.userID.toString()+"@fcm.googleapis.com")
-                .setMessageId(Integer.toString(1))
-                .addData("my_message", "Hello World")
-                .addData("my_action", "SAY_HELLO")
-                .build())
-
-            val fm = FirebaseMessaging.getInstance()
-
-            fm.send(
-                RemoteMessage.Builder(current_User.userID.toString() + "@gcm.googleapis.com")
-                    .setMessageId(getMsgId())
-                    .addData("key1", "a value")
-                    .addData("key2", "another value")
-                    .build()
-            )
-
- */
         }
 
+        /**
+         * save changes in username and update username in every friendslist of his friends
+         */
         btnSave.setOnClickListener {
             Sounds.playClickSound(this)
-
             val username = viewUsername.text.toString()
             val uID = auth.currentUser?.uid.toString()
-
-
             val user = UserQP(
                 uID,
                 username,
@@ -182,7 +162,6 @@ class EditProfileActivity : AppCompatActivity() {
                 currentUser.token
             )
              if (username.isNotEmpty()) {
-
                  val callbackCheckUsername = object:
                      Callback<Boolean> {
                      override fun onTaskComplete(result: Boolean) {
@@ -210,9 +189,6 @@ class EditProfileActivity : AppCompatActivity() {
                                      }
                                  }
                              }
-
-
-                             // hier muss die Friendslist der anderen geupdated werden
                              editUser(uID, user)
                              val intent = Intent(this@EditProfileActivity, ProfileActivity::class.java)
                              startActivity(intent)
@@ -224,10 +200,7 @@ class EditProfileActivity : AppCompatActivity() {
              } else {
                  textErrorUserName.visibility = View.VISIBLE
                  textErrorUserName.text = getString(R.string.please_enter_username)
-
              }
         }
     }
-
-
 }

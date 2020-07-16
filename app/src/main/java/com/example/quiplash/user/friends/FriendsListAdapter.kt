@@ -38,6 +38,9 @@ class FriendsListAdapter (val mCtx: Context, val layoutResId: Int, val currentUs
         friendNameView.text = friend.userName
         friendScoreView.text = ("Score: " + friend.score.toString())
 
+        /**
+         * load profile picture
+         */
         val spaceRef = storageRef.child(friend.photo!!)
         spaceRef.downloadUrl
             .addOnSuccessListener { uri ->
@@ -47,13 +50,15 @@ class FriendsListAdapter (val mCtx: Context, val layoutResId: Int, val currentUs
                     .into(imageViewUser)
             }.addOnFailureListener { Log.d("Test", " Failed!") }
 
-
+        /**
+         * remove friend from user's and friend's friends
+         */
         deleteButton.setOnClickListener{
             Sounds.playClickSound(context)
 
             // remove current user from friend friendlist
             val newfriendsListFriend = emptyList<String>().toMutableList()
-            for(k in 0..friend.friends.size-1) {
+            for(k in friend.friends.indices) {
                 newfriendsListFriend.add(k, friend.friends[k])
             }
             newfriendsListFriend.remove(currentUser.userName)

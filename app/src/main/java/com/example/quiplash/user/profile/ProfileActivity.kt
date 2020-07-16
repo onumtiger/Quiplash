@@ -26,12 +26,10 @@ import com.google.firebase.storage.FirebaseStorage
 
 
 class ProfileActivity : AppCompatActivity() {
-    //FirebaseAuth object
     private var auth: FirebaseAuth? = null
     lateinit var currentUser: UserQP
     lateinit var db: CollectionReference
     private val dbUsersPath = DBMethods.usersPath
-
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,13 +45,11 @@ class ProfileActivity : AppCompatActivity() {
 
         val fotostorage = FirebaseStorage.getInstance()
         val storageRef = fotostorage.reference
-
         val btnBack = findViewById<Button>(R.id.profile_go_back_arrow)
         val btnEditProfile = findViewById<Button>(R.id.btnEditProfile)
         val btnaddQuestion = findViewById<Button>(R.id.btnaddQuestion)
         val btnSignOut = findViewById<Button>(R.id.sign_out)
         val btnRegisterGuest = findViewById<Button>(R.id.buttonRegisterGuest)
-
         val viewProfilePic: ImageView = findViewById(R.id.imageView)
         val viewEmail: TextView = findViewById(R.id.email)
         val viewLabelEmail: TextView = findViewById(R.id.textViewMail)
@@ -64,7 +60,10 @@ class ProfileActivity : AppCompatActivity() {
             ModalGuestInfo()
         val fm = supportFragmentManager
 
-
+        /**
+         * load user information and display them
+         * if loading data fails display default profile picture and username
+         */
         val callback = object : Callback<UserQP> {
             override fun onTaskComplete(result: UserQP) {
                 currentUser = result
@@ -119,87 +118,76 @@ class ProfileActivity : AppCompatActivity() {
         }
         getUser(callback)
 
+        /**
+         * start addquestion activity if user's not a guest
+         */
         btnaddQuestion.setOnClickListener {
             if (currentUser.guest!!) {
                 dialogFragmentGuest.show(fm, "modal_guest_info")
             } else {
                 Sounds.playClickSound(this)
-
                 val intent = Intent(this, AddQuestionActivity::class.java)
                 startActivity(intent)
             }
         }
 
+        /**
+         * sign user and start login screen
+         */
         btnSignOut.setOnClickListener {
             if (currentUser.guest!!) {
                 dialogFragmentGuest.show(fm, "modal_guest_info")
-
             } else {
                 Sounds.playClickSound(this)
-
                 FirebaseAuth.getInstance().signOut()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
         }
 
+        /**
+         * go back to landing view
+         */
         btnBack.setOnClickListener {
                 Sounds.playClickSound(this)
-
                 val intent = Intent(this, LandingActivity::class.java)
                 startActivity(intent)
         }
 
+        /**
+         * start editprofile activity
+         */
         btnEditProfile.setOnClickListener {
             if (currentUser.guest!!) {
                 dialogFragmentGuest.show(fm, "modal_guest_info")
             } else {
                 Sounds.playClickSound(this)
-
                 val intent = Intent(this, EditProfileActivity::class.java)
                 startActivity(intent)
             }
 
         }
 
+        /**
+         * start registerguest activity
+         */
         btnRegisterGuest.setOnClickListener {
             Sounds.playClickSound(this)
 
             val intent = Intent(this, RegisterGuestActivity::class.java)
             startActivity(intent)
         }
-
-/*
-        btnDeleteAccount.setOnClickListener{
-                    Sounds.playClickSound(this)
-
-            val dialogFragment = DeleteAccount()
-            val ft = supportFragmentManager.beginTransaction()
-            val prev = supportFragmentManager.findFragmentByTag("delete")
-            if (prev != null)
-            {
-                ft.remove(prev)
-            }
-            ft.addToBackStack(null)
-            dialogFragment.show(ft, "delete")
-        }
-
- */
     }
 
     fun getUserInfoDefault(): Array<String> {
         val username = "No Username found"
         val email = "No Email found"
         val score = "0"
-
         val userinfo = arrayOf(
             username,
             email,
             score
         )
-
         return userinfo
     }
-
-
 }

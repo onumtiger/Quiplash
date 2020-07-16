@@ -25,12 +25,14 @@ import java.util.*
 
 
 class NotificationInvitation : FirebaseMessagingService()  {
-
     private val ADMIN_CHANNEL_ID = "admin_channel"
     lateinit var db: CollectionReference
     private val dbGamesPath = DBMethods.gamesPath
 
-
+    /**
+     * send invite notification to a player
+     * if player clicks on notification he/she'll enter the join game view of the game
+     */
     @SuppressLint("ResourceAsColor")
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
@@ -83,10 +85,13 @@ class NotificationInvitation : FirebaseMessagingService()  {
         }
     }
 
+    /**
+     * set up notification style
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private fun setupChannels(notificationManager: NotificationManager?) {
         val adminChannelName = "New notification"
-        val adminChannelDescription = "Device to devie notification"
+        val adminChannelDescription = "Device to device notification"
 
         val adminChannel: NotificationChannel
         adminChannel = NotificationChannel(ADMIN_CHANNEL_ID, adminChannelName, NotificationManager.IMPORTANCE_HIGH)

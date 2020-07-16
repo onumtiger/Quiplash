@@ -16,7 +16,7 @@ import com.example.quiplash.user.UserQP
 import java.util.*
 
 class FriendsActivity : AppCompatActivity() {
-    lateinit var current_User: UserQP
+    lateinit var currentUser: UserQP
     lateinit var friend : UserQP
     lateinit var otherUsers: ArrayList<UserQP>
 
@@ -36,9 +36,14 @@ class FriendsActivity : AppCompatActivity() {
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.friends_swiperefresh)
 
         noFriendsAdded.visibility = View.INVISIBLE
-        // fetch friends from db
+        /**
+         * fetch user's friend form db and display them
+         */
         getFriendsList(friendsListView)
 
+        /**
+         * go back to landing view
+         */
         btnBack.setOnClickListener() {
             Sounds.playClickSound(this)
 
@@ -46,6 +51,9 @@ class FriendsActivity : AppCompatActivity() {
             startActivity(intent);
         }
 
+        /**
+         * display overlay to add a friend
+         */
         btnFriend.setOnClickListener(){
             Sounds.playClickSound(this)
 
@@ -67,9 +75,12 @@ class FriendsActivity : AppCompatActivity() {
         }
     }
 
-    fun getFriendsList (friendsListView: ListView) {
+    /**
+     * fetch user's friend form db and display them
+     */
+    private fun getFriendsList (friendsListView: ListView) {
         val noFriendsAdded = findViewById<TextView>(R.id.no_friends)
-        var friendsListCurrentUser = emptyList<String>()
+        var friendsListCurrentUser: List<String>
         val friendsUserList = mutableListOf<UserQP>()
 
         val callbackGetUsers = object:
@@ -80,13 +91,13 @@ class FriendsActivity : AppCompatActivity() {
                 val callbackGetUser = object:
                     Callback<UserQP> {
                     override fun onTaskComplete(result : UserQP) {
-                        current_User = result
-                        friendsListCurrentUser = current_User.friends
+                        currentUser = result
+                        friendsListCurrentUser = currentUser.friends
 
-                        for(i in 0 .. friendsListCurrentUser.size-1) {
-                            for(j in 0 .. otherUsers.size-1) {
+                        for(element in friendsListCurrentUser) {
+                            for(j in 0 until otherUsers.size) {
                                 // get friend information
-                                if(friendsListCurrentUser[i] == otherUsers[j].userName.toString()) {
+                                if(element == otherUsers[j].userName) {
                                     friend = otherUsers[j]
                                     friendsUserList.add(friend)
                                     break
@@ -101,7 +112,7 @@ class FriendsActivity : AppCompatActivity() {
                             FriendsListAdapter(
                                 applicationContext,
                                 R.layout.friends_list_item,
-                                current_User,
+                                currentUser,
                                 friendsUserList
                             )
 
