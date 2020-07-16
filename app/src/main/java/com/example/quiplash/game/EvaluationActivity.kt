@@ -59,6 +59,10 @@ class EvaluationActivity : AppCompatActivity() {
     private var oldRound = 0
     private var complete_layout: ConstraintLayout? = null
 
+    //drink mode
+    private var winnernames = ""
+    private var deuce = false
+    private var second_name = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -233,6 +237,7 @@ class EvaluationActivity : AppCompatActivity() {
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
                 game = documentSnapshot.toObject(Game::class.java)!!
+                //player1 wins
                 if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         GameManager.opp0).answerScore > game.playrounds.getValue(
                         "round${game.activeRound}"
@@ -252,6 +257,13 @@ class EvaluationActivity : AppCompatActivity() {
                     imageLoserSign!!.visibility = ImageView.VISIBLE
                     imageLoserSign!!.startAnimation(zoomanim)
 
+                    //add challenge if drinkmode
+                    if (game.partyMode){
+                        val drnk = (0..game.drinks.size-1).random()
+                        drink_view?.text = (winnernames + " has this challenge: \n" + game.drinks[drnk])
+                    }
+
+                    //player2 wins
                 } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         GameManager.opp0
                     ).answerScore < game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
@@ -273,12 +285,20 @@ class EvaluationActivity : AppCompatActivity() {
                     imageLoserSign!!.visibility = ImageView.VISIBLE
                     imageLoserSign!!.startAnimation(zoomanim)
 
+                    //add challenge if drinkmode
+                    if (game.partyMode){
+                        val drnk = (0..game.drinks.size-1).random()
+                        drink_view?.text = (winnernames + " has this challenge: \n" + game.drinks[drnk])
+                    }
+                //deuce
                 } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         GameManager.opp0
                     ).answerScore == game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         GameManager.opp1
                     ).answerScore
                 ) {
+                    deuce = true
+                    second_name = true
                     setWinnerInfo(
                         0,
                         frameProfile,
@@ -303,11 +323,16 @@ class EvaluationActivity : AppCompatActivity() {
                     imageAndIcon?.visibility = TextView.VISIBLE
                     val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom)
                     imageAndIcon!!.startAnimation(zoomanim)
-                }
+/*
+                    if (game.partyMode){
+                        val drnk = (0..game.drinks.size-1).random()
+                        drink_view?.text = (winnernames + "have this challenge: \n" + game.drinks[drnk])
+                    }
 
+ */
+                }
             }
     }
-
 
     /**
      * Get Winner-infos by 'setWinner' and Display Winner-Informations (name, scorinf, photo)
@@ -336,14 +361,25 @@ class EvaluationActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 val winner = it.toObject(UserQP::class.java)!!
                 nameView?.text = winner.userName
+                if (game.partyMode){
+                    val drnk = (0..game.drinks.size-1).random()
+                    if (deuce == true){
+                        if (second_name == true){
+                            winnernames += winner.userName + " & "
+                            second_name = false
+                        } else {
+                            winnernames += winner.userName + " "
+                            drink_view?.text = (winnernames + "have this challenge: \n" + game.drinks[drnk])
+                        }
+                    } else {
+                        winnernames += winner.userName + " "
+                        drink_view?.text = (winnernames + "has this challenge: \n" + game.drinks[drnk])
+                    }
+                }
                 setProfilePicture(winner, profileView)
                 val shakehanim = AnimationUtils.loadAnimation(this, R.anim.zoom_in_and_shake)
 
                 scoreView!!.startAnimation(shakehanim)
-                if (game.partyMode){
-                    val drnk = (0..game.drinks.size-1).random()
-                    drink_view?.text = (winner.userName + " has this challenge: \n" + game.drinks[drnk])
-                }
             }
     }
 

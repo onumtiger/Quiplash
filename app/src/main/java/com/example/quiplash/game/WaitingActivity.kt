@@ -316,12 +316,12 @@ class WaitingActivity : AppCompatActivity() {
      * --> total rounds = 9
      * **/
     private fun getallRounds(): HashMap<String, Round> {
-        var allRoundCount = 1
+        //var allRoundCount = 1
         var jump = 1
         var roundCount = 0
-        val oneRound: MutableList<Round> = mutableListOf()
+        //val oneRound: MutableList<Round> = mutableListOf()
         val allRounds: HashMap<String, Round> = hashMapOf()
-        var subroundCount = 0
+        //var subroundCount = 0
 
         var testroundcount = 0
 
