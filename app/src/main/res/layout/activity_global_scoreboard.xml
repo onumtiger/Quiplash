@@ -26,7 +26,7 @@
                 app:layout_constraintHorizontal_bias="0.042"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_go_back_arrow" />
+                app:srcCompat="@drawable/ic_go_back_arrow_black" />
 
 
             <RelativeLayout
@@ -52,7 +52,6 @@
                     android:layout_marginTop="38dp"
                     android:layout_marginEnd="0dp"
                     android:layout_marginRight="0dp"
-                    android:fontFamily="@font/roboto_slab_bold"
                     android:gravity="center"
                     android:text="@string/scoreboard"
                     android:textColor="@android:color/black"

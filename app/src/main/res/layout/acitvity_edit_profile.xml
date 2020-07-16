@@ -59,8 +59,9 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginBottom="50dp"
+        android:background="@drawable/char_button_frame_disabled"
         android:text="@string/more"
-        android:backgroundTint="@color/colorText"
+        android:textColor="@color/colorText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -89,6 +90,7 @@
         android:hint="@string/username_placeholder"
         android:inputType="textPersonName"
         android:singleLine="true"
+        android:text="gast@mail.de"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textViewName"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -99,8 +101,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:fontFamily="@font/roboto_slab_bold"
-        android:textAlignment="center"
         android:textColor="@color/colorRed"
         android:textColorHighlight="@color/colorRed"
         android:textColorHint="@color/colorRed"

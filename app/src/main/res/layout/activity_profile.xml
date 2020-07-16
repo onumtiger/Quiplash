@@ -41,29 +41,12 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textViewMail"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginStart="50dp"
-        android:fontFamily="@font/roboto_slab_bold"
-        android:text="@string/e_mail"
-        android:textAlignment="textStart"
-        android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toBottomOf="@+id/email"
-        app:layout_constraintEnd_toStartOf="@+id/email"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/email" />
-
-    <TextView
         android:id="@+id/usernameBig"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="50dp"
-        android:fontFamily="@font/roboto_slab_bold"
-        android:textAlignment="center"
-        android:textColor="@color/colorWhite"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,29 +58,40 @@
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/roboto_slab_bold"
-        android:textAlignment="center"
-        android:textColor="@color/colorWhite"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameBig" />
 
-    <TextView
-        android:id="@+id/email"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="50dp"
-        android:fontFamily="@font/roboto_slab"
-        android:text="@string/e_mail_placeholder"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.439"
-        app:layout_constraintStart_toEndOf="@+id/textViewMail"
-        app:layout_constraintTop_toBottomOf="@+id/score" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score">
+
+        <TextView
+            android:id="@+id/textViewMail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/e_mail"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/textViewMail"
+            android:text="@string/e_mail_placeholder"
+            android:textAlignment="viewStart"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/buttonRegisterGuest"
@@ -106,15 +100,8 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="16dp"
-        android:background="@color/colorText"
-        android:fontFamily="@font/roboto_slab_bold"
+        android:backgroundTint="@color/colorText"
         android:text="@string/register_btn"
-        android:textColor="@color/colorWhite"
-        android:textColorHighlight="@color/colorWhite"
-        android:textColorHint="@color/colorWhite"
-        android:textColorLink="@color/colorWhite"
-        android:textCursorDrawable="@color/colorTurquoise"
-        android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btnEditProfile"
@@ -128,14 +115,8 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="16dp"
-        android:background="@android:color/black"
-        android:fontFamily="@font/roboto_slab_bold"
+        android:backgroundTint="@color/colorText"
         android:text="@string/edit_account_btn"
-        android:textColor="@color/colorWhite"
-        android:textColorHighlight="@color/colorWhite"
-        android:textColorHint="@color/colorWhite"
-        android:textColorLink="@color/colorWhite"
-        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btnaddQuestion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -147,14 +128,8 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="50dp"
-        android:background="@color/colorButtonBlue"
-        android:fontFamily="@font/roboto_slab_bold"
+        android:backgroundTint="@color/colorButtonBlue"
         android:text="@string/add_question"
-        android:textColor="@color/colorWhite"
-        android:textColorHighlight="@color/colorWhite"
-        android:textColorHint="@color/colorWhite"
-        android:textColorLink="@color/colorWhite"
-        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -166,8 +141,6 @@
         android:layout_marginTop="41dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/logout_icon"
-        android:fontFamily="@font/roboto_slab_bold"
-        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -45,9 +45,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/userPhotoLayout"
-            android:fontFamily="@font/roboto_slab_bold"
             android:text="@string/username_placeholder"
-            android:textColor="#000000"
+            android:textColor="@color/colorText"
             android:textSize="20sp" />
 
         <TextView
@@ -57,9 +56,8 @@
             android:layout_below="@+id/friend_username"
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@+id/userPhotoLayout"
-            android:fontFamily="@font/roboto_slab"
             android:text="@string/score_placeholder"
-            android:textColor="#000000"
+            android:textColor="@color/colorText"
             android:textSize="20sp" />
 
         <Button
@@ -73,10 +71,8 @@
             android:layout_marginTop="25dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="25dp"
-            android:background="@color/colorText"
-            android:fontFamily="@font/roboto_slab_bold"
-            android:text="@string/invite"
-            android:textColor="@color/colorWhite" />
+            android:backgroundTint="@color/colorText"
+            android:text="@string/invite"/>
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

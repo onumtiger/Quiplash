@@ -39,7 +39,7 @@ class EvaluationActivity : AppCompatActivity() {
     private var winnerName: TextView? = null
     private var imageWinnerPhoto: ImageView? = null
     private var scoreView: TextView? = null
-    private var frameProfile: ConstraintLayout? = null
+    private var frameProfile: RelativeLayout? = null
     private var imageWinnerSign: ImageView? = null
 
     private var imageAndIcon: TextView? = null
@@ -50,7 +50,7 @@ class EvaluationActivity : AppCompatActivity() {
     private var imageShot: TextView? = null
     private var scoreViewDraw: TextView? = null
     private var answerViewWinnerFrameDraw: View? = null
-    private var frameProfileDraw: ConstraintLayout? = null
+    private var frameProfileDraw: RelativeLayout? = null
     private var drinkView: TextView? = null
 
     private lateinit var awaitNextRound: ListenerRegistration
@@ -247,6 +247,16 @@ class EvaluationActivity : AppCompatActivity() {
                             winnerName,
                             imageWinnerPhoto
                         )
+
+                        setWinnerInfo(
+                            1,
+                            frameProfileDraw,
+                            answerViewWinnerDraw,
+                            scoreViewDraw,
+                            winnerNameDraw,
+                            imageWinnerPhotoDraw
+                        )
+
                         val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom)
                         imageWinnerSign!!.visibility = ImageView.VISIBLE
                         imageWinnerSign!!.startAnimation(zoomanim)
@@ -267,6 +277,15 @@ class EvaluationActivity : AppCompatActivity() {
                             scoreView,
                             winnerName,
                             imageWinnerPhoto
+                        )
+
+                        setWinnerInfo(
+                            0,
+                            frameProfileDraw,
+                            answerViewWinnerDraw,
+                            scoreViewDraw,
+                            winnerNameDraw,
+                            imageWinnerPhotoDraw
                         )
 
                         val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom)

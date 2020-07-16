@@ -25,10 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="38dp"
-        android:fontFamily="@font/roboto_slab_bold"
         android:gravity="center"
         android:text="@string/friends"
-        android:textColor="@color/colorWhite"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,16 +38,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="30dp"
         android:layout_marginEnd="50dp"
         android:fontFamily="@font/roboto_slab"
         android:text="@string/you_haven_t_added_any_friends"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintVertical_bias="0.42000002" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout4"

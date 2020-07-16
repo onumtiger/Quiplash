@@ -37,164 +37,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="38dp"
-                android:fontFamily="@font/roboto_slab_bold"
                 android:gravity="center"
                 android:text="@string/waiting_for_players"
-                android:textColor="@color/colorWhite"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <RelativeLayout
-                android:id="@+id/relativeLayout2"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayoutDrinks">
-
-
-                <ListView
-                    android:id="@+id/players_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </RelativeLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutButtons"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayoutDrinks"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView4">
-
-                <Button
-                    android:id="@+id/join_game_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorText"
-                    android:fontFamily="@font/roboto_slab_bold"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:text="@string/join_game"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHighlight="@color/colorWhite"
-                    android:textColorHint="@color/colorWhite"
-                    android:textColorLink="@color/colorWhite"
-                    android:textSize="18sp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/invite_players_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:background="@android:color/black"
-                    android:fontFamily="@font/roboto_slab_bold"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/invite_players_btn"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHighlight="@color/colorWhite"
-                    android:textColorHint="@color/colorWhite"
-                    android:textColorLink="@color/colorWhite"
-                    android:textSize="18sp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/leave_game"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorButtonRed"
-                    android:fontFamily="@font/roboto_slab_bold"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/leave_game_btn"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHighlight="@color/colorWhite"
-                    android:textColorHint="@color/colorWhite"
-                    android:textColorLink="@color/colorWhite"
-                    android:textSize="18sp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/start_game_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@color/colorText"
-                    android:fontFamily="@font/roboto_slab_bold"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/start_game_btn"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHighlight="@color/colorWhite"
-                    android:textColorHint="@color/colorWhite"
-                    android:textColorLink="@color/colorWhite"
-                    android:textSize="18sp"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/end_game"
-                    app:layout_constraintEnd_toStartOf="@+id/end_game"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/end_game" />
-
-                <Button
-                    android:id="@+id/end_game"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@color/colorButtonRed"
-                    android:fontFamily="@font/roboto_slab_bold"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/end_game_btn"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHighlight="@color/colorWhite"
-                    android:textColorHint="@color/colorWhite"
-                    android:textColorLink="@color/colorWhite"
-                    android:textSize="18sp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/start_game_btn"
-                    app:layout_constraintTop_toBottomOf="@+id/invite_players_btn" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <TextView
-                android:id="@+id/textViewDrinksLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_slab_bold"
-                android:text="@string/choose_your_drinks"
-                android:textAlignment="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutButtons" />
 
             <LinearLayout
                 android:id="@+id/linearLayoutDrinks"
@@ -216,12 +65,8 @@
                     android:id="@+id/CheckBoxBeer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/colorWhite"
-                    android:fontFamily="@font/roboto_slab_bold"
                     android:paddingEnd="10dp"
                     android:text="@string/beer"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="14sp"
                     tools:layout_editor_absoluteX="107dp"
                     tools:layout_editor_absoluteY="16dp" />
 
@@ -229,13 +74,8 @@
                     android:id="@+id/CheckBoxWine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/colorWhite"
-                    android:fontFamily="@font/roboto_slab_bold"
                     android:paddingEnd="10dp"
                     android:text="@string/wine"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="14sp"
                     tools:layout_editor_absoluteX="107dp"
                     tools:layout_editor_absoluteY="16dp" />
 
@@ -243,12 +83,8 @@
                     android:id="@+id/CheckBoxCocktails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/colorWhite"
-                    android:fontFamily="@font/roboto_slab_bold"
                     android:paddingEnd="10dp"
                     android:text="@string/cocktails"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="14sp"
                     tools:layout_editor_absoluteX="107dp"
                     tools:layout_editor_absoluteY="16dp" />
 
@@ -256,16 +92,127 @@
                     android:id="@+id/CheckBoxShots"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/colorWhite"
-                    android:fontFamily="@font/roboto_slab_bold"
                     android:paddingEnd="10dp"
                     android:text="@string/shots"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="14sp"
                     tools:layout_editor_absoluteX="107dp"
                     tools:layout_editor_absoluteY="16dp" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewDrinksLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:text="@string/choose_your_drinks"
+                android:textSize="18sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutButtons" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutButtons"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+                <Button
+                    android:id="@+id/join_game_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:backgroundTint="@color/colorText"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="@string/join_game"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/invite_players_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="@android:color/black"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/invite_players_btn"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toTopOf="@+id/start_game_btn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/leave_game"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorButtonRed"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/leave_game_btn"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/start_game_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/colorText"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/start_game_btn"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/end_game"
+                    app:layout_constraintEnd_toStartOf="@+id/end_game"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/end_game" />
+
+                <Button
+                    android:id="@+id/end_game"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/colorButtonRed"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/end_game_btn"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/start_game_btn" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutDrinks">
+
+
+                <ListView
+                    android:id="@+id/players_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
