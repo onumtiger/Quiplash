@@ -29,13 +29,11 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
     val serverKey =
         "key=" + "AAAAwY4EMK8:APA91bENZDch9bhf-dZG59bEc3dMU1QbH_AF4fRnKqbhOo5eoQDG9pMeA_8R07yfKZ4S7M2MP3_KN5e0kcTbOqyiNpycCdPg5Zl0elI4ZNDNqqtlXuyUiT21382W7-u1sFq-jICptB3B"
     val contentType = "application/json"
-
     val requestQueue: RequestQueue by lazy {
         Volley.newRequestQueue(this.context)
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-
         val layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         val view: View = layoutInflater.inflate(layoutResId, null)
         val friendNameView = view.findViewById<TextView>(R.id.friend_username)
@@ -45,18 +43,18 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
         var storageRef = fotostorage.reference
         val playerPhoto: String
         val inviteBtn = view.findViewById<Button>(R.id.inviteBtn)
-
         val player = playerList[position]
         if (player.photo !== null) {
             playerPhoto = player.photo!!
         } else {
             playerPhoto = DBMethods.defaultGuestImg
         }
-
         setInviteBtn(gameID, player.userID, inviteBtn)
         friendNameView.text = player.userName
         friendScoreView.text = "Score: " + player.score.toString()
-
+        /**
+         * load profile picture
+         */
         var spaceRef = storageRef.child(playerPhoto)
         spaceRef.downloadUrl
             .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
@@ -66,7 +64,9 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
                     .into(imageViewUser)
             }).addOnFailureListener(OnFailureListener { Log.d("Test", " Failed!") })
 
-
+        /**
+         * send game invitation to selected player
+         */
         inviteBtn.setOnClickListener {
             Sounds.playClickSound(context)
             inviteBtn.isClickable = false
@@ -92,6 +92,9 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
         return view
     }
 
+    /**
+     * track invitations in database to display them in ui and fade invite button out
+     */
     fun setInvitationsInDB(gameID: String, userID: String) {
         var game: Game
         val callback = object : Callback<Game> {
@@ -105,6 +108,9 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
         DBMethods.getCurrentGame(callback, gameID)
     }
 
+    /**
+     * fade invite button out if user's been invited
+     */
     fun setInviteBtn(gameID: String, userID: String, inviteBtn: Button) {
         var game: Game
         val callback = object : Callback<Game> {
@@ -120,6 +126,9 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
         DBMethods.getCurrentGame(callback, gameID)
     }
 
+    /**
+     * set up json request object to send invitation as notification to user
+     */
     fun sendNotification(notification: JSONObject) {
         Log.e("TAG", "sendNotification")
         Log.d("notification", notification.toString())

@@ -15,9 +15,11 @@ class InvitePlayer : DialogFragment() {
     }
     override fun onViewCreated(view:View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val btnCancel = view.findViewById<TextView>(R.id.interaction_cancel_btn)
 
+        /**
+         * close overlay
+         */
         btnCancel.setOnClickListener {
             context?.let { it1 ->
                 Sounds.playClickSound(
