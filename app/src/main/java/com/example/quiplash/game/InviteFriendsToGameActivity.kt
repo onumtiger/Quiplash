@@ -38,9 +38,9 @@ class InviteFriendsToGameActivity : AppCompatActivity() {
         val gameID = intent.getStringExtra("gameID")
         getCurrentGame(gameID, friendsListView)
 
-        btnBack.setOnClickListener() {
+        btnBack.setOnClickListener {
             Sounds.playClickSound(this)
-            super.onBackPressed();
+            super.onBackPressed()
         }
 
         refreshLayout.setOnRefreshListener {
@@ -81,7 +81,7 @@ class InviteFriendsToGameActivity : AppCompatActivity() {
                         for(i in 0 .. friendsListCurrentUser.size-1) {
                             for(j in 0 .. otherUsers.size-1) {
                                 // get friend information
-                                if(friendsListCurrentUser[i] == otherUsers[j].userName.toString()) {
+                                if(friendsListCurrentUser[i] == otherUsers[j].userName) {
                                     friend = otherUsers[j]
                                     if(!currentGame.users.contains(friend.userID)) {
                                         friendsUserList.add(friend)

@@ -14,7 +14,6 @@ import com.example.quiplash.Sounds
 import com.example.quiplash.database.Callback
 import com.example.quiplash.database.DBMethods
 import com.example.quiplash.database.DBMethods.Companion.deleteGame
-import com.example.quiplash.database.DBMethods.Companion.editGame
 import com.example.quiplash.database.DBMethods.Companion.getCurrentGame
 import com.example.quiplash.database.DBMethods.Companion.getUserWithID
 import com.example.quiplash.game.GameManager.Companion.game
@@ -24,7 +23,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
-import kotlin.math.round
 
 
 class WaitingActivity : AppCompatActivity() {
@@ -218,30 +216,34 @@ class WaitingActivity : AppCompatActivity() {
         val btnLeaveGame = findViewById<Button>(R.id.leave_game)
         val btnJoinGame = findViewById<Button>(R.id.join_game_btn)
 
-        if (currentGame.users[0] == auth.currentUser?.uid.toString()) {
-            btnStartGame.visibility = View.VISIBLE
-            btnEndGame.visibility = View.VISIBLE
-            btnLeaveGame.visibility = View.GONE
-            btnJoinGame.visibility = View.GONE
-            btnInvitePlayers.visibility = View.VISIBLE
-        } else if (currentGame.users.contains(auth.currentUser?.uid.toString())) {
-            btnStartGame.visibility = View.GONE
-            btnEndGame.visibility = View.GONE
-            btnLeaveGame.visibility = View.VISIBLE
-            btnJoinGame.visibility = View.GONE
-            btnInvitePlayers.visibility = View.VISIBLE
-        } else {
-            btnStartGame.visibility = View.GONE
-            btnEndGame.visibility = View.GONE
-            btnLeaveGame.visibility = View.GONE
-            btnJoinGame.visibility = View.VISIBLE
-            btnInvitePlayers.visibility = View.GONE
+        when {
+            currentGame.users[0] == auth.currentUser?.uid.toString() -> {
+                btnStartGame.visibility = View.VISIBLE
+                btnEndGame.visibility = View.VISIBLE
+                btnLeaveGame.visibility = View.GONE
+                btnJoinGame.visibility = View.GONE
+                btnInvitePlayers.visibility = View.VISIBLE
+            }
+            currentGame.users.contains(auth.currentUser?.uid.toString()) -> {
+                btnStartGame.visibility = View.GONE
+                btnEndGame.visibility = View.GONE
+                btnLeaveGame.visibility = View.VISIBLE
+                btnJoinGame.visibility = View.GONE
+                btnInvitePlayers.visibility = View.VISIBLE
+            }
+            else -> {
+                btnStartGame.visibility = View.GONE
+                btnEndGame.visibility = View.GONE
+                btnLeaveGame.visibility = View.GONE
+                btnJoinGame.visibility = View.VISIBLE
+                btnInvitePlayers.visibility = View.GONE
+            }
         }
 
         if (currentPlayerNumber == playerNumber) {
             btnStartGame.isClickable = true
             btnStartGame.setBackgroundResource(R.color.colorText)
-            btnStartGame.setTextColor(Color.BLACK)
+            btnStartGame.setTextColor(Color.WHITE)
             btnInvitePlayers.visibility = View.GONE
         } else {
             btnStartGame.isClickable = false
@@ -315,12 +317,9 @@ class WaitingActivity : AppCompatActivity() {
      * --> total rounds = 9
      * **/
     private fun getallRounds(): HashMap<String, Round> {
-        var allRoundCount = 1
         var jump = 1
         var roundCount = 0
-        val oneRound: MutableList<Round> = mutableListOf()
         val allRounds: HashMap<String, Round> = hashMapOf()
-        var subroundCount = 0
 
         var testroundcount = 0
 
@@ -335,18 +334,8 @@ class WaitingActivity : AppCompatActivity() {
                         voters["voter${voters.size}"] = Voter(user)
                     }
                 }
-                for (x in 0..game.rounds-1){
-                    /*
-                    oneRound += (Round(
-                        voters,
-                        linkedMapOf(
-                            GameManager.opp0 to Opponent(game.users[roundCount]),
-                            GameManager.opp1 to Opponent(game.users[roundCount + jump])
-                        ),
-                        (x*roundCount).toString()
-                    ))
-                    */
-                    var round = Round(
+                for (x in 0 until game.rounds){
+                    val round = Round(
                         voters,
                         linkedMapOf(
                             GameManager.opp0 to Opponent(game.users[roundCount]),
@@ -354,8 +343,8 @@ class WaitingActivity : AppCompatActivity() {
                         ),
                         gameQuestions[testroundcount].question.toString()
                     )
-                    var roundindex = (testroundcount.rem(game.users.size))*game.rounds+(testroundcount/game.users.size).toInt()
-                    allRounds["round"+roundindex.toString()] = round
+                    val roundindex = (testroundcount.rem(game.users.size))*game.rounds+(testroundcount/game.users.size)
+                    allRounds["round$roundindex"] = round
                     testroundcount += 1
                 }
                 roundCount += 1

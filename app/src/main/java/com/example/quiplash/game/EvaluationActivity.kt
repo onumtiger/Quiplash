@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
+import com.example.quiplash.BounceInterpolator
 import com.example.quiplash.database.Callback
 import com.example.quiplash.database.DBMethods
 import com.example.quiplash.game.GameManager.Companion.game
@@ -303,7 +304,9 @@ class EvaluationActivity : AppCompatActivity() {
                         imageLoserSign?.visibility = ImageView.INVISIBLE
                         imageShot?.visibility = ImageView.INVISIBLE
                         imageAndIcon?.visibility = TextView.VISIBLE
-                        val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom)
+                        val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
+                        val interpolator = BounceInterpolator(0.2, 10.0)
+                        zoomanim.interpolator = interpolator
                         imageAndIcon!!.startAnimation(zoomanim)
                     }
                 }

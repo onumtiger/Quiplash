@@ -47,45 +47,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <FrameLayout
-                android:id="@+id/layoutQuestion"
+            <TextView
+                android:id="@+id/textViewQuestion"
                 android:layout_width="0dp"
-                android:layout_height="239dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/char_border_frame"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:gravity="center_horizontal|fill_vertical"
+                android:padding="16dp"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <View
-                    android:id="@+id/viewQuestion"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"
-                    android:background="@drawable/char_border_frame"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textViewQuestion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="80dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginEnd="80dp"
-                    android:layout_marginBottom="54dp"
-                    android:fontFamily="@font/roboto_slab_bold"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/viewQuestion"
-                    app:layout_constraintEnd_toEndOf="@+id/viewQuestion"
-                    app:layout_constraintStart_toStartOf="@+id/viewQuestion"
-                    app:layout_constraintTop_toTopOf="@+id/viewQuestion" />
-            </FrameLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -104,7 +85,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
-                android:textStyle="bold"
+                android:textStyle="bold|italic"
                 app:layout_constraintBottom_toTopOf="@+id/answerField"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -131,6 +112,7 @@
                 android:paddingBottom="56dp"
                 android:singleLine="false"
                 android:textAlignment="center"
+                android:textCursorDrawable="@color/colorTurquoise"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/layoutAnswerSaved"

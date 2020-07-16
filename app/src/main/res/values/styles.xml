@@ -2,16 +2,47 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
+        <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+        <item name="android:editTextStyle">@style/RobotoButtonStyle</item>
     </style>
 
     <style name="AppTheme.SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowDisablePreview">true</item>
+    </style>
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/roboto_slab_bold</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="RobotoEditTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/roboto_slab_bold</item>
+        <item name="android:tint">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColorHint">#92FFFFFF</item>
+        <item name="android:textCursorDrawable">@color/colorTurquoise</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">@font/roboto_slab_bold</item>
+        <item name="android:background">@drawable/char_button_frame</item>
+        <!--<item name="android:backgroundTint">@color/colorText</item>-->
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColorHighlight">@color/colorWhite</item>
+        <item name="android:textColorHint">@color/colorWhite</item>
+        <item name="android:textColorLink">@color/colorWhite</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textAlignment">center</item>
     </style>
 </resources>

@@ -86,8 +86,6 @@ class PrepareAnswerActivity : AppCompatActivity() {
         val btnReady = findViewById<Button>(R.id.btnReady)
         fieldAnswer = findViewById(R.id.answerField)
         imageCheckmark = findViewById(R.id.imageCheckmark)
-        val viewQuestion = findViewById<View>(R.id.viewQuestion)
-        val layoutQuestion = findViewById<FrameLayout>(R.id.layoutQuestion)
         layoutAnswerSaved = findViewById(R.id.layoutAnswerSaved)
 
         viewFlipper = findViewById(R.id.viewFlipperQuestion) // get the reference of ViewFlipper
@@ -95,7 +93,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
         val interpolator = BounceInterpolator(0.5, 10.0)
         splashanim.interpolator = interpolator
-        layoutQuestion.startAnimation(splashanim)
+        textViewQuestion.startAnimation(splashanim)
 
         textViewRound.text =
             ("${ceil((game.activeRound + 1).toDouble() / 3).toInt()}/${game.rounds}")
@@ -121,7 +119,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
         }
         startTimer(textViewTimer, startSecondsAnswer, callbackTimer)
 
-        viewQuestion.setOnClickListener {
+        textViewQuestion.setOnClickListener {
             Sounds.playClickSound(this)
             Sounds.playAnswerSound(this)
             viewFlipper.showNext()

@@ -48,17 +48,20 @@ class LandingActivity : AppCompatActivity() {
         val interpolator = BounceInterpolator(0.2, 10.0)
         splashanim.interpolator = interpolator
         logoLanding.startAnimation(splashanim)
+
+        val buttonAnim = AnimationUtils.loadAnimation(this, R.anim.zoom_button)
+        buttonAnim.interpolator = interpolator
         /*set Invitations Notification Hint invisible first,
         then check if user has invitations */
         invitations.visibility = View.INVISIBLE
         showInvitationsHint()
 
         //addToken
-        val callbackGetUser = object:
+        val callbackGetUser = object :
             Callback<UserQP> {
-            override fun onTaskComplete(result : UserQP) {
+            override fun onTaskComplete(result: UserQP) {
                 currentUser = result
-                if (currentUser.token.isNullOrEmpty()){
+                if (currentUser.token.isNullOrEmpty()) {
                     addToken(currentUser)
                 }
             }
@@ -68,30 +71,39 @@ class LandingActivity : AppCompatActivity() {
         //set clickListeners for all buttons & refreshListener for view
         btnNewGame.setOnClickListener {
             Sounds.playClickSound(this)
+            btnNewGame!!.startAnimation(buttonAnim)
+
             val intent = Intent(this, NewGameActivity::class.java)
             startActivity(intent)
         }
 
         btnJoinGame.setOnClickListener {
             Sounds.playClickSound(this)
+            btnJoinGame!!.startAnimation(buttonAnim)
+
             val intent = Intent(this, JoinGameActivity::class.java)
             startActivity(intent)
         }
 
         btnProfile.setOnClickListener {
             Sounds.playClickSound(this)
+            btnProfile!!.startAnimation(buttonAnim)
+
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
 
         btnFriends.setOnClickListener {
             Sounds.playClickSound(this)
+            btnFriends!!.startAnimation(buttonAnim)
             val intent = Intent(this, FriendsActivity::class.java)
             startActivity(intent)
         }
 
         btnScoreBoard.setOnClickListener {
             Sounds.playClickSound(this)
+            btnScoreBoard!!.startAnimation(buttonAnim)
+
             val intent = Intent(this, GlobalScoreboardActivity::class.java)
             startActivity(intent)
         }
@@ -127,7 +139,7 @@ class LandingActivity : AppCompatActivity() {
                         numInvitations += 1
                     }
                 }
-                if (numInvitations == 0){
+                if (numInvitations == 0) {
                     invitations.visibility = View.INVISIBLE
                 } else {
                     invitations.visibility = View.VISIBLE
