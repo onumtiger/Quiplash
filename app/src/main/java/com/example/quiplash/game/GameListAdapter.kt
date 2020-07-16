@@ -44,7 +44,7 @@ class GameListAdapter(val mCtx: Context, val layoutResId: Int, val gameList: Lis
         }
 
         // If exists, set game title
-        if (!game.gameTitle.isNullOrEmpty()) {
+        if (game.gameTitle.isNotEmpty()) {
             textViewGame.text = game.gameTitle
         }
 

@@ -73,7 +73,7 @@ class RegisterGuestActivity : AppCompatActivity() {
         inputPassword = findViewById(R.id.passwordFieldGuest)
         inputPassword2 = findViewById(R.id.passwordRetypeFieldGuest)
 
-        textviewError = findViewById<TextView>(R.id.textError)
+        textviewError = findViewById(R.id.textErrorGuest)
         progressBar = findViewById(R.id.progressBarGuestSignup)
 
         inputPassword2.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
@@ -92,6 +92,8 @@ class RegisterGuestActivity : AppCompatActivity() {
 
         btnSignUp.setOnClickListener {
             Sounds.playClickSound(this)
+            textviewError.visibility = TextView.GONE
+            progressBar.visibility = View.INVISIBLE
             signup()
         }
     }
@@ -106,48 +108,105 @@ class RegisterGuestActivity : AppCompatActivity() {
         if (checkInput()) {
             progressBar.visibility = View.VISIBLE
 
-            //If guest is a logged in Annonymous User...
-            if(auth.currentUser!!.isAnonymous){
-                val credential = EmailAuthProvider.getCredential(inputEmail.text.toString(), inputPassword.text.toString())
+            //get user-object
+            val callbackUser = object :
+                Callback<UserQP> {
+                override fun onTaskComplete(result: UserQP) {
+                    Log.d("SPIELER","Task complete")
+                    Log.d("SPIELER", result.toString())
 
-                auth.currentUser!!.linkWithCredential(credential)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            Log.d("SUCCESS", "linkWithCredential:success")
-                            createUser()
-                        } else {
-                            Log.w("ERROR", "linkWithCredential:failure", task.exception)
-                            Toast.makeText(baseContext, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show()
-                        }
-
-                    }
-            } else {
-                //else if guest was already logged out (the anonymous-user doesn't exist anymore on Firebase-Auth) -> we have to create a new User in Firebase
-                //Remove Guest-data from DB
-
-                auth.createUserWithEmailAndPassword(
-                    inputEmail.text.toString(),
-                    inputPassword.text.toString()
-                )
-                    .addOnCompleteListener(this) { task ->
+                    //get user-object
+                    if(result.userID == ""){
+                        Log.d("SPIELER", "kein user vorhanden")
+                        textviewError.text = getString(R.string.username_not_exist)
+                        textviewError.visibility = TextView.VISIBLE
                         progressBar.visibility = View.INVISIBLE
+                    }else {
+                        guestid = result.userID
+                        result.userID = auth.currentUser?.uid.toString()
+                        result.guest = false
 
-                        if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            createUser()
+                        //save user in game-manager (for easy access in further dev)
+                        setUserinfo(result)
 
-                        } else {
+                        DBMethods.deleteUser(guestid)
+                        removeLocalGuestInfo()
+                        //save user (name, score,...) in database
+                        db.document(result.userID)
+                            .set(result)
+                            .addOnSuccessListener {
+                                Log.d("SUCCESS", "DocumentSnapshot successfully written!")
 
-                            Toast.makeText(
-                                this@RegisterGuestActivity,
-                                "Authentication failed." + task.result,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                                //If guest is a logged in Annonymous User...
+                                if (auth.currentUser!!.isAnonymous) {
+                                    val credential = EmailAuthProvider.getCredential(
+                                        inputEmail.text.toString(),
+                                        inputPassword.text.toString()
+                                    )
+
+                                    auth.currentUser!!.linkWithCredential(credential)
+                                        .addOnCompleteListener(this@RegisterGuestActivity) { task ->
+                                            if (task.isSuccessful) {
+                                                Log.d("SUCCESS", "linkWithCredential:success")
+                                                startActivity(
+                                                    Intent(
+                                                        this@RegisterGuestActivity,
+                                                        ProfileActivity::class.java
+                                                    )
+                                                )
+                                                finish()
+                                                //createUser()
+                                            } else {
+                                                Log.w("ERROR", "linkWithCredential:failure", task.exception)
+                                                Toast.makeText(
+                                                    baseContext, "Authentication failed.",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+
+                                        }
+                                } else {
+                                    //else if guest was already logged out (the anonymous-user doesn't exist anymore on Firebase-Auth) -> we have to create a new User in Firebase
+                                    //Remove Guest-data from DB
+
+                                    auth.createUserWithEmailAndPassword(
+                                        inputEmail.text.toString(),
+                                        inputPassword.text.toString()
+                                    )
+                                        .addOnCompleteListener(this@RegisterGuestActivity) { task ->
+                                            progressBar.visibility = View.INVISIBLE
+
+                                            if (task.isSuccessful) {
+                                                // Sign in success, update UI with the signed-in user's information
+                                                //createUser()
+                                                startActivity(
+                                                    Intent(
+                                                        this@RegisterGuestActivity,
+                                                        ProfileActivity::class.java
+                                                    )
+                                                )
+                                                finish()
+                                            } else {
+
+                                                Toast.makeText(
+                                                    this@RegisterGuestActivity,
+                                                    "Authentication failed." + task.result,
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+
+                                        }
+                                }
+
+                            }
+                            .addOnFailureListener { e -> Log.w("ERROR", "Error writing document", e) }
 
                     }
+                }
             }
+            DBMethods.getUserByName(callbackUser, inputUsername.text.toString())
+
+
         } else {
 
             errotext = ""
@@ -168,44 +227,10 @@ class RegisterGuestActivity : AppCompatActivity() {
             }
 
             textviewError.text = errotext
+            textviewError.visibility = TextView.VISIBLE
 
         }
     }
-
-    private fun createUser() {
-
-        //get user-object
-        val callbackUser = object :
-            Callback<UserQP> {
-            override fun onTaskComplete(result: UserQP) {
-                guestid = result.userID
-                result.userID = auth.currentUser?.uid.toString()
-                result.guest = false
-                //save user in game-manager (for easy access in further dev)
-                setUserinfo(result)
-
-                //save user (name, score,...) in database
-                db.document(result.userID)
-                    .set(result)
-                    .addOnSuccessListener {
-                        Log.d("SUCCESS", "DocumentSnapshot successfully written!")
-                        DBMethods.deleteUser(guestid)
-                        removeLocalGuestInfo()
-
-                        startActivity(Intent(this@RegisterGuestActivity, ProfileActivity::class.java))
-                        finish()
-                    }
-                    .addOnFailureListener { e -> Log.w("ERROR", "Error writing document", e) }
-            }
-        }
-        DBMethods.getUserByName(callbackUser, inputUsername.text.toString())
-
-
-
-
-    }
-
-
 
 
     private fun removeLocalGuestInfo(){

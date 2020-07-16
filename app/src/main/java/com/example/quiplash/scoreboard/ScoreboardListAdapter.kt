@@ -27,15 +27,17 @@ class ScoreboardListAdapter(val mCtx: Context, val layoutResId: Int, val playerL
         val imageViewUser: ImageView = view.findViewById(R.id.player_image)
         var fotostorage = FirebaseStorage.getInstance();
         var storageRef = fotostorage.reference
-        val playerPhoto: String
+        var playerPhoto: String
 
         val player = playerList[position]
 
+        Log.d("SPIELER", "Photo: ${playerList[position].photo}")
+        Log.d("SPIELER", "Name: ${playerList[position].userName}")
         // Get string to profile photo of player
-        if (player.photo !== null) {
-            playerPhoto = player.photo!!
-        } else {
+        if (playerList[position].photo == null|| player.photo == "") {
             playerPhoto = DBMethods.defaultGuestImg
+        } else {
+            playerPhoto = playerList[position].photo!!
         }
 
         // set text & image views in listItem
@@ -43,7 +45,7 @@ class ScoreboardListAdapter(val mCtx: Context, val layoutResId: Int, val playerL
         textViewGame.text = player.userName
 
         // Get profile photo of player from db to show it in listView
-        var spaceRef = storageRef.child(playerPhoto)
+        val spaceRef = storageRef.child(playerPhoto)
         spaceRef.downloadUrl
             .addOnSuccessListener(OnSuccessListener<Uri?> { uri ->
                 Glide

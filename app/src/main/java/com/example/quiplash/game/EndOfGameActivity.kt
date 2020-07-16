@@ -23,7 +23,7 @@ import java.util.ArrayList
 
 class EndOfGameActivity : AppCompatActivity() {
 
-    var all_user = arrayListOf<UserQP>()
+    var allUser = arrayListOf<UserQP>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +45,7 @@ class EndOfGameActivity : AppCompatActivity() {
         val callbackGetUsers = object:
             Callback<ArrayList<UserQP>> {
             override fun onTaskComplete(result: ArrayList<UserQP>) {
-                all_user = result
+                allUser = result
             }
         }
         getUsers(callbackGetUsers)
@@ -74,8 +74,7 @@ class EndOfGameActivity : AppCompatActivity() {
         val gameID = game.gameID
         var userIDList = mutableListOf<String>()
         var currentGame: Game
-        var old_scores = arrayListOf<Int>()
-        var users_here = hashMapOf<UserQP, Int>()
+        val usersHere = hashMapOf<UserQP, Int>()
 
         val callback = object : Callback<Game> {
             override fun onTaskComplete(result: Game) {
@@ -85,10 +84,10 @@ class EndOfGameActivity : AppCompatActivity() {
 
                 // get hash with game players and old scores
                 players.forEach {
-                    var current_id = it
-                    for (x in 0..all_user.size-1){
-                        if (all_user[x].userID == current_id){
-                            users_here.put(all_user[x], all_user[x].score)
+                    val currentId = it
+                    for (x in 0..allUser.size-1){
+                        if (allUser[x].userID == currentId){
+                            usersHere.put(allUser[x], allUser[x].score)
                         }
                     }
                 }
@@ -131,17 +130,17 @@ class EndOfGameActivity : AppCompatActivity() {
 
 
                 // add extra scores to best three players
-                users_here.forEach {
-                    var current_id = it.key.userID
-                    var old_score = it.value
+                usersHere.forEach {
+                    val currentId = it.key.userID
+                    val oldScore = it.value
                     val callbackUser = object :
                         Callback<UserQP> {
                         override fun onTaskComplete(result: UserQP) {
-                            val user_updated = result
-                            users_here.put(user_updated, user_updated.score - old_score);
+                            val userUpdated = result
+                            usersHere.put(userUpdated, userUpdated.score - oldScore);
                         }
                     }
-                    DBMethods.getUserWithID(callbackUser, current_id)
+                    DBMethods.getUserWithID(callbackUser, currentId)
                 }
 
 
@@ -149,19 +148,23 @@ class EndOfGameActivity : AppCompatActivity() {
                     val callbackUser = object :
                         Callback<UserQP> {
                         override fun onTaskComplete(result: UserQP) {
-                            var user = result
-                            if(x == 0){
-                                user.score = user.score + gameWinnerScore
-                            } else if (x == 1) {
-                                user.score = user.score + gameSecondScore
-                            } else {
-                                user.score = user.score + gameThirdScore
+                            val user = result
+                            when (x) {
+                                0 -> {
+                                    user.score = user.score + gameWinnerScore
+                                }
+                                1 -> {
+                                    user.score = user.score + gameSecondScore
+                                }
+                                else -> {
+                                    user.score = user.score + gameThirdScore
+                                }
                             }
                             editUser(user.userID, user)
                         }
                     }
-                    DBMethods.getUserWithID(callbackUser, users_here.maxBy{ it.value }?.key?.userID.toString())
-                    users_here.remove(users_here.maxBy{ it.value }?.key)
+                    DBMethods.getUserWithID(callbackUser, usersHere.maxBy{ it.value }?.key?.userID.toString())
+                    usersHere.remove(usersHere.maxBy{ it.value }?.key)
                 }
             }
         }

@@ -14,7 +14,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="50dp"
         android:backgroundTint="#00FFFFFF"
-        android:contentDescription="go_back_arrow"
+        android:contentDescription="@string/go_back_arrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_go_back_arrow" />
@@ -43,7 +43,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="50dp"
         android:fontFamily="@font/roboto_slab"
-        android:text="You haven't added any friends yet. You can add your friends on the button below."
+        android:text="@string/you_haven_t_added_any_friends"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
         android:textSize="16sp"

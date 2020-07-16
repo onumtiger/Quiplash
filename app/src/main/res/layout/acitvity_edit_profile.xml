@@ -14,26 +14,12 @@
         android:layout_height="32dp"
         android:layout_marginTop="41dp"
         android:backgroundTint="#00FFFFFF"
-        android:contentDescription="go_back_arrow"
+        android:contentDescription="@string/go_back_arrow"
         android:src="@drawable/ic_go_back_arrow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- <TextView
-        android:id="@+id/textView9"
-        android:layout_width="151dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:text="@string/profile"
-        android:textColor="@color/colorTitles"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" /> -->
 
 
     <ImageView
@@ -82,12 +68,12 @@
         android:layout_marginBottom="50dp"
         android:background="@android:color/black"
         android:fontFamily="@font/roboto_slab_bold"
-        android:text="More"
+        android:text="@string/more"
         android:textColor="@color/colorWhite"
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
         android:textColorLink="@color/colorWhite"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -104,7 +90,7 @@
         android:textColorHighlight="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
         android:textColorLink="@color/colorWhite"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/edit_rest"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -117,6 +103,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="50dp"
+        android:autofillHints="Your New Username"
+        android:backgroundTint="@color/colorWhite"
         android:ems="10"
         android:fontFamily="@font/roboto_slab"
         android:hint="@string/username_placeholder"

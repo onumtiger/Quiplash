@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.quiplash.LandingActivity
 import com.example.quiplash.R
@@ -40,7 +39,7 @@ class WaitingActivity : AppCompatActivity() {
     private var gameQuestions = arrayListOf<Question>()
 
     //Party Mode
-    private var drink_challenges = arrayListOf<String>()
+    private var drinkChallenges = arrayListOf<String>()
     private var beerBool: Boolean = false
     private var wineBool: Boolean = false
     private var cocktailBool: Boolean = false
@@ -377,30 +376,30 @@ class WaitingActivity : AppCompatActivity() {
 
     private fun addDrinks(){
         if (beerBool){
-            drink_challenges.add("Have a sip of Beer")
-            drink_challenges.add("Have 3 sips of Beer")
-            drink_challenges.add("Ex your Beer and open a new one")
+            drinkChallenges.add("Have a sip of Beer")
+            drinkChallenges.add("Have 3 sips of Beer")
+            drinkChallenges.add("Ex your Beer and open a new one")
         }
         if (wineBool){
-            drink_challenges.add("Have a sip of wine")
-            drink_challenges.add("Have 3 sips of wine")
-            drink_challenges.add("Ex your glas of wine and refill it")
+            drinkChallenges.add("Have a sip of wine")
+            drinkChallenges.add("Have 3 sips of wine")
+            drinkChallenges.add("Ex your glas of wine and refill it")
         }
         if (cocktailBool){
-            drink_challenges.add("Have a sip of your cocktail")
-            drink_challenges.add("Have 3 sips of your cocktail")
-            drink_challenges.add("Ex half of your glas and if it's empty refill it!")
-            drink_challenges.add("Let your cocktail be a bit stronger :)")
+            drinkChallenges.add("Have a sip of your cocktail")
+            drinkChallenges.add("Have 3 sips of your cocktail")
+            drinkChallenges.add("Ex half of your glas and if it's empty refill it!")
+            drinkChallenges.add("Let your cocktail be a bit stronger :)")
         }
         if (shotBool){
-            drink_challenges.add("Have a Shot")
-            drink_challenges.add("Have 2 Shots")
-            drink_challenges.add("Have a shot of the ugliest Water you have")
-            drink_challenges.add("Choose a partner and have a shot with him together")
+            drinkChallenges.add("Have a Shot")
+            drinkChallenges.add("Have 2 Shots")
+            drinkChallenges.add("Have a shot of the ugliest Water you have")
+            drinkChallenges.add("Choose a partner and have a shot with him together")
         }
 
         db.document(game.gameID)
-            .update("drinks", drink_challenges)
+            .update("drinks", drinkChallenges)
             .addOnSuccessListener {
                 Sounds.playStartSound(this)
             }
