@@ -45,6 +45,8 @@ class LandingActivity : AppCompatActivity() {
         val logoLanding = findViewById<ImageView>(R.id.imageLogo)
 
         val splashanim = AnimationUtils.loadAnimation(this, R.anim.shakeback_splash)
+        val interpolator = BounceInterpolator(0.2, 10.0)
+        splashanim.interpolator = interpolator
         logoLanding.startAnimation(splashanim)
         /*set Invitations Notification Hint invisible first,
         then check if user has invitations */

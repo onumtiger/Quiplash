@@ -16,7 +16,7 @@ import com.example.quiplash.user.UserQP
 import java.util.*
 
 class InviteFriendsToGameActivity : AppCompatActivity() {
-    lateinit var current_User: UserQP
+    lateinit var currentUser: UserQP
     lateinit var friend : UserQP
     lateinit var otherUsers: ArrayList<UserQP>
 
@@ -50,7 +50,7 @@ class InviteFriendsToGameActivity : AppCompatActivity() {
 
     }
 
-    fun getCurrentGame(gameID: String, friendsListView: ListView) {
+    private fun getCurrentGame(gameID: String, friendsListView: ListView) {
         var currentGame: Game
         val callback = object : Callback<Game> {
             override fun onTaskComplete(result: Game) {
@@ -75,8 +75,8 @@ class InviteFriendsToGameActivity : AppCompatActivity() {
                 val callbackGetUser = object:
                     Callback<UserQP> {
                     override fun onTaskComplete(result : UserQP) {
-                        current_User = result
-                        friendsListCurrentUser = current_User.friends
+                        currentUser = result
+                        friendsListCurrentUser = currentUser.friends
 
                         for(i in 0 .. friendsListCurrentUser.size-1) {
                             for(j in 0 .. otherUsers.size-1) {

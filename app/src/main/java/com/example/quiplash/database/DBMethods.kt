@@ -394,18 +394,30 @@ class DBMethods {
             }
 
             fun getUserByName(callback: Callback<UserQP>, username: String) {
+                Log.d("SPIELER", "getUserByName")
+                Log.d("SPIELER", username)
+
                 db.collection(
                     usersPath
-                ).whereEqualTo(DBMethods.usernamePath, username)
+                ).whereEqualTo(usernamePath, username)
                     .get()
                     .addOnSuccessListener { documents ->
-                        for (document in documents) {
-                            val user = document.toObject(UserQP::class.java)
-                            callback.onTaskComplete(user)
+                        Log.d("SPIELER", "Spieler gefunden")
+                        Log.d("SPIELER", documents.size().toString())
+                        if(documents.size() == 0){
+                            callback.onTaskComplete(UserQP())
+                        }else {
+                            for (document in documents) {
+                                Log.d("SPIELER", document.data.toString())
+                                Log.d("SPIELER", "User wird geschickt")
+                                val user = document.toObject(UserQP::class.java)
+                                callback.onTaskComplete(user)
+                            }
                         }
                     }
                     .addOnFailureListener { exception ->
-                        Log.w("ERROR", "Error getting documents: ", exception)
+                        Log.d("SPIELER", "Error getting documents: ", exception)
+                        callback.onTaskComplete(UserQP())
                     }
             }
 

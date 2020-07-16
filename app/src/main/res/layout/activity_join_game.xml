@@ -21,7 +21,7 @@
                 android:layout_height="32dp"
                 android:layout_marginTop="41dp"
                 android:backgroundTint="#00FFFFFF"
-                android:contentDescription="go_back_arrow"
+                android:contentDescription="@string/go_back_arrow"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.042"
                 app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="50dp"
                 android:fontFamily="@font/roboto_slab"
-                android:text="There are currently no active games. You can create a new one on the button below."
+                android:text="@string/no_active_games"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
                 android:textSize="17sp"
@@ -76,7 +76,7 @@
                 <ListView
                     android:id="@+id/active_games_list"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"></ListView>
+                    android:layout_height="match_parent" />
             </RelativeLayout>
 
             <ImageButton

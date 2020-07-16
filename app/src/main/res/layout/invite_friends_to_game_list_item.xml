@@ -64,7 +64,7 @@
             android:layout_marginBottom="25dp"
             android:background="@color/colorText"
             android:fontFamily="@font/roboto_slab_bold"
-            android:text="Invite"
+            android:text="@string/invite"
             android:textColor="@color/colorWhite" />
 
     </RelativeLayout>

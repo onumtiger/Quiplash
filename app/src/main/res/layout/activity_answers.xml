@@ -112,7 +112,7 @@
         android:elevation="15dp"
         android:fontFamily="@font/roboto_slab_bold"
         android:gravity="fill_vertical"
-        android:text="or"
+        android:text="@string/or"
         android:textAlignment="center"
         android:textColor="@color/colorText"
         android:textSize="28sp"

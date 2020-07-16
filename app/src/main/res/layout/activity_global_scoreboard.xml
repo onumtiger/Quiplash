@@ -21,7 +21,7 @@
                 android:layout_height="32dp"
                 android:layout_marginTop="41dp"
                 android:backgroundTint="#00FFFFFF"
-                android:contentDescription="go_back_arrow"
+                android:contentDescription="@string/go_back_arrow"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.042"
                 app:layout_constraintStart_toStartOf="parent"

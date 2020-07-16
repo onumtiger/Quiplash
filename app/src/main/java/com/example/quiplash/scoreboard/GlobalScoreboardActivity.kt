@@ -12,7 +12,6 @@ import com.example.quiplash.database.Callback
 import com.example.quiplash.LandingActivity
 import com.example.quiplash.R
 import com.example.quiplash.Sounds
-import com.example.quiplash.game.GameManager
 import com.example.quiplash.user.UserQP
 import java.util.ArrayList
 

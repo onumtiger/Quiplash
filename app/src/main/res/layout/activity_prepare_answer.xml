@@ -154,7 +154,7 @@
                     android:id="@+id/imageCheckmark"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:contentDescription="checkmark"
+                    android:contentDescription="@string/checkmark"
                     android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

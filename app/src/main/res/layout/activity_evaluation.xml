@@ -148,7 +148,6 @@
                 android:elevation="6dp"
                 android:fontFamily="@font/roboto_slab_bold"
                 android:rotation="15"
-                android:text="1"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
                 android:textSize="36sp"
@@ -353,7 +352,7 @@
                 android:textColorHighlight="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:textColorLink="@color/colorWhite"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/timerViewEval" />
