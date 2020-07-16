@@ -358,11 +358,11 @@ class EvaluationActivity : AppCompatActivity() {
                             secondName = false
                         } else {
                             winnerNames += winner.userName + " "
-                            drinkView?.text = (winnernames + "have this challenge: \n" + game.drinks[drnk])
+                            drinkView?.text = (winnerNames + "have this challenge: \n" + game.drinks[drnk])
                         }
                     } else {
                         winnerNames += winner.userName + " "
-                        drinkView?.text = (winnernames + "has this challenge: \n" + game.drinks[drnk])
+                        drinkView?.text = (winnerNames + "has this challenge: \n" + game.drinks[drnk])
                     }
                 }
             }
