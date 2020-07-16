@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import kotlin.math.round
 
 
 class WaitingActivity : AppCompatActivity() {
@@ -322,6 +323,8 @@ class WaitingActivity : AppCompatActivity() {
         val allRounds: HashMap<String, Round> = hashMapOf()
         var subroundCount = 0
 
+        var testroundcount = 0
+
         while (jump < game.users.size) {
 
             while (roundCount < game.users.size - jump) {
@@ -333,31 +336,35 @@ class WaitingActivity : AppCompatActivity() {
                         voters["voter${voters.size}"] = Voter(user)
                     }
                 }
-
-                oneRound += (Round(
-                    voters,
-                    linkedMapOf(
-                        GameManager.opp0 to Opponent(game.users[roundCount]),
-                        GameManager.opp1 to Opponent(game.users[roundCount + jump])
-                    ),
-                    ""
-                ))
-
+                for (x in 0..game.rounds-1){
+                    /*
+                    oneRound += (Round(
+                        voters,
+                        linkedMapOf(
+                            GameManager.opp0 to Opponent(game.users[roundCount]),
+                            GameManager.opp1 to Opponent(game.users[roundCount + jump])
+                        ),
+                        (x*roundCount).toString()
+                    ))
+                    */
+                    var round = Round(
+                        voters,
+                        linkedMapOf(
+                            GameManager.opp0 to Opponent(game.users[roundCount]),
+                            GameManager.opp1 to Opponent(game.users[roundCount + jump])
+                        ),
+                        gameQuestions[testroundcount].question.toString()
+                    )
+                    var roundindex = (testroundcount.rem(game.users.size))*game.rounds+(testroundcount/game.users.size).toInt()
+                    allRounds["round"+roundindex.toString()] = round
+                    testroundcount += 1
+                }
                 roundCount += 1
-
             }
             roundCount = 0
             jump += 1
         }
 
-        while (allRoundCount <= game.rounds) {
-            oneRound.forEach { value ->
-                allRounds["round$subroundCount"] = value
-                subroundCount += 1
-            }
-
-            allRoundCount += 1
-        }
 
         for (x in 0 until allRounds.size) {
             allRounds["round$x"]?.question = gameQuestions[x].question.toString()
