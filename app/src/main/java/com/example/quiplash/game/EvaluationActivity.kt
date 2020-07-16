@@ -59,6 +59,11 @@ class EvaluationActivity : AppCompatActivity() {
     private var oldRound = 0
     private var completeLayout: ConstraintLayout? = null
 
+    //drink mode
+    private var winnerNames = ""
+    private var deuce = false
+    private var secondName = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -301,6 +306,8 @@ class EvaluationActivity : AppCompatActivity() {
                         GameManager.opp1
                     ).answerScore
                     -> {
+                        deuce = true
+                        secondName = true
                         setWinnerInfo(
                             0,
                             frameProfile,
@@ -366,8 +373,19 @@ class EvaluationActivity : AppCompatActivity() {
 
                 scoreView!!.startAnimation(shakehanim)
                 if (game.partyMode){
-                    val drnk = (0 until game.drinks.size).random()
-                    drinkView?.text = (winner.userName + " has this challenge: \n" + game.drinks[drnk])
+                    val drnk = (0..game.drinks.size-1).random()
+                    if (deuce == true){
+                        if (secondName == true){
+                            winnerNames += winner.userName + " & "
+                            secondName = false
+                        } else {
+                            winnerNames += winner.userName + " "
+                            drinkView?.text = (winnerNames + "have this challenge: \n" + game.drinks[drnk])
+                        }
+                    } else {
+                        winnerNames += winner.userName + " "
+                        drinkView?.text = (winnerNames + "has this challenge: \n" + game.drinks[drnk])
+                    }
                 }
             }
     }
