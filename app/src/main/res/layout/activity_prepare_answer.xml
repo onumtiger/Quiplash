@@ -104,6 +104,7 @@
                 android:paddingBottom="56dp"
                 android:singleLine="false"
                 android:textAlignment="center"
+                android:textAllCaps="true"
                 android:textCursorDrawable="@color/colorTurquoise"
                 android:textSize="20sp"
                 android:textStyle="bold"
