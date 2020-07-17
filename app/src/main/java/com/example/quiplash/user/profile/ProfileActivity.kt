@@ -27,7 +27,7 @@ import com.google.firebase.storage.FirebaseStorage
 
 class ProfileActivity : AppCompatActivity() {
     private var auth: FirebaseAuth? = null
-    lateinit var currentUser: UserQP
+    private var currentUser: UserQP = UserQP()
     lateinit var db: CollectionReference
     private val dbUsersPath = DBMethods.usersPath
 
@@ -64,6 +64,7 @@ class ProfileActivity : AppCompatActivity() {
          * load user information and display them
          * if loading data fails display default profile picture and username
          */
+
         val callback = object : Callback<UserQP> {
             override fun onTaskComplete(result: UserQP) {
                 currentUser = result

@@ -80,7 +80,7 @@ class EvaluationActivity : AppCompatActivity() {
         if (!game.partyMode){
             drinkView?.visibility = View.INVISIBLE
         } else {
-            completeLayout?.setBackgroundResource(R.drawable.background_party)
+            completeLayout?.setBackgroundResource(R.drawable.prty)
             val drnk = (0 until game.drinks.size).random()
             drinkView?.text = ("The Loosers challenge: \n" + game.drinks[drnk])
         }
