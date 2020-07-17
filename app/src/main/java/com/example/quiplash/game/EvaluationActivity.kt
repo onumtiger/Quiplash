@@ -262,7 +262,7 @@ class EvaluationActivity : AppCompatActivity() {
                             imageWinnerPhotoDraw
                         )
 
-                        val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom)
+                        val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom_button)
                         imageWinnerSign!!.visibility = ImageView.VISIBLE
                         imageWinnerSign!!.startAnimation(zoomanim)
                         imageLoserSign!!.visibility = ImageView.VISIBLE
@@ -294,6 +294,8 @@ class EvaluationActivity : AppCompatActivity() {
                         )
 
                         val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom)
+                        val interpolator = BounceInterpolator(0.2, 10.0)
+                        zoomanim.interpolator = interpolator
                         imageWinnerSign!!.visibility = ImageView.VISIBLE
                         imageWinnerSign!!.startAnimation(zoomanim)
                         imageLoserSign!!.visibility = ImageView.VISIBLE
@@ -330,7 +332,7 @@ class EvaluationActivity : AppCompatActivity() {
                         imageLoserSign?.visibility = ImageView.INVISIBLE
                         imageShot?.visibility = ImageView.INVISIBLE
                         imageAndIcon?.visibility = TextView.VISIBLE
-                        val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
+                        val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom_button)
                         val interpolator = BounceInterpolator(0.2, 10.0)
                         zoomanim.interpolator = interpolator
                         imageAndIcon!!.startAnimation(zoomanim)
