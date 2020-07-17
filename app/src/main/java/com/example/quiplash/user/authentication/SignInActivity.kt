@@ -24,7 +24,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
-
+/**A user can sign-in with e-mail and password**/
 class SignInActivity : AppCompatActivity() {
     //FirebaseAuth object
     private lateinit var auth: FirebaseAuth
@@ -68,12 +68,15 @@ class SignInActivity : AppCompatActivity() {
                 setUser(auth.currentUser?.uid.toString())
             }
         }
+
+        //Remove Top-Bar
         try {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
         }
         setContentView(R.layout.activity_sign_in)
 
+        //Set View-Elements
         inputEmail = findViewById(R.id.emailFieldSU)
         inputPassword = findViewById(R.id.passwordFieldSU)
         progressBar = findViewById(R.id.progressBarLogin)
@@ -84,6 +87,7 @@ class SignInActivity : AppCompatActivity() {
         textviewError = findViewById(R.id.textErrorLogin)
 
 
+        //On Press Enter in Password-Field the same Function as when pressing 'SignIn'-Button will be called.
         inputPassword.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 login()
@@ -93,12 +97,14 @@ class SignInActivity : AppCompatActivity() {
         })
 
 
+        //Switch to Sign-Up-View
         btnSignup.setOnClickListener{
             Sounds.playClickSound(this)
             startActivity(Intent(this@SignInActivity, SignUpActivity::class.java))
             finish()
         }
 
+        //If Guest is logged out he can log in through local saved Guest-infos
         btnLoginGuest.setOnClickListener{
             Sounds.playClickSound(this)
 
@@ -117,6 +123,7 @@ class SignInActivity : AppCompatActivity() {
         }
 
 
+        //Switch to 'Reset-Password'-View
         btnResetPassword.setOnClickListener{
             Sounds.playClickSound(this)
 
@@ -124,6 +131,7 @@ class SignInActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        //Call Login-Funtions
         btnLogin.setOnClickListener{
             Sounds.playClickSound(this)
             login()
@@ -131,6 +139,9 @@ class SignInActivity : AppCompatActivity() {
     }
 
 
+    /**
+     * Check wether Form is complete and than authenticate via Firebase.
+     * **/
     private fun login(){
         val email = inputEmail.text.toString()
         val password = inputPassword.text.toString()
@@ -218,7 +229,6 @@ class SignInActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         auth.addAuthStateListener(authListener!!)
-        //val currentUser: FirebaseUser? = auth!!.currentUser
     }
 
 

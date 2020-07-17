@@ -16,10 +16,10 @@ class Game {
     var playrounds: HashMap<String, Round> = linkedMapOf()
     var isPublic: Boolean = false
     var partyMode: Boolean = false
-    var drinks: ArrayList<String> = arrayListOf<String>()
+    var drinks: ArrayList<String> = arrayListOf()
     var hostID: String = ""
     var gameTitle: String = ""
-    var invitations: ArrayList<String> = arrayListOf<String>()
+    var invitations: ArrayList<String> = arrayListOf()
 
 
     constructor(

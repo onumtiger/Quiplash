@@ -48,6 +48,8 @@ class DBMethods {
             const val gamesPath = "games"
             private const val questionsPath = "questions"
             private const val usernamePath = "userName"
+            const val playroundsPath = "playrounds"
+            const val drinksPath = "drinks"
             const val defaultUserImg = "images/default_user_QP.png"
             const val defaultGuestImg = "images/default_guest_QP.png"
 

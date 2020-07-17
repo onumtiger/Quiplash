@@ -147,4 +147,5 @@
     <string name="checkmark">checkmark</string>
     <string name="choose_the_source">Choose the source</string>
     <string name="you_don_t_have_an_account">You don\'t have an account?</string>
+    <string name="enter_username">Please enter your Username</string>
 </resources>

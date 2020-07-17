@@ -24,15 +24,19 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 
-
+/**
+ * While the Game hasn't enough Players and isn't started by the host, the players remain in the 'Waiting'-View.
+ * The Host can End Game, Invite Players and Start the Game in this View.
+ * Players can Join the Game and leave it in this View.
+ * **/
 class WaitingActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     //Firestore
     lateinit var db: CollectionReference
     private val dbGamesPath = DBMethods.gamesPath
-    private lateinit var selectedQuestions: ArrayList<Question>
 
+    private lateinit var selectedQuestions: ArrayList<Question>
     private lateinit var awaitGamestart: ListenerRegistration
     private var gameQuestions = arrayListOf<Question>()
 
@@ -47,6 +51,8 @@ class WaitingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
         auth = FirebaseAuth.getInstance()
+
+        //Remove Tob Bar
         try {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
@@ -58,6 +64,9 @@ class WaitingActivity : AppCompatActivity() {
         getQuestionsForGame(game.rounds, game.playerNumber, game.category)
 
 
+        //If Game is started by the Host the Game info will be updated. This Listener switches
+        // the View either to the View for Players who have to answer the Question or to vote
+        // for an answer. But if the Host ends the Game the Players switch bck to the Landing-View.
         awaitGamestart = db.document(game.gameID).addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.w("ERROR", "Listen failed.", e)
@@ -76,6 +85,7 @@ class WaitingActivity : AppCompatActivity() {
         }
 
 
+        //Set View-Elements
         val btnInvitePlayers = findViewById<Button>(R.id.invite_players_btn)
         val btnStartGame = findViewById<Button>(R.id.start_game_btn)
         val btnEndGame = findViewById<Button>(R.id.end_game)
@@ -93,7 +103,7 @@ class WaitingActivity : AppCompatActivity() {
 
         getUsersList(playersListView, game.gameID)
 
-        if(game.partyMode && auth.currentUser?.uid.toString() == game.hostID) {
+        if (game.partyMode && auth.currentUser?.uid.toString() == game.hostID) {
             layoutDrinksCheck.visibility = View.VISIBLE
             labelDrinks.visibility = View.VISIBLE
 
@@ -109,16 +119,22 @@ class WaitingActivity : AppCompatActivity() {
             checkShot.setOnClickListener {
                 shotBool = checkShot.isChecked
             }
-        }else{
+        } else {
             layoutDrinksCheck.visibility = View.GONE
             labelDrinks.visibility = View.GONE
         }
 
+        /**
+         * If Host presses 'Start Game', Playrounds will be created. If the Game is in Party-Mode,
+         * A checup runs wether a drink is choosen. If the host has choosen (a) drink(s) they will
+         * be saved. Else a corresponding Feedback will be displayed.
+         **/
         btnStartGame.setOnClickListener {
-            if (game.partyMode && !beerBool && !wineBool && !cocktailBool && !shotBool){
-                Toast.makeText(this, "Please show us your drinks for the game", Toast.LENGTH_LONG).show()
+            if (game.partyMode && !beerBool && !wineBool && !cocktailBool && !shotBool) {
+                Toast.makeText(this, "Please show us your drinks for the game", Toast.LENGTH_LONG)
+                    .show()
             } else {
-                if (game.partyMode){
+                if (game.partyMode) {
                     addDrinks()
                 }
                 awaitGamestart.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
@@ -127,6 +143,7 @@ class WaitingActivity : AppCompatActivity() {
             }
         }
 
+        //The Game will be deleted
         btnEndGame.setOnClickListener {
             Sounds.playClickSound(this)
 
@@ -140,12 +157,14 @@ class WaitingActivity : AppCompatActivity() {
             deleteGame(game.gameID, callbackSuccess)
         }
 
+        //Player will be removed from Game
         btnLeaveGame.setOnClickListener {
             removeUserFromGame()
             val intent = Intent(this, LandingActivity::class.java)
             startActivity(intent)
         }
 
+        //Player will be added to Game
         btnJoinGame.setOnClickListener {
             addUserToGame()
             btnLeaveGame.visibility = View.VISIBLE
@@ -189,13 +208,14 @@ class WaitingActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun addUserToGame() {
+    private fun addUserToGame() {
         val selectedItem = game
         selectedItem.users = selectedItem.users + auth.currentUser?.uid.toString()
         DBMethods.updateGameUsers(selectedItem)
     }
 
-    fun removeUserFromGame() {
+    /**Player will be removed from UI and from Game in Database**/
+    private fun removeUserFromGame() {
         val selectedItem = game
         val filteredUsers =
             selectedItem.users.filterIndexed { _, s -> (s != auth.currentUser?.uid.toString()) }
@@ -203,6 +223,7 @@ class WaitingActivity : AppCompatActivity() {
         DBMethods.updateGameUsers(selectedItem)
     }
 
+    /**According to Players'-State (Host(Minimum Number of Players is reached), Host(Minimum Number of Players is not reached), Player(joined), Player(not joined))**/
     fun setBtnVisibility(currentGame: Game, currentPlayerNumber: Int, playerNumber: Int) {
         val btnInvitePlayers = findViewById<Button>(R.id.invite_players_btn)
         val btnStartGame = findViewById<Button>(R.id.start_game_btn)
@@ -280,6 +301,9 @@ class WaitingActivity : AppCompatActivity() {
         getCurrentGame(callback, gameID)
     }
 
+    /**
+     * If The Host has Start the Game every Player will be allocated to corresponding View (Voter, Opponent)
+     * **/
     private fun gotoGameLaunch() {
         awaitGamestart.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
         Sounds.playStartSound(this)
@@ -288,6 +312,9 @@ class WaitingActivity : AppCompatActivity() {
         finish()
     }
 
+    /**
+     * If The Host has End the Game every Player will be send Back to landing-view
+     * **/
     private fun gotoGameLanding() {
         awaitGamestart.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
         val intent = Intent(this, LandingActivity::class.java)
@@ -328,7 +355,7 @@ class WaitingActivity : AppCompatActivity() {
                         voters["voter${voters.size}"] = Voter(user)
                     }
                 }
-                for (x in 0 until game.rounds){
+                for (x in 0 until game.rounds) {
                     val round = Round(
                         voters,
                         linkedMapOf(
@@ -337,7 +364,8 @@ class WaitingActivity : AppCompatActivity() {
                         ),
                         gameQuestions[testroundcount].question.toString()
                     )
-                    val roundindex = (testroundcount.rem(game.users.size))*game.rounds+(testroundcount/game.users.size)
+                    val roundindex =
+                        (testroundcount.rem(game.users.size)) * game.rounds + (testroundcount / game.users.size)
                     allRounds["round$roundindex"] = round
                     testroundcount += 1
                 }
@@ -357,24 +385,24 @@ class WaitingActivity : AppCompatActivity() {
 
     }
 
-    private fun addDrinks(){
-        if (beerBool){
+    private fun addDrinks() {
+        if (beerBool) {
             drinkChallenges.add("Have a sip of Beer")
             drinkChallenges.add("Have 3 sips of Beer")
             drinkChallenges.add("Ex your Beer and open a new one")
         }
-        if (wineBool){
+        if (wineBool) {
             drinkChallenges.add("Have a sip of wine")
             drinkChallenges.add("Have 3 sips of wine")
             drinkChallenges.add("Ex your glas of wine and refill it")
         }
-        if (cocktailBool){
+        if (cocktailBool) {
             drinkChallenges.add("Have a sip of your cocktail")
             drinkChallenges.add("Have 3 sips of your cocktail")
             drinkChallenges.add("Ex half of your glas and if it's empty refill it!")
             drinkChallenges.add("Let your cocktail be a bit stronger :)")
         }
-        if (shotBool){
+        if (shotBool) {
             drinkChallenges.add("Have a Shot")
             drinkChallenges.add("Have 2 Shots")
             drinkChallenges.add("Have a shot of the ugliest Water you have")
@@ -382,16 +410,18 @@ class WaitingActivity : AppCompatActivity() {
         }
 
         db.document(game.gameID)
-            .update("drinks", drinkChallenges)
+            .update(DBMethods.drinksPath, drinkChallenges)
             .addOnSuccessListener {
                 Sounds.playStartSound(this)
             }
             .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
     }
 
+    /**If all rounds are generated they will be saved into database. Afterwards the Listener
+     * in this activity receives this update and sends every Player to the next view**/
     private fun savePlayrounds() {
         db.document(game.gameID)
-            .update("playrounds", getallRounds())
+            .update(DBMethods.playroundsPath, getallRounds())
             .addOnSuccessListener {
                 Sounds.playStartSound(this)
 

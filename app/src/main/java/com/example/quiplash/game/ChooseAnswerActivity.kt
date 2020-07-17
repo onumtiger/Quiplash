@@ -25,23 +25,17 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlin.math.ceil
 
+/**
+ * This View is for Players who have to Vote for Answer for the current round.
+ * While the Players who have to answer the question, the Voters are in a 'waiting-view'.
+ * Afterwards the Voters can vote for an answer which will be saved.
+ * **/
 class ChooseAnswerActivity : AppCompatActivity() {
 
+    //View
     lateinit var timerView: TextView
     private lateinit var timerViewWaiting: TextView
-
     private lateinit var simpleViewFlipper: ViewFlipper
-
-
-    //Firestore
-    lateinit var db: CollectionReference
-    private val dbGamesPath = DBMethods.gamesPath
-    private var auth: FirebaseAuth? = null
-
-    private lateinit var awaitAnswerChoosen: ListenerRegistration
-    private var answersArrived = false
-    private var answerChoosen = 2
-
     private lateinit var answerView1: View
     private lateinit var answerView2: View
     private lateinit var answerTV1: TextView
@@ -50,17 +44,33 @@ class ChooseAnswerActivity : AppCompatActivity() {
     private lateinit var imageCheckA1: ImageView
     private lateinit var imageCheckA2: ImageView
 
+    //Firestore
+    lateinit var db: CollectionReference
+    private val dbGamesPath = DBMethods.gamesPath
+    private var auth: FirebaseAuth? = null
+
+    //Variables
+    private lateinit var awaitAnswerChoosen: ListenerRegistration
+    private var answersArrived = false
+    private var answerChoosen = 2
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //Hide Top-Bar
         try {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
         }
         setContentView(R.layout.activity_choose_answer)
+
+        //Start Sound
         Sounds.playVotingSound(this)
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
 
+        //Set View-Elements
         timerView = findViewById(R.id.timer2)
         timerViewWaiting = findViewById(R.id.timerWaiting2)
         answerTV1 = findViewById(R.id.answer1)
@@ -73,18 +83,19 @@ class ChooseAnswerActivity : AppCompatActivity() {
         imageCheckA2 = findViewById(R.id.imageCheckAnswer2)
         simpleViewFlipper =
             findViewById(R.id.simpleViewFlipperCA) // get the reference of ViewFlipper
+        roundView.text = ("${ceil((game.activeRound + 1).toDouble() / 3).toInt()}/${game.rounds}")
 
+        //Setup and Start Timer
         val callbackTimerWaiting = object :
             Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
+                //If Timer ends and the View hasn't already switched...
                 if (!answersArrived) {
-                    setNextView()
+                    setNextView() //then go to next View
                 }
             }
         }
         startTimer(timerViewWaiting, startSecondsAnswer, callbackTimerWaiting)
-
-        roundView.text = ("${ceil((game.activeRound + 1).toDouble() / 3).toInt()}/${game.rounds}")
 
 
         // Declare in and out animations and load them using AnimationUtils class
@@ -95,20 +106,22 @@ class ChooseAnswerActivity : AppCompatActivity() {
         simpleViewFlipper.inAnimation = inAni
         simpleViewFlipper.outAnimation = out
 
+        //Click on Answer (1)
         answerView1.setOnClickListener {
-            saveVote(0)
-
-            Sounds.playClickSound(this)
+            saveVote(0) // save Vote
+            Sounds.playClickSound(this) // play Sound
+            //Start animation of Answer-View
             val splashanim = AnimationUtils.loadAnimation(this, R.anim.little_shake)
             val interpolator = BounceInterpolator(0.5, 5.0)
             splashanim.interpolator = interpolator
             answerView1.startAnimation(splashanim)
         }
 
+        //Click on Answer (2)
         answerView2.setOnClickListener {
-            saveVote(1)
-
-            Sounds.playClickSound(this)
+            saveVote(1) // save Vote
+            Sounds.playClickSound(this) // play Sound
+            //Start animation of Answer-View
             val splashanim = AnimationUtils.loadAnimation(this, R.anim.little_shake)
             val interpolator = BounceInterpolator(0.5, 5.0)
             splashanim.interpolator = interpolator
@@ -116,7 +129,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
         }
 
 
-
+        //Listen to changes of Database. Await if Data of Game changes.
         awaitAnswerChoosen = db.document(game.gameID).addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.w("ERROR", "Listen failed.", e)
@@ -125,6 +138,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
 
             if (snapshot != null && snapshot.exists()) {
                 game = snapshot.toObject(Game::class.java)!!
+                //If Both Answers are available & The View hasn't already switched (due to expired Time), go to next View -> Show Answers
                 if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         GameManager.opp0
                     ).answer != "" && game.playrounds.getValue(
@@ -141,18 +155,22 @@ class ChooseAnswerActivity : AppCompatActivity() {
 
     }
 
+    //Disable Back-Btn on Device
     override fun onBackPressed() {
         println("do nothing")
     }
 
+    /**Setup and Switch to Next View: get Game-Infos and display in View. Start Timer for Voting**/
     private fun setNextView() {
         awaitAnswerChoosen.remove() //IMPORTANT to remove the DB-Listener!!! Else it keeps on listening and run function if if-clause is correct.
         answersArrived = true
-        simpleViewFlipper.showNext()
+        simpleViewFlipper.showNext() // Switch to next View
 
+        //Get Game-Info from Database
         val callbackGame = object :
             Callback<Game> {
             override fun onTaskComplete(result: Game) {
+                //Display Game-Infos in View
                 game = result
                 questionTV.text =
                     game.playrounds.getValue("round${game.activeRound}").question
@@ -168,9 +186,11 @@ class ChooseAnswerActivity : AppCompatActivity() {
         }
         DBMethods.getCurrentGame(callbackGame, game.gameID)
 
+        //Setup and Start Timer
         val callbackTimer = object :
             Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
+                //If Timer ends go to next View
                 val intent =
                     Intent(this@ChooseAnswerActivity, EvaluationActivity::class.java)
                 startActivity(intent)
@@ -193,10 +213,13 @@ class ChooseAnswerActivity : AppCompatActivity() {
         return voterkey
     }
 
+    /**
+     * Save Vote in Database respectively Save Score for Vote Into Database.
+     * Voter can Change ist vote during the given Time.
+     * **/
     private fun saveVote(answerIndex: Int) {
-        //if already votet
+        //if already votet -> Change Vote. Add Score to Choosen Answer and Remove Vote-Score from previous choosen answer.
         if (answerChoosen <= 1) {
-
             db.document(game.gameID)
                 .update(
                     mapOf(
