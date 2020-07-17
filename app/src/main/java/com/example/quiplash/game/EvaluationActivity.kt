@@ -397,7 +397,7 @@ class EvaluationActivity : AppCompatActivity() {
     private fun setProfilePicture(player: UserQP, profileView: ImageView?) {
 
         val storageRef = FirebaseStorage.getInstance().reference
-p
+
         if (player.photo == null) {
             player.photo = DBMethods.defaultGuestImg
         }

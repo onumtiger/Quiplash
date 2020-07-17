@@ -113,7 +113,6 @@
                 android:textColorHighlight="@color/colorText"
                 android:textColorHint="@color/colorText"
                 android:textColorLink="@color/colorText"
-                android:backgroundTint="@color/colorTurquoise"
                 android:textCursorDrawable="@color/colorTurquoise"
                 android:textSize="20sp"
                 android:textStyle="bold"
