@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/e_mail"
+        android:textColor="@color/colorWhite"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBarLogin" />
@@ -52,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/password"
+        android:textColor="@color/colorWhite"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -91,6 +93,7 @@
         android:id="@+id/signinBtn"
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:backgroundTint="@color/colorText"
         android:text="@string/sign_in_btn"
         app:layout_constraintBottom_toTopOf="@+id/signinGuestBtn"
         app:layout_constraintLeft_toLeftOf="parent"
