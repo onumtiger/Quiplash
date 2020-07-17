@@ -383,7 +383,7 @@ class EvaluationActivity : AppCompatActivity() {
                             drinkView?.text = (winnerNames + "have this challenge: \n" + game.drinks[drnk])
                         }
                     } else {
-                        winnerNames += winner.userName + " "
+                        winnerNames = winner.userName + " "
                         drinkView?.text = (winnerNames + "has this challenge: \n" + game.drinks[drnk])
                     }
                 }
