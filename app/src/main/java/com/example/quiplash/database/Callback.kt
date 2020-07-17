@@ -1,6 +1,6 @@
 package com.example.quiplash.database
 
-//for database funcions
+//for database functions
 interface Callback<T>{
     fun onTaskComplete(result: T)
 }

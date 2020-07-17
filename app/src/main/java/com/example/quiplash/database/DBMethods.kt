@@ -104,6 +104,7 @@ class DBMethods {
                 }
             }
 
+            //get current user from DB
             fun getUser(callback: Callback<UserQP>) {
                 db.collection(
                     usersPath
@@ -117,6 +118,7 @@ class DBMethods {
                     }
             }
 
+            //add token to user
             fun addToken(user_t: UserQP){
                 FirebaseInstanceId.getInstance().instanceId
                     .addOnCompleteListener(OnCompleteListener { task ->
@@ -136,7 +138,7 @@ class DBMethods {
                     })
             }
 
-
+            //get all users from DB
             fun getUsers(callback: Callback<ArrayList<UserQP>>) {
                 val allUsers = ArrayList<UserQP>()
                 db.collection(
@@ -157,7 +159,7 @@ class DBMethods {
                     }
             }
 
-
+            //get all questions from DB
             fun getQuestions(callback: Callback<ArrayList<Question>>) {
                 val allQuestions = ArrayList<Question>()
                 db.collection(
@@ -179,26 +181,7 @@ class DBMethods {
                     }
             }
 
-            //to get a random question
-            fun getRandomQuestion(): Question {
-                if (!actual || GameQuestions.size > 0){
-                    val callback = object:
-                        Callback<ArrayList<Question>> {
-                        override fun onTaskComplete(result: ArrayList<Question>) {
-                            GameQuestions = result
-                            actual = true
-                        }
-                    }
-                    getQuestions(
-                        callback
-                    )
-                }
-                val position = (0..GameQuestions.size - 1).random()
-                val question = GameQuestions[position]
-                GameQuestions.drop(position)
-                return question
-            }
-
+            //edit User (found by ID) in DB
             fun editUser(ID :String, user : UserQP) {
                 db.collection(
                     usersPath
@@ -209,6 +192,7 @@ class DBMethods {
                 }
             }
 
+            //edit User friends (found by ID) in DB
             fun editUserFriends(userid: String, friends: List<String>) {
                     db.collection(
                         usersPath
@@ -217,14 +201,7 @@ class DBMethods {
                     .addOnFailureListener { e -> Log.w(TAG, "Error updating friendslist", e) }
             }
 
-            fun editUsername(userid: String, username: String) {
-                db.collection(
-                    usersPath
-                ).document(userid).update(usernamePath, username)
-                    .addOnSuccessListener { Log.d(TAG, "Username successfully updated!") }
-                    .addOnFailureListener { e -> Log.w(TAG, "Error updating Username", e) }
-            }
-
+            //delete User from DB
             fun deleteUser(userid: String) {
                 db.collection(
                     usersPath
@@ -235,6 +212,7 @@ class DBMethods {
                     .addOnFailureListener { e -> Log.w("ERROR", "Error deleting document", e) }
             }
 
+            //Update image of User in DB
             fun updateUserImage(userid :String, imagepath :String, callback: Callback<Boolean>) {
                 db.collection(
                     usersPath
@@ -249,19 +227,7 @@ class DBMethods {
                     }
             }
 
-            fun editQuestion(){
-            }
-
-            fun deleteQuestion(ID :String, question : Question){
-                db.collection(
-                    questionsPath
-                ).document(ID).set(question).addOnSuccessListener {
-                    //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
-                }.addOnFailureListener{
-                    //exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
-                }
-            }
-
+            //set net Game to DB
             fun setGame(game: Game): String {
                 val ref = db.collection(
                     gamesPath
@@ -272,6 +238,7 @@ class DBMethods {
                 return game.gameID
             }
 
+            //Updtae users of current game in DB
             fun updateGameUsers(game: Game) {
                 val gameID = game.gameID
                 val ref = db.collection(
@@ -282,6 +249,7 @@ class DBMethods {
                     .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
             }
 
+            //update invitations of game in DB
             fun updateInvitations(game: Game) {
                 val gameID = game.gameID
                 val ref = db.collection(
@@ -292,16 +260,7 @@ class DBMethods {
                     .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
             }
 
-            fun editGame(ID :String, game : Game) {
-                db.collection(
-                    gamesPath
-                ).document(ID).set(game).addOnSuccessListener {
-                    //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
-                }.addOnFailureListener{
-                    //exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
-                }
-            }
-
+            //Update scores of users in game in DB
             fun updateUserScores(userID: String, gameScore: Int) {
                 val callbackUser = object :
                     Callback<UserQP> {
@@ -328,6 +287,7 @@ class DBMethods {
                 )
             }
 
+            //get active games from DB
             fun getActiveGames(callback: Callback<MutableList<Game>>, gameList: MutableList<Game>) {
                 val docRef = db.collection(
                     gamesPath
@@ -348,6 +308,7 @@ class DBMethods {
                     }
             }
 
+            //get the current game from DB
             fun getCurrentGame(callback: Callback<Game>, gameID: String) {
                 var currentGame = Game()
                 var playersList: MutableList<String>
@@ -375,6 +336,7 @@ class DBMethods {
                     }
             }
 
+            //get User by ID from DB
             fun getUserWithID(callback: Callback<UserQP>, userID: String) {
                 db.collection(
                     usersPath
@@ -390,6 +352,7 @@ class DBMethods {
                     }
             }
 
+            //get User by name from DB
             fun getUserByName(callback: Callback<UserQP>, username: String) {
                 db.collection(
                     usersPath
@@ -411,6 +374,7 @@ class DBMethods {
                     }
             }
 
+            //delete Game from DB
             fun deleteGame(gameID: String, callback: Callback<Boolean>) {
                 val docRef = db.collection(
                     gamesPath
@@ -423,6 +387,7 @@ class DBMethods {
             }
 
 
+            //check Username from DB
             fun checkUsername(curName: String, username: String, callback: Callback<Boolean>) {
                 var usernameExists = false
                 db.collection(

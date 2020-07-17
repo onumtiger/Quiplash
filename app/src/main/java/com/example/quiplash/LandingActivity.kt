@@ -74,6 +74,7 @@ class LandingActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        //join an existing get
         btnJoinGame.setOnClickListener {
             Sounds.playClickSound(this)
             btnJoinGame!!.startAnimation(buttonAnim)
@@ -82,6 +83,7 @@ class LandingActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        //view and edit profile
         btnProfile.setOnClickListener {
             Sounds.playClickSound(this)
             btnProfile!!.startAnimation(buttonAnim)
@@ -90,6 +92,7 @@ class LandingActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        //show and get friends
         btnFriends.setOnClickListener {
             Sounds.playClickSound(this)
             btnFriends!!.startAnimation(buttonAnim)
@@ -97,6 +100,7 @@ class LandingActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        //see all scores
         btnScoreBoard.setOnClickListener {
             Sounds.playClickSound(this)
             btnScoreBoard!!.startAnimation(buttonAnim)
