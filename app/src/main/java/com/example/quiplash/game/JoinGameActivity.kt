@@ -68,6 +68,17 @@ class JoinGameActivity : AppCompatActivity() {
             refreshLayout.isRefreshing = false
         }
 
+        activeGamesList.viewTreeObserver.addOnScrollChangedListener {
+            if (!activeGamesList.canScrollVertically(1)) {
+                // Bottom of scroll view, disable refreshLayout
+                refreshLayout.isEnabled = false
+            }
+            if (!activeGamesList.canScrollVertically(-1)) {
+                // Top of scroll view, enable refreshLayout
+                refreshLayout.isEnabled = true
+            }
+        }
+
         getGamesList(activeGamesList)
         activeGamesList.onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
             // Get the selected item text from ListView

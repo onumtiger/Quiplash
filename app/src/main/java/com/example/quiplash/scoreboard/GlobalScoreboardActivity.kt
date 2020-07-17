@@ -43,6 +43,17 @@ class GlobalScoreboardActivity : AppCompatActivity() {
             refreshLayout.isRefreshing = false
         }
 
+        val scoreboardList = findViewById<ListView>(R.id.scoreboard_list)
+        scoreboardList.viewTreeObserver.addOnScrollChangedListener {
+            if (!scoreboardList.canScrollVertically(1)) {
+                // Bottom of scroll view, disable refreshLayout
+                refreshLayout.isEnabled = false
+            }
+            if (!scoreboardList.canScrollVertically(-1)) {
+                // Top of scroll view, enable refreshLayout
+                refreshLayout.isEnabled = true
+            }
+        }
         getScores()
     }
 
