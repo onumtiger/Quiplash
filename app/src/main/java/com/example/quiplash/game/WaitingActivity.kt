@@ -371,13 +371,7 @@ class WaitingActivity : AppCompatActivity() {
             roundCount = 0
             jump += 1
         }
-
-
-        for (x in 0 until allRounds.size) {
-            allRounds["round$x"]?.question = gameQuestions[x].question.toString()
-        }
-
-
+        
         return allRounds
 
     }
@@ -433,7 +427,7 @@ class WaitingActivity : AppCompatActivity() {
         val callback = object : Callback<java.util.ArrayList<Question>> {
             override fun onTaskComplete(result: java.util.ArrayList<Question>) {
                 var counter = 0
-                while (counter < countQuestions) {
+                while (counter < countQuestions+1) {
                     val position = (0 until result.size).random()
                     if (result[position].type.toString() == selected_category) {
                         selectedQuestions.add(result[position])
