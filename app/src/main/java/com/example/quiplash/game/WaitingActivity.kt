@@ -76,7 +76,6 @@ class WaitingActivity : AppCompatActivity() {
         }
 
 
-        val btnBack = findViewById<Button>(R.id.host_waiting_go_back_arrow)
         val btnInvitePlayers = findViewById<Button>(R.id.invite_players_btn)
         val btnStartGame = findViewById<Button>(R.id.start_game_btn)
         val btnEndGame = findViewById<Button>(R.id.end_game)
@@ -113,11 +112,6 @@ class WaitingActivity : AppCompatActivity() {
         }else{
             layoutDrinksCheck.visibility = View.GONE
             labelDrinks.visibility = View.GONE
-        }
-
-        btnBack.setOnClickListener {
-            Sounds.playClickSound(this)
-            super.onBackPressed()
         }
 
         btnStartGame.setOnClickListener {
