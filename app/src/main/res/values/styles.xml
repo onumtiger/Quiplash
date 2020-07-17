@@ -20,7 +20,7 @@
 
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/roboto_slab_bold</item>
-        <item name="android:textColor">@color/colorWhite</item>
+        <!--<item name="android:textColor">@color/colorWhite</item>-->
         <item name="android:textAlignment">center</item>
         <item name="android:typeface">serif</item>
     </style>
