@@ -69,11 +69,6 @@ class SignInActivity : AppCompatActivity() {
             }
         }
 
-        //Remove Top-Bar
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
         setContentView(R.layout.activity_sign_in)
 
         //Set View-Elements

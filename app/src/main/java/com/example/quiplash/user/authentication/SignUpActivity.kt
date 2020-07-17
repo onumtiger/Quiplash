@@ -61,11 +61,6 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         sharedPreference = getSharedPreferences(PREFNAME, PRIVATEMODE)
 
-        //Remove Top-Bar
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
         setContentView(R.layout.activity_sign_up)
 
         //Get Firebase auth instance

@@ -52,11 +52,8 @@ class WaitingActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
         auth = FirebaseAuth.getInstance()
 
-        //Remove Tob Bar
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
+
+
         setContentView(R.layout.activity_waiting)
 
         //add Questions to Game
@@ -348,11 +345,11 @@ class WaitingActivity : AppCompatActivity() {
 
             while (roundCount < game.users.size - jump) {
 
-                val voters = linkedMapOf<String, Voter>()
+                val voters = mutableListOf<String>()
                 for (user in game.users) {
 
                     if (game.users.indexOf(user) != roundCount && game.users.indexOf(user) != (roundCount + jump)) {
-                        voters["voter${voters.size}"] = Voter(user)
+                        voters.add(user)
                     }
                 }
                 for (x in 0 until game.rounds) {

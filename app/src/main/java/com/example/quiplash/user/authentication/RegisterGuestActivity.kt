@@ -51,10 +51,7 @@ class RegisterGuestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
+
         setContentView(R.layout.activity_register_guest)
 
         //Get Firebase auth instance

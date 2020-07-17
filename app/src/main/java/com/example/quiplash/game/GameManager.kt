@@ -88,22 +88,20 @@ class GameManager {
         fun playerAllocation(appcontext: Context, userid: String) {
             if (game.playrounds.size >= game.activeRound) {
 
-                if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        opp0
-                    ).userID.equals(userid) || game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                        opp1
-                    ).userID.equals(userid)
+                if (game.playrounds.getValue("round${game.activeRound}").voters.contains(userid)
                 ) {
-                    val intent = Intent(appcontext, PrepareAnswerActivity::class.java).setFlags(
-                        Intent.FLAG_ACTIVITY_NEW_TASK
-                    )
-                    appcontext.startActivity(intent)
-                } else {
                     val intent = Intent(appcontext, ChooseAnswerActivity::class.java).setFlags(
                         Intent.FLAG_ACTIVITY_NEW_TASK
                     )
                     appcontext.startActivity(intent)
+
+                } else {
+                    val intent = Intent(appcontext, PrepareAnswerActivity::class.java).setFlags(
+                        Intent.FLAG_ACTIVITY_NEW_TASK
+                    )
+                    appcontext.startActivity(intent)
                 }
+
             } else {
                 val intent = Intent(
                     appcontext,

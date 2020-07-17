@@ -37,11 +37,6 @@ class AnswersActivity : AppCompatActivity() {
 
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
 
-        //Hide Top-Bar
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
         setContentView(R.layout.activity_answers)
 
         //Set View-Elements

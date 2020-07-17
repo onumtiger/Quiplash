@@ -76,11 +76,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
             }
 
-        //Remove Top_Bar
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
+
         setContentView(R.layout.activity_prepare_answer)
 
         //Set View-Elements

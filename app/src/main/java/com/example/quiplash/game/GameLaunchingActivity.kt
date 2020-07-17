@@ -33,12 +33,6 @@ class GameLaunchingActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
 
-        //Remove Top-Bar
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
-
         setContentView(R.layout.activity_game_launching)
 
         //Set View-Elements

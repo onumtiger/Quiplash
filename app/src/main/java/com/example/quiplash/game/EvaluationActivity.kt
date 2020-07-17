@@ -106,12 +106,6 @@ class EvaluationActivity : AppCompatActivity() {
         }
         GameManager.setPoints(callbackPoints)
 
-        //Remove Top-Bar
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
-
 
         //Setup View-Elements
         val questionEval = findViewById<TextView>(R.id.questionEval)

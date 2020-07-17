@@ -21,10 +21,7 @@ class GlobalScoreboardActivity : AppCompatActivity() {
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
+
         setContentView(R.layout.activity_global_scoreboard)
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.scoreboard_go_back_arrow)

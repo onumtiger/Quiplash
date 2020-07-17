@@ -36,10 +36,7 @@ class JoinGameActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
+
         setContentView(R.layout.activity_join_game)
 
         val btnNewGameActivity = findViewById<AppCompatImageButton>(R.id.join_new_game_btn)

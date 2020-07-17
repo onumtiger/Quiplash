@@ -58,11 +58,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //Hide Top-Bar
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
+
         setContentView(R.layout.activity_choose_answer)
 
         //Start Sound
@@ -200,19 +196,6 @@ class ChooseAnswerActivity : AppCompatActivity() {
         startTimer(timerView, startSecondsVoting, callbackTimer)
     }
 
-    private fun getVotersIndex(userid: String): String {
-        var voterkey = ""
-        game.playrounds.getValue("round${game.activeRound}").voters.forEach {
-            if (it.value.userID == userid) {
-                voterkey = it.key
-                return@forEach
-            }
-            return@forEach
-        }
-
-        return voterkey
-    }
-
     /**
      * Save Vote in Database respectively Save Score for Vote Into Database.
      * Voter can Change ist vote during the given Time.
@@ -258,9 +241,6 @@ class ChooseAnswerActivity : AppCompatActivity() {
             db.document(game.gameID)
                 .update(
                     mapOf(
-                        /*"playrounds.round${game.activeRound}.voters.${getVotersIndex(auth!!.currentUser?.uid.toString())}.voteUserID" to game.playrounds.getValue(
-                            "round${game.activeRound}"
-                        ).opponents.getValue("opponent$answerIndex").userID,*/
                         "playrounds.round${game.activeRound}.opponents.opponent$answerIndex.answerScore" to FieldValue.increment(
                             GameManager.voteScore.toDouble()
                         )

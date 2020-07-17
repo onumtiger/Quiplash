@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/imageViewProfileBorder"
-        android:layout_width="152dp"
-        android:layout_height="152dp"
+        android:layout_width="154dp"
+        android:layout_height="154dp"
         android:layout_marginTop="23dp"
         android:contentDescription="@string/border_for_profile_picture"
         android:elevation="11dp"
@@ -47,6 +47,7 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#4A000000"
             android:scaleType="center" />
 
     </androidx.cardview.widget.CardView>

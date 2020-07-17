@@ -27,10 +27,7 @@ class EndOfGameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
+
         setContentView(R.layout.activity_end_of_game)
 
         val btnHome = findViewById<Button>(R.id.btnHome)
