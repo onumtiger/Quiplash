@@ -5,7 +5,6 @@ class Question {
     var question: String? = null
     var type: String? = null
     var ID: String? = null
-    var category: String? = null
 
     constructor(ID: String?, question: String?, type: String?) {
         this.ID = ID

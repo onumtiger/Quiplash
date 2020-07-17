@@ -100,6 +100,8 @@ class WaitingActivity : AppCompatActivity() {
 
         getUsersList(playersListView, game.gameID)
 
+        //partymode
+        //checkboxes for host to add the drinks for the game
         if (game.partyMode && auth.currentUser?.uid.toString() == game.hostID) {
             layoutDrinksCheck.visibility = View.VISIBLE
             labelDrinks.visibility = View.VISIBLE
@@ -117,6 +119,7 @@ class WaitingActivity : AppCompatActivity() {
                 shotBool = checkShot.isChecked
             }
         } else {
+            //only viewable for host
             layoutDrinksCheck.visibility = View.GONE
             labelDrinks.visibility = View.GONE
         }
@@ -379,6 +382,9 @@ class WaitingActivity : AppCompatActivity() {
 
     }
 
+    //partymode
+    //add drinks depending on selected drinks by host
+    //drinks are added to game in firestore
     private fun addDrinks() {
         if (beerBool) {
             drinkChallenges.add("Have a sip of Beer")
@@ -425,6 +431,7 @@ class WaitingActivity : AppCompatActivity() {
             .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
     }
 
+    //get random questions from database selected by category in a local arraylist
     private fun getQuestionsForGame(rounds: Int, player_count: Int, selected_category: String) {
         val countQuestions = rounds * player_count
         val callback = object : Callback<java.util.ArrayList<Question>> {

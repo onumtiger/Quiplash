@@ -48,12 +48,12 @@ class GameManager {
 
         val db = FirebaseFirestore.getInstance().collection(DBMethods.gamesPath)
 
+        // gametimer start
         fun startTimer(textView: TextView, time_in_seconds: Long, callback: Callback<Boolean>) {
             countdownTimer = object : CountDownTimer(time_in_seconds * 1000, 1000) {
                 override fun onFinish() {
                     callback.onTaskComplete(true)
                 }
-
                 override fun onTick(p0: Long) {
                     time_in_milli_seconds = p0
                     updateTextUI(
@@ -74,13 +74,7 @@ class GameManager {
             }
         }
 
-        private fun resetTimer(textView: TextView) {
-            time_in_milli_seconds = 60000L
-            updateTextUI(
-                textView
-            )
-        }
-
+        //Timer pause
         fun pauseTimer() {
             countdownTimer.cancel()
         }

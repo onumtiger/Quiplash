@@ -65,6 +65,8 @@ class EndOfGameActivity : AppCompatActivity() {
         DBMethods.deleteGame(game.gameID,callbackSuccess)
     }
 
+    //show player scores
+    //add final extra points for best 3 players
     private fun showPlayerScores() {
         val scoreboardList = findViewById<ListView>(R.id.scoreboard_list)
         val scoreboardArray = mutableListOf<UserQP>()

@@ -82,6 +82,8 @@ class EvaluationActivity : AppCompatActivity() {
         drinkView = findViewById(R.id.party_shot_text_view)
         completeLayout = findViewById(R.id.complete_layout)
 
+        //partymode
+        //before loosers load
         if (!game.partyMode){
             drinkView?.visibility = View.GONE
         } else {
@@ -105,7 +107,6 @@ class EvaluationActivity : AppCompatActivity() {
             }
         }
         GameManager.setPoints(callbackPoints)
-
 
         //Setup View-Elements
         val questionEval = findViewById<TextView>(R.id.questionEval)
@@ -225,12 +226,10 @@ class EvaluationActivity : AppCompatActivity() {
 
     }
 
-
     //Disable Back-Btn on Device
     override fun onBackPressed() {
         println("do nothing")
     }
-
 
     /**
      * Get Scoring and select winner.
@@ -376,6 +375,9 @@ class EvaluationActivity : AppCompatActivity() {
                 val shakehanim = AnimationUtils.loadAnimation(this, R.anim.zoom_in_and_shake)
 
                 scoreView!!.startAnimation(shakehanim)
+
+                //partymode
+                //get looser/loosers of round and give him a challenge
                 if (game.partyMode){
                     val drnk = (0 until game.drinks.size).random()
                     if (deuce){
