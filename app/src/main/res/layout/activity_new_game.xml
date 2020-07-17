@@ -200,10 +200,13 @@
 
     <Button
         android:id="@+id/start_game"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
         android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/colorText"
         android:text="@string/create_game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
