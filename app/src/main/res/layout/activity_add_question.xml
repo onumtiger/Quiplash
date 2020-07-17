@@ -113,6 +113,11 @@
         android:layout_marginStart="52dp"
         android:layout_marginTop="364dp"
         android:inputType="text"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="#92FFFFFF"
+        android:textCursorDrawable="@color/colorTurquoise"
+        android:textSize="16sp"
+        android:backgroundTint="@color/colorWhite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:autofillHints="Enter your Question" />

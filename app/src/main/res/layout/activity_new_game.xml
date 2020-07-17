@@ -231,6 +231,7 @@
         android:inputType="textPersonName"
         android:textAlignment="textStart"
         android:textColor="@color/colorWhite"
+        android:textColorHint="#92FFFFFF"
         android:textCursorDrawable="@color/colorTurquoise"
         app:layout_constraintBottom_toBottomOf="@+id/party_switch"
         app:layout_constraintEnd_toStartOf="@+id/switchPrivateGame"

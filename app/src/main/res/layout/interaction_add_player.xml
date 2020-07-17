@@ -52,6 +52,8 @@
             android:inputType="textEmailAddress"
             android:singleLine="true"
             android:textSize="14sp"
+            android:textColorHint="#92000000"
+            android:textCursorDrawable="@color/colorTurquoise"
             app:layout_constraintHorizontal_bias="0.187"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -65,7 +67,6 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/ic_close"
             android:gravity="center"
-            android:textColor="@color/colorGreen"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
