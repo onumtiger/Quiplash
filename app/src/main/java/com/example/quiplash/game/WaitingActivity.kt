@@ -341,36 +341,39 @@ class WaitingActivity : AppCompatActivity() {
 
         var testroundcount = 0
 
-        while (jump < game.users.size) {
+            while (jump < game.users.size) {
 
-            while (roundCount < game.users.size - jump) {
+                while (roundCount < game.users.size - jump) {
 
-                val voters = mutableListOf<String>()
-                for (user in game.users) {
+                    val voters = mutableListOf<String>()
+                    for (user in game.users) {
 
-                    if (game.users.indexOf(user) != roundCount && game.users.indexOf(user) != (roundCount + jump)) {
-                        voters.add(user)
+                        if (game.users.indexOf(user) != roundCount && game.users.indexOf(user) != (roundCount + jump)) {
+                            voters.add(user)
+                        }
                     }
+                    for (x in 0 until game.rounds) {
+                        if (testroundcount < game.rounds*game.playerNumber){
+                            val round = Round(
+                                voters,
+                                linkedMapOf(
+                                    GameManager.opp0 to Opponent(game.users[roundCount]),
+                                    GameManager.opp1 to Opponent(game.users[roundCount + jump])
+                                ),
+                                gameQuestions[testroundcount].question.toString()
+                            )
+                            val roundindex =
+                                (testroundcount.rem(game.users.size)) * game.rounds + (testroundcount / game.users.size)
+                            allRounds["round$roundindex"] = round
+                            testroundcount += 1
+                        }
+                    }
+                    roundCount += 1
                 }
-                for (x in 0 until game.rounds-1) {
-                    val round = Round(
-                        voters,
-                        linkedMapOf(
-                            GameManager.opp0 to Opponent(game.users[roundCount]),
-                            GameManager.opp1 to Opponent(game.users[roundCount + jump])
-                        ),
-                        gameQuestions[testroundcount].question.toString()
-                    )
-                    val roundindex =
-                        (testroundcount.rem(game.users.size)) * game.rounds + (testroundcount / game.users.size)
-                    allRounds["round$roundindex"] = round
-                    testroundcount += 1
-                }
-                roundCount += 1
+                roundCount = 0
+                jump += 1
             }
-            roundCount = 0
-            jump += 1
-        }
+
         
         return allRounds
 
@@ -429,7 +432,7 @@ class WaitingActivity : AppCompatActivity() {
                 var counter = 0
                 while (counter < countQuestions+1) {
                     val position = (0 until result.size).random()
-                    if (result[position].type.toString() == selected_category) {
+                    if (result[position].type.toString() == selected_category || selected_category == "All") {
                         selectedQuestions.add(result[position])
                         val currentQuestion = result[position]
                         result.remove(currentQuestion)

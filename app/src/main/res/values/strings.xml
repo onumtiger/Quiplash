@@ -46,7 +46,7 @@
     <string name="add">ADD</string>
     <!-- Game Categories -->
     <string-array name="array_categories">
-        <item name="standard">Standard</item>
+        <item name="all">All</item>
         <item name="funny">Funny</item>
         <item name="harsh">Harsh</item>
         <item name="poetic">Poetic</item>

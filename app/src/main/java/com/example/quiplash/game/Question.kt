@@ -7,11 +7,10 @@ class Question {
     var ID: String? = null
     var category: String? = null
 
-    constructor(ID: String?, question: String?, type: String?, category: String?) {
+    constructor(ID: String?, question: String?, type: String?) {
         this.ID = ID
         this.question = question
         this.type = type
-        this.category = category
     }
 
     constructor(){}

@@ -65,8 +65,7 @@ class DBMethods {
                 val qustn = Question(
                     ID,
                     question_text,
-                    question_type,
-                    ""
+                    question_type
                 )
 
                 db.collection(
