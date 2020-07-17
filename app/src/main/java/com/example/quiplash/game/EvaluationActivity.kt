@@ -80,7 +80,7 @@ class EvaluationActivity : AppCompatActivity() {
         if (!game.partyMode){
             drinkView?.visibility = View.INVISIBLE
         } else {
-            completeLayout?.setBackgroundResource(R.drawable.prty)
+            completeLayout?.setBackgroundResource(R.drawable.background_party_mode)
             val drnk = (0 until game.drinks.size).random()
             drinkView?.text = ("The Loosers challenge: \n" + game.drinks[drnk])
         }
@@ -383,9 +383,10 @@ class EvaluationActivity : AppCompatActivity() {
                         } else {
                             winnerNames += winner.userName + " "
                             drinkView?.text = (winnerNames + "have this challenge: \n" + game.drinks[drnk])
+                            deuce = false
                         }
                     } else {
-                        winnerNames += winner.userName + " "
+                        winnerNames = winner.userName + " "
                         drinkView?.text = (winnerNames + "has this challenge: \n" + game.drinks[drnk])
                     }
                 }
@@ -396,7 +397,7 @@ class EvaluationActivity : AppCompatActivity() {
     private fun setProfilePicture(player: UserQP, profileView: ImageView?) {
 
         val storageRef = FirebaseStorage.getInstance().reference
-
+p
         if (player.photo == null) {
             player.photo = DBMethods.defaultGuestImg
         }

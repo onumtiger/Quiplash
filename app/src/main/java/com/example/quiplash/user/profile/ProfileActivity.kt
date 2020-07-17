@@ -123,13 +123,16 @@ class ProfileActivity : AppCompatActivity() {
          * start addquestion activity if user's not a guest
          */
         btnaddQuestion.setOnClickListener {
-            if (currentUser.guest!!) {
-                dialogFragmentGuest.show(fm, "modal_guest_info")
-            } else {
-                Sounds.playClickSound(this)
-                val intent = Intent(this, AddQuestionActivity::class.java)
-                startActivity(intent)
-            }
+            val handler = Handler()
+            handler.postDelayed({
+                if (currentUser.guest!!) {
+                    dialogFragmentGuest.show(fm, "modal_guest_info")
+                } else {
+                    Sounds.playClickSound(this)
+                    val intent = Intent(this, AddQuestionActivity::class.java)
+                    startActivity(intent)
+                }
+            }, 200)
         }
 
         /**

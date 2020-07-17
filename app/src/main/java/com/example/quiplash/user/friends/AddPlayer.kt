@@ -129,12 +129,12 @@ class AddPlayer : DialogFragment() {
                             // update users
                             currentUser.userID?.let { it1 -> DBMethods.editUser(it1, currentUser) }
                             friend.userID?.let { it1 -> DBMethods.editUser(it1, friend) }
+                            Toast.makeText(context, "Successfully added!", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
                 }
             }
-            Toast.makeText(context, "Successfully added!", Toast.LENGTH_SHORT)
-                .show()
             val intent = Intent(context, FriendsActivity::class.java);
             startActivity(intent);
         }
