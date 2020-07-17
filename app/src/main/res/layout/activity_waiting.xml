@@ -21,17 +21,6 @@
             android:layout_height="match_parent">
 
 
-            <Button
-                android:id="@+id/host_waiting_go_back_arrow"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginTop="41dp"
-                android:background="@drawable/ic_go_back_arrow"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.042"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
