@@ -4,6 +4,7 @@ import android.view.animation.Interpolator
 import kotlin.math.cos
 import kotlin.math.pow
 
+/**The Bounce-Interpolator helps reglating the speed and frequency of an animation**/
 class BounceInterpolator internal constructor(amplitude: Double, frequency: Double) :
     Interpolator {
     private var mAmplitude = 1.0

@@ -36,10 +36,7 @@ class JoinGameActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
+
         setContentView(R.layout.activity_join_game)
 
         val btnNewGameActivity = findViewById<AppCompatImageButton>(R.id.join_new_game_btn)
@@ -66,6 +63,17 @@ class JoinGameActivity : AppCompatActivity() {
             Sounds.playRefreshSound(this)
             getGamesList(activeGamesList)
             refreshLayout.isRefreshing = false
+        }
+
+        activeGamesList.viewTreeObserver.addOnScrollChangedListener {
+            if (!activeGamesList.canScrollVertically(1)) {
+                // Bottom of scroll view, disable refreshLayout
+                refreshLayout.isEnabled = false
+            }
+            if (!activeGamesList.canScrollVertically(-1)) {
+                // Top of scroll view, enable refreshLayout
+                refreshLayout.isEnabled = true
+            }
         }
 
         getGamesList(activeGamesList)

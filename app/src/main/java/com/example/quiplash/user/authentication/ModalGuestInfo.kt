@@ -10,6 +10,8 @@ import androidx.fragment.app.DialogFragment
 import com.example.quiplash.R
 import com.example.quiplash.Sounds
 
+/**This Modal informs the Guest-User about the restrictions of a Guest in general.
+ * This Modal offers to dismiss the modal or to register.**/
 class ModalGuestInfo : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

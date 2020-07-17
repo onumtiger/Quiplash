@@ -24,7 +24,9 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
-
+/**
+ *
+ * **/
 class SignUpActivity : AppCompatActivity() {
     //view objects
     private lateinit var progressBar: ProgressBar
@@ -58,10 +60,7 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPreference = getSharedPreferences(PREFNAME, PRIVATEMODE)
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
+
         setContentView(R.layout.activity_sign_up)
 
         //Get Firebase auth instance
@@ -71,6 +70,7 @@ class SignUpActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance().collection(dbUsersPath)
 
+        //Set View-Elements
         val btnSignIn = findViewById<Button>(R.id.signinBtn)
         val btnSignUp = findViewById<Button>(R.id.signupBtn)
         val btnSubmit = findViewById<Button>(R.id.submitBtn)
@@ -93,6 +93,7 @@ class SignUpActivity : AppCompatActivity() {
         simpleViewFlipper.inAnimation = inAni
         simpleViewFlipper.outAnimation = out
 
+        //On Press Enter in Password-Field the same Function as when pressing 'SignUp'-Button will be called.
         inputPassword2.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 signup()
@@ -101,7 +102,7 @@ class SignUpActivity : AppCompatActivity() {
             false
         })
 
-
+        //On Press Enter in Password-Field the same Function as when pressing 'Submit Username'-Button will be called.
         inputUsername.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 submitUsername()
@@ -118,6 +119,7 @@ class SignUpActivity : AppCompatActivity() {
             finish()
         }
 
+        //Entered Username will be saved
         btnSubmit.setOnClickListener {
             Sounds.playClickSound(this)
             submitUsername()
@@ -136,24 +138,34 @@ class SignUpActivity : AppCompatActivity() {
 
     }
 
+    /**
+     *Entered Username will be checked wether it already exists
+     * **/
     private fun submitUsername(){
-        val callbackCheckUsername = object:
-            Callback<Boolean> {
-            override fun onTaskComplete(result: Boolean) {
-                if (result) {
-                    textviewErrorUserName.text = getString(R.string.username_not_available)
-                } else {
-                    createUser()
+        if(inputUsername.text.isNotEmpty()) {
+            val callbackCheckUsername = object :
+                Callback<Boolean> {
+                override fun onTaskComplete(result: Boolean) {
+                    if (result) {
+                        textviewErrorUserName.text = getString(R.string.username_not_available)
+                    } else {
+                        createUser()
+                    }
                 }
             }
+            DBMethods.checkUsername(
+                "",
+                inputUsername.text.toString(),
+                callbackCheckUsername
+            )
+        }else{
+            textviewErrorUserName.text = getString(R.string.enter_username)
         }
-        DBMethods.checkUsername(
-            "",
-            inputUsername.text.toString(),
-            callbackCheckUsername
-        )
     }
 
+    /** If Form is In-Complete, corresponding Feedback will be displayed. Else a User in Firebase
+     * will created. Afterwards the view Switches to a View where the user can enter a Username
+     * **/
     private fun signup(){
         if (checkInput()) {
             progressBar.visibility = View.VISIBLE
@@ -212,6 +224,8 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
+    /**The User will signed up as guest/anonymous (an 'anonymous'-Account will be created in Firebase).
+     * Afterwards the guest can enter a Username**/
     private fun anonymousLogin() {
         auth.signInAnonymously()
             .addOnCompleteListener(this) { task ->
@@ -230,12 +244,16 @@ class SignUpActivity : AppCompatActivity() {
             }
     }
 
+
+    /**The Validity of the Input will be checked regarding completeness and wether passwords are
+     * same and have the min-length of 6 Characters**/
     private fun checkInput(): Boolean {
         return (!TextUtils.isEmpty(emailFieldSU.text) && !TextUtils.isEmpty(passwordRetypeFieldSU.text) &&
                 !TextUtils.isEmpty(passwordFieldSU.text) && (passwordRetypeFieldSU.text.toString() == passwordFieldSU.text.toString()) && passwordFieldSU.text.length >= 6)
     }
 
 
+    /**A User in Firestore will be created**/
     private fun createUser() {
         //if user is guest...
         if (!isUser) {

@@ -25,6 +25,11 @@ import com.example.quiplash.R
 import com.example.quiplash.Sounds
 import com.example.quiplash.user.UserQP
 
+/**
+ * This View presents teh result of the voting. If the game is in party-mode,
+ * additional Infos for th loser of this Round will be displayed.
+ * **/
+
 class EvaluationActivity : AppCompatActivity() {
 
     //Firestore
@@ -39,7 +44,7 @@ class EvaluationActivity : AppCompatActivity() {
     private var winnerName: TextView? = null
     private var imageWinnerPhoto: ImageView? = null
     private var scoreView: TextView? = null
-    private var frameProfile: RelativeLayout? = null
+    private var frameProfile: ConstraintLayout? = null
     private var imageWinnerSign: ImageView? = null
 
     private var imageAndIcon: TextView? = null
@@ -47,10 +52,9 @@ class EvaluationActivity : AppCompatActivity() {
     private var winnerNameDraw: TextView? = null
     private var imageWinnerPhotoDraw: ImageView? = null
     private var imageLoserSign: ImageView? = null
-    private var imageShot: TextView? = null
     private var scoreViewDraw: TextView? = null
     private var answerViewWinnerFrameDraw: View? = null
-    private var frameProfileDraw: RelativeLayout? = null
+    private var frameProfileDraw: ConstraintLayout? = null
     private var drinkView: TextView? = null
 
     private lateinit var awaitNextRound: ListenerRegistration
@@ -74,15 +78,17 @@ class EvaluationActivity : AppCompatActivity() {
         dbUsers = FirebaseFirestore.getInstance().collection(dbUsersPath)
         auth = FirebaseAuth.getInstance()
 
+        //Set View-Elements
         drinkView = findViewById(R.id.party_shot_text_view)
         completeLayout = findViewById(R.id.complete_layout)
 
         if (!game.partyMode){
-            drinkView?.visibility = View.INVISIBLE
+            drinkView?.visibility = View.GONE
         } else {
             completeLayout?.setBackgroundResource(R.drawable.background_party_mode)
             val drnk = (0 until game.drinks.size).random()
             drinkView?.text = ("The Loosers challenge: \n" + game.drinks[drnk])
+            drinkView?.visibility = View.VISIBLE
         }
 
 
@@ -100,13 +106,8 @@ class EvaluationActivity : AppCompatActivity() {
         }
         GameManager.setPoints(callbackPoints)
 
-        //Remove Top-Bar
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
 
-
+        //Setup View-Elements
         val questionEval = findViewById<TextView>(R.id.questionEval)
         val textViewTimer = findViewById<TextView>(R.id.timerViewEval)
         answerViewWinner = findViewById(R.id.answerRoundWinner)
@@ -115,9 +116,7 @@ class EvaluationActivity : AppCompatActivity() {
         scoreView = findViewById(R.id.textViewScore)
         frameProfile = findViewById(R.id.winner)
         imageWinnerSign = findViewById(R.id.imageWinnerSign)
-
         imageAndIcon = findViewById(R.id.textViewAnd)
-
         answerViewWinnerDraw = findViewById(R.id.answerRoundWinnerDraw)
         winnerNameDraw = findViewById(R.id.textRoundWinnerNameDraw)
         answerViewWinnerFrameDraw = findViewById(R.id.viewDraw)
@@ -126,8 +125,6 @@ class EvaluationActivity : AppCompatActivity() {
         scoreViewDraw = findViewById(R.id.textViewScoreDraw)
         frameProfileDraw = findViewById(R.id.winnerDraw)
         imageLoserSign = findViewById(R.id.imageLoserSign)
-        imageShot = findViewById(R.id.textViewShot)
-
         val nextBtn = findViewById<TextView>(R.id.buttonNext)
 
         //save current active-round
@@ -142,6 +139,7 @@ class EvaluationActivity : AppCompatActivity() {
             Callback<Boolean> {
             override fun onTaskComplete(result: Boolean) {
                 Sounds.playClickSound(this@EvaluationActivity)
+                //When Timer ends and View hasn't already switched, go to next View
                 if(!setRoundFlag) {
                     setRoundFlag = true
                     setNextRound()
@@ -155,6 +153,7 @@ class EvaluationActivity : AppCompatActivity() {
             nextBtn.text = getString(R.string.show_scoreboard)
         }
 
+        //When Button is clicked and View hasn't already switched, go to next View
         nextBtn.setOnClickListener {
             Sounds.playClickSound(this)
             if(!setRoundFlag) {
@@ -226,6 +225,8 @@ class EvaluationActivity : AppCompatActivity() {
 
     }
 
+
+    //Disable Back-Btn on Device
     override fun onBackPressed() {
         println("do nothing")
     }
@@ -243,7 +244,7 @@ class EvaluationActivity : AppCompatActivity() {
                         GameManager.opp0).answerScore > game.playrounds.getValue(
                         "round${game.activeRound}"
                     ).opponents.getValue(GameManager.opp1).answerScore
-                    -> {
+                    -> { // Answer (1) WINS
                         setWinnerInfo(
                             0,
                             frameProfile,
@@ -274,7 +275,7 @@ class EvaluationActivity : AppCompatActivity() {
                     ).answerScore < game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         GameManager.opp1
                     ).answerScore
-                    -> {
+                    -> {// Answer (2) WINS
                         setWinnerInfo(
                             1,
                             frameProfile,
@@ -307,7 +308,7 @@ class EvaluationActivity : AppCompatActivity() {
                     ).answerScore == game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                         GameManager.opp1
                     ).answerScore
-                    -> {
+                    -> { // DRAW
                         deuce = true
                         secondName = true
                         setWinnerInfo(
@@ -330,8 +331,8 @@ class EvaluationActivity : AppCompatActivity() {
                         scoreViewDraw?.visibility = RelativeLayout.VISIBLE
                         imageWinnerSign?.visibility = ImageView.INVISIBLE
                         imageLoserSign?.visibility = ImageView.INVISIBLE
-                        imageShot?.visibility = ImageView.INVISIBLE
                         imageAndIcon?.visibility = TextView.VISIBLE
+
                         val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom_button)
                         val interpolator = BounceInterpolator(0.2, 10.0)
                         zoomanim.interpolator = interpolator
@@ -356,6 +357,7 @@ class EvaluationActivity : AppCompatActivity() {
     ) {
         frameView?.visibility = View.VISIBLE
 
+        //display Answers in View
         answerView?.text =
             game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent$winnerIndex").answer
         scoreView?.text =
@@ -375,9 +377,9 @@ class EvaluationActivity : AppCompatActivity() {
 
                 scoreView!!.startAnimation(shakehanim)
                 if (game.partyMode){
-                    val drnk = (0..game.drinks.size-1).random()
-                    if (deuce == true){
-                        if (secondName == true){
+                    val drnk = (0 until game.drinks.size).random()
+                    if (deuce){
+                        if (secondName){
                             winnerNames += winner.userName + " & "
                             secondName = false
                         } else {
@@ -394,14 +396,18 @@ class EvaluationActivity : AppCompatActivity() {
     }
 
 
+    /**Load Picture of User in View**/
     private fun setProfilePicture(player: UserQP, profileView: ImageView?) {
 
+        //Reference of Firebase-Storage
         val storageRef = FirebaseStorage.getInstance().reference
 
+        //If User has no Profile-Picture show a default-image
         if (player.photo == null) {
             player.photo = DBMethods.defaultGuestImg
         }
 
+        //Load Image
         val spaceRef = storageRef.child(player.photo!!)
         spaceRef.downloadUrl
             .addOnSuccessListener { uri ->

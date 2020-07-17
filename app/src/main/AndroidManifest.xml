@@ -35,33 +35,29 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".user.profile.ResetPasswordActivity" />
-        <activity android:name=".user.friends.FriendsActivity" />
-        <activity android:name=".user.profile.ProfileActivity" />
-        <activity android:name=".user.authentication.RegisterGuestActivity" />
-        <activity android:name=".game.JoinGameActivity" />
-        <activity android:name=".game.NewGameActivity" />
-        <activity android:name=".LandingActivity" />
-        <activity android:name="com.example.quiplash.user.authentication.SignUpActivity" />
-        <activity android:name="com.example.quiplash.user.authentication.SignInActivity" />
-        <activity android:name=".game.WaitingActivity" />
-        <activity android:name=".game.InviteFriendsToGameActivity" />
-        <activity android:name=".game.GameLaunchingActivity" />
-        <activity android:name=".scoreboard.GlobalScoreboardActivity" />
-        <activity android:name=".user.addQuestions.AddQuestionActivity" />
-        <activity android:name=".game.AnswersActivity" />
-        <activity android:name=".game.PrepareAnswerActivity" />
-        <activity android:name=".game.ChooseAnswerActivity" />
-        <activity android:name=".game.EvaluationActivity" />
-        <activity android:name=".game.EndOfGameActivity" />
-        <activity android:name=".user.profile.EditProfileActivity" />
-        <activity android:name=".user.profile.EditPWMailActivity" />
+        <activity android:name=".user.profile.ResetPasswordActivity" android:screenOrientation="portrait" />
+        <activity android:name=".user.friends.FriendsActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".user.profile.ProfileActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".user.authentication.RegisterGuestActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".game.JoinGameActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".game.NewGameActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".LandingActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.example.quiplash.user.authentication.SignUpActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.example.quiplash.user.authentication.SignInActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".game.WaitingActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".game.InviteFriendsToGameActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".game.GameLaunchingActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".scoreboard.GlobalScoreboardActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".user.addQuestions.AddQuestionActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".game.AnswersActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".game.PrepareAnswerActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".game.ChooseAnswerActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".game.EvaluationActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".game.EndOfGameActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".user.profile.EditProfileActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".user.profile.EditPWMailActivity" android:screenOrientation="portrait"/>
         <activity android:name=".MainActivity">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
         </activity>
         <activity android:name=".LaunchingActivity"
             android:theme="@style/AppTheme.SplashScreen">

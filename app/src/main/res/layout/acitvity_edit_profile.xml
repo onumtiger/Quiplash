@@ -22,6 +22,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <ImageView
+        android:id="@+id/imageViewProfileBorder"
+        android:layout_width="154dp"
+        android:layout_height="154dp"
+        android:layout_marginTop="23dp"
+        android:contentDescription="@string/border_for_profile_picture"
+        android:elevation="11dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_game_go_back_arrow"
+        app:srcCompat="@drawable/char_circle_transparent" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/userPhotoLayout"
         android:layout_width="150dp"
@@ -40,6 +52,7 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#48000000"
             android:scaleType="center" />
 
     </androidx.cardview.widget.CardView>
@@ -49,8 +62,8 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="125dp"
         android:background="@drawable/edit_sign_black"
+        android:elevation="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/userPhotoLayout"
         app:layout_constraintTop_toTopOf="@+id/userPhotoLayout" />

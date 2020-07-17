@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 
 /**
- * Class for displaying the start screen when opening the app
+ * Class for displaying the splash-screen when starting the app
  */
 
 class LaunchingActivity : AppCompatActivity() {

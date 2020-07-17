@@ -38,18 +38,18 @@ class DBMethods {
 
             val db = FirebaseFirestore.getInstance()
             lateinit var res: QuerySnapshot
-            var singleUser : UserQP =
-               UserQP()
             var GameQuestions = ArrayList<Question>()
             var actual = false
             private var auth: FirebaseAuth? = FirebaseAuth.getInstance()
 
             const val usersPath = "users"
-            const val invitationsPath = "invitations"
-            const val friendsPath = "friends"
+            private const val invitationsPath = "invitations"
+            private const val friendsPath = "friends"
             const val gamesPath = "games"
-            const val questionsPath = "questions"
-            const val usernamePath = "userName"
+            private const val questionsPath = "questions"
+            private const val usernamePath = "userName"
+            const val playroundsPath = "playrounds"
+            const val drinksPath = "drinks"
             const val defaultUserImg = "images/default_user_QP.png"
             const val defaultGuestImg = "images/default_guest_QP.png"
 
@@ -351,7 +351,7 @@ class DBMethods {
 
             fun getCurrentGame(callback: Callback<Game>, gameID: String) {
                 var currentGame = Game()
-                var playersList = mutableListOf<String>()
+                var playersList: MutableList<String>
                 val docRef = db.collection(
                     gamesPath
                 ).document(gameID)
@@ -377,46 +377,37 @@ class DBMethods {
             }
 
             fun getUserWithID(callback: Callback<UserQP>, userID: String) {
-                println(userID)
                 db.collection(
                     usersPath
                 ).document(userID).get()
                     .addOnSuccessListener { document ->
                         if (document != null) {
-                            Log.d("TAG", "${document.id} => ${document.data}")
                             val user = document.toObject(UserQP::class.java)!!
                             callback.onTaskComplete(user)
                         }
                     }
                     .addOnFailureListener { exception ->
-                        Log.d("TAG", "Error getting documents: ", exception)
+                        Log.d("ERROR", "Error getting documents: ", exception)
                     }
             }
 
             fun getUserByName(callback: Callback<UserQP>, username: String) {
-                Log.d("SPIELER", "getUserByName")
-                Log.d("SPIELER", username)
-
                 db.collection(
                     usersPath
                 ).whereEqualTo(usernamePath, username)
                     .get()
                     .addOnSuccessListener { documents ->
-                        Log.d("SPIELER", "Spieler gefunden")
-                        Log.d("SPIELER", documents.size().toString())
                         if(documents.size() == 0){
                             callback.onTaskComplete(UserQP())
                         }else {
                             for (document in documents) {
-                                Log.d("SPIELER", document.data.toString())
-                                Log.d("SPIELER", "User wird geschickt")
                                 val user = document.toObject(UserQP::class.java)
                                 callback.onTaskComplete(user)
                             }
                         }
                     }
                     .addOnFailureListener { exception ->
-                        Log.d("SPIELER", "Error getting documents: ", exception)
+                        Log.d("ERROR", "Error getting documents: ", exception)
                         callback.onTaskComplete(UserQP())
                     }
             }

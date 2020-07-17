@@ -22,17 +22,18 @@ import com.example.quiplash.Sounds
 import com.example.quiplash.user.profile.ProfileActivity
 import com.example.quiplash.user.UserQP
 
+/**If a Guest wants to become a User of Quiplash, he can enter its information in this register-View.**/
 class RegisterGuestActivity : AppCompatActivity() {
 
     //view objects
     private lateinit var progressBar: ProgressBar
-    private lateinit var inputEmail : EditText
-    private lateinit var inputUsername : EditText
-    private lateinit var inputPassword : EditText
-    private lateinit var inputPassword2 : EditText
-    private lateinit var textviewError : TextView
+    private lateinit var inputEmail: EditText
+    private lateinit var inputUsername: EditText
+    private lateinit var inputPassword: EditText
+    private lateinit var inputPassword2: EditText
+    private lateinit var textviewError: TextView
 
-    private lateinit var guestid : String
+    private lateinit var guestid: String
 
     //FirebaseAuth object
     private lateinit var auth: FirebaseAuth
@@ -50,10 +51,7 @@ class RegisterGuestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
+
         setContentView(R.layout.activity_register_guest)
 
         //Get Firebase auth instance
@@ -61,10 +59,11 @@ class RegisterGuestActivity : AppCompatActivity() {
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
-        sharedPreference =  getSharedPreferences(prefName, privateMode)
+        sharedPreference = getSharedPreferences(prefName, privateMode)
 
         db = FirebaseFirestore.getInstance().collection(dbUsersPath)
 
+        //Set View-Elements
         val btnSignUp = findViewById<Button>(R.id.btnSignupGuest)
         val btnBack = findViewById<Button>(R.id.buttonRegisterGuestBack)
 
@@ -76,6 +75,7 @@ class RegisterGuestActivity : AppCompatActivity() {
         textviewError = findViewById(R.id.textErrorGuest)
         progressBar = findViewById(R.id.progressBarGuestSignup)
 
+        //Press Enter in the 'Retype-password'-field has the same effect as pressing the Submit-Button
         inputPassword2.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 signup()
@@ -98,13 +98,14 @@ class RegisterGuestActivity : AppCompatActivity() {
         }
     }
 
+    /**This Function checks wether the form is complete.**/
     private fun checkInput(): Boolean {
         return (!TextUtils.isEmpty(inputEmail.text) && !TextUtils.isEmpty(inputPassword2.text) &&
                 !TextUtils.isEmpty(inputPassword.text) && (inputPassword2.text.toString() == inputPassword.text.toString()) && inputPassword.text.length >= 6)
     }
 
-
-    private fun signup(){
+    /**If the form is complete, it will be checked if entered username exists**/
+    private fun signup() {
         if (checkInput()) {
             progressBar.visibility = View.VISIBLE
 
@@ -112,16 +113,9 @@ class RegisterGuestActivity : AppCompatActivity() {
             val callbackUser = object :
                 Callback<UserQP> {
                 override fun onTaskComplete(result: UserQP) {
-                    Log.d("SPIELER","Task complete")
-                    Log.d("SPIELER", result.toString())
 
-                    //get user-object
-                    if(result.userID == ""){
-                        Log.d("SPIELER", "kein user vorhanden")
-                        textviewError.text = getString(R.string.username_not_exist)
-                        textviewError.visibility = TextView.VISIBLE
-                        progressBar.visibility = View.INVISIBLE
-                    }else {
+                    //If entered username does exist and user with enterd username is a guest
+                    if (result.userID != "" && result.guest!!) {
                         guestid = result.userID
                         result.userID = auth.currentUser?.uid.toString()
                         result.guest = false
@@ -143,7 +137,7 @@ class RegisterGuestActivity : AppCompatActivity() {
                                         inputEmail.text.toString(),
                                         inputPassword.text.toString()
                                     )
-
+                                    //A user in Firebase will be created
                                     auth.currentUser!!.linkWithCredential(credential)
                                         .addOnCompleteListener(this@RegisterGuestActivity) { task ->
                                             if (task.isSuccessful) {
@@ -155,9 +149,12 @@ class RegisterGuestActivity : AppCompatActivity() {
                                                     )
                                                 )
                                                 finish()
-                                                //createUser()
                                             } else {
-                                                Log.w("ERROR", "linkWithCredential:failure", task.exception)
+                                                Log.w(
+                                                    "ERROR",
+                                                    "linkWithCredential:failure",
+                                                    task.exception
+                                                )
                                                 Toast.makeText(
                                                     baseContext, "Authentication failed.",
                                                     Toast.LENGTH_SHORT
@@ -168,7 +165,6 @@ class RegisterGuestActivity : AppCompatActivity() {
                                 } else {
                                     //else if guest was already logged out (the anonymous-user doesn't exist anymore on Firebase-Auth) -> we have to create a new User in Firebase
                                     //Remove Guest-data from DB
-
                                     auth.createUserWithEmailAndPassword(
                                         inputEmail.text.toString(),
                                         inputPassword.text.toString()
@@ -178,7 +174,6 @@ class RegisterGuestActivity : AppCompatActivity() {
 
                                             if (task.isSuccessful) {
                                                 // Sign in success, update UI with the signed-in user's information
-                                                //createUser()
                                                 startActivity(
                                                     Intent(
                                                         this@RegisterGuestActivity,
@@ -199,15 +194,30 @@ class RegisterGuestActivity : AppCompatActivity() {
                                 }
 
                             }
-                            .addOnFailureListener { e -> Log.w("ERROR", "Error writing document", e) }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(
+                                    this@RegisterGuestActivity,
+                                    "User could not been saved. Please try again later.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                Log.w(
+                                    "ERROR",
+                                    "Error writing document",
+                                    e
+                                )
+                            }
 
+                    } else { //If entered username does not exist or user with enterd username is not a guest
+                        textviewError.text = getString(R.string.username_not_exist)
+                        textviewError.visibility = TextView.VISIBLE
+                        progressBar.visibility = View.INVISIBLE
                     }
                 }
             }
             DBMethods.getUserByName(callbackUser, inputUsername.text.toString())
 
 
-        } else {
+        } else { //Register-Form is in-complete, corresponding Feedback will be displayed
 
             errotext = ""
             if (TextUtils.isEmpty(inputEmail.text)) {
@@ -233,12 +243,12 @@ class RegisterGuestActivity : AppCompatActivity() {
     }
 
 
-    private fun removeLocalGuestInfo(){
+    /**Local saved guest-infos will be removed**/
+    private fun removeLocalGuestInfo() {
         val editor = sharedPreference?.edit()
         editor?.clear()
         editor?.apply()
     }
-
 
 
 }

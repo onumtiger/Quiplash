@@ -21,10 +21,7 @@ class GlobalScoreboardActivity : AppCompatActivity() {
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
+
         setContentView(R.layout.activity_global_scoreboard)
 
         val btnBack = findViewById<AppCompatImageButton>(R.id.scoreboard_go_back_arrow)
@@ -43,6 +40,17 @@ class GlobalScoreboardActivity : AppCompatActivity() {
             refreshLayout.isRefreshing = false
         }
 
+        val scoreboardList = findViewById<ListView>(R.id.scoreboard_list)
+        scoreboardList.viewTreeObserver.addOnScrollChangedListener {
+            if (!scoreboardList.canScrollVertically(1)) {
+                // Bottom of scroll view, disable refreshLayout
+                refreshLayout.isEnabled = false
+            }
+            if (!scoreboardList.canScrollVertically(-1)) {
+                // Top of scroll view, enable refreshLayout
+                refreshLayout.isEnabled = true
+            }
+        }
         getScores()
     }
 

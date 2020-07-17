@@ -32,24 +32,25 @@ class GameLaunchingActivity : AppCompatActivity() {
         // Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance().collection(dbGamesPath)
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
+
         setContentView(R.layout.activity_game_launching)
 
+        //Set View-Elements
         val gamelaunchTitle = findViewById<TextView>(R.id.textViewTitleGL)
         val layoutGamelaunch = findViewById<ConstraintLayout>(R.id.layoutGameLaunch)
 
+        //If it's not the first Round edit Text
         if (game.activeRound > 1) {
             gamelaunchTitle.text = getString(R.string.next_round_starts)
         }
 
+        //Set Animation
         val splashanim = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
         val interpolator = BounceInterpolator(0.5, 10.0)
         splashanim.interpolator = interpolator
         layoutGamelaunch.startAnimation(splashanim)
 
+        //If Game has begun allocate Player If Game is already over send player back to Landing-View
         db.document(game.gameID).get()
             .addOnSuccessListener { documentSnapshot ->
                 game = documentSnapshot.toObject(Game::class.java)!!

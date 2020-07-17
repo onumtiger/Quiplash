@@ -57,6 +57,7 @@
                 android:padding="16dp"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonNext" />
@@ -75,12 +76,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/party_shot_text_view" />
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/winner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="135dp"
+                android:layout_marginTop="120dp"
                 android:elevation="11dp"
                 android:gravity="center_vertical"
                 app:layout_constraintEnd_toEndOf="@+id/view4"
@@ -88,10 +89,37 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/view4">
 
+                <TextView
+                    android:id="@+id/textViewScore"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/char_circle_turquoise"
+                    android:elevation="11dp"
+                    android:paddingTop="12dp"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_marginTop="27dp"
+                    android:elevation="1dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/char_circle_transparent" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/userPhotoLayout"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginEnd="22dp"
                     android:background="@drawable/char_circle_transparent"
                     android:elevation="10dp"
                     app:cardBackgroundColor="#00FFFFFF"
@@ -99,12 +127,13 @@
                     app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="parent">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/imageRoundWinnerPhoto"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
+                        android:background="#40000000"
                         android:scaleType="center" />
                 </androidx.cardview.widget.CardView>
 
@@ -117,68 +146,61 @@
                     android:layout_alignStart="@+id/userPhotoLayout"
                     android:layout_alignEnd="@+id/userPhotoLayout"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="6dp"
                     android:textColor="@color/colorWhite"
-                    android:textSize="20sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@+id/userPhotoLayout"
                     app:layout_constraintStart_toStartOf="@+id/userPhotoLayout"
                     app:layout_constraintTop_toBottomOf="@+id/userPhotoLayout" />
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <TextView
-                android:id="@+id/textViewScore"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginEnd="80dp"
-                android:layout_marginBottom="110dp"
-                android:background="@drawable/char_circle_turquoise"
-                android:elevation="11dp"
-                android:paddingTop="12dp"
-                android:textColor="@color/colorText"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/winner"
-                app:layout_constraintEnd_toEndOf="@+id/winner"
-                app:layout_constraintStart_toStartOf="@+id/winner" />
-
-            <TextView
-                android:id="@+id/textViewShot"
-                android:layout_width="50dp"
-                android:layout_height="55dp"
-                android:layout_marginStart="80dp"
-                android:layout_marginBottom="100dp"
-                android:background="@drawable/shot_pink"
-                android:elevation="6dp"
-                android:rotation="15"
-                android:textSize="36sp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@+id/winnerDraw"
-                app:layout_constraintEnd_toEndOf="@+id/winnerDraw"
-                app:layout_constraintStart_toEndOf="@+id/winnerDraw" />
-
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/winnerDraw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="135dp"
+                android:layout_marginTop="120dp"
                 android:layout_marginEnd="40dp"
                 android:elevation="11dp"
                 android:gravity="center_vertical"
-                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/viewDraw"
                 app:layout_constraintTop_toTopOf="@+id/viewDraw">
 
+                <TextView
+                    android:id="@+id/textViewScoreDraw"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/char_circle_turquoise"
+                    android:elevation="11dp"
+                    android:paddingTop="12dp"
+                    android:textColor="@color/colorText"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="@+id/winnerDraw"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_marginTop="27dp"
+                    android:elevation="1dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/char_circle_transparent" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/userPhotoLayoutDraw"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginEnd="22dp"
                     android:background="@drawable/char_circle_transparent"
                     android:elevation="10dp"
                     app:cardBackgroundColor="#00FFFFFF"
@@ -186,12 +208,13 @@
                     app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="parent">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/imageRoundWinnerPhotoDraw"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
+                        android:background="#3E000000"
                         android:scaleType="center" />
                 </androidx.cardview.widget.CardView>
 
@@ -203,39 +226,24 @@
                     android:layout_alignStart="@+id/userPhotoLayoutDraw"
                     android:layout_alignEnd="@+id/userPhotoLayoutDraw"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="6dp"
                     android:textColor="@color/colorWhite"
-                    android:textSize="20sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@+id/userPhotoLayoutDraw"
                     app:layout_constraintStart_toStartOf="@+id/userPhotoLayoutDraw"
                     app:layout_constraintTop_toBottomOf="@+id/userPhotoLayoutDraw" />
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/textViewScoreDraw"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="80dp"
-                android:layout_marginBottom="110dp"
-                android:background="@drawable/char_circle_turquoise"
-                android:elevation="11dp"
-                android:paddingTop="12dp"
-                android:textColor="@color/colorText"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@+id/winnerDraw"
-                app:layout_constraintEnd_toEndOf="@+id/winnerDraw"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/winnerDraw" />
+
 
 
             <ImageView
                 android:id="@+id/imageLoserSign"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="30dp"
                 android:layout_marginBottom="60dp"
                 android:elevation="12dp"
                 android:rotation="-7"
