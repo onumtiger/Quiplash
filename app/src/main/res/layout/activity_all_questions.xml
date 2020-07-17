@@ -19,7 +19,8 @@
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/chkDone"
         android:layout_toRightOf="@+id/chkDone"
-        android:text="Item Text" />
+        android:text="Item Text"
+        android:textColor="@color/colorWhite" />
 
 
     <ImageButton
