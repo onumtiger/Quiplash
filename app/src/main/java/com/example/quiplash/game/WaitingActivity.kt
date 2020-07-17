@@ -352,7 +352,7 @@ class WaitingActivity : AppCompatActivity() {
                         voters.add(user)
                     }
                 }
-                for (x in 0 until game.rounds) {
+                for (x in 0 until game.rounds-1) {
                     val round = Round(
                         voters,
                         linkedMapOf(
