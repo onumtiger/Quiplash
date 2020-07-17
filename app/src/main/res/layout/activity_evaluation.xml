@@ -102,6 +102,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="81dp"
+                    android:layout_height="81dp"
+                    android:layout_marginStart="21dp"
+                    android:layout_marginTop="27dp"
+                    android:layout_marginEnd="21dp"
+                    android:elevation="1dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/char_circle_transparent" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/userPhotoLayout"
                     android:layout_width="80dp"
@@ -117,13 +130,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/imageView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:elevation="1dp"
-                        app:srcCompat="@drawable/char_circle_transparent" />
 
                     <ImageView
                         android:id="@+id/imageRoundWinnerPhoto"
@@ -152,22 +158,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-            <TextView
-                android:id="@+id/textViewShot"
-                android:layout_width="50dp"
-                android:layout_height="55dp"
-                android:layout_marginStart="80dp"
-                android:layout_marginBottom="100dp"
-                android:background="@drawable/shot_pink"
-                android:elevation="6dp"
-                android:rotation="15"
-                android:textSize="36sp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@+id/winnerDraw"
-                app:layout_constraintEnd_toEndOf="@+id/winnerDraw"
-                app:layout_constraintStart_toEndOf="@+id/winnerDraw" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/winnerDraw"

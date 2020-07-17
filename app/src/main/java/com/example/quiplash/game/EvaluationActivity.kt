@@ -52,7 +52,6 @@ class EvaluationActivity : AppCompatActivity() {
     private var winnerNameDraw: TextView? = null
     private var imageWinnerPhotoDraw: ImageView? = null
     private var imageLoserSign: ImageView? = null
-    private var imageShot: TextView? = null
     private var scoreViewDraw: TextView? = null
     private var answerViewWinnerFrameDraw: View? = null
     private var frameProfileDraw: ConstraintLayout? = null
@@ -132,7 +131,6 @@ class EvaluationActivity : AppCompatActivity() {
         scoreViewDraw = findViewById(R.id.textViewScoreDraw)
         frameProfileDraw = findViewById(R.id.winnerDraw)
         imageLoserSign = findViewById(R.id.imageLoserSign)
-        imageShot = findViewById(R.id.textViewShot)
         val nextBtn = findViewById<TextView>(R.id.buttonNext)
 
         //save current active-round
@@ -339,7 +337,6 @@ class EvaluationActivity : AppCompatActivity() {
                         scoreViewDraw?.visibility = RelativeLayout.VISIBLE
                         imageWinnerSign?.visibility = ImageView.INVISIBLE
                         imageLoserSign?.visibility = ImageView.INVISIBLE
-                        imageShot?.visibility = ImageView.INVISIBLE
                         imageAndIcon?.visibility = TextView.VISIBLE
 
                         val zoomanim = AnimationUtils.loadAnimation(this, R.anim.zoom_button)
