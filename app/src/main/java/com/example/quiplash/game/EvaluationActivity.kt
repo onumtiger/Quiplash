@@ -39,7 +39,7 @@ class EvaluationActivity : AppCompatActivity() {
     private var winnerName: TextView? = null
     private var imageWinnerPhoto: ImageView? = null
     private var scoreView: TextView? = null
-    private var frameProfile: RelativeLayout? = null
+    private var frameProfile: ConstraintLayout? = null
     private var imageWinnerSign: ImageView? = null
 
     private var imageAndIcon: TextView? = null
@@ -50,7 +50,7 @@ class EvaluationActivity : AppCompatActivity() {
     private var imageShot: TextView? = null
     private var scoreViewDraw: TextView? = null
     private var answerViewWinnerFrameDraw: View? = null
-    private var frameProfileDraw: RelativeLayout? = null
+    private var frameProfileDraw: ConstraintLayout? = null
     private var drinkView: TextView? = null
 
     private lateinit var awaitNextRound: ListenerRegistration
@@ -78,11 +78,12 @@ class EvaluationActivity : AppCompatActivity() {
         completeLayout = findViewById(R.id.complete_layout)
 
         if (!game.partyMode){
-            drinkView?.visibility = View.INVISIBLE
+            drinkView?.visibility = View.GONE
         } else {
             completeLayout?.setBackgroundResource(R.drawable.background_party_mode)
             val drnk = (0 until game.drinks.size).random()
             drinkView?.text = ("The Loosers challenge: \n" + game.drinks[drnk])
+            drinkView?.visibility = View.VISIBLE
         }
 
 
@@ -376,8 +377,8 @@ class EvaluationActivity : AppCompatActivity() {
                 scoreView!!.startAnimation(shakehanim)
                 if (game.partyMode){
                     val drnk = (0..game.drinks.size-1).random()
-                    if (deuce == true){
-                        if (secondName == true){
+                    if (deuce){
+                        if (secondName){
                             winnerNames += winner.userName + " & "
                             secondName = false
                         } else {

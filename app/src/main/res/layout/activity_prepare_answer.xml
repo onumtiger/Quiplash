@@ -70,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <TextView
                 android:id="@+id/textViewQuestion2"
                 android:layout_width="0dp"
@@ -86,19 +87,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <EditText
                 android:id="@+id/answerField"
                 android:layout_width="300dp"
                 android:layout_height="250dp"
                 android:layout_marginTop="16dp"
+                android:autoText="false"
                 android:autofillHints="Your Answer..."
                 android:background="@drawable/char_speechbubble_mirrored"
                 android:capitalize="characters"
                 android:ems="10"
                 android:fontFamily="@font/patrick_hand"
                 android:hint="@string/your_answer"
-                android:inputType="textMultiLine"
+                android:inputType="textCapCharacters"
                 android:maxLength="100"
                 android:maxLines="3"
                 android:paddingStart="16dp"
@@ -110,8 +111,11 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/colorText"
-                android:textColorHint="@color/colorGray"
+                android:textColorHighlight="@color/colorText"
+                android:textColorHint="#4A000000"
+                android:textColorLink="@color/colorText"
                 android:textCursorDrawable="@color/colorTurquoise"
+                android:textIsSelectable="false"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/layoutAnswerSaved"

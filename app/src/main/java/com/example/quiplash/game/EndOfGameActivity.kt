@@ -93,6 +93,7 @@ class EndOfGameActivity : AppCompatActivity() {
                 }
 
                 userIDList.forEach {
+
                     val callbackUser = object :
                         Callback<UserQP> {
                         override fun onTaskComplete(result: UserQP) {
@@ -131,11 +132,13 @@ class EndOfGameActivity : AppCompatActivity() {
 
                 // add extra scores to best three players
                 usersHere.forEach {
+
                     val currentId = it.key.userID
                     val oldScore = it.value
                     val callbackUser = object :
                         Callback<UserQP> {
                         override fun onTaskComplete(result: UserQP) {
+
                             val userUpdated = result
                             usersHere.put(userUpdated, userUpdated.score - oldScore);
                         }
@@ -144,7 +147,7 @@ class EndOfGameActivity : AppCompatActivity() {
                 }
 
 
-                for (x in 0 ..2){
+                for (x in currentGame.users.indices){
                     val callbackUser = object :
                         Callback<UserQP> {
                         override fun onTaskComplete(result: UserQP) {
