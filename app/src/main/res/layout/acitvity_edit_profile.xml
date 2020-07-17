@@ -22,14 +22,27 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageView
-        android:id="@+id/imageView"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/userPhotoLayout"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/char_circle_transparent"
+        android:elevation="10dp"
+        app:cardBackgroundColor="#00FFFFFF"
+        app:cardCornerRadius="75dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_game_go_back_arrow" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_game_go_back_arrow">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="center" />
+
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/btnPrrofilePic"
@@ -39,8 +52,8 @@
         android:layout_marginTop="125dp"
         android:background="@drawable/edit_sign_black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="@+id/userPhotoLayout"
+        app:layout_constraintTop_toTopOf="@+id/userPhotoLayout" />
 
     <TextView
         android:id="@+id/textViewName"
@@ -88,16 +101,19 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="50dp"
         android:autofillHints="Your New Username"
+        android:backgroundTint="@color/colorWhite"
         android:ems="10"
         android:hint="@string/username_placeholder"
         android:inputType="textPersonName"
         android:singleLine="true"
         android:text="gast@mail.de"
         android:textColor="@color/colorWhite"
-        android:textColorLink="@color/colorWhite"
+        android:textColorHint="#92FFFFFF"
+        android:textCursorDrawable="@color/colorTurquoise"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textViewName"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/userPhotoLayout" />
 
     <TextView
         android:id="@+id/textErrorUsernameEdit"

@@ -62,7 +62,7 @@
 
         <Button
             android:id="@+id/inviteBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="35dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
@@ -72,7 +72,8 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="25dp"
             android:backgroundTint="@color/colorText"
-            android:text="@string/invite"/>
+            android:text="@string/invite"
+            android:textSize="14sp" />
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

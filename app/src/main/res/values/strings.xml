@@ -89,7 +89,7 @@
     <string name="already_have_an_account">You already have an account?</string>
     <string name="reset_password_success">We\'ve sent you an email to reset your password to your provided e-mail address</string>
     <string name="back_to_login">Back to Login</string>
-    <string name="email_already_exists">This e-mail does not exist in our system. Please check your input</string>
+    <string name="email_already_exists">This e-mail does already exist in our system. Please check your input</string>
     <string name="other_players_choose_answer">The other players choose the best answer</string>
     <string name="waiting_answers">Waiting for all answers to arrive.</string>
     <string name="next_round">Next Round</string>
