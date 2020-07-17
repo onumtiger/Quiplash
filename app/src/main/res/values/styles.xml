@@ -25,7 +25,7 @@
         <item name="android:typeface">serif</item>
     </style>
 
-    <style name="RobotoEditTextViewStyle" parent="android:Widget.Holo.EditText">
+    <style name="RobotoEditTextViewStyle" parent="Widget.AppCompat.EditText">
         <item name="android:fontFamily">@font/roboto_slab_bold</item>
         <item name="android:tint">@color/colorWhite</item>
         <item name="android:textColor">@color/colorWhite</item>
