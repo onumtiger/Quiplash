@@ -66,6 +66,7 @@ class EvaluationActivity : AppCompatActivity() {
     //drink mode
     private var winnerNames = ""
     private var deuce = false
+    private var getWinner = 0
     private var secondName = false
 
 
@@ -87,10 +88,7 @@ class EvaluationActivity : AppCompatActivity() {
         if (!game.partyMode){
             drinkView?.visibility = View.GONE
         } else {
-            completeLayout?.setBackgroundResource(R.drawable.background_party_mode)
-            val drnk = (0 until game.drinks.size).random()
-            drinkView?.text = ("The Loosers challenge: \n" + game.drinks[drnk])
-            drinkView?.visibility = View.VISIBLE
+            drinkView?.text = ""
         }
 
 
@@ -244,6 +242,7 @@ class EvaluationActivity : AppCompatActivity() {
                         "round${game.activeRound}"
                     ).opponents.getValue(GameManager.opp1).answerScore
                     -> { // Answer (1) WINS
+                        getWinner = 0
                         setWinnerInfo(
                             0,
                             frameProfile,
@@ -275,6 +274,7 @@ class EvaluationActivity : AppCompatActivity() {
                         GameManager.opp1
                     ).answerScore
                     -> {// Answer (2) WINS
+                        getWinner = 1
                         setWinnerInfo(
                             1,
                             frameProfile,
@@ -390,8 +390,11 @@ class EvaluationActivity : AppCompatActivity() {
                             deuce = false
                         }
                     } else {
-                        winnerNames = winner.userName + " "
-                        drinkView?.text = (winnerNames + "has this challenge: \n" + game.drinks[drnk])
+                        if (winnerIndex == getWinner){
+                            winnerNames = winner.userName + " "
+                            drinkView?.text = (winnerNames + "has this challenge: \n" + game.drinks[drnk])
+                            getWinner = 0
+                        }
                     }
                 }
             }
