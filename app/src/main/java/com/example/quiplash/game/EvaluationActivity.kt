@@ -66,8 +66,9 @@ class EvaluationActivity : AppCompatActivity() {
     //drink mode
     private var winnerNames = ""
     private var deuce = false
-    private var getWinner = 0
     private var secondName = false
+    private var eins = 0
+    private var zwei = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -242,8 +243,8 @@ class EvaluationActivity : AppCompatActivity() {
                         "round${game.activeRound}"
                     ).opponents.getValue(GameManager.opp1).answerScore
                     -> { // Answer (1) WINS
-                        getWinner = 0
                         setWinnerInfo(
+                            true,
                             0,
                             frameProfile,
                             answerViewWinner,
@@ -253,6 +254,7 @@ class EvaluationActivity : AppCompatActivity() {
                         )
 
                         setWinnerInfo(
+                            false,
                             1,
                             frameProfileDraw,
                             answerViewWinnerDraw,
@@ -274,8 +276,8 @@ class EvaluationActivity : AppCompatActivity() {
                         GameManager.opp1
                     ).answerScore
                     -> {// Answer (2) WINS
-                        getWinner = 1
                         setWinnerInfo(
+                            true,
                             1,
                             frameProfile,
                             answerViewWinner,
@@ -285,6 +287,7 @@ class EvaluationActivity : AppCompatActivity() {
                         )
 
                         setWinnerInfo(
+                            false,
                             0,
                             frameProfileDraw,
                             answerViewWinnerDraw,
@@ -311,6 +314,7 @@ class EvaluationActivity : AppCompatActivity() {
                         deuce = true
                         secondName = true
                         setWinnerInfo(
+                            true,
                             0,
                             frameProfile,
                             answerViewWinner,
@@ -319,6 +323,7 @@ class EvaluationActivity : AppCompatActivity() {
                             imageWinnerPhoto
                         )
                         setWinnerInfo(
+                            false,
                             1,
                             frameProfileDraw,
                             answerViewWinnerDraw,
@@ -347,6 +352,7 @@ class EvaluationActivity : AppCompatActivity() {
      * Get Winner-infos by 'setWinner' and Display Winner-Informations (name, scorinf, photo)
      * **/
     private fun setWinnerInfo(
+        frst: Boolean,
         winnerIndex: Int,
         frameView: View?,
         answerView: TextView?,
@@ -356,6 +362,11 @@ class EvaluationActivity : AppCompatActivity() {
     ) {
         frameView?.visibility = View.VISIBLE
 
+        if (frst == true){
+            eins = game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent$winnerIndex").answerScore
+        } else {
+            zwei = game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent$winnerIndex").answerScore
+        }
         //display Answers in View
         answerView?.text =
             game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent$winnerIndex").answer
@@ -390,11 +401,14 @@ class EvaluationActivity : AppCompatActivity() {
                             deuce = false
                         }
                     } else {
-                        if (winnerIndex == getWinner){
+                        if (eins>zwei){
                             winnerNames = winner.userName + " "
                             drinkView?.text = (winnerNames + "has this challenge: \n" + game.drinks[drnk])
-                            getWinner = 0
+                        } else if (zwei > eins) {
+                            winnerNames = winner.userName + " "
+                            drinkView?.text = (winnerNames + "has this challenge: \n" + game.drinks[drnk])
                         }
+
                     }
                 }
             }
