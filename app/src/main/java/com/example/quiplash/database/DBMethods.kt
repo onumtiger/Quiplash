@@ -77,33 +77,6 @@ class DBMethods {
                 }
             }
 
-            fun saveUser(
-                user_name: String,
-                guest: Boolean,
-                score: Int,
-                photo: String,
-                friends: List<String>
-            ) {
-                val uID = createID()
-                    .toString()
-                val usr = UserQP(
-                    uID,
-                    user_name,
-                    guest,
-                    score,
-                    photo,
-                    friends,
-                    ""
-                )
-                db.collection(
-                    usersPath
-                ).document().set(usr).addOnSuccessListener {
-                    //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
-                }.addOnFailureListener{
-                    //exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
-                }
-            }
-
             //get current user from DB
             fun getUser(callback: Callback<UserQP>) {
                 db.collection(
