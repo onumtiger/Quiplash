@@ -110,6 +110,7 @@ class JoinGameActivity : AppCompatActivity() {
                 if (gameList.isNullOrEmpty()) {
                     noActiveGameInfo.visibility = View.VISIBLE
                 } else {
+                    noActiveGameInfo.visibility = View.INVISIBLE
                     gameList.forEach {
                         if (it.isPublic || (it.users.contains(auth.currentUser?.uid.toString())) || it.invitations.contains(auth.currentUser?.uid.toString())) {
                             resultGames.add(it)
