@@ -241,7 +241,6 @@ class EvaluationActivity : AppCompatActivity() {
                     ).opponents.getValue(GameManager.opp1).answerScore
                     -> { // Answer (1) WINS
                         setWinnerInfo(
-                            true,
                             0,
                             frameProfile,
                             answerViewWinner,
@@ -251,7 +250,6 @@ class EvaluationActivity : AppCompatActivity() {
                         )
 
                         setWinnerInfo(
-                            false,
                             1,
                             frameProfileDraw,
                             answerViewWinnerDraw,
@@ -274,7 +272,6 @@ class EvaluationActivity : AppCompatActivity() {
                     ).answerScore
                     -> {// Answer (2) WINS
                         setWinnerInfo(
-                            true,
                             1,
                             frameProfile,
                             answerViewWinner,
@@ -284,7 +281,6 @@ class EvaluationActivity : AppCompatActivity() {
                         )
 
                         setWinnerInfo(
-                            false,
                             0,
                             frameProfileDraw,
                             answerViewWinnerDraw,
@@ -311,7 +307,6 @@ class EvaluationActivity : AppCompatActivity() {
                         deuce = true
                         secondName = true
                         setWinnerInfo(
-                            true,
                             0,
                             frameProfile,
                             answerViewWinner,
@@ -320,7 +315,6 @@ class EvaluationActivity : AppCompatActivity() {
                             imageWinnerPhoto
                         )
                         setWinnerInfo(
-                            false,
                             1,
                             frameProfileDraw,
                             answerViewWinnerDraw,
@@ -349,7 +343,6 @@ class EvaluationActivity : AppCompatActivity() {
      * Get Winner-infos by 'setWinner' and Display Winner-Informations (name, scorinf, photo)
      * **/
     private fun setWinnerInfo(
-        frst: Boolean,
         winnerIndex: Int,
         frameView: View?,
         answerView: TextView?,
@@ -411,7 +404,7 @@ class EvaluationActivity : AppCompatActivity() {
                     override fun onTaskComplete(result: UserQP) {
                         val drink_user = result
                         val drnk = (0 until game.drinks.size).random()
-                        drinkView?.text = (drink_user.userName.toString() + " has this challenge: \n" + game.drinks[drnk])
+                        drinkView?.text = (drink_user.userName + " has this challenge: \n" + game.drinks[drnk])
                     }
                 }
                 DBMethods.getUserWithID(callbackUser, looser_score_drink_id)
