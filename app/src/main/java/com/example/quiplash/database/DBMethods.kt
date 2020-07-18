@@ -38,10 +38,9 @@ class DBMethods {
 
             val db = FirebaseFirestore.getInstance()
             lateinit var res: QuerySnapshot
-            var GameQuestions = ArrayList<Question>()
-            var actual = false
             private var auth: FirebaseAuth? = FirebaseAuth.getInstance()
 
+            //Database-Paths
             const val usersPath = "users"
             private const val invitationsPath = "invitations"
             private const val friendsPath = "friends"
@@ -50,6 +49,8 @@ class DBMethods {
             private const val usernamePath = "userName"
             const val playroundsPath = "playrounds"
             const val drinksPath = "drinks"
+
+            //Default_images
             const val defaultUserImg = "images/default_user_QP.png"
             const val defaultGuestImg = "images/default_guest_QP.png"
 
@@ -308,8 +309,6 @@ class DBMethods {
                                 currentGame = game
                                 val players = game.users
                                     playersList = players.toMutableList()
-                                    Log.d("playersListSize", "${playersList.size}")
-
                             }
                             callback.onTaskComplete(currentGame)
                         }

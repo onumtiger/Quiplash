@@ -49,7 +49,6 @@ class NewGameActivity : AppCompatActivity() {
                 id: Long
             ) {
                 if(++check > 3) {
-                    Log.d("check cat", check.toString())
                     Sounds.playClickSound(this@NewGameActivity)
                 }
             }
@@ -66,7 +65,6 @@ class NewGameActivity : AppCompatActivity() {
                 id: Long
             ) {
                 if(++check > 3) {
-                    Log.d("check play", check.toString())
                     Sounds.playClickSound(this@NewGameActivity)
                 }
             }
@@ -83,7 +81,6 @@ class NewGameActivity : AppCompatActivity() {
                 id: Long
             ) {
                 if(++check > 3) {
-                    Log.d("check round", check.toString())
                     Sounds.playClickSound(this@NewGameActivity)
                 }
             }

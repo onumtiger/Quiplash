@@ -31,8 +31,6 @@ class ScoreboardListAdapter(val mCtx: Context, val layoutResId: Int, val playerL
 
         val player = playerList[position]
 
-        Log.d("SPIELER", "Photo: ${playerList[position].photo}")
-        Log.d("SPIELER", "Name: ${playerList[position].userName}")
         // Get string to profile photo of player
         if (playerList[position].photo == null|| player.photo == "") {
             playerPhoto = DBMethods.defaultGuestImg
