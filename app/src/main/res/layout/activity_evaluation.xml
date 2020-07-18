@@ -13,8 +13,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -46,29 +48,26 @@
 
             <TextView
                 android:id="@+id/party_shot_text_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="325dp"
+                android:layout_height="97dp"
                 android:layout_marginStart="50dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="50dp"
                 android:background="@drawable/char_button_frame"
                 android:backgroundTint="@color/colorButtonLavender"
                 android:gravity="center_horizontal|center_vertical"
-                android:padding="16dp"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
-                android:visibility="gone"
+                android:textStyle="bold|italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonNext" />
 
             <TextView
                 android:id="@+id/questionEval"
-                android:layout_width="0dp"
+                android:layout_width="312dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="50dp"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:textStyle="bold|italic"
@@ -235,8 +234,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/userPhotoLayoutDraw" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
             <ImageView

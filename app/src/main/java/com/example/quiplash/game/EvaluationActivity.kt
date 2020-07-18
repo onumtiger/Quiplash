@@ -67,9 +67,6 @@ class EvaluationActivity : AppCompatActivity() {
     private var winnerNames = ""
     private var deuce = false
     private var secondName = false
-    private var eins = 0
-    private var zwei = 0
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,9 +83,10 @@ class EvaluationActivity : AppCompatActivity() {
 
         //partymode
         //before loosers load
-        if (!game.partyMode){
+        if (game.partyMode == false){
             drinkView?.visibility = View.GONE
         } else {
+            Toast.makeText(this, "immerhin hier", Toast.LENGTH_SHORT).show()
             drinkView?.text = ""
         }
 
@@ -362,11 +360,15 @@ class EvaluationActivity : AppCompatActivity() {
     ) {
         frameView?.visibility = View.VISIBLE
 
-        if (frst == true){
-            eins = game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent$winnerIndex").answerScore
+        val first_answer_score = game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").answerScore
+        val second_answer_score = game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent1").answerScore
+        var looser_score_drink_id = ""
+        if (first_answer_score > second_answer_score){
+            looser_score_drink_id = game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent1").userID.toString()
         } else {
-            zwei = game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent$winnerIndex").answerScore
+            looser_score_drink_id = game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent0").userID.toString()
         }
+
         //display Answers in View
         answerView?.text =
             game.playrounds.getValue("round${game.activeRound}").opponents.getValue("opponent$winnerIndex").answer
@@ -400,18 +402,23 @@ class EvaluationActivity : AppCompatActivity() {
                             drinkView?.text = (winnerNames + "have this challenge: \n" + game.drinks[drnk])
                             deuce = false
                         }
-                    } else {
-                        if (eins>zwei){
-                            winnerNames = winner.userName + " "
-                            drinkView?.text = (winnerNames + "has this challenge: \n" + game.drinks[drnk])
-                        } else if (zwei > eins) {
-                            winnerNames = winner.userName + " "
-                            drinkView?.text = (winnerNames + "has this challenge: \n" + game.drinks[drnk])
-                        }
-
                     }
                 }
             }
+        if(game.partyMode){
+            if(!deuce){
+                Toast.makeText(this, "hier auch !", Toast.LENGTH_SHORT).show()
+                val callbackUser = object :
+                    Callback<UserQP> {
+                    override fun onTaskComplete(result: UserQP) {
+                        val drink_user = result
+                        val drnk = (0 until game.drinks.size).random()
+                        drinkView?.text = (drink_user.userName.toString() + "has this challenge: \n" + game.drinks[drnk])
+                    }
+                }
+                DBMethods.getUserWithID(callbackUser, looser_score_drink_id)
+            }
+        }
     }
 
 
