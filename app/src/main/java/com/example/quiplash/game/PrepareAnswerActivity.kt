@@ -99,7 +99,7 @@ class PrepareAnswerActivity : AppCompatActivity() {
 
         //Display Game-Infos in View
         textViewRound.text =
-            ("${ceil((game.activeRound + 1).toDouble() / 3).toInt()}/${game.rounds}")
+            ("${ceil((game.activeRound + 1).toDouble() / game.rounds).toInt()}/${game.rounds}")
         textViewQuestion.text = game.playrounds.getValue("round${game.activeRound}").question
         textViewQuestion2.text = game.playrounds.getValue("round${game.activeRound}").question
 

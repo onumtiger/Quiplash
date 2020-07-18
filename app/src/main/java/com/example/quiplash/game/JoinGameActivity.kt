@@ -19,8 +19,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.example.quiplash.game.GameManager.Companion.game
 import com.example.quiplash.R
 import com.example.quiplash.Sounds
-import com.example.quiplash.user.UserQP
-
 
 class JoinGameActivity : AppCompatActivity() {
     lateinit var gameList: MutableList<Game>

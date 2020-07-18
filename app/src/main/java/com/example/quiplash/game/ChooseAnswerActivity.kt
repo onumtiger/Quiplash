@@ -79,7 +79,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
         imageCheckA2 = findViewById(R.id.imageCheckAnswer2)
         simpleViewFlipper =
             findViewById(R.id.simpleViewFlipperCA) // get the reference of ViewFlipper
-        roundView.text = ("${ceil((game.activeRound + 1).toDouble() / 3).toInt()}/${game.rounds}")
+        roundView.text = ("${ceil((game.activeRound + 1).toDouble() / game.rounds).toInt()}/${game.rounds}")
 
         //Setup and Start Timer
         val callbackTimerWaiting = object :

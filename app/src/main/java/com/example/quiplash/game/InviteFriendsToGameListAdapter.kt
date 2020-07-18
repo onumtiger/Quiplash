@@ -1,6 +1,8 @@
 package com.example.quiplash.game
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
@@ -33,6 +35,7 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
         Volley.newRequestQueue(this.context)
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         val view: View = layoutInflater.inflate(layoutResId, null)
@@ -70,7 +73,7 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
         inviteBtn.setOnClickListener {
             Sounds.playClickSound(context)
             inviteBtn.isClickable = false
-            inviteBtn.setBackgroundResource(R.color.colorGray)
+            inviteBtn.backgroundTintList = ColorStateList.valueOf(R.color.colorGray);
 
             val notification = JSONObject()
             val notifcationBody = JSONObject()
