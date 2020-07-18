@@ -4,15 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
 import android.util.Log
-import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.example.quiplash.LandingActivity
 import com.example.quiplash.database.Callback
 import com.example.quiplash.database.DBMethods
 import com.example.quiplash.user.UserQP
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 
 /**
  * GAMEMANAGER:
@@ -45,7 +42,7 @@ class GameManager {
             user = userinfo
         }
 
-
+        //Path to Games in Database
         val db = FirebaseFirestore.getInstance().collection(DBMethods.gamesPath)
 
         // gametimer start
@@ -64,6 +61,7 @@ class GameManager {
             countdownTimer.start()
         }
 
+        //Upating UI of Timer
         private fun updateTextUI(textView: TextView) {
             val minute = (time_in_milli_seconds / 1000) / 60
             val seconds = (time_in_milli_seconds / 1000) % 60
@@ -79,6 +77,12 @@ class GameManager {
             countdownTimer.cancel()
         }
 
+        /**
+         * This Function examines wether a player is a 'Voter' or one of the 'Opponents' (Those who have to answer a question).
+         * Then send Player to corresponding View:
+         * Voter -> 'Choose Answer' (Wait for all answers, than vot for the best answer)
+         * Opponent -> 'Prepare Answer' (Watch Question, then answer the question)
+         * **/
         fun playerAllocation(appcontext: Context, userid: String) {
             if (game.playrounds.size >= game.activeRound) {
 
@@ -106,31 +110,47 @@ class GameManager {
         }
 
 
+        /**
+         * Set additional Scores for the Winner of this Round.
+         * Save new Scoring into Database.
+         * First fetch game-info from Database. Then check wether additional scroing hav elaredy been added by other users (players).
+         * If not examine the winner of this round and save bonus-points tho the winners' answer.
+         * **/
         fun setPoints(callback: Callback<Boolean>) {
             val callbackGame = object :
                 Callback<Game> {
                 override fun onTaskComplete(result: Game) {
                     game = result
 
-                    if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
+                    //First check wether Round-scores have already been updated by other users/players.
+                    if ((game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                             opp0
-                        ).answerScore > game.playrounds.getValue(
+                        ).answerScore + game.playrounds.getValue(
                             "round${game.activeRound}"
-                        ).opponents.getValue(opp1).answerScore
+                        ).opponents.getValue(opp1).answerScore) > (game.playrounds.getValue("round${game.activeRound}").voters.size * voteScore)
                     ) {
-                        game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                            opp0
-                        ).answerScore += roundWinnerScore
-                    } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                            opp0
-                        ).answerScore < game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                            opp1
-                        ).answerScore
-                    ) {
-                        game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
-                            opp1
-                        ).answerScore += roundWinnerScore
-                    }
+                        callback.onTaskComplete(true)
+                    } else{ //If scores have not been updated yet, update scoring
+
+                        if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
+                                opp0
+                            ).answerScore > game.playrounds.getValue(
+                                "round${game.activeRound}"
+                            ).opponents.getValue(opp1).answerScore
+                        ) {
+                            game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
+                                opp0
+                            ).answerScore += roundWinnerScore
+                        } else if (game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
+                                opp0
+                            ).answerScore < game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
+                                opp1
+                            ).answerScore
+                        ) {
+                            game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
+                                opp1
+                            ).answerScore += roundWinnerScore
+                        }
 
                     db.document(game.gameID)
                         .update(
@@ -154,34 +174,13 @@ class GameManager {
                             )
                         }
                 }
+                }
             }
             DBMethods.getCurrentGame(
                 callbackGame,
                 game.gameID
             )
 
-        }
-
-        fun setProfilePicture(player: UserQP, profileView: ImageView?, appcontext: Context) {
-            val playerPhoto: String
-            val storageRef = FirebaseStorage.getInstance().reference
-
-            if (player.photo !== null) {
-                playerPhoto = player.photo!!
-            } else {
-                playerPhoto = DBMethods.defaultGuestImg
-            }
-
-            val spaceRef = storageRef.child(playerPhoto)
-            spaceRef.downloadUrl
-                .addOnSuccessListener { uri ->
-                    if (profileView != null) {
-                        Glide
-                            .with(appcontext)
-                            .load(uri)
-                            .into(profileView)
-                    }
-                }.addOnFailureListener { Log.d("Test", " Failed!") }
         }
 
 

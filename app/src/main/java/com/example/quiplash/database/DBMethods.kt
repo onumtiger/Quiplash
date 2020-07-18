@@ -335,7 +335,7 @@ class DBMethods {
                     }
             }
 
-            //get User by name from DB
+            //get User by name from DB. Usernames are Unique.
             fun getUserByName(callback: Callback<UserQP>, username: String) {
                 db.collection(
                     usersPath
