@@ -86,7 +86,6 @@ class EvaluationActivity : AppCompatActivity() {
         if (game.partyMode == false){
             drinkView?.visibility = View.GONE
         } else {
-            Toast.makeText(this, "immerhin hier", Toast.LENGTH_SHORT).show()
             drinkView?.text = ""
         }
 
@@ -407,7 +406,6 @@ class EvaluationActivity : AppCompatActivity() {
             }
         if(game.partyMode){
             if(!deuce){
-                Toast.makeText(this, "hier auch !", Toast.LENGTH_SHORT).show()
                 val callbackUser = object :
                     Callback<UserQP> {
                     override fun onTaskComplete(result: UserQP) {
