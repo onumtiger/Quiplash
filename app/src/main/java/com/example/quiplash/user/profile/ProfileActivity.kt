@@ -61,7 +61,6 @@ class ProfileActivity : AppCompatActivity() {
          * load user information and display them
          * if loading data fails display default profile picture and username
          */
-
         val callback = object : Callback<UserQP> {
             override fun onTaskComplete(result: UserQP) {
                 currentUser = result
@@ -170,7 +169,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         /**
-         * start registerguest activity
+         * start register guest activity
          */
         btnRegisterGuest.setOnClickListener {
             Sounds.playClickSound(this)

@@ -68,11 +68,12 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="100dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="25dp"
-            android:backgroundTint="@color/colorText"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/colorButtonGreen"
             android:text="@string/invite"
+            android:textColor="@color/colorWhite"
             android:textSize="14sp" />
 
     </RelativeLayout>
