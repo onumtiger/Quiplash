@@ -192,6 +192,17 @@ class DBMethods {
                 }
             }
 
+            fun editGame(ID :String, game : Game) {
+                db.collection(
+                    gamesPath
+                ).document(ID).set(game).addOnSuccessListener {
+                    //Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
+                }.addOnFailureListener{
+                    //exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
+                }
+            }
+            // game.playrounds.getValue("round${game.activeRound}").question
+
             //edit User friends (found by ID) in DB
             fun editUserFriends(userid: String, friends: List<String>) {
                     db.collection(

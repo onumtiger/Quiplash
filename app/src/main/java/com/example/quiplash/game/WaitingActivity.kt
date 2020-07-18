@@ -58,7 +58,6 @@ class WaitingActivity : AppCompatActivity() {
 
         //add Questions to Game
         selectedQuestions = arrayListOf()
-        getQuestionsForGame(game.rounds, game.playerNumber, game.category)
 
 
         //If Game is started by the Host the Game info will be updated. This Listener switches
@@ -338,48 +337,52 @@ class WaitingActivity : AppCompatActivity() {
      * --> total rounds = 9
      * **/
     private fun getallRounds(): HashMap<String, Round> {
+        var allRoundCount = 1
         var jump = 1
         var roundCount = 0
+        val oneRound: MutableList<Round> = mutableListOf()
         val allRounds: HashMap<String, Round> = hashMapOf()
+        var subroundCount = 0
 
-        var testroundcount = 0
+        while (jump < game.users.size) {
 
-            while (jump < game.users.size) {
+            while (roundCount < game.users.size - jump) {
 
-                while (roundCount < game.users.size - jump) {
+                val voters = mutableListOf<String>()
+                for (user in game.users) {
 
-                    val voters = mutableListOf<String>()
-                    for (user in game.users) {
-
-                        if (game.users.indexOf(user) != roundCount && game.users.indexOf(user) != (roundCount + jump)) {
-                            voters.add(user)
-                        }
+                    if (game.users.indexOf(user) != roundCount && game.users.indexOf(user) != (roundCount + jump)) {
+                        voters.add(user)
                     }
-                    for (x in 0 until game.rounds) {
-                        if (testroundcount < game.rounds*game.playerNumber){
-                            val round = Round(
-                                voters,
-                                linkedMapOf(
-                                    GameManager.opp0 to Opponent(game.users[roundCount]),
-                                    GameManager.opp1 to Opponent(game.users[roundCount + jump])
-                                ),
-                                gameQuestions[testroundcount].question.toString()
-                            )
-                            val roundindex =
-                                (testroundcount.rem(game.users.size)) * game.rounds + (testroundcount / game.users.size)
-                            allRounds["round$roundindex"] = round
-                            testroundcount += 1
-                        }
-                    }
-                    roundCount += 1
                 }
-                roundCount = 0
-                jump += 1
+
+                oneRound += (Round(
+                    voters,
+                    linkedMapOf(
+                        GameManager.opp0 to Opponent(game.users[roundCount]),
+                        GameManager.opp1 to Opponent(game.users[roundCount + jump])
+                    ),
+                    ""
+                ))
+                roundCount += 1
             }
+            roundCount = 0
+            jump += 1
+        }
 
-        
+        while (allRoundCount <= game.rounds) {
+            oneRound.forEach { value ->
+                //value.question = gameQuestions[subroundCount].question.toString()
+                allRounds["round$subroundCount"] = value
+                //allRounds["round$subroundCount"]?.question =
+                subroundCount += 1
+            }
+            getQuestionsForGame(game.rounds, game.playerNumber, game.category, subroundCount)
+
+
+            allRoundCount += 1
+        }
         return allRounds
-
     }
 
     //partymode
@@ -423,17 +426,29 @@ class WaitingActivity : AppCompatActivity() {
         db.document(game.gameID)
             .update(DBMethods.playroundsPath, getallRounds())
             .addOnSuccessListener {
-                Sounds.playStartSound(this)
+                val callback = object : Callback<Game> {
+                    override fun onTaskComplete(result: Game) {
+                        var game_new = result
+                        var i = 0
+                        game_new.playrounds.forEach { value ->
+                            value.value.question = gameQuestions[i].question.toString()
+                            i++
+                        }
+                        DBMethods.editGame(game.gameID, game_new)
+                        Sounds.playStartSound(this@WaitingActivity)
 
-                val intent = Intent(this, GameLaunchingActivity::class.java)
-                startActivity(intent)
+                        val intent = Intent(this@WaitingActivity , GameLaunchingActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+                DBMethods.getCurrentGame(callback, game.gameID)
             }
             .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
     }
 
     //get random questions from database selected by category in a local arraylist
-    private fun getQuestionsForGame(rounds: Int, player_count: Int, selected_category: String) {
-        val countQuestions = rounds * player_count
+    private fun getQuestionsForGame(rounds: Int, player_count: Int, selected_category: String, quest_counter: Int) {
+        val countQuestions = quest_counter+1
         val callback = object : Callback<java.util.ArrayList<Question>> {
             override fun onTaskComplete(result: java.util.ArrayList<Question>) {
                 var counter = 0
