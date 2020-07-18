@@ -372,12 +372,10 @@ class WaitingActivity : AppCompatActivity() {
 
         while (allRoundCount <= game.rounds) {
             oneRound.forEach { value ->
-                //value.question = gameQuestions[subroundCount].question.toString()
                 allRounds["round$subroundCount"] = value
-                //allRounds["round$subroundCount"]?.question =
                 subroundCount += 1
             }
-            getQuestionsForGame(game.rounds, game.playerNumber, game.category, subroundCount)
+            getQuestionsForGame(game.category, subroundCount)
 
 
             allRoundCount += 1
@@ -428,7 +426,7 @@ class WaitingActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 val callback = object : Callback<Game> {
                     override fun onTaskComplete(result: Game) {
-                        var game_new = result
+                        val game_new = result
                         var i = 0
                         game_new.playrounds.forEach { value ->
                             value.value.question = gameQuestions[i].question.toString()
@@ -441,13 +439,13 @@ class WaitingActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                 }
-                DBMethods.getCurrentGame(callback, game.gameID)
+                getCurrentGame(callback, game.gameID)
             }
             .addOnFailureListener { e -> Log.w("Error", "Error writing document", e) }
     }
 
     //get random questions from database selected by category in a local arraylist
-    private fun getQuestionsForGame(rounds: Int, player_count: Int, selected_category: String, quest_counter: Int) {
+    private fun getQuestionsForGame(selected_category: String, quest_counter: Int) {
         val countQuestions = quest_counter+1
         val callback = object : Callback<java.util.ArrayList<Question>> {
             override fun onTaskComplete(result: java.util.ArrayList<Question>) {
