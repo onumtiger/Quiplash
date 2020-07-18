@@ -413,7 +413,7 @@ class EvaluationActivity : AppCompatActivity() {
                     override fun onTaskComplete(result: UserQP) {
                         val drink_user = result
                         val drnk = (0 until game.drinks.size).random()
-                        drinkView?.text = (drink_user.userName.toString() + "has this challenge: \n" + game.drinks[drnk])
+                        drinkView?.text = (drink_user.userName.toString() + " has this challenge: \n" + game.drinks[drnk])
                     }
                 }
                 DBMethods.getUserWithID(callbackUser, looser_score_drink_id)
