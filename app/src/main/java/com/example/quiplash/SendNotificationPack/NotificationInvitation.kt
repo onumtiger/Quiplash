@@ -25,6 +25,7 @@ import java.util.*
 
 
 class NotificationInvitation : FirebaseMessagingService()  {
+    // Variables
     private val ADMIN_CHANNEL_ID = "admin_channel"
     lateinit var db: CollectionReference
     private val dbGamesPath = DBMethods.gamesPath
@@ -47,7 +48,6 @@ class NotificationInvitation : FirebaseMessagingService()  {
 
                         val notificationManager =
                             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                        //Setting up Notification channels for android O and above
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             setupChannels(notificationManager)
                         }

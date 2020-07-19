@@ -17,17 +17,20 @@ import com.example.quiplash.user.UserQP
 import java.util.ArrayList
 
 class AddPlayer : DialogFragment() {
-    lateinit var currentUser: UserQP
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.interaction_add_player, container, false)
     }
 
     override fun onViewCreated(view:View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // View elements
         val btnAdd = view.findViewById<TextView>(R.id.interaction_add_btn)
         val btnCancel = view.findViewById<TextView>(R.id.interaction_cancel_btn)
         val viewUsername: EditText = view.findViewById(R.id.interaction_username_add)
+
+        // Variables
+        lateinit var currentUser: UserQP
         lateinit var otherUsers: ArrayList<UserQP>
         var friendsListCurrentUser = emptyList<String>()
         var friendsListFriend = emptyList<String>()
@@ -56,7 +59,7 @@ class AddPlayer : DialogFragment() {
         DBMethods.getUser(callbackGetUser)
 
         /**
-         * Handle the users input by checking if the input user exists
+         * Handle the users input by checking if the entered user exists
          * and if the they are already friends. If not add the input user as friend
          */
         btnAdd.setOnClickListener(){

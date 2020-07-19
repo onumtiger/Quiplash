@@ -16,6 +16,7 @@ import com.example.quiplash.user.UserQP
 import java.util.*
 
 class InviteFriendsToGameActivity : AppCompatActivity() {
+    // Variables
     lateinit var currentUser: UserQP
     lateinit var friend : UserQP
     lateinit var otherUsers: ArrayList<UserQP>
@@ -23,23 +24,29 @@ class InviteFriendsToGameActivity : AppCompatActivity() {
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_invite_friends_to_game)
 
+        // View elements
         val btnBack = findViewById<AppCompatImageButton>(R.id.friends_go_back_arrow)
         val friendsListView = findViewById<ListView>(R.id.friends)
-        val noSuchFriends = findViewById<TextView>(R.id.no_friends_found)
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.friends_swiperefresh)
-
+        val noSuchFriends = findViewById<TextView>(R.id.no_friends_found)
         noSuchFriends.visibility = View.INVISIBLE
+
         val gameID = intent.getStringExtra("gameID")
         getCurrentGame(gameID, friendsListView)
 
+        /**
+         * Go back to waiting view
+         */
         btnBack.setOnClickListener {
             Sounds.playClickSound(this)
             super.onBackPressed()
         }
 
+        /**
+         * Refresh on swipe
+         */
         refreshLayout.setOnRefreshListener {
             getCurrentGame(gameID, friendsListView)
             refreshLayout.isRefreshing = false
@@ -47,18 +54,23 @@ class InviteFriendsToGameActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * fetch game from DB
+     */
     private fun getCurrentGame(gameID: String, friendsListView: ListView) {
         var currentGame: Game
         val callback = object : Callback<Game> {
             override fun onTaskComplete(result: Game) {
                 currentGame = result
-                // fetch friends from db
                 getFriendsList(friendsListView, currentGame)
             }
         }
         DBMethods.getCurrentGame(callback, gameID)
     }
 
+    /**
+     * fetch user's friends from db
+     */
     fun getFriendsList (friendsListView: ListView, currentGame: Game) {
         val noSuchFriends = findViewById<TextView>(R.id.no_friends_found)
         var friendsListCurrentUser = emptyList<String>()

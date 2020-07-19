@@ -17,28 +17,31 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.FirebaseStorage
 
 
+/**
+ * This displays the player's profile picture and username as a list element
+ */
 class PlayersListAdapter(val mCtx: Context, val layoutResId: Int, val playerList: MutableList<UserQP>) : ArrayAdapter<UserQP>(mCtx, layoutResId, playerList) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        //View elements
         val layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         val view: View = layoutInflater.inflate(layoutResId, null)
         val textViewGame = view.findViewById<TextView>(R.id.textRoundWinnerName)
         val imageViewUser: ImageView = view.findViewById(R.id.players_star)
+
+        //Variables
         var fotostorage = FirebaseStorage.getInstance()
         var storageRef = fotostorage.reference
         val playerPhoto: String
-
         val player = playerList[position]
 
-        // Get string to profile photo of player
+        // Get string of player's profile photo
         if (player.photo !== null) {
             playerPhoto = player.photo!!
         } else {
             playerPhoto = DBMethods.defaultGuestImg
         }
 
-        textViewGame.text = player.userName
-
-        // Get profile photo of player from db to show it in listView
+        // Get profile photo of player from db to display it
         val spaceRef = storageRef.child(playerPhoto)
         spaceRef.downloadUrl
             .addOnSuccessListener { uri ->
@@ -47,6 +50,9 @@ class PlayersListAdapter(val mCtx: Context, val layoutResId: Int, val playerList
                     .load(uri)
                     .into(imageViewUser)
             }.addOnFailureListener { Log.d("Test", " Failed!") }
+
+        // display username
+        textViewGame.text = player.userName
 
         return view
     }

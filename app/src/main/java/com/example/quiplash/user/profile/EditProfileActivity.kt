@@ -47,7 +47,7 @@ class EditProfileActivity : AppCompatActivity() {
         var score = 0
         var friends = emptyList<String>()
 
-        //Views
+        //View elements
         val viewProfilePic: ImageView = findViewById(R.id.imageView)
         val textErrorUserName = findViewById<TextView>(R.id.textErrorUsernameEdit)
         val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow)

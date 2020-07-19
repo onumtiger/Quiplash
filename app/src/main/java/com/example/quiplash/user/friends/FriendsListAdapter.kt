@@ -20,17 +20,21 @@ import com.google.firebase.storage.FirebaseStorage
 
 class FriendsListAdapter (val mCtx: Context, val layoutResId: Int, val currentUser: UserQP, val playerList: MutableList<UserQP>) : ArrayAdapter<UserQP>(mCtx, layoutResId, playerList) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        // View elements
         val layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         val view: View = layoutInflater.inflate(layoutResId, null)
         val friendNameView = view.findViewById<TextView>(R.id.friend_username)
         val friendScoreView = view.findViewById<TextView>(R.id.friend_score)
         val imageViewUser: ImageView = view.findViewById(R.id.profile_image)
+        val deleteButton = view.findViewById<ImageButton>(R.id.friend_delete)
+
+        // Firebase
         val fotostorage = FirebaseStorage.getInstance()
         val storageRef = fotostorage.reference
-        val deleteButton = view.findViewById<ImageButton>(R.id.friend_delete)
-        val playerPhoto: String
 
+        // Variables
         val friend = playerList[position]
+
         if (friend.photo == null) {
             friend.photo = DBMethods.defaultGuestImg
         }

@@ -7,6 +7,9 @@ import com.google.firebase.messaging.FirebaseMessagingService
 
 
 class MyFirebaseIdService:FirebaseMessagingService(){
+    /**
+     * Set new token
+     */
     override fun onNewToken(s:String){
         super.onNewToken(s)
         var firebaseUser = FirebaseAuth.getInstance().currentUser
@@ -15,9 +18,12 @@ class MyFirebaseIdService:FirebaseMessagingService(){
             updateToken(refreshToken)
         }
     }
+
+    /**
+     * update user token
+     */
     private fun updateToken(refreshToken:String){
-        val firebaseUser = FirebaseAuth.getInstance().currentUser
-        var token:Token= Token(refreshToken)
-        FirebaseDatabase.getInstance().getReference("Tokens").child(FirebaseAuth.getInstance().getCurrentUser()!!.getUid()).setValue(token)
+        var token= Token(refreshToken)
+        FirebaseDatabase.getInstance().getReference("Tokens").child(FirebaseAuth.getInstance().currentUser!!.uid).setValue(token)
     }
 }

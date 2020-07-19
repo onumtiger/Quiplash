@@ -18,6 +18,7 @@ class Sounds {
             mp = MediaPlayer.create(context, raw.click)
             mp!!.start()
         }
+
         /**
          * Sounds's played on refresh of refresh views
          */
@@ -26,6 +27,7 @@ class Sounds {
             mp = MediaPlayer.create(context, raw.refresh)
             mp!!.start()
         }
+
         /**
          * Sounds's played on start of a game round
          */
@@ -34,6 +36,7 @@ class Sounds {
             mp = MediaPlayer.create(context, raw.start)
             mp!!.start()
         }
+
         /**
          * Sounds's played in voting phase
          */
@@ -42,6 +45,7 @@ class Sounds {
             mp = MediaPlayer.create(context, raw.voting)
             mp!!.start()
         }
+
         /**
          * Sounds's played in evaluation
          */
@@ -50,6 +54,7 @@ class Sounds {
             mp = MediaPlayer.create(context, raw.score)
             mp!!.start()
         }
+
         /**
          * Sounds's played while preparing an answer
          */
@@ -58,6 +63,7 @@ class Sounds {
             mp = MediaPlayer.create(context, raw.prepareanswer)
             mp!!.start()
         }
+
         /**
          * Sounds's played at the end of a game
          */
@@ -66,6 +72,7 @@ class Sounds {
             mp = MediaPlayer.create(context, raw.end)
             mp!!.start()
         }
+
         /**
          * Stop media player
          */

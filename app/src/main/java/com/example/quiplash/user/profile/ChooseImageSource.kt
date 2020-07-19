@@ -24,6 +24,11 @@ import java.util.*
 
 
 class ChooseImageSource : DialogFragment() {
+    //Firebase
+    private lateinit var auth: FirebaseAuth
+    private var storage: FirebaseStorage? = null
+
+    // Variables
     lateinit var currentUser: UserQP
     private val CAMERA_REQUEST_CODE = 1
     private val PICK_IMAGE_REQUEST = 71
@@ -31,16 +36,14 @@ class ChooseImageSource : DialogFragment() {
     private val photoPath : String = DBMethods.defaultUserImg
     private val photoPathGuest : String = DBMethods.defaultGuestImg
 
-    //Firebase
-    private lateinit var auth: FirebaseAuth
-    private var storage: FirebaseStorage? = null
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.interaction_edit_profile_images, container, false)
     }
 
     override fun onViewCreated(view:View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // View elements
         val btnCamera = view.findViewById<AppCompatImageButton>(R.id.camera_button)
         val btnGallery = view.findViewById<AppCompatImageButton>(R.id.gallery_button)
 
@@ -79,6 +82,7 @@ class ChooseImageSource : DialogFragment() {
             chooseImage()
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var  setFullScreen = false
@@ -89,6 +93,9 @@ class ChooseImageSource : DialogFragment() {
             setStyle(STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
     }
 
+    /**
+     * upload image after returning from selection
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -101,7 +108,6 @@ class ChooseImageSource : DialogFragment() {
             uploadImage(data.data!!)
         }
     }
-
 
     /**
      * open camera to take a picture

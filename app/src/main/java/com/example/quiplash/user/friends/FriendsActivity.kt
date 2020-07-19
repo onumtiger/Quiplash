@@ -16,6 +16,7 @@ import com.example.quiplash.user.UserQP
 import java.util.*
 
 class FriendsActivity : AppCompatActivity() {
+    // Variables
     lateinit var currentUser: UserQP
     lateinit var friend : UserQP
     lateinit var otherUsers: ArrayList<UserQP>
@@ -23,9 +24,9 @@ class FriendsActivity : AppCompatActivity() {
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_friends)
 
+        // View elements
         val btnBack = findViewById<AppCompatImageButton>(R.id.friends_go_back_arrow)
         val btnFriend = findViewById<AppCompatImageButton>(R.id.add_friend_btn)
         val friendsListView = findViewById<ListView>(R.id.friends)
@@ -33,6 +34,7 @@ class FriendsActivity : AppCompatActivity() {
         val refreshLayout = findViewById<SwipeRefreshLayout>(R.id.friends_swiperefresh)
 
         noFriendsAdded.visibility = View.INVISIBLE
+
         /**
          * fetch user's friend form db and display them
          */
@@ -65,6 +67,9 @@ class FriendsActivity : AppCompatActivity() {
             dialogFragment.show(ft, "delete")
         }
 
+        /**
+         * refresh view after swipe input
+         */
         refreshLayout.setOnRefreshListener {
             Sounds.playRefreshSound(this)
             getFriendsList(friendsListView)

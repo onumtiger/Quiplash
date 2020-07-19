@@ -13,8 +13,10 @@ import com.google.firebase.messaging.RemoteMessage
  * display notification in notification bar
  */
 class MyFireBaseMessagingService:FirebaseMessagingService(){
+    // Variables
     private lateinit var title:String;
     private lateinit var message:String;
+
     override fun onMessageReceived(@NonNull remoteMessage:RemoteMessage){
         super.onMessageReceived(remoteMessage)
         title = remoteMessage.data["Title"].toString()

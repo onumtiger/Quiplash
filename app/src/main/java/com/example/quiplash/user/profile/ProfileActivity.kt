@@ -27,21 +27,26 @@ import com.google.firebase.storage.FirebaseStorage
 
 class ProfileActivity : AppCompatActivity() {
     private var auth: FirebaseAuth? = null
-    private var currentUser: UserQP = UserQP()
     lateinit var db: CollectionReference
     private val dbUsersPath = DBMethods.usersPath
+    private var currentUser: UserQP = UserQP()
+
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_profile)
 
+        //Firebase
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance().collection(dbUsersPath)
 
+        //Variables
         val fotostorage = FirebaseStorage.getInstance()
         val storageRef = fotostorage.reference
+        var photoPath = DBMethods.defaultUserImg
+
+        //View elements
         val btnBack = findViewById<Button>(R.id.profile_go_back_arrow)
         val btnEditProfile = findViewById<Button>(R.id.btnEditProfile)
         val btnaddQuestion = findViewById<Button>(R.id.btnaddQuestion)
@@ -52,13 +57,13 @@ class ProfileActivity : AppCompatActivity() {
         val viewLabelEmail: TextView = findViewById(R.id.textViewMail)
         val viewScore: TextView = findViewById(R.id.score)
         val viewUsernameBig: TextView = findViewById(R.id.usernameBig)
-        var photoPath = DBMethods.defaultUserImg
+
+        val fm = supportFragmentManager
         val dialogFragmentGuest =
             ModalGuestInfo()
-        val fm = supportFragmentManager
 
         /**
-         * load user information and display them
+         * load user information (username, picture and score) and display them
          * if loading data fails display default profile picture and username
          */
         val callback = object : Callback<UserQP> {
@@ -86,7 +91,6 @@ class ProfileActivity : AppCompatActivity() {
                                 .load(uri)
                                 .into(viewProfilePic)
                         }.addOnFailureListener { Log.d("Test", " Failed!") }
-
                 } else {
                     viewUsernameBig.text = currentUser.userName
                     viewEmail.text = auth?.currentUser?.email.toString()
@@ -98,7 +102,7 @@ class ProfileActivity : AppCompatActivity() {
                         photoPath = currentUser.photo.toString()
                     }
 
-                    // timer is needed to load new photo is user edits its profile pic
+                    // timer is needed to load new photo if user has edited his/hers profile pic
                     val handler = Handler()
                     handler.postDelayed({
                         val spaceRef = storageRef.child(photoPath)
@@ -119,9 +123,6 @@ class ProfileActivity : AppCompatActivity() {
          * start addquestion activity if user's not a guest
          */
         btnaddQuestion.setOnClickListener {
-            //val handler = Handler()
-            //handler.postDelayed({
-            //}, 400)
             if (currentUser.guest!!) {
                 dialogFragmentGuest.show(fm, "modal_guest_info")
             } else {
@@ -179,6 +180,9 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * return default user data to handle fetching failures
+     */
     fun getUserInfoDefault(): Array<String> {
         val username = "No Username found"
         val email = "No Email found"
