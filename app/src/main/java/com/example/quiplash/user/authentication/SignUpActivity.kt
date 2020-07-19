@@ -75,6 +75,7 @@ class SignUpActivity : AppCompatActivity() {
         val btnSignUp = findViewById<Button>(R.id.signupBtn)
         val btnSubmit = findViewById<Button>(R.id.submitBtn)
         val btnAnonymous = findViewById<Button>(R.id.anonymousBtn)
+        val btnBack = findViewById<ImageButton>(R.id.signup_go_back_arrow)
         inputEmail = findViewById(R.id.emailFieldSU)
         inputPassword = findViewById(R.id.passwordFieldSU)
         inputPassword2 = findViewById(R.id.passwordRetypeFieldSU)
@@ -117,6 +118,12 @@ class SignUpActivity : AppCompatActivity() {
             Sounds.playClickSound(this)
             startActivity(Intent(this@SignUpActivity, SignInActivity::class.java))
             finish()
+        }
+
+        //set onClickListener for buttons
+        btnBack.setOnClickListener {
+            Sounds.playClickSound(this)
+            simpleViewFlipper.showPrevious()
         }
 
         //Entered Username will be saved
@@ -287,6 +294,11 @@ class SignUpActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e -> Log.w("ERROR", "Error writing document", e) }
 
+    }
+
+    //Disable Back-Btn on Device
+    override fun onBackPressed() {
+        println("do nothing")
     }
 
 }
