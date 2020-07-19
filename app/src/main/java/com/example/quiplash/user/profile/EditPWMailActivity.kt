@@ -34,7 +34,7 @@ class EditPWMailActivity : AppCompatActivity() {
     //Variables
     lateinit var friend: UserQP
     lateinit var currentUserName: String
-    lateinit var otherUsers: ArrayList<UserQP>
+    var otherUsers: ArrayList<UserQP> = arrayListOf<UserQP>()
 
     //Views
     lateinit var view_oldPW :EditText

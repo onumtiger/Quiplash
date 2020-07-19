@@ -122,12 +122,13 @@ class InviteFriendsToGameListAdapter (val mCtx: Context, val layoutResId: Int, v
     fun setInviteBtn(gameID: String, userID: String, inviteBtn: Button) {
         var game: Game
         val callback = object : Callback<Game> {
+            @SuppressLint("ResourceAsColor")
             override fun onTaskComplete(result: Game) {
                 game = result
                 val invitations = game.invitations
                 if (invitations.contains(userID)) {
                     inviteBtn.isClickable = false
-                    inviteBtn.setBackgroundResource(R.color.colorGray)
+                    inviteBtn.backgroundTintList = ColorStateList.valueOf(R.color.colorGray);
                 }
             }
         }
