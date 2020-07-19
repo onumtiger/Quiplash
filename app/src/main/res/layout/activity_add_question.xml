@@ -20,24 +20,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnStandard"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="48dp"
-        android:backgroundTint="@color/colorButtonHoneydew"
-        android:fontFamily="@font/patrick_hand"
-        android:text="Standard"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/choose" />
-
-    <Button
         android:id="@+id/btnFunny"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="100dp"
         android:backgroundTint="@color/colorButtonLavender"
         android:fontFamily="@font/patrick_hand"
         android:text="@string/funny"
@@ -46,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnStandard" />
+        app:layout_constraintTop_toBottomOf="@+id/choose" />
 
     <Button
         android:id="@+id/btnHarsh"

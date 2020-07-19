@@ -26,7 +26,6 @@ class AddQuestionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_question)
 
         //Buttons
-        val btnStandard = findViewById<Button>(R.id.btnStandard)
         val btnFunny = findViewById<Button>(R.id.btnFunny)
         val btnPoetic = findViewById<Button>(R.id.btnPoetic)
         val btnHarsh = findViewById<Button>(R.id.btnHarsh)
@@ -60,12 +59,6 @@ class AddQuestionActivity : AppCompatActivity() {
         }
 
         //choose question category
-        btnStandard.setOnClickListener {
-            Sounds.playClickSound(this)
-            newType = "Standard"
-            ButtonsInvisible()
-        }
-
         btnFunny.setOnClickListener {
             Sounds.playClickSound(this)
 
@@ -90,7 +83,6 @@ class AddQuestionActivity : AppCompatActivity() {
 
     //make useless Buttons invisible after choosing category
     fun ButtonsInvisible(){
-        btnStandard.visibility= View.INVISIBLE
         btnFunny.visibility= View.INVISIBLE
         btnPoetic.visibility= View.INVISIBLE
         btnHarsh.visibility= View.INVISIBLE
