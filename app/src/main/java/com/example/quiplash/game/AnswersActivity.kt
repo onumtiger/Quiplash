@@ -56,7 +56,7 @@ class AnswersActivity : AppCompatActivity() {
                     GameManager.opp0).answer
                 answerTV2.text = game.playrounds.getValue("round${game.activeRound}").opponents.getValue(
                     GameManager.opp1).answer
-                roundTextView.text = ("${ceil((game.activeRound+1).toDouble()/3).toInt()}/${game.rounds}")
+                roundTextView.text = ("${ceil((game.activeRound+1).toDouble()/(game.playrounds.size/game.rounds)).toInt()}/${game.rounds}")
             }
         }
         DBMethods.getCurrentGame(callbackGame,game.gameID)

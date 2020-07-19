@@ -128,7 +128,7 @@ class EvaluationActivity : AppCompatActivity() {
         oldRound = game.activeRound
 
         questionEval.text = game.playrounds.getValue("round${game.activeRound}").question
-        roundViewEval.text = ("${ceil((game.activeRound+1).toDouble()/3).toInt()}/${game.rounds}")
+        roundViewEval.text = ("${ceil((game.activeRound+1).toDouble()/(game.playrounds.size/game.rounds)).toInt()}/${game.rounds}")
 
 
         //Create Timer

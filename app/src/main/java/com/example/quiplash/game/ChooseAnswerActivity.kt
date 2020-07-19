@@ -79,7 +79,7 @@ class ChooseAnswerActivity : AppCompatActivity() {
         imageCheckA2 = findViewById(R.id.imageCheckAnswer2)
         simpleViewFlipper =
             findViewById(R.id.simpleViewFlipperCA) // get the reference of ViewFlipper
-        roundView.text = ("${ceil((game.activeRound + 1).toDouble() / game.rounds).toInt()}/${game.rounds}")
+        roundView.text = ("${ceil((game.activeRound + 1).toDouble() / (game.playrounds.size/game.rounds)).toInt()}/${game.rounds}")
 
         //Setup and Start Timer
         val callbackTimerWaiting = object :
@@ -92,7 +92,6 @@ class ChooseAnswerActivity : AppCompatActivity() {
             }
         }
         startTimer(timerViewWaiting, startSecondsAnswer, callbackTimerWaiting)
-
 
         // Declare in and out animations and load them using AnimationUtils class
         val inAni = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left)
