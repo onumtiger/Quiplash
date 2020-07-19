@@ -382,7 +382,7 @@ class EvaluationActivity : AppCompatActivity() {
                 scoreView!!.startAnimation(shakehanim)
 
                 //partymode
-                //get looser/loosers of round and give him a challenge
+                //if both people have to do a challenge
                 if (game.partyMode){
                     val drnk = (0 until game.drinks.size).random()
                     if (deuce){
@@ -397,6 +397,8 @@ class EvaluationActivity : AppCompatActivity() {
                     }
                 }
             }
+        //partyMode
+        //get Looser of this round and give him a challenge
         if(game.partyMode){
             if(!deuce){
                 val callbackUser = object :

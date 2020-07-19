@@ -36,13 +36,18 @@ class EditProfileActivity : AppCompatActivity() {
 
         setContentView(R.layout.acitvity_edit_profile)
 
+        //Firebase
         auth = FirebaseAuth.getInstance()
         storage = FirebaseStorage.getInstance()
+
+        //Variables
         val fotostorage = FirebaseStorage.getInstance()
         val storageRef = fotostorage.reference
         var photoPath = DBMethods.defaultUserImg
         var score = 0
         var friends = emptyList<String>()
+
+        //Views
         val viewProfilePic: ImageView = findViewById(R.id.imageView)
         val textErrorUserName = findViewById<TextView>(R.id.textErrorUsernameEdit)
         val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow)

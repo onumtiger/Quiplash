@@ -26,24 +26,22 @@ import kotlinx.android.synthetic.main.activity_edit_pw_mail.*
 
 class EditPWMailActivity : AppCompatActivity() {
 
-    private var authListener: FirebaseAuth.AuthStateListener? = null
+    //firebase
     private lateinit var auth: FirebaseAuth
+    lateinit var db: CollectionReference
+    private val dbUsersPath = DBMethods.usersPath
 
+    //Variables
     lateinit var friend: UserQP
     lateinit var currentUserName: String
     lateinit var otherUsers: ArrayList<UserQP>
 
-
+    //Views
     lateinit var view_oldPW :EditText
     lateinit var view_newPW :EditText
     lateinit var view_newPW2 :EditText
     lateinit var view_mail :EditText
-
     lateinit var btnDeleteAccount :Button
-
-    lateinit var db: CollectionReference
-    private val dbUsersPath = DBMethods.usersPath
-
 
 
     @SuppressLint("WrongViewCast")
@@ -52,37 +50,33 @@ class EditPWMailActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_edit_pw_mail)
 
+        //Firebase
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance().collection(dbUsersPath)
+        var current_user = FirebaseAuth.getInstance().currentUser
 
+        //Views
         val saveBtn = findViewById<Button>(R.id.btnEditProfileRest)
         val btnBack = findViewById<AppCompatImageButton>(R.id.profile_game_go_back_arrow)
-
         view_oldPW = findViewById(R.id.password_old)
         view_newPW = findViewById(R.id.password_new)
         view_newPW2 = findViewById(R.id.password_new2)
         view_mail = findViewById(R.id.email_new)
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount)
-
         val btnNext = findViewById<Button>(R.id.next_button)
-
         var textViewMail = findViewById<TextView>(R.id.textViewMail)
         var textViewPw = findViewById<TextView>(R.id.textViewPw)
         var textViewPw2 = findViewById<TextView>(R.id.textViewPw2)
 
+        //set Visibility for password check (reauthentication)
         view_newPW.visibility = View.INVISIBLE
         view_newPW2.visibility = View.INVISIBLE
         view_mail.visibility = View.INVISIBLE
         textViewMail.visibility = View.INVISIBLE
         textViewPw.visibility = View.INVISIBLE
         textViewPw2.visibility = View.INVISIBLE
-
         saveBtn.visibility = View.INVISIBLE
         btnDeleteAccount.visibility = View.INVISIBLE
-
-        var current_user = FirebaseAuth.getInstance().currentUser
-
-
 
         btnBack.setOnClickListener {
             Sounds.playClickSound(this)
@@ -142,6 +136,9 @@ class EditPWMailActivity : AppCompatActivity() {
             val newPW2 = view_newPW2.text.toString()
             val mail = view_mail.text.toString()
 
+            if (newPW.isNullOrEmpty() && newPW2.isNullOrEmpty() && mail.isNullOrEmpty()){
+                Toast.makeText(this, "Please Tip in a new Password or a new Mail Address", Toast.LENGTH_SHORT).show()
+            }
             //check if both passwords are correct
             if(newPW == newPW2 && !newPW.isNullOrEmpty()){
                 if(newPW.length > 5 ){

@@ -15,21 +15,29 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
-
 /*
 ALL METHODS:
 
 - saveQuestion(question_text: String, question_type: String) -> save a Question in DB
-- saveUser(user_name: String, guest: Boolean, score: Int) -> save a User in DB
-- getUsers(callback: Callback<ArrayList<User>>) -> get an Arraylist with all Users, Callback as a parameter (Example for Callback below)
-- getQuestions(callback: Callback<ArrayList<User>>) -> -""-
-- getRandomQuestion() -> returns a rondom Question, that was asked yet
-- deleteUser()
-- deleteQuestion()
-- editUser(ID :String, question :User) -> Edit a user(found by firestore ID)
-- editQuestion(ID :String, question :Question) -> Edit a question(found by firestore ID)
-
-
+- getUser(callback: Callback<UserQP>) -> get current User
+- addToken(user_t: UserQP) -> Add or overwrite token for push messages
+- getUsers(callback: Callback<ArrayList<UserQP>>) -> get Arraylist with all Users from DB
+- getQuestions(callback: Callback<ArrayList<Question>>) -> get Arraylist with all Questions from DB
+- editUser(ID :String, user : UserQP) -> edit values of user by ID
+- editGame(ID :String, game : Game) -> edit values of game by ID
+- editUserFriends(userid: String, friends: List<String>) -> edit friends of user by ID
+- deleteUser(userid: String) -> Delete User by ID
+- updateUserImage(userid :String, imagepath :String, callback: Callback<Boolean>) -> Update Userimage
+- setGame(game: Game) -> Create new Game, returns value of ID of new Game
+- updateGameUsers(game: Game) -> update Users of Game
+- updateInvitations(game: Game) -> update Game invitations of Users
+- updateUserScores(userID: String, gameScore: Int) -> update scores of Users
+- getActiveGames(callback: Callback<MutableList<Game>>, gameList: MutableList<Game>) -> get all acive Games in a List
+- getCurrentGame(callback: Callback<Game>, gameID: String) -> get current Game
+- getUserWithID(callback: Callback<UserQP>, userID: String) -> get User By ID
+- getUserByName(callback: Callback<UserQP>, username: String) -> get User by Name
+- deleteGame(gameID: String, callback: Callback<Boolean>) -> Delete Game with GameID
+- checkUsername(curName: String, username: String, callback: Callback<Boolean>) -> check if username already exists
  */
 
 class DBMethods {
@@ -175,7 +183,6 @@ class DBMethods {
                     //exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
                 }
             }
-            // game.playrounds.getValue("round${game.activeRound}").question
 
             //edit User friends (found by ID) in DB
             fun editUserFriends(userid: String, friends: List<String>) {
