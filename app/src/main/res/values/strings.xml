@@ -56,22 +56,13 @@
         <item name="three_players">3 Players</item>
         <item name="four_players">4 Players</item>
         <item name="five_players">5 Players</item>
-        <item name="six_players">6 Players</item>
-        <item name="seven_players">7 Players</item>
-        <item name="eight_players">8 Players</item>
-        <item name="nine_players">9 Players</item>
-        <item name="ten_players">10 Players</item>
     </string-array>
     <!-- Amount Rounds -->
     <string-array name="amount_rounds">
+        <item name="one_rounds">1 Round</item>
+        <item name="two_rounds">2 Rounds</item>
         <item name="three_rounds">3 Rounds</item>
         <item name="four_rounds">4 Rounds</item>
-        <item name="five_rounds">5 Rounds</item>
-        <item name="six_rounds">6 Rounds</item>
-        <item name="seven_rounds">7 Rounds</item>
-        <item name="eight_rounds">8 Rounds</item>
-        <item name="nine_rounds">9 Rounds</item>
-        <item name="ten_rounds">10 Rounds</item>
     </string-array>
 
     <!-- others -->
